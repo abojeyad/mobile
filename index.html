@@ -134,29 +134,21 @@ html {
 }
 
 /* Desktop mimicry - only applies when screen is large enough */
-@media (min-width: 600px) and (min-height: 600px) {
-  body {
-    background: var(--bg-page);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-  #app-root {
-    position: relative;
-    width: 414px;
-    height: 896px;
-    border-radius: var(--radius-xl);
-    border: 1.5px solid rgba(0,0,0,0.10);
-    box-shadow: 0 8px 40px rgba(0,0,0,0.10);
-    /* Top safe area: simulate a real mobile status bar gap */
-    padding-top: 44px;
-  }
-  /* Compensate: screens already handle their own internal padding,
-     so we only need the shell padding on the outermost container */
-  #app-root > .screen {
-    /* screens fill the remaining height inside the padded shell */
-  }
+body {
+  background: var(--bg-page);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#app-root {
+  position: relative;
+  width: 414px;
+  height: 896px;
+  border-radius: var(--radius-xl);
+  border: 1.5px solid rgba(0,0,0,0.10);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+  padding-top: 44px;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -200,18 +192,16 @@ html {
    the extra 44px top offset — overlays nested inside a .screen (like
    overlay-hot-deals, overlay-brands, overlay-price-drops) already sit
    correctly within the screen's coordinate space and must NOT get extra padding. */
-@media (min-width: 600px) and (min-height: 600px) {
-  #overlay-wishlist-all .listing-header,
-  #overlay-recent-all .listing-header,
-  #overlay-personalized-all .listing-header,
-  #overlay-brand-page .listing-header,
-  #overlay-store-page .listing-header,
-  #overlay-deal-intermediate .dip-header,
-  .ssp-header,
-  .ai-chat-header,
-  .rv-header {
-    padding-top: calc(44px + 8px) !important;
-  }
+#overlay-wishlist-all .listing-header,
+#overlay-recent-all .listing-header,
+#overlay-personalized-all .listing-header,
+#overlay-brand-page .listing-header,
+#overlay-store-page .listing-header,
+#overlay-deal-intermediate .dip-header,
+.ssp-header,
+.ai-chat-header,
+.rv-header {
+  padding-top: calc(44px + 8px) !important;
 }
 .profile-header {
   background: #F9F5F6 !important; /* Keep original activity header color */
@@ -987,6 +977,9 @@ html {
    must also be hidden — handled by the JS showOverlay/hideOverlay. */
 .overlay.visible { z-index: 110; }
 
+/* Hide activity bottom nav when a sub-page is open */
+#screen-activity.sub-open .bottom-nav { display: none; }
+
 /* Store page already had its own override — keep consistent */
 #overlay-store-page { z-index: 110; }
 
@@ -1189,34 +1182,32 @@ html {
 .web-status-bar {
   display: none;
 }
-@media (min-width: 600px) and (min-height: 600px) {
-  .web-status-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 44px;
-    padding: 0 20px;
-    z-index: 200;
-    pointer-events: none;
-  }
-  .web-status-bar-time {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--ink-1);
-    letter-spacing: 0.01em;
-  }
-  .web-status-bar-icons {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .web-status-bar-icons svg {
-    width: 15px;
-    height: 15px;
-    color: var(--ink-1);
-  }
+.web-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 44px;
+  padding: 0 20px;
+  z-index: 200;
+  pointer-events: none;
+}
+.web-status-bar-time {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-1);
+  letter-spacing: 0.01em;
+}
+.web-status-bar-icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.web-status-bar-icons svg {
+  width: 15px;
+  height: 15px;
+  color: var(--ink-1);
 }
 .interests-chip {
   padding:10px 18px; border-radius:24px; font-size:14px; font-weight:600;
@@ -2651,43 +2642,42 @@ html {
         <div class="notif-list-section">
           <div class="notif-section-label">Today</div>
 
-          <!-- Price Alert: Chanel drop — UNREAD -->
+          <!-- Template 1: Wishlist price drop — UNREAD -->
           <div class="notif-item notif-price unread">
             <div class="notif-dot"></div>
             <div class="notif-avatar notif-avatar-price">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
             </div>
             <div class="notif-body">
-              <div class="notif-title">Bleu de Chanel EDP dropped to 485 SAR</div>
-              <div class="notif-sub">Golden Scent · was 620 SAR</div>
+              <div class="notif-title">The product in your wishlist has decreased in price.</div>
+              <div class="notif-sub">Bleu de Chanel EDP · now 485 SAR</div>
               <div class="notif-time">2 hours ago</div>
             </div>
             <div class="notif-price-pill">−135 SAR</div>
           </div>
 
-          <!-- Price Alert: Target hit — UNREAD -->
+          <!-- Template 2: Followed product price drop — UNREAD -->
           <div class="notif-item notif-price unread">
             <div class="notif-dot"></div>
             <div class="notif-avatar notif-avatar-price">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
             </div>
             <div class="notif-body">
-              <div class="notif-title">Price alert triggered — Acqua di Gio EDP</div>
-              <div class="notif-sub">Now 265 SAR at Al-Sultan · your target was 300 SAR</div>
+              <div class="notif-title">The price of a product you follow has decreased by 22%.</div>
+              <div class="notif-sub">Acqua di Gio EDP · now 265 SAR at Al-Sultan</div>
               <div class="notif-time">5 hours ago</div>
             </div>
-            <div class="notif-price-pill">−85 SAR</div>
+            <div class="notif-price-pill">−22%</div>
           </div>
 
-          <!-- Admin Announcement — UNREAD -->
+          <!-- Template 4: Admin message — UNREAD -->
           <div class="notif-item notif-admin unread">
             <div class="notif-dot"></div>
             <div class="notif-avatar notif-avatar-admin">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
             <div class="notif-body">
-              <div class="notif-title">Weekend flash sale — up to 30% off Dior</div>
-              <div class="notif-sub">Namshi · Ends Sunday midnight</div>
+              <div class="notif-title">Yourdis: Weekend flash sale — up to 30% off Dior at Namshi. Ends Sunday midnight.</div>
               <div class="notif-time">8 hours ago</div>
             </div>
             <div class="notif-admin-pill">Yourdis</div>
@@ -2698,31 +2688,32 @@ html {
         <div class="notif-list-section">
           <div class="notif-section-label">Yesterday</div>
 
-          <!-- Price Alert: Dior drop — READ -->
+          <!-- Template 3: Reminder style — READ -->
+          <div class="notif-item notif-price">
+            <div class="notif-dot read"></div>
+            <div class="notif-avatar notif-avatar-price">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="notif-body">
+              <div class="notif-title">Reminder: A product you follow has dropped in price by 16%.</div>
+              <div class="notif-sub">Dior Sauvage EDT · now 310 SAR at Najd Al-Otheyah</div>
+              <div class="notif-time">Yesterday · 2:14 PM</div>
+            </div>
+            <div class="notif-price-pill">−16%</div>
+          </div>
+
+          <!-- Template 1: Wishlist price drop — READ -->
           <div class="notif-item notif-price">
             <div class="notif-dot read"></div>
             <div class="notif-avatar notif-avatar-price">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
             </div>
             <div class="notif-body">
-              <div class="notif-title">Dior Sauvage EDT — new low price</div>
-              <div class="notif-sub">310 SAR at Najd Al-Otheyah · was 370 SAR</div>
-              <div class="notif-time">Yesterday · 2:14 PM</div>
-            </div>
-            <div class="notif-price-pill">−60 SAR</div>
-          </div>
-
-          <!-- Price Alert: Back in stock — READ -->
-          <div class="notif-item notif-price">
-            <div class="notif-dot read"></div>
-            <div class="notif-avatar notif-avatar-price">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-            </div>
-            <div class="notif-body">
-              <div class="notif-title">Tom Ford Tobacco Oud back in stock</div>
-              <div class="notif-sub">Available at Asheq Al-Otor · 590 SAR</div>
+              <div class="notif-title">The product in your wishlist has decreased in price.</div>
+              <div class="notif-sub">Tom Ford Tobacco Oud · now 590 SAR at Asheq Al-Otor</div>
               <div class="notif-time">Yesterday · 9:07 AM</div>
             </div>
+            <div class="notif-price-pill">−55 SAR</div>
           </div>
         </div>
 
@@ -2730,29 +2721,28 @@ html {
         <div class="notif-list-section">
           <div class="notif-section-label">This Week</div>
 
-          <!-- Price Alert: Creed — READ -->
+          <!-- Template 2: Followed product price drop — READ -->
           <div class="notif-item notif-price">
             <div class="notif-dot read"></div>
             <div class="notif-avatar notif-avatar-price">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
             </div>
             <div class="notif-body">
-              <div class="notif-title">Creed Aventus 100ml — all-time low</div>
-              <div class="notif-sub">840 SAR at Asheq Al-Otor · lowest ever tracked</div>
+              <div class="notif-title">The price of a product you follow has decreased by 20%.</div>
+              <div class="notif-sub">Creed Aventus 100ml · now 840 SAR at Asheq Al-Otor</div>
               <div class="notif-time">3 days ago</div>
             </div>
-            <div class="notif-price-pill">−210 SAR</div>
+            <div class="notif-price-pill">−20%</div>
           </div>
 
-          <!-- Admin Announcement: App update — READ -->
+          <!-- Template 4: Admin message — READ -->
           <div class="notif-item notif-admin">
             <div class="notif-dot read"></div>
             <div class="notif-avatar notif-avatar-admin">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             </div>
             <div class="notif-body">
-              <div class="notif-title">Yourdis 2.1 is here</div>
-              <div class="notif-sub">New: fragrance notes view, reaction system, and smarter price tracking</div>
+              <div class="notif-title">Yourdis: Version 2.1 is now live — fragrance notes view, reaction system, and smarter price tracking.</div>
               <div class="notif-time">4 days ago</div>
             </div>
             <div class="notif-admin-pill">Yourdis</div>
@@ -3694,6 +3684,24 @@ html {
               <div class="frag-id-value" id="product-perfumer">Jacques Polge</div>
             </div>
 
+            <!-- Year -->
+            <div class="frag-id-card">
+              <div class="frag-id-icon" style="background:var(--b-teal);color:#0E7490;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <div class="frag-id-label">Year</div>
+              <div class="frag-id-value" id="product-year">2010</div>
+            </div>
+
+            <!-- Rating -->
+            <div class="frag-id-card">
+              <div class="frag-id-icon" style="background:#FEF9C3;color:#CA8A04;">
+                <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+              <div class="frag-id-label">Rating</div>
+              <div class="frag-id-value" id="product-rating">4.6</div>
+            </div>
+
           </div>
         </div>
 		        <div class="accords-wrap" id="product-accords">
@@ -3858,7 +3866,7 @@ html {
           <div class="review-head"><span class="review-user">Fahad M.</span><span class="review-date">1 month ago</span></div>
           <div class="review-text" id="product-review2">Classic for a reason. The EDP version has noticeably better projection than the EDT. Great value at this price point.</div>
         </div>
-        <div class="reviews-show-more" onclick="openReviewsPage()" style="cursor:pointer;">Show all <span id="product-all-reviews">287</span> reviews →</div>
+        <div class="reviews-show-more" id="reviews-show-more-btn" onclick="openReviewsPage()" style="cursor:pointer;" data-count="287">Show all 287 reviews →</div>
 <div style="margin-top: 20px;"></div>
 
       </div><!-- /padding -->
@@ -4163,34 +4171,6 @@ html {
               <div id="phone-incomplete-dot" style="color:var(--amber);display:flex;align-items:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px;"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
               <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── NOTIFICATIONS ── -->
-      <div class="act-settings-group">
-        <div class="act-settings-label">Notifications</div>
-        <div class="act-settings-card">
-          <div class="act-settings-row">
-            <div class="act-settings-row-l">
-              <div class="act-sicon sri-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg></div>
-              <div class="act-sinfo"><span class="act-sname">Price drop alerts</span><span class="act-ssub">Notify immediately</span></div>
-            </div>
-            <div class="toggle" style="transform:scale(0.8);transform-origin:right;flex-shrink:0;" onclick="this.classList.toggle('off')"><div class="toggle-thumb"></div></div>
-          </div>
-          <div class="act-settings-row">
-            <div class="act-settings-row-l">
-              <div class="act-sicon sri-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-              <div class="act-sinfo"><span class="act-sname">Daily deal digest</span><span class="act-ssub">Every morning at 8:00 AM</span></div>
-            </div>
-            <div class="toggle off" style="transform:scale(0.8);transform-origin:right;flex-shrink:0;" onclick="this.classList.toggle('off')"><div class="toggle-thumb"></div></div>
-          </div>
-          <div class="act-settings-row act-settings-row-last">
-            <div class="act-settings-row-l">
-              <div class="act-sicon sri-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-              <div class="act-sinfo"><span class="act-sname">Back-in-stock alerts</span><span class="act-ssub">For wishlisted items</span></div>
-            </div>
-            <div class="toggle" style="transform:scale(0.8);transform-origin:right;flex-shrink:0;" onclick="this.classList.toggle('off')"><div class="toggle-thumb"></div></div>
           </div>
         </div>
       </div>
@@ -4824,94 +4804,43 @@ html {
     </div>
 
     <!-- Summary bar -->
-    <div class="rv-summary-bar">
-      <div style="display:flex;align-items:center;gap:16px;">
-        <div class="rv-big-score" id="rv-big-score">4.6</div>
-        <div style="flex:1;">
-          <div style="display:flex;gap:4px;margin-bottom:5px;">
-            <svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg class="rv-star" viewBox="0 0 24 24" fill="currentColor" style="clip-path:inset(0 40% 0 0)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          </div>
-          <!-- Rating bars -->
-          <div style="display:flex;flex-direction:column;gap:3px;">
-            <div style="display:flex;align-items:center;gap:8px;">
-              <span style="font-size:12px;color:var(--ink-3);width:14px;text-align:right;">5</span>
-              <div style="flex:1;height:5px;border-radius:3px;background:var(--bg-input);overflow:hidden;"><div style="width:68%;height:100%;background:var(--amber);border-radius:3px;"></div></div>
-              <span style="font-size:12px;color:var(--ink-3);width:28px;">68%</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <span style="font-size:12px;color:var(--ink-3);width:14px;text-align:right;">4</span>
-              <div style="flex:1;height:5px;border-radius:3px;background:var(--bg-input);overflow:hidden;"><div style="width:20%;height:100%;background:var(--amber);border-radius:3px;"></div></div>
-              <span style="font-size:12px;color:var(--ink-3);width:28px;">20%</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <span style="font-size:12px;color:var(--ink-3);width:14px;text-align:right;">3</span>
-              <div style="flex:1;height:5px;border-radius:3px;background:var(--bg-input);overflow:hidden;"><div style="width:8%;height:100%;background:var(--amber);border-radius:3px;"></div></div>
-              <span style="font-size:12px;color:var(--ink-3);width:28px;">8%</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <span style="font-size:12px;color:var(--ink-3);width:14px;text-align:right;">2</span>
-              <div style="flex:1;height:5px;border-radius:3px;background:var(--bg-input);overflow:hidden;"><div style="width:3%;height:100%;background:var(--amber);border-radius:3px;"></div></div>
-              <span style="font-size:12px;color:var(--ink-3);width:28px;">3%</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <span style="font-size:12px;color:var(--ink-3);width:14px;text-align:right;">1</span>
-              <div style="flex:1;height:5px;border-radius:3px;background:var(--bg-input);overflow:hidden;"><div style="width:1%;height:100%;background:var(--amber);border-radius:3px;"></div></div>
-              <span style="font-size:12px;color:var(--ink-3);width:28px;">1%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sort chips -->
-    <div class="rv-sort-row">
-      <span class="rv-sort-chip active" onclick="sortReviews('recent',this)">Most Recent</span>
-      <span class="rv-sort-chip" onclick="sortReviews('top',this)">Top Rated</span>
-      <span class="rv-sort-chip" onclick="sortReviews('critical',this)">Critical</span>
-      <span class="rv-sort-chip" onclick="sortReviews('verified',this)">Verified Purchase</span>
-    </div>
-
     <!-- Review list -->
     <div style="flex:1;overflow-y:auto;" id="rv-list">
       <div class="rv-card">
         <div class="rv-card-head"><span class="rv-user">Khalid A.</span><span class="rv-date">2 weeks ago</span></div>
         <div class="rv-stars"><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <div class="rv-text">Incredible longevity — easily 10+ hours. The woody freshness is perfect for the office. Found it for 485 SAR on Golden Scent thanks to Yourdis. Best price tracker for fragrances in the Kingdom.</div>
-        <div class="rv-helpful"><span class="rv-helpful-label">Helpful?</span><button class="rv-helpful-btn" onclick="this.textContent='👍 Yes (43)'">👍 Yes (42)</button><button class="rv-helpful-btn" onclick="this.textContent='👎 No (3)'">👎 No (2)</button></div>
+        
       </div>
       <div class="rv-card">
         <div class="rv-card-head"><span class="rv-user">Fahad M.</span><span class="rv-date">1 month ago</span></div>
         <div class="rv-stars"><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor" style="color:var(--border-strong)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <div class="rv-text">Classic for a reason. The EDP version has noticeably better projection than the EDT. Great value at this price point. Yourdis alerted me the moment it dropped — couldn't ask for more.</div>
-        <div class="rv-helpful"><span class="rv-helpful-label">Helpful?</span><button class="rv-helpful-btn" onclick="this.textContent='👍 Yes (29)'">👍 Yes (28)</button><button class="rv-helpful-btn">👎 No (1)</button></div>
+        
       </div>
       <div class="rv-card">
         <div class="rv-card-head"><span class="rv-user">Mohammed Al-R.</span><span class="rv-date">6 weeks ago</span></div>
         <div class="rv-stars"><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <div class="rv-text">Absolutely perfect for winter evenings. The smoky Vetiver base is sophisticated without being overpowering. My go-to fragrance for formal occasions. Purchased three times already.</div>
-        <div class="rv-helpful"><span class="rv-helpful-label">Helpful?</span><button class="rv-helpful-btn" onclick="this.textContent='👍 Yes (19)'">👍 Yes (18)</button><button class="rv-helpful-btn">👎 No (0)</button></div>
+        
       </div>
       <div class="rv-card">
         <div class="rv-card-head"><span class="rv-user">Tariq S.</span><span class="rv-date">2 months ago</span></div>
         <div class="rv-stars"><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor" style="color:var(--border-strong)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <div class="rv-text">Very good fragrance. I prefer the EDT slightly more — it's a bit lighter for everyday wear. But the EDP has much better staying power. Tracked through Yourdis for 3 months before it dropped to 485.</div>
-        <div class="rv-helpful"><span class="rv-helpful-label">Helpful?</span><button class="rv-helpful-btn" onclick="this.textContent='👍 Yes (15)'">👍 Yes (14)</button><button class="rv-helpful-btn">👎 No (2)</button></div>
+        
       </div>
       <div class="rv-card">
         <div class="rv-card-head"><span class="rv-user">Omar F.</span><span class="rv-date">2 months ago</span></div>
         <div class="rv-stars"><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <div class="rv-text">This is my fourth bottle. Never gets old. Bleu de Chanel EDP is truly a timeless masterpiece. The citrus opening, the woody heart, the lasting base — everything is perfectly balanced. Recommended for everyone.</div>
-        <div class="rv-helpful"><span class="rv-helpful-label">Helpful?</span><button class="rv-helpful-btn" onclick="this.textContent='👍 Yes (34)'">👍 Yes (33)</button><button class="rv-helpful-btn">👎 No (1)</button></div>
+        
       </div>
       <div class="rv-card" style="border-bottom:none;">
         <div class="rv-card-head"><span class="rv-user">Abdulaziz K.</span><span class="rv-date">3 months ago</span></div>
         <div class="rv-stars"><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor" style="color:var(--border-strong)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="rv-star" viewBox="0 0 24 24" fill="currentColor" style="color:var(--border-strong)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <div class="rv-text">Good but slightly overhyped in my opinion. I prefer more oriental scents. That said, the quality is undeniable and longevity is excellent. 3 stars for personal preference, not quality.</div>
-        <div class="rv-helpful"><span class="rv-helpful-label">Helpful?</span><button class="rv-helpful-btn" onclick="this.textContent='👍 Yes (8)'">👍 Yes (7)</button><button class="rv-helpful-btn">👎 No (4)</button></div>
+        
       </div>
       <div style="height:20px;"></div>
     </div>
@@ -5009,7 +4938,7 @@ var PRODUCTS = {
     img:YOURDIS_IMAGES.chanel,initials:'Cd',bg:'var(--b-purple)',
     name_ar:'بلو دو شانيل إي دي بي',brand_ar:'شانيل · 100 مل · عطر مركّز',
     country:'France',country_ar:'فرنسا',gender:'Men',gender_ar:'رجالي',
-    family:'Aromatic',family_ar:'عطري',perfumer:'Jacques Polge',
+    family:'Aromatic',family_ar:'عطري',perfumer:'Jacques Polge',year:'2010',
     notes:'<span class="note-chip note-top">Top: Citrus · Bergamot</span><span class="note-chip note-heart">Heart: Vetiver · Cedarwood</span><span class="note-chip note-base">Base: Patchouli · Labdanum</span>',
     notes_ar:'قمة: حمضيات · برغموت · قلب: فيتيفر · خشب الأرز · قاعدة: باتشولي · لبدانم',
     accords: [
@@ -5041,7 +4970,7 @@ var PRODUCTS = {
     img:YOURDIS_IMAGES.dior,initials:'Dk',bg:'var(--b-teal)',
     name_ar:'ديور سوفاج إي دي تي',brand_ar:'ديور · 200 مل · ماء تواليت',
     country:'France',country_ar:'فرنسا',gender:'Men',gender_ar:'رجالي',
-    family:'Fresh Spicy',family_ar:'منعش حار',perfumer:'François Demachy',
+    family:'Fresh Spicy',family_ar:'منعش حار',perfumer:'François Demachy',year:'2015',
     notes:'<span class="note-chip note-top">Top: Calabrian Bergamot</span><span class="note-chip note-heart">Heart: Sichuan Pepper · Geranium</span><span class="note-chip note-base">Base: Ambroxan · Cedar</span>',
     notes_ar:'قمة: برغموت كالابريا · قلب: فلفل سيتشوان · قاعدة: أمبروكسان · أرز',
     accords: [
@@ -5073,7 +5002,7 @@ var PRODUCTS = {
     img:YOURDIS_IMAGES.tomford,initials:'Tf',bg:'var(--b-amber)',
     name_ar:'توم فورد توباكو عود إي دي بي',brand_ar:'توم فورد · 50 مل · عطر مركّز',
     country:'USA',country_ar:'الولايات المتحدة',gender:'Unisex',gender_ar:'للجنسين',
-    family:'Oriental Oud',family_ar:'شرقي عود',perfumer:'Olivier Gillotin',
+    family:'Oriental Oud',family_ar:'شرقي عود',perfumer:'Olivier Gillotin',year:'2007',
     notes:'<span class="note-chip note-top">Top: Clove · Coriander</span><span class="note-chip note-heart">Heart: Tobacco · Oud Wood</span><span class="note-chip note-base">Base: Sandalwood · Tonka Bean</span>',
     notes_ar:'قمة: قرنفل · كزبرة · قلب: تبغ · عود · قاعدة: صندل · فاصوليا التونكا',
     accords: [
@@ -5105,7 +5034,7 @@ var PRODUCTS = {
     img:YOURDIS_IMAGES.ysl,initials:'YS',bg:'var(--b-pink)',
     name_ar:'إيف سان لوران واي لو بارفان',brand_ar:'إيف سان لوران · 60 مل · بارفان',
     country:'France',country_ar:'فرنسا',gender:'Men',gender_ar:'رجالي',
-    family:'Fougere Aromatic',family_ar:'فوجير عطري',perfumer:'Dominique Ropion',
+    family:'Fougere Aromatic',family_ar:'فوجير عطري',perfumer:'Dominique Ropion',year:'2017',
     notes:'<span class="note-chip note-top">Top: Bergamot · Ginger</span><span class="note-chip note-heart">Heart: Sage · Suede</span><span class="note-chip note-base">Base: Fir Balsam · Ambergris</span>',
     notes_ar:'قمة: برغموت · زنجبيل · قلب: مريمية · شمواه · قاعدة: بلسم تنوب · عنبر',
     accords: [
@@ -5137,7 +5066,7 @@ var PRODUCTS = {
     img:YOURDIS_IMAGES.armani,initials:'Aq',bg:'var(--b-blue)',
     name_ar:'أكوا دي جيو إي دي بي',brand_ar:'أرماني · 75 مل · عطر مركّز',
     country:'Italy',country_ar:'إيطاليا',gender:'Men',gender_ar:'رجالي',
-    family:'Fresh Aquatic',family_ar:'مائي منعش',perfumer:'Alberto Morillas',
+    family:'Fresh Aquatic',family_ar:'مائي منعش',perfumer:'Alberto Morillas',year:'1996',
     notes:'<span class="note-chip note-top">Top: Marine Accord · Bergamot</span><span class="note-chip note-heart">Heart: Incense · Rosemary</span><span class="note-chip note-base">Base: Patchouli · Mineral Amber</span>',
     notes_ar:'قمة: ألحان بحرية · برغموت · قلب: بخور · روزماري · قاعدة: باتشولي · عنبر معدني',
     accords: [
@@ -5177,7 +5106,7 @@ var PRODUCTS = {
     price:'840 SAR',orig:'1,050 SAR',store:'Asheq Al-Otor',storeKey:'sephora',
     badge:'↓ 20% off',badgeClass:'badge-fire',
     atl:'810 SAR',avg:'990 SAR',ath:'1,150 SAR',
-    rating:'4.9',reviews:'2,104',
+    rating:'4.9',reviews:'2,104',year:'2010',
     r1:'The king of fragrances. Every batch has slight variation which makes each bottle unique.',
     r2:'840 SAR is an absolute steal for 100ml Aventus. Yourdis alert worked perfectly.',
     priceHistory:[{date:'Today · 2 days ago',price:'840 SAR',dir:'down'},{date:'01 Mar 2025',price:'1,050 SAR',dir:'up'},{date:'10 Nov 2024',price:'820 SAR',dir:'down'},{date:'15 Jul 2024',price:'1,100 SAR',dir:'up'},{date:'01 Apr 2024',price:'860 SAR',dir:'down'}],
@@ -5197,7 +5126,7 @@ var PRODUCTS = {
     price:'345 SAR',orig:'420 SAR',store:'Golden Scent',storeKey:'amazon',
     badge:'↓ 18% off',badgeClass:'badge-good',
     atl:'310 SAR',avg:'390 SAR',ath:'450 SAR',
-    rating:'4.3',reviews:'674',
+    rating:'4.3',reviews:'674',year:'2003',
     r1:'Better projection than the EDT. The mint opening is addictive.',
     r2:'Excellent evening scent at this price.',
     priceHistory:[{date:'Today · 4 hrs ago',price:'345 SAR',dir:'down'},{date:'15 Feb 2025',price:'420 SAR',dir:'up'},{date:'01 Nov 2024',price:'330 SAR',dir:'down'},{date:'10 Aug 2024',price:'440 SAR',dir:'up'},{date:'20 May 2024',price:'360 SAR',dir:'down'}],
@@ -5217,7 +5146,7 @@ var PRODUCTS = {
     price:'280 SAR',orig:'340 SAR',store:'Al-Sultan Perfumes',storeKey:'namshi',
     badge:'↓ 18% off',badgeClass:'badge-good',
     atl:'255 SAR',avg:'310 SAR',ath:'365 SAR',
-    rating:'4.2',reviews:'389',
+    rating:'4.2',reviews:'389',year:'2022',
     r1:'Underrated gem. The pepper note keeps it interesting all day.',
     r2:'Solid daily driver. Great performance for the price.',
     priceHistory:[{date:'Today · 6 hrs ago',price:'280 SAR',dir:'down'},{date:'20 Feb 2025',price:'340 SAR',dir:'up'},{date:'05 Dec 2024',price:'265 SAR',dir:'down'},{date:'01 Sep 2024',price:'355 SAR',dir:'up'},{date:'15 Jun 2024',price:'290 SAR',dir:'down'}],
@@ -5237,7 +5166,7 @@ var PRODUCTS = {
     price:'320 SAR',orig:'395 SAR',store:'Asheq Al-Otor',storeKey:'sephora',
     badge:'↓ 19% off',badgeClass:'badge-good',
     atl:'295 SAR',avg:'365 SAR',ath:'420 SAR',
-    rating:'4.4',reviews:'761',
+    rating:'4.4',reviews:'761',year:'1999',
     r1:'Way better than the original EDT. Richer, longer lasting and more refined.',
     r2:'Compliment machine. People ask what I\'m wearing every single time.',
     priceHistory:[{date:'Today · 3 hrs ago',price:'320 SAR',dir:'down'},{date:'10 Mar 2025',price:'395 SAR',dir:'up'},{date:'20 Nov 2024',price:'305 SAR',dir:'down'},{date:'15 Aug 2024',price:'415 SAR',dir:'up'},{date:'01 May 2024',price:'330 SAR',dir:'down'}],
@@ -5257,7 +5186,7 @@ var PRODUCTS = {
     price:'295 SAR',orig:'370 SAR',store:'Golden Scent',storeKey:'amazon',
     badge:'↓ 20% off',badgeClass:'badge-good',
     atl:'270 SAR',avg:'340 SAR',ath:'395 SAR',
-    rating:'4.5',reviews:'512',
+    rating:'4.5',reviews:'512',year:'2011',
     r1:'The most wearable floral I own. Fresh but with real depth.',
     r2:'Perfect office fragrance. Light enough not to overwhelm.',
     priceHistory:[{date:'Today · 2 hrs ago',price:'295 SAR',dir:'down'},{date:'05 Mar 2025',price:'370 SAR',dir:'up'},{date:'10 Dec 2024',price:'280 SAR',dir:'down'},{date:'20 Sep 2024',price:'385 SAR',dir:'up'},{date:'01 Jun 2024',price:'305 SAR',dir:'down'}],
@@ -5277,7 +5206,7 @@ var PRODUCTS = {
     price:'380 SAR',orig:'455 SAR',store:'Asheq Al-Otor',storeKey:'sephora',
     badge:'↓ 17% off',badgeClass:'badge-good',
     atl:'350 SAR',avg:'425 SAR',ath:'490 SAR',
-    rating:'4.6',reviews:'441',
+    rating:'4.6',reviews:'441',year:'2006',
     r1:'One of the most intellectual fragrances ever made. A wearable work of art.',
     r2:'Gets better every hour. The drydown is extraordinary.',
     priceHistory:[{date:'Today · 1 hr ago',price:'380 SAR',dir:'down'},{date:'28 Feb 2025',price:'455 SAR',dir:'up'},{date:'15 Nov 2024',price:'365 SAR',dir:'down'},{date:'01 Aug 2024',price:'470 SAR',dir:'up'},{date:'10 Apr 2024',price:'390 SAR',dir:'down'}],
@@ -5297,7 +5226,7 @@ var PRODUCTS = {
     price:'270 SAR',orig:'330 SAR',store:'Najd Al-Otheyah',storeKey:'noon',
     badge:'↓ 18% off',badgeClass:'badge-good',
     atl:'245 SAR',avg:'305 SAR',ath:'360 SAR',
-    rating:'4.4',reviews:'387',
+    rating:'4.4',reviews:'387',year:'2017',
     r1:'The vanilla is not heavy at all — very elegant and refined.',
     r2:'A classic Guerlain that punches above its weight in longevity.',
     priceHistory:[{date:'Today · 3 hrs ago',price:'270 SAR',dir:'down'},{date:'01 Mar 2025',price:'330 SAR',dir:'up'},{date:'10 Dec 2024',price:'255 SAR',dir:'down'},{date:'15 Sep 2024',price:'345 SAR',dir:'up'},{date:'20 May 2024',price:'280 SAR',dir:'down'}],
@@ -5317,7 +5246,7 @@ var PRODUCTS = {
     price:'260 SAR',orig:'320 SAR',store:'Asheq Al-Otor',storeKey:'sephora',
     badge:'↓ 19% off',badgeClass:'badge-good',
     atl:'235 SAR',avg:'295 SAR',ath:'345 SAR',
-    rating:'4.3',reviews:'298',
+    rating:'4.3',reviews:'298',year:'1995',
     r1:'The EDP version is in a different league from the EDT. Much richer.',
     r2:'Timeless. I keep coming back to this every winter.',
     priceHistory:[{date:'Today · 5 hrs ago',price:'260 SAR',dir:'down'},{date:'15 Feb 2025',price:'320 SAR',dir:'up'},{date:'20 Nov 2024',price:'245 SAR',dir:'down'},{date:'01 Aug 2024',price:'335 SAR',dir:'up'},{date:'10 Apr 2024',price:'265 SAR',dir:'down'}],
@@ -5337,7 +5266,7 @@ var PRODUCTS = {
     price:'195 SAR',orig:'245 SAR',store:'V Perfume',storeKey:'jarir',
     badge:'↓ 20% off',badgeClass:'badge-good',
     atl:'175 SAR',avg:'220 SAR',ath:'265 SAR',
-    rating:'4.2',reviews:'623',
+    rating:'4.2',reviews:'623',year:'1992',
     r1:'A classic that never gets old. Clean, fresh and universally loved.',
     r2:'Excellent value. Light and perfect for summer.',
     priceHistory:[{date:'Today · 2 hrs ago',price:'195 SAR',dir:'down'},{date:'20 Feb 2025',price:'245 SAR',dir:'up'},{date:'01 Nov 2024',price:'185 SAR',dir:'down'},{date:'15 Jul 2024',price:'260 SAR',dir:'up'},{date:'01 Apr 2024',price:'200 SAR',dir:'down'}],
@@ -5357,7 +5286,7 @@ var PRODUCTS = {
     price:'215 SAR',orig:'265 SAR',store:'Najd Al-Otheyah',storeKey:'noon',
     badge:'↓ 19% off',badgeClass:'badge-good',
     atl:'190 SAR',avg:'240 SAR',ath:'285 SAR',
-    rating:'4.3',reviews:'276',
+    rating:'4.3',reviews:'276',year:'2005',
     r1:'The bitter mandarin makes this completely different from other aquatics.',
     r2:'Great summer fragrance. Very unique opening.',
     priceHistory:[{date:'Today · 4 hrs ago',price:'215 SAR',dir:'down'},{date:'10 Mar 2025',price:'265 SAR',dir:'up'},{date:'25 Nov 2024',price:'200 SAR',dir:'down'},{date:'10 Aug 2024',price:'280 SAR',dir:'up'},{date:'01 May 2024',price:'225 SAR',dir:'down'}],
@@ -5377,7 +5306,7 @@ var PRODUCTS = {
     price:'240 SAR',orig:'295 SAR',store:'Golden Scent',storeKey:'amazon',
     badge:'↓ 19% off',badgeClass:'badge-good',
     atl:'215 SAR',avg:'265 SAR',ath:'315 SAR',
-    rating:'4.4',reviews:'334',
+    rating:'4.4',reviews:'334',year:'2010',
     r1:'The platinum version adds a smoothness and depth the original lacks.',
     r2:'Best value designer fragrance right now. Underrated.',
     priceHistory:[{date:'Today · 6 hrs ago',price:'240 SAR',dir:'down'},{date:'05 Mar 2025',price:'295 SAR',dir:'up'},{date:'10 Dec 2024',price:'225 SAR',dir:'down'},{date:'20 Aug 2024',price:'310 SAR',dir:'up'},{date:'01 May 2024',price:'250 SAR',dir:'down'}],
@@ -5397,7 +5326,7 @@ var PRODUCTS = {
     price:'315 SAR',orig:'390 SAR',store:'Asheq Al-Otor',storeKey:'sephora',
     badge:'↓ 19% off',badgeClass:'badge-good',
     atl:'285 SAR',avg:'360 SAR',ath:'415 SAR',
-    rating:'4.5',reviews:'418',
+    rating:'4.5',reviews:'418',year:'2011',
     r1:'The jasmine is incredibly realistic and the vanilla is not too sweet.',
     r2:'Feminine but sophisticated. Perfect for evening events.',
     priceHistory:[{date:'Today · 2 hrs ago',price:'315 SAR',dir:'down'},{date:'20 Feb 2025',price:'390 SAR',dir:'up'},{date:'05 Nov 2024',price:'300 SAR',dir:'down'},{date:'01 Aug 2024',price:'405 SAR',dir:'up'},{date:'15 Apr 2024',price:'325 SAR',dir:'down'}],
@@ -5417,7 +5346,7 @@ var PRODUCTS = {
     price:'350 SAR',orig:'430 SAR',store:'Al-Sultan Perfumes',storeKey:'namshi',
     badge:'↓ 19% off',badgeClass:'badge-good',
     atl:'320 SAR',avg:'395 SAR',ath:'455 SAR',
-    rating:'4.6',reviews:'895',
+    rating:'4.6',reviews:'895',year:'2010',
     r1:'The coffee note makes this completely unique. Gets compliments constantly.',
     r2:'Dark and sensual without being heavy. Perfect for evenings.',
     priceHistory:[{date:'Today · 3 hrs ago',price:'350 SAR',dir:'down'},{date:'10 Mar 2025',price:'430 SAR',dir:'up'},{date:'15 Nov 2024',price:'335 SAR',dir:'down'},{date:'01 Sep 2024',price:'445 SAR',dir:'up'},{date:'20 May 2024',price:'360 SAR',dir:'down'}],
@@ -5437,7 +5366,7 @@ var PRODUCTS = {
     price:'280 SAR',orig:'345 SAR',store:'Golden Scent',storeKey:'amazon',
     badge:'↓ 19% off',badgeClass:'badge-good',
     atl:'255 SAR',avg:'315 SAR',ath:'370 SAR',
-    rating:'4.5',reviews:'521',
+    rating:'4.5',reviews:'521',year:'2003',
     r1:'The musk is skin-close and incredibly intimate. One of the best skin-scents.',
     r2:'Understated elegance. Perfect for when you want to smell like yourself — but better.',
     priceHistory:[{date:'Today · 1 hr ago',price:'280 SAR',dir:'down'},{date:'15 Feb 2025',price:'345 SAR',dir:'up'},{date:'01 Nov 2024',price:'265 SAR',dir:'down'},{date:'10 Jul 2024',price:'360 SAR',dir:'up'},{date:'20 Mar 2024',price:'290 SAR',dir:'down'}],
@@ -5457,7 +5386,7 @@ var PRODUCTS = {
     price:'145 SAR',orig:'185 SAR',store:'Najd Al-Otheyah',storeKey:'noon',
     badge:'↓ 22% off',badgeClass:'badge-fire',
     atl:'130 SAR',avg:'165 SAR',ath:'200 SAR',
-    rating:'4.2',reviews:'248',
+    rating:'4.2',reviews:'248',year:'2015',
     r1:'Incredible value. Punches well above its price point.',
     r2:'Fresh, clean and very wearable daily. The best budget aquatic in Saudi stores.',
     priceHistory:[{date:'Today · 5 hrs ago',price:'145 SAR',dir:'down'},{date:'28 Feb 2025',price:'185 SAR',dir:'up'},{date:'15 Nov 2024',price:'135 SAR',dir:'down'},{date:'01 Aug 2024',price:'195 SAR',dir:'up'},{date:'10 Apr 2024',price:'150 SAR',dir:'down'}],
@@ -5581,10 +5510,12 @@ function _setProductMeta(p) {
     houseEl.textContent = brandParts[0].trim() || p.name.split(' ')[0];
   }
 
-  document.getElementById('product-family').textContent  = p.family || '--';
-  document.getElementById('product-perfumer').textContent = p.perfumer || '--';
-  document.getElementById('product-country').textContent  = p.country || '--';
-  document.getElementById('product-gender').textContent   = p.gender || '--';
+  document.getElementById('product-family').textContent   = p.family   || '--';
+  document.getElementById('product-perfumer').textContent = p.perfumer  || '--';
+  document.getElementById('product-country').textContent  = p.country   || '--';
+  document.getElementById('product-gender').textContent   = p.gender    || '--';
+  document.getElementById('product-year').textContent     = p.year      || '--';
+  document.getElementById('product-rating').textContent   = p.rating    ? p.rating + ' ★' : '--';
 
   // Render Accords
   var accordsContainer = document.getElementById('product-accords');
@@ -5653,7 +5584,8 @@ function _setProductReviews(p) {
   if (ratingEl) ratingEl.textContent = p.rating;
   var revCountEl = document.getElementById('product-review-count');
   if (revCountEl) revCountEl.textContent = p.rating + ' out of 5 · ' + p.reviews + ' reviews';
-  document.getElementById('product-all-reviews').textContent   = p.reviews;
+  var btn = document.getElementById('reviews-show-more-btn');
+  if (btn) btn.textContent = 'Show all ' + p.reviews + ' reviews →';
   document.getElementById('product-review1').textContent       = p.r1;
   document.getElementById('product-review2').textContent       = p.r2;
 }
@@ -5988,20 +5920,23 @@ function closeAllStores() {
 }
 
 /* Wishlist All */
-function showWishlistAll() { showOverlay('overlay-wishlist-all'); var sa = document.querySelector('#overlay-wishlist-all [style*="overflow-y:auto"]'); if (sa) sa.scrollTop = 0; }
-function closeWishlistAll() { hideOverlay('overlay-wishlist-all'); }
+function _actSubOpen()  { document.getElementById('screen-activity').classList.add('sub-open'); }
+function _actSubClose() { document.getElementById('screen-activity').classList.remove('sub-open'); }
+
+function showWishlistAll() { _actSubOpen(); showOverlay('overlay-wishlist-all'); var sa = document.querySelector('#overlay-wishlist-all [style*="overflow-y:auto"]'); if (sa) sa.scrollTop = 0; }
+function closeWishlistAll() { hideOverlay('overlay-wishlist-all'); _actSubClose(); }
 
 /* Recently Viewed All */
-function showRecentAll() { showOverlay('overlay-recent-all'); var sa = document.querySelector('#overlay-recent-all [style*="overflow-y:auto"]'); if (sa) sa.scrollTop = 0; }
-function closeRecentAll() { hideOverlay('overlay-recent-all'); }
+function showRecentAll() { _actSubOpen(); showOverlay('overlay-recent-all'); var sa = document.querySelector('#overlay-recent-all [style*="overflow-y:auto"]'); if (sa) sa.scrollTop = 0; }
+function closeRecentAll() { hideOverlay('overlay-recent-all'); _actSubClose(); }
 
 /* Settings */
 function showSettings() { showOverlay('overlay-settings'); }
 function closeSettings() { hideOverlay('overlay-settings'); }
 
 /* Interests Edit */
-function showInterestsEdit() { showOverlay('overlay-interests'); }
-function closeInterestsEdit() { hideOverlay('overlay-interests'); }
+function showInterestsEdit() { _actSubOpen(); showOverlay('overlay-interests'); }
+function closeInterestsEdit() { hideOverlay('overlay-interests'); _actSubClose(); }
 
 /* Logout confirm sheet */
 function confirmLogout() {
@@ -6668,10 +6603,12 @@ var _sspCurrency = 'SAR';
 var _sspLanguage = 'en';
 
 function openSettingsSub(page) {
+  _actSubOpen();
   document.getElementById('ssp-' + page).classList.add('visible');
 }
 function closeSettingsSub(page) {
   document.getElementById('ssp-' + page).classList.remove('visible');
+  _actSubClose();
 }
 
 function saveProfile() {
@@ -6899,11 +6836,12 @@ function filterWishlist(query) {
 function openReviewsPage() {
   /* Sync product name and count from current product detail */
   var nameEl  = document.getElementById('product-name');
-  var countEl = document.getElementById('product-all-reviews');
+  var countEl = document.getElementById('reviews-show-more-btn');
   if (nameEl)  document.getElementById('rv-product-name').textContent = nameEl.textContent;
   if (countEl) document.getElementById('rv-total-count').textContent  = countEl.textContent + ' reviews';
   var scoreEl = document.getElementById('product-rating');
-  if (scoreEl) document.getElementById('rv-big-score').textContent = scoreEl.textContent;
+  var bigScore = document.getElementById('rv-big-score');
+  if (scoreEl && bigScore) bigScore.textContent = scoreEl.textContent;
   document.getElementById('overlay-reviews').classList.add('visible');
   /* Scroll review list to top */
   var list = document.getElementById('rv-list');
