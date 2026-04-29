@@ -270,8 +270,62 @@ ai_reply_popular: { en: 'These are the most popular fragrances on Yourdis right 
 ai_reply_fallback: { en: 'Here are some of our top-rated fragrances. Tap any card to compare prices across stores:', ar: 'إليك بعض من أعلى العطور تقييماً لدينا. اضغط على أي بطاقة لمقارنة الأسعار عبر المتاجر:' },
 ai_reply_voice: { en: 'I heard you! Based on your message, here are some fragrances you might love:', ar: 'سمعتك! بناءً على رسالتك الصوتية، إليك بعض العطور التي قد تعجبك:' },
 ai_mic_unavailable: { en: 'Voice messages are not supported on this device.', ar: 'الرسائل الصوتية غير مدعومة على هذا الجهاز.' },
-ai_mic_denied: { en: 'Microphone access was denied. Please allow it in your browser settings.', ar: 'تم رفض الوصول إلى الميكروفون. يرجى السماح به في إعدادات المتصفح.' },
+ai_mic_denied: { en: 'Microphone access is blocked. Please enable it in settings.', ar: 'تم حظر الوصول إلى الميكروفون. يرجى تفعيله من الإعدادات.' },
 
+/* ══════════════════════════════════════════════════════════
+   My Profile PAGE
+══════════════════════════════════════════════════════════ */
+sp_email_title: { en: 'Email Address', ar: 'البريد الإلكتروني' },
+sp_email_desc: { en: "Enter your new email address. We'll send a verification code to confirm the change.", ar: 'أدخل بريدك الإلكتروني الجديد. سنرسل رمز تحقق لتأكيد التغيير.' },
+sp_current_email: { en: 'Current Email', ar: 'البريد الحالي' },
+sp_new_email: { en: 'New Email Address', ar: 'البريد الإلكتروني الجديد' },
+sp_email_ph: { en: 'Enter new email', ar: 'أدخل البريد الجديد' },
+sp_email_err: { en: 'Please enter a valid email address.', ar: 'يرجى إدخال بريد إلكتروني صحيح.' },
+sp_send_code: { en: 'Send Verification Code', ar: 'إرسال رمز التحقق' },
+sp_otp_sent: { en: 'We sent a 4-digit code to', ar: 'أرسلنا رمزًا مكوّنًا من 4 أرقام إلى' },
+sp_otp_wrong: { en: 'Incorrect code. The code is 0000.', ar: 'الرمز غير صحيح. الرمز هو 0000.' },
+sp_no_code: { en: "Didn't receive it?", ar: 'لم تستلمه؟' },
+sp_resend: { en: 'Resend', ar: 'إعادة الإرسال' },
+sp_verify_confirm: { en: 'Verify & Save', ar: 'تحقق وحفظ' },
+
+sp_phone_title: { en: 'Phone Number', ar: 'رقم الهاتف' },
+sp_phone_not_added: { en: 'Not added yet', ar: 'لم يُضف بعد' },
+sp_phone_desc: { en: 'Add your phone number to receive SMS alerts and improve account security.', ar: 'أضف رقم هاتفك لتلقّي التنبيهات عبر الرسائل وتعزيز أمان الحساب.' },
+sp_phone_label: { en: 'Phone Number', ar: 'رقم الهاتف' },
+sp_phone_ph: { en: '5X XXX XXXX', ar: '5X XXX XXXX' },
+
+sp_profile_change_photo: { en: 'Change Photo', ar: 'تغيير الصورة' },
+sp_first_name: { en: 'First Name', ar: 'الاسم الأول' },
+sp_last_name: { en: 'Last Name', ar: 'اسم العائلة' },
+sp_display_name: { en: 'Display Name', ar: 'الاسم المعروض' },
+sp_gender: { en: 'Gender', ar: 'الجنس' },
+sp_gender_male: { en: 'Male', ar: 'ذكر' },
+sp_gender_female: { en: 'Female', ar: 'أنثى' },
+sp_save: { en: 'Save Changes', ar: 'حفظ التغييرات' },
+sp_saved: { en: '✓ Changes saved', ar: '✓ تم الحفظ' },
+
+sp_currency_desc: { en: 'Choose how prices are displayed across the app.', ar: 'اختر كيفية عرض الأسعار في التطبيق.' },
+sp_lang_desc: { en: 'Choose the language used throughout the app.', ar: 'اختر اللغة المستخدمة في التطبيق.' },
+set_support_contact: { en: 'Contact Support', ar: 'التواصل مع الدعم' },
+set_support_sub: { en: 'Report an issue or get help', ar: 'أبلغ عن مشكلة أو احصل على مساعدة' },
+set_help_sub: { en: 'Get answers to common questions', ar: 'احصل على إجابات للأسئلة الشائعة' },
+sp_support_desc: { en: "Describe your issue and we'll get back to you within 24 hours.", ar: 'صف مشكلتك وسنردّ عليك خلال 24 ساعة.' },
+sp_support_topic: { en: 'Topic', ar: 'الموضوع' },
+sp_topic_price: { en: 'Price Issue', ar: 'مشكلة في السعر' },
+sp_topic_account: { en: 'Account', ar: 'الحساب' },
+sp_topic_alert: { en: 'Alert', ar: 'التنبيه' },
+sp_topic_other: { en: 'Other', ar: 'أخرى' },
+sp_support_msg: { en: 'Your Message', ar: 'رسالتك' },
+sp_support_ph: { en: 'Describe your issue…', ar: 'صف مشكلتك…' },
+sp_support_send: { en: 'Send Message', ar: 'إرسال الرسالة' },
+sp_support_sent: { en: '✓ Message sent. We\'ll reply within 24 hours.', ar: '✓ تم الإرسال. سنردّ عليك خلال 24 ساعة.' },
+
+/* ══════════════════════════════════════════════════════════
+    PAGE
+══════════════════════════════════════════════════════════ */
+guest_modal_title: { en: 'Sign in to continue', ar: 'سجّل دخولك للمتابعة' },
+guest_modal_sub:   { en: 'This feature is available to registered users. Create a free account to unlock it.', ar: 'هذه الميزة متاحة للمستخدمين المسجّلين. أنشئ حسابًا مجانيًا لتفعيلها.' },
+guest_modal_later: { en: 'Maybe later', ar: 'ربما لاحقاً' },
 
 
 };

@@ -1122,7 +1122,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   <div class="home-header">
     <div style="display:flex;align-items:center;justify-content:space-between;">
       <!-- Sina AI -->
-      <div style="display:flex;align-items:center;gap:9px;cursor:pointer;" onclick="switchScreen('ai-chat')">
+      <div style="display:flex;align-items:center;gap:9px;cursor:pointer;" onclick="if(guestGuard())return;switchScreen('ai-chat')">
         <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.08));border-radius:50%;outline:1px solid rgba(0,0,0,0.09);">
           <defs>
             <radialGradient id="nn-bg" cx="38%" cy="35%" r="65%"><stop offset="0%" stop-color="#F4F4F4"/><stop offset="55%" stop-color="#EDEDED"/><stop offset="100%" stop-color="#E6E6E6"/></radialGradient>
@@ -1166,7 +1166,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         </div>
       </div>
       <!-- Notification bell -->
-      <div class="icon-btn" style="position:relative;cursor:pointer;" onclick="switchScreen('notifications')">
+      <div class="icon-btn" style="position:relative;cursor:pointer;" onclick="if(guestGuard())return;switchScreen('notifications')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
         <span id="notif-badge" style="position:absolute;top:6px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--red);border:1.5px solid #fff;"></span>
       </div>
@@ -1233,8 +1233,8 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   <div class="bottom-nav">
     <div class="bn-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-i18n="nav_home">Home</span></div>
     <div class="bn-item" onclick="switchScreen('stores')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7"/><path d="M9 22V12h6v10"/><path d="M3 9v13h18V9"/><path d="M3 9h18"/></svg><span data-i18n="nav_stores">Stores</span></div>
-    <div class="bn-item" onclick="switchScreen('alerts')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span data-i18n="nav_alerts">Alerts</span></div>
-    <div class="bn-item" onclick="switchScreen('activity')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span data-i18n="nav_activity">Activity</span></div>
+    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('alerts')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span data-i18n="nav_alerts">Alerts</span></div>
+    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('activity')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span data-i18n="nav_activity">Activity</span></div>
   </div>
 
 </div><!-- /screen-home -->
@@ -1878,11 +1878,11 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7"/><path d="M9 22V12h6v10"/><path d="M3 9v13h18V9"/><path d="M3 9h18"/></svg>
       <span data-i18n="nav_stores">Stores</span>
     </div>
-    <div class="bn-item" onclick="switchScreen('alerts')">
+    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('alerts')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       <span data-i18n="nav_alerts">Alerts</span>
     </div>
-    <div class="bn-item" onclick="switchScreen('activity')">
+    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('activity')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       <span data-i18n="nav_activity">Activity</span>
     </div>
@@ -1915,7 +1915,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       </div>
     </div>
     <div class="store-page-actions">
-      <button class="store-follow-btn not-following" id="store-follow-btn" onclick="toggleStoreFollow(this)">
+      <button class="store-follow-btn not-following" id="store-follow-btn" onclick="if(guestGuard())return;toggleStoreFollow(this)">
         <span data-i18n="stores_follow">Follow</span>
       </button>
       <span class="store-followers" id="store-followers-count"></span>
@@ -1992,10 +1992,10 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <div class="icon-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
       </div>
-      <div class="icon-btn" id="alertBtn" onclick="toggleAlert()">
+      <div class="icon-btn" id="alertBtn" onclick="if(guestGuard())return;toggleAlert()">
         <svg id="alertIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
       </div>
-      <div class="icon-btn" id="bookmarkBtn" onclick="toggleBookmark()">
+      <div class="icon-btn" id="bookmarkBtn" onclick="if(guestGuard())return;toggleBookmark()">
         <svg id="bookmarkIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
       </div>
     </div>
@@ -2144,7 +2144,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <div style="margin-top:12px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px;">
         <div style="font-size:var(--t4);font-weight:500;color:var(--ink-1);margin-bottom:10px;" data-i18n="pdp_add_review">Add a Review</div>
         <textarea id="review-text-input" data-i18n="pdp_review_ph" placeholder="Share your thoughts about this fragrance…" style="width:100%;min-height:72px;resize:none;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 11px;font-size:var(--t4);font-family:var(--font-body);color:var(--ink-1);outline:none;line-height:1.6;transition:border-color 0.15s;"></textarea>
-        <button onclick="submitReview()" style="margin-top:8px;width:100%;padding:10px;border-radius:var(--radius-sm);background:var(--gold);color:#fff;font-size:var(--t5);font-weight:500;border:none;cursor:pointer;" data-i18n="pdp_submit_review">Submit Review</button>
+        <button onclick="if(guestGuard())return;submitReview()" style="margin-top:8px;width:100%;padding:10px;border-radius:var(--radius-sm);background:var(--gold);color:#fff;font-size:var(--t5);font-weight:500;border:none;cursor:pointer;" data-i18n="pdp_submit_review">Submit Review</button>
         <div id="review-submit-msg" style="display:none;margin-top:8px;font-size:var(--t5);color:var(--green);text-align:center;font-weight:500;" data-i18n="pdp_review_thanks">✓ Review submitted. Thank you!</div>
       </div>
       <div style="margin-top:20px;"></div>
@@ -2208,6 +2208,43 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   </div>
 
 </div><!-- /screen-ai-chat -->
+
+<!-- ═══════════════════════════════════════
+     GUEST AUTH MODAL (bottom sheet)
+     Shown whenever a guest taps a
+     members-only action.
+═══════════════════════════════════════ -->
+<div id="guest-modal-backdrop" onclick="closeGuestModal()" style="display:none;position:absolute;inset:0;z-index:300;background:rgba(0,0,0,0.45);"></div>
+<div id="guest-modal-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;z-index:301;background:var(--bg-phone);border-top-left-radius:var(--radius-xl);border-top-right-radius:var(--radius-xl);box-shadow:0 -4px 32px rgba(0,0,0,0.14);flex-direction:column;transform:translateY(100%);transition:transform 0.32s cubic-bezier(0.25,0.46,0.45,0.94);">
+  <!-- Handle -->
+  <div style="width:40px;height:5px;border-radius:3px;background:var(--border-strong);margin:12px auto 0;flex-shrink:0;"></div>
+  <!-- Content -->
+  <div style="padding:20px 24px 36px;display:flex;flex-direction:column;align-items:center;">
+    <!-- Logo -->
+    <img src="logo.png" alt="Yourdis" style="width:52px;height:52px;object-fit:contain;margin-bottom:14px;" onerror="this.style.display='none'"/>
+    <!-- Headline -->
+    <div style="font-size:var(--t3);font-weight:700;color:var(--ink-1);text-align:center;margin-bottom:6px;" data-i18n="guest_modal_title">Sign in to continue</div>
+    <!-- Sub-text -->
+    <div style="font-size:var(--t5);color:var(--ink-3);text-align:center;line-height:1.7;margin-bottom:24px;max-width:280px;" data-i18n="guest_modal_sub">This feature is available to registered users. Create a free account to unlock it.</div>
+    <!-- Google -->
+    <button onclick="guestModalAuth('google')" style="width:100%;height:48px;border-radius:var(--radius-md);background:var(--bg-phone);color:var(--ink-1);border:1px solid var(--border-strong);font-size:var(--t4);font-weight:600;display:flex;align-items:center;justify-content:center;gap:12px;cursor:pointer;margin-bottom:10px;transition:opacity 0.15s;">
+      <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      <span data-i18n="auth_google">Sign in with Google</span>
+    </button>
+    <!-- Apple -->
+    <button onclick="guestModalAuth('apple')" style="width:100%;height:48px;border-radius:var(--radius-md);background:#000;color:#fff;border:none;font-size:var(--t4);font-weight:600;display:flex;align-items:center;justify-content:center;gap:12px;cursor:pointer;margin-bottom:10px;transition:opacity 0.15s;">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M17.05 20.28c-.96.95-2.04 1.72-3.32 1.72-1.24 0-1.63-.78-3.17-.78-1.57 0-2.02.76-3.18.78-1.24.02-2.31-.83-3.27-1.74-2.51-2.4-4.22-7.14-1.64-10.37 1.28-1.6 2.92-2.53 4.54-2.53 1.25 0 2.3.75 3.12.75.79 0 2.15-.89 3.65-.89 1.5 0 2.84.58 3.86 1.83-3.14 1.84-2.62 5.9.41 7.33-.74 1.84-1.72 3.59-3.02 4.9zm-3.61-16.71c.7-.85 1.17-2.04.9-3.23-1.04.04-2.31.7-3.05 1.55-.66.75-1.24 1.95-.97 3.11 1.15.08 2.27-.45 3.12-1.43z"/></svg>
+      <span data-i18n="auth_apple">Sign in with Apple</span>
+    </button>
+    <!-- Email -->
+    <button onclick="guestModalAuth('email')" style="width:100%;height:48px;border-radius:var(--radius-md);background:var(--gold);color:#fff;border:none;font-size:var(--t4);font-weight:600;display:flex;align-items:center;justify-content:center;gap:12px;cursor:pointer;margin-bottom:14px;transition:opacity 0.15s;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:17px;height:17px;" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span data-i18n="auth_email">Continue with Email</span>
+    </button>
+    <!-- Maybe later -->
+    <button onclick="closeGuestModal()" style="background:none;border:none;font-size:var(--t5);color:var(--ink-3);cursor:pointer;padding:4px 0;" data-i18n="guest_modal_later">Maybe later</button>
+  </div>
+</div>
 
 </div><!-- /phone-frame -->
 </div><!-- /app-root -->
@@ -3170,16 +3207,24 @@ function _compareRenderStores(p, sizeFilter) {
     card.className = 'dip-alt-card';
     card.style.cursor = 'pointer';
     card.addEventListener('click', (function(pid){ return function(){ openProduct(pid, 'compare'); }; })(p.id));
+    var bestBadge = idx === 0
+      ? '<span style="font-size:10px;font-weight:700;background:var(--green-light);color:var(--green);padding:2px 8px;border-radius:20px;white-space:nowrap;">' + T('compare_best_price') + '</span>'
+      : '';
     card.innerHTML =
       '<div class="dip-alt-thumb" style="width:72px;height:72px;">' +
         '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
           '<img loading="lazy" src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
         '</div>' +
       '</div>' +
-      '<div class="dip-alt-info">' +
-        '<div class="dip-alt-name" style="font-weight:600;text-transform:uppercase;color:var(--ink-3);font-size:var(--t6);">' + storeName + '</div>' +
-        '<div class="dip-alt-name" style="color:var(--ink-1);margin-top:2px;">' + P(p,'name') + '</div>' +
-        '<div class="dip-alt-sub">' + entry.price + ' ' + cur + ' ' + P(p,'brand') + ' · ' + p.size + '</div>' +
+      '<div class="dip-alt-info" style="min-width:0;flex:1;">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">' +
+          '<div style="font-weight:500;color:#333;font-size:var(--t5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + storeName + '</div>' +
+          bestBadge +
+        '</div>' +
+        '<div class="dip-alt-sub" style="color:#000;display:flex;align-items:center;justify-content:space-between;gap:6px;">' +
+          '<span>' + P(p,'brand') + ' · ' + p.size + '</span>' +
+          '<span style="font-weight:700;font-size:var(--t4);white-space:nowrap;">' + entry.price + ' ' + cur + '</span>' +
+        '</div>' +
       '</div>' +
       '<div class="dip-alt-right">' +
         '<div class="dip-alt-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>' +
@@ -3953,8 +3998,62 @@ function _aiAppendVoiceBubble(durationSecs) {
 }
 
 /* ══════════════════════════════════════════════════════════
-   INIT
+   GUEST AUTH MODAL
 ══════════════════════════════════════════════════════════ */
+
+function openGuestModal() {
+  var backdrop = document.getElementById('guest-modal-backdrop');
+  var sheet    = document.getElementById('guest-modal-sheet');
+  backdrop.style.display = 'block';
+  sheet.style.display    = 'flex';
+  /* Force reflow so the transition fires */
+  sheet.getBoundingClientRect();
+  sheet.style.transform  = 'translateY(0)';
+  /* Re-apply i18n strings inside the modal in case language changed */
+  sheet.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    var txt = T(key);
+    if (el.children.length === 0) el.textContent = txt;
+  });
+}
+
+function closeGuestModal() {
+  var backdrop = document.getElementById('guest-modal-backdrop');
+  var sheet    = document.getElementById('guest-modal-sheet');
+  sheet.style.transform = 'translateY(100%)';
+  setTimeout(function() {
+    sheet.style.display    = 'none';
+    backdrop.style.display = 'none';
+  }, 320);
+}
+
+/* Called by the modal's auth buttons — mirrors handleAuth() on the login screen */
+function guestModalAuth(method) {
+  closeGuestModal();
+  if (method === 'email') {
+    /* Go to auth screen and open OTP overlay, same as login page */
+    _isGuest = false;
+    switchScreen('auth');
+    setTimeout(openOtp, 350);
+  } else {
+    /* Google / Apple — sign in immediately */
+    _isGuest = false;
+    switchScreen('home');
+  }
+}
+
+/* Central guard: call this instead of the action when user is a guest.
+   Returns true if the modal was shown (caller should abort its action).
+   Returns false if the user is signed in (caller proceeds normally).   */
+function guestGuard() {
+  if (_isGuest) {
+    openGuestModal();
+    return true;
+  }
+  return false;
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
   setLang('en'); /* triggers renderProductCards + onLangChange → renderStores + renderAlerts */
 });
