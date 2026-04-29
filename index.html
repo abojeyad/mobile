@@ -1046,6 +1046,167 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   50%       { height: 20px; opacity: 1;   }
 }
 .ai-rec-time { font-size: var(--t5); color: var(--red); font-weight: 600; white-space: nowrap; }
+
+/* ══════════════════════════════════════════════════════════
+   SUB-PAGE SCREENS (Profile, Email, Phone, etc.)
+══════════════════════════════════════════════════════════ */
+.sub-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px 12px; flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+}
+.sub-header-title { font-size: var(--t3); font-weight: 600; color: var(--ink-1); }
+.sub-body {
+  flex: 1; overflow-y: auto; overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  padding: 28px 20px;
+}
+.sub-body::-webkit-scrollbar { display: none; }
+.sub-label {
+  font-size: var(--t5); font-weight: 600; color: var(--ink-3);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin-bottom: 8px; margin-top: 24px;
+}
+.sub-label:first-child { margin-top: 0; }
+.sub-input {
+  width: 100%; height: 50px; padding: 0 14px;
+  background: var(--bg-input); border: 1px solid var(--border);
+  border-radius: var(--radius-md); font-size: var(--t4);
+  color: var(--ink-1); outline: none; transition: border-color 0.15s;
+  font-family: inherit;
+}
+.sub-input:focus { border-color: var(--red); }
+.sub-textarea {
+  width: 100%; min-height: 100px; padding: 12px 14px; resize: none;
+  background: var(--bg-input); border: 1px solid var(--border);
+  border-radius: var(--radius-md); font-size: var(--t4);
+  color: var(--ink-1); outline: none; transition: border-color 0.15s;
+  font-family: inherit; line-height: 1.6;
+}
+.sub-textarea:focus { border-color: var(--red); }
+.sub-btn {
+  width: 100%; height: 50px; border-radius: var(--radius-md);
+  background: var(--red); color: #fff; font-size: var(--t4);
+  font-weight: 600; font-family: inherit; border: none; cursor: pointer;
+  margin-top: 16px; transition: opacity 0.15s;
+}
+.sub-btn:active { opacity: 0.85; }
+.sub-btn-outline {
+  width: 100%; height: 50px; border-radius: var(--radius-md);
+  background: var(--bg-surface); color: var(--ink-1); font-size: var(--t4);
+  font-weight: 600; font-family: inherit; border: 1px solid var(--border-strong);
+  cursor: pointer; margin-top: 10px; transition: opacity 0.15s;
+}
+.sub-btn-outline:active { opacity: 0.75; }
+.sub-notice { font-size: var(--t5); color: var(--ink-3); line-height: 1.6; margin-top: 8px; }
+.sub-success { display: none; font-size: var(--t5); color: var(--green); font-weight: 500; text-align: center; margin-top: 10px; }
+.sub-otp-row { display: flex; gap: 12px; justify-content: center; margin-top: 20px; }
+.sub-otp-box {
+  width: 56px; height: 60px; border-radius: var(--radius-md);
+  border: 1.5px solid var(--border); background: var(--bg-input);
+  font-size: 24px; font-weight: 700; color: var(--ink-1);
+  text-align: center; outline: none; font-family: inherit;
+  transition: border-color 0.15s;
+}
+.sub-otp-box:focus { border-color: var(--red); }
+.sub-option-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 15px 16px; background: var(--bg-phone);
+  border: 1px solid var(--border); border-radius: var(--radius-md);
+  margin-bottom: 10px; cursor: pointer; transition: background 0.12s;
+}
+.sub-option-row:hover { background: var(--bg-surface); }
+.sub-option-row.selected { border-color: var(--red); background: var(--red-light); }
+.sub-option-label { font-size: var(--t4); font-weight: 500; color: var(--ink-1); }
+.sub-option-check {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2px solid var(--border-strong); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.sub-option-row.selected .sub-option-check { background: var(--red); border-color: var(--red); }
+.sub-option-row.selected .sub-option-check::after {
+  content: ''; display: block; width: 8px; height: 8px;
+  background: #fff; border-radius: 50%;
+}
+.faq-block {
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px;
+}
+.faq-q { font-size: var(--t4); font-weight: 600; color: var(--ink-1); margin-bottom: 6px; }
+.faq-a { font-size: var(--t4); color: var(--ink-2); line-height: 1.65; }
+.privacy-block {
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px;
+}
+.privacy-block-title { font-size: var(--t4); font-weight: 600; color: var(--ink-1); margin-bottom: 6px; }
+.privacy-block-body  { font-size: var(--t4); color: var(--ink-2); line-height: 1.65; }
+.sub-divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+/* ── Interests accord cards ── */
+.interests-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.interest-card {
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  padding: 16px 14px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+.interest-card.selected {
+  border-color: var(--red);
+  box-shadow: 0 0 0 1px var(--red);
+}
+.interest-card-emoji {
+  font-size: 28px;
+  line-height: 1;
+  margin-bottom: 8px;
+  display: block;
+}
+.interest-card-name {
+  font-size: var(--t4);
+  font-weight: 600;
+  color: var(--ink-1);
+  display: block;
+}
+.interest-card-name-ar {
+  font-size: var(--t5);
+  color: var(--ink-3);
+  display: block;
+  margin-top: 2px;
+}
+.interest-card-check {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  background: var(--bg-phone);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+[dir="rtl"] .interest-card-check { right: auto; left: 10px; }
+.interest-card.selected .interest-card-check {
+  background: var(--red);
+  border-color: var(--red);
+}
+.interest-card.selected .interest-card-check::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+}
 </style>
 </head>
 <body>
@@ -1326,14 +1487,14 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         <div class="filter-section">
           <div class="filter-section-label" data-i18n="filter_accords">Accords</div>
           <div class="filter-chips-wrap">
-            <span class="filter-chip" data-group="accord" data-val-en="Sweet"    onclick="toggleFilterChip(this)">Sweet</span>
-            <span class="filter-chip" data-group="accord" data-val-en="Gourmand" onclick="toggleFilterChip(this)">Gourmand</span>
-            <span class="filter-chip" data-group="accord" data-val-en="Fresh"    onclick="toggleFilterChip(this)">Fresh</span>
-            <span class="filter-chip" data-group="accord" data-val-en="Woody"    onclick="toggleFilterChip(this)">Woody</span>
-            <span class="filter-chip" data-group="accord" data-val-en="Musky"    onclick="toggleFilterChip(this)">Musky</span>
-            <span class="filter-chip" data-group="accord" data-val-en="Amber"    onclick="toggleFilterChip(this)">Amber</span>
-            <span class="filter-chip" data-group="accord" data-val-en="Spicy"    onclick="toggleFilterChip(this)">Spicy</span>
-            <span class="filter-chip" data-group="accord" data-val-en="Citrus"   onclick="toggleFilterChip(this)">Citrus</span>
+            <span class="filter-chip" data-group="accord" data-val-en="Sweet"    data-val-ar="حلو"     onclick="toggleFilterChip(this)">Sweet</span>
+            <span class="filter-chip" data-group="accord" data-val-en="Gourmand" data-val-ar="جورماند" onclick="toggleFilterChip(this)">Gourmand</span>
+            <span class="filter-chip" data-group="accord" data-val-en="Fresh"    data-val-ar="منعش"    onclick="toggleFilterChip(this)">Fresh</span>
+            <span class="filter-chip" data-group="accord" data-val-en="Woody"    data-val-ar="خشبي"    onclick="toggleFilterChip(this)">Woody</span>
+            <span class="filter-chip" data-group="accord" data-val-en="Musky"    data-val-ar="مسكي"    onclick="toggleFilterChip(this)">Musky</span>
+            <span class="filter-chip" data-group="accord" data-val-en="Amber"    data-val-ar="عنبري"   onclick="toggleFilterChip(this)">Amber</span>
+            <span class="filter-chip" data-group="accord" data-val-en="Spicy"    data-val-ar="حار"     onclick="toggleFilterChip(this)">Spicy</span>
+            <span class="filter-chip" data-group="accord" data-val-en="Citrus"   data-val-ar="حمضي"    onclick="toggleFilterChip(this)">Citrus</span>
           </div>
         </div>
         <!-- Brand — from PRODUCTS data -->
@@ -1382,7 +1543,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <!-- My Interests -->
     <div class="sec-head" style="margin-bottom:4px;">
       <span class="sec-label" data-i18n="activity_interests">My Interests</span>
-      <span class="sec-link" data-i18n="activity_edit">Edit</span>
+      <span class="sec-link" data-i18n="activity_edit" onclick="switchScreen('sub-interests')" style="cursor:pointer;">Edit</span>
     </div>
     <div style="font-size:var(--t5);color:var(--ink-3);padding:0 20px;margin-bottom:14px;" data-i18n="activity_interests_sub">We've selected default interests for you. Tap Edit to customize them.</div>
     <div class="pref-chips" style="margin-bottom:20px;">
@@ -1417,24 +1578,24 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="act-settings-group">
       <div class="act-settings-label" data-i18n="set_account">Account</div>
       <div class="act-settings-card">
-        <div class="act-settings-row">
+        <div class="act-settings-row" onclick="switchScreen('sub-profile')">
           <div class="act-settings-row-l">
             <div class="act-sicon sri-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
             <div class="act-sinfo"><span class="act-sname" data-i18n="set_profile">Profile</span><span class="act-ssub">Abdullah Hassan</span></div>
           </div>
           <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </div>
-        <div class="act-settings-row">
+        <div class="act-settings-row" onclick="switchScreen('sub-email')">
           <div class="act-settings-row-l">
             <div class="act-sicon sri-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-            <div class="act-sinfo"><span class="act-sname">Email</span><span class="act-ssub">you@gmail.com</span></div>
+            <div class="act-sinfo"><span class="act-sname" data-i18n="set_email">Email</span><span class="act-ssub">you@gmail.com</span></div>
           </div>
           <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </div>
-        <div class="act-settings-row act-settings-row-last">
+        <div class="act-settings-row act-settings-row-last" onclick="switchScreen('sub-phone')">
           <div class="act-settings-row-l">
             <div class="act-sicon sri-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
-            <div class="act-sinfo"><span class="act-sname">Phone</span><span class="act-ssub">Not added yet</span></div>
+            <div class="act-sinfo"><span class="act-sname" data-i18n="set_phone">Phone</span><span class="act-ssub" data-i18n="set_phone_empty">Not added yet</span></div>
           </div>
           <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </div>
@@ -1445,14 +1606,14 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="act-settings-group">
       <div class="act-settings-label" data-i18n="set_preferences">Preferences</div>
       <div class="act-settings-card">
-        <div class="act-settings-row">
+        <div class="act-settings-row" onclick="switchScreen('sub-currency')">
           <div class="act-settings-row-l">
             <div class="act-sicon sri-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
-            <div class="act-sinfo"><span class="act-sname" data-i18n="set_currency">Currency</span><span class="act-ssub">Saudi Riyal (SAR)</span></div>
+            <div class="act-sinfo"><span class="act-sname" data-i18n="set_currency">Currency</span><span class="act-ssub" id="settings-currency-sub">Saudi Riyal (SAR)</span></div>
           </div>
           <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </div>
-        <div class="act-settings-row act-settings-row-last">
+        <div class="act-settings-row act-settings-row-last" onclick="switchScreen('sub-language')">
           <div class="act-settings-row-l">
             <div class="act-sicon sri-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
             <div class="act-sinfo"><span class="act-sname" data-i18n="set_language">Language</span><span class="act-ssub" id="settings-lang-sub">English</span></div>
@@ -1466,17 +1627,24 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="act-settings-group">
       <div class="act-settings-label" data-i18n="set_support">Support</div>
       <div class="act-settings-card">
-        <div class="act-settings-row">
+        <div class="act-settings-row" onclick="switchScreen('sub-support')">
           <div class="act-settings-row-l">
-            <div class="act-sicon sri-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-            <div class="act-sinfo"><span class="act-sname" data-i18n="set_help">Help &amp; FAQ</span><span class="act-ssub">Get answers to common questions</span></div>
+            <div class="act-sicon" style="background:var(--b-blue);color:#0E7490;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+            <div class="act-sinfo"><span class="act-sname" data-i18n="set_support_row">Contact Support</span><span class="act-ssub" data-i18n="set_support_sub">Send us a message</span></div>
           </div>
           <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </div>
-        <div class="act-settings-row act-settings-row-last">
+        <div class="act-settings-row" onclick="switchScreen('sub-help')">
+          <div class="act-settings-row-l">
+            <div class="act-sicon sri-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+            <div class="act-sinfo"><span class="act-sname" data-i18n="set_help">Help &amp; FAQ</span><span class="act-ssub" data-i18n="set_help_sub">Get answers to common questions</span></div>
+          </div>
+          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <div class="act-settings-row act-settings-row-last" onclick="switchScreen('sub-privacy')">
           <div class="act-settings-row-l">
             <div class="act-sicon" style="background:var(--bg-input);color:var(--ink-3);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-            <div class="act-sinfo"><span class="act-sname" data-i18n="set_privacy">Privacy Policy</span><span class="act-ssub">Version 2.1</span></div>
+            <div class="act-sinfo"><span class="act-sname" data-i18n="set_privacy">Privacy Policy</span><span class="act-ssub" data-i18n="set_privacy_sub">Version 2.1</span></div>
           </div>
           <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </div>
@@ -2162,6 +2330,19 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
     </div><!-- /padding -->
   </div><!-- /scroll-area -->
+  <!-- Toast notification -->
+  <div id="pdp-toast" style="
+    position:absolute; bottom:28px; left:16px; right:16px;
+    background:var(--ink-1); color:#fff;
+    border-radius:var(--radius-md); padding:13px 16px;
+    font-size:var(--t5); line-height:1.55; font-weight:400;
+    box-shadow:0 6px 24px rgba(0,0,0,0.22);
+    opacity:0; pointer-events:none;
+    transform:translateY(10px);
+    transition:opacity 0.22s ease, transform 0.22s ease;
+    z-index:50;
+  "></div>
+
 </div><!-- /screen-product-detail -->
 
 
@@ -2243,6 +2424,244 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     </button>
     <!-- Maybe later -->
     <button onclick="closeGuestModal()" style="background:none;border:none;font-size:var(--t5);color:var(--ink-3);cursor:pointer;padding:4px 0;" data-i18n="guest_modal_later">Maybe later</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SUB-PAGE: PROFILE
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-sub-profile">
+  <div class="sub-header">
+    <button class="dip-back-btn" onclick="switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" data-i18n="set_profile">Profile</span>
+  </div>
+  <div class="sub-body">
+    <div class="sub-label" data-i18n="sub_profile_name_label">Display Name</div>
+    <input id="sub-profile-input" class="sub-input" type="text" value="Abdullah Hassan" data-i18n="sub_profile_name_ph"/>
+    <button class="sub-btn" onclick="subProfileSave()" data-i18n="sub_save">Save Changes</button>
+    <div class="sub-success" id="sub-profile-success" data-i18n="sub_saved_ok">✓ Saved successfully</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SUB-PAGE: EMAIL
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-sub-email">
+  <div class="sub-header">
+    <button class="dip-back-btn" onclick="switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" data-i18n="set_email">Email</span>
+  </div>
+  <div class="sub-body">
+    <!-- Step 1: enter new email + send OTP -->
+    <div id="sub-email-step1">
+      <div class="sub-label" data-i18n="sub_email_new_label">New Email Address</div>
+      <input id="sub-email-input" class="sub-input" type="email" placeholder="you@example.com" data-i18n="sub_email_ph"/>
+      <div class="sub-notice" data-i18n="sub_email_notice">We will send a 4-digit verification code to this address.</div>
+      <button class="sub-btn" onclick="subEmailSendOtp()" data-i18n="sub_email_send_otp">Send OTP</button>
+      <div class="sub-success" id="sub-email-send-err" style="display:none;color:var(--red);" data-i18n="sub_email_enter_valid">Please enter a valid email address.</div>
+    </div>
+    <!-- Step 2: enter OTP -->
+    <div id="sub-email-step2" style="display:none;">
+      <div class="sub-label" data-i18n="sub_email_otp_label">Verification Code</div>
+      <div class="sub-notice" id="sub-email-otp-notice"></div>
+      <div class="sub-otp-row">
+        <input class="sub-otp-box" id="sub-otp-0" type="text" maxlength="1" inputmode="numeric" oninput="subOtpMove(this,0)" onkeydown="subOtpBack(event,0)"/>
+        <input class="sub-otp-box" id="sub-otp-1" type="text" maxlength="1" inputmode="numeric" oninput="subOtpMove(this,1)" onkeydown="subOtpBack(event,1)"/>
+        <input class="sub-otp-box" id="sub-otp-2" type="text" maxlength="1" inputmode="numeric" oninput="subOtpMove(this,2)" onkeydown="subOtpBack(event,2)"/>
+        <input class="sub-otp-box" id="sub-otp-3" type="text" maxlength="1" inputmode="numeric" oninput="subOtpMove(this,3)" onkeydown="subOtpBack(event,3)"/>
+      </div>
+      <div class="sub-success" id="sub-email-otp-err" style="display:none;color:var(--red);" data-i18n="sub_email_otp_wrong">Incorrect code. Please try again (hint: 0000).</div>
+      <button class="sub-btn" onclick="subEmailConfirmOtp()" data-i18n="sub_email_confirm">Verify &amp; Save</button>
+      <button class="sub-btn-outline" onclick="subEmailBackToStep1()" data-i18n="sub_email_change">Change Email</button>
+      <div class="sub-success" id="sub-email-success" data-i18n="sub_email_saved">✓ Email updated successfully</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SUB-PAGE: PHONE
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-sub-phone">
+  <div class="sub-header">
+    <button class="dip-back-btn" onclick="switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" data-i18n="set_phone">Phone</span>
+  </div>
+  <div class="sub-body">
+    <div class="sub-label" data-i18n="sub_phone_label">Phone Number</div>
+    <input id="sub-phone-input" class="sub-input" type="tel" data-i18n="sub_phone_ph" placeholder="+966 5X XXX XXXX"/>
+    <div class="sub-notice" data-i18n="sub_phone_notice">Used for account security and order updates.</div>
+    <button class="sub-btn" onclick="subPhoneSave()" data-i18n="sub_save">Save Changes</button>
+    <div class="sub-success" id="sub-phone-success" data-i18n="sub_saved_ok">✓ Saved successfully</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SUB-PAGE: CURRENCY
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-sub-currency">
+  <div class="sub-header">
+    <button class="dip-back-btn" onclick="switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" data-i18n="set_currency">Currency</span>
+  </div>
+  <div class="sub-body">
+    <div class="sub-label" data-i18n="sub_currency_label">Select Currency</div>
+    <div class="sub-option-row selected" id="sub-cur-sar" onclick="subCurrencySelect('SAR')">
+      <span class="sub-option-label" data-i18n="sub_currency_sar">Saudi Riyal (SAR)</span>
+      <span class="sub-option-check"></span>
+    </div>
+    <div class="sub-option-row" id="sub-cur-usd" onclick="subCurrencySelect('USD')">
+      <span class="sub-option-label" data-i18n="sub_currency_usd">US Dollar (USD)</span>
+      <span class="sub-option-check"></span>
+    </div>
+    <button class="sub-btn" onclick="subCurrencySave()" data-i18n="sub_save">Save Changes</button>
+    <div class="sub-success" id="sub-currency-success" data-i18n="sub_saved_ok">✓ Saved successfully</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SUB-PAGE: LANGUAGE
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-sub-language">
+  <div class="sub-header">
+    <button class="dip-back-btn" onclick="switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" data-i18n="set_language">Language</span>
+  </div>
+  <div class="sub-body">
+    <div class="sub-label" data-i18n="sub_lang_label">Select Language</div>
+    <div class="sub-option-row selected" id="sub-lang-en" onclick="subLangSelect('en')">
+      <span class="sub-option-label" data-i18n="sub_lang_en">English</span>
+      <span class="sub-option-check"></span>
+    </div>
+    <div class="sub-option-row" id="sub-lang-ar" onclick="subLangSelect('ar')">
+      <span class="sub-option-label" data-i18n="sub_lang_ar">العربية</span>
+      <span class="sub-option-check"></span>
+    </div>
+    <button class="sub-btn" onclick="subLangSave()" data-i18n="sub_save">Save Changes</button>
+    <div class="sub-success" id="sub-lang-success" data-i18n="sub_saved_ok">✓ Saved successfully</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SUB-PAGE: SUPPORT
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-sub-support">
+  <div class="sub-header">
+    <button class="dip-back-btn" onclick="switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" data-i18n="set_support_row">Contact Support</span>
+  </div>
+  <div class="sub-body">
+    <div class="sub-label" data-i18n="sub_support_email_label">Your Email</div>
+    <input id="sub-support-email" class="sub-input" type="email" value="you@gmail.com" data-i18n="sub_support_email_ph"/>
+    <div class="sub-label" data-i18n="sub_support_msg_label">Message</div>
+    <textarea id="sub-support-msg" class="sub-textarea" data-i18n="sub_support_msg_ph" placeholder="Describe your issue or question…"></textarea>
+    <button class="sub-btn" onclick="subSupportSend()" data-i18n="sub_support_send">Send Message</button>
+    <div class="sub-success" id="sub-support-success" data-i18n="sub_support_sent">✓ Message sent. We'll get back to you within 24 hours.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SUB-PAGE: HELP & FAQ
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-sub-help">
+  <div class="sub-header">
+    <button class="dip-back-btn" onclick="switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" data-i18n="set_help">Help &amp; FAQ</span>
+  </div>
+  <div class="sub-body">
+    <div class="faq-block" style="background:var(--b-purple);">
+      <div class="faq-q" data-i18n="faq_q1">How does Yourdis compare prices?</div>
+      <div class="faq-a" data-i18n="faq_a1">Yourdis tracks prices across all verified stores in real time and shows you the lowest price available for each fragrance.</div>
+    </div>
+    <div class="faq-block" style="background:var(--b-teal);">
+      <div class="faq-q" data-i18n="faq_q2">How do price alerts work?</div>
+      <div class="faq-a" data-i18n="faq_a2">Open any product page, set your target price, and we'll notify you the moment it drops to or below that price at any store.</div>
+    </div>
+    <div class="faq-block" style="background:var(--b-amber);">
+      <div class="faq-q" data-i18n="faq_q3">Is Yourdis free to use?</div>
+      <div class="faq-a" data-i18n="faq_a3">Yes, Yourdis is completely free. We earn a small commission from stores when you purchase through our links, at no extra cost to you.</div>
+    </div>
+    <div class="faq-block" style="background:var(--b-blue);">
+      <div class="faq-q" data-i18n="faq_q4">How does cashback work?</div>
+      <div class="faq-a" data-i18n="faq_a4">When you shop through Yourdis, you earn 2% cashback on every purchase. It's credited directly to your wallet and can be withdrawn anytime.</div>
+    </div>
+    <div class="faq-block" style="background:var(--b-pink);">
+      <div class="faq-q" data-i18n="faq_q5">How do I add or remove a store from tracking?</div>
+      <div class="faq-a" data-i18n="faq_a5">Go to the Stores tab and tap Follow on any store you'd like to track. To unfollow, tap the button again on the store's page.</div>
+    </div>
+    <div class="faq-block" style="background:var(--b-sage);">
+      <div class="faq-q" data-i18n="faq_q6">Can I change my language or currency?</div>
+      <div class="faq-a" data-i18n="faq_a6">Yes. Go to My Profile → Language to switch between Arabic and English, or My Profile → Currency to switch between SAR and USD.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SUB-PAGE: PRIVACY POLICY
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-sub-privacy">
+  <div class="sub-header">
+    <button class="dip-back-btn" onclick="switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" data-i18n="set_privacy">Privacy Policy</span>
+  </div>
+  <div class="sub-body">
+    <div class="privacy-block">
+      <div class="privacy-block-title" data-i18n="privacy_t1">Data We Collect</div>
+      <div class="privacy-block-body" data-i18n="privacy_b1">We collect your name, email, phone number, and browsing activity within the app to personalize your experience and send relevant alerts.</div>
+    </div>
+    <div class="privacy-block">
+      <div class="privacy-block-title" data-i18n="privacy_t2">How We Use Your Data</div>
+      <div class="privacy-block-body" data-i18n="privacy_b2">Your data is used solely to provide price alerts, cashback tracking, and personalized recommendations. We never sell your personal data to third parties.</div>
+    </div>
+    <div class="privacy-block">
+      <div class="privacy-block-title" data-i18n="privacy_t3">Cookies & Tracking</div>
+      <div class="privacy-block-body" data-i18n="privacy_b3">We use minimal cookies to keep you signed in and to understand how the app is used. No third-party advertising trackers are used.</div>
+    </div>
+    <div class="privacy-block">
+      <div class="privacy-block-title" data-i18n="privacy_t4">Your Rights</div>
+      <div class="privacy-block-body" data-i18n="privacy_b4">You can request a copy of your data, ask us to delete your account, or opt out of marketing emails at any time by contacting us.</div>
+    </div>
+    <div class="privacy-block">
+      <div class="privacy-block-title" data-i18n="privacy_t5">Contact</div>
+      <div class="privacy-block-body" data-i18n="privacy_b5">For privacy questions, email us at privacy@yourdis.com. We respond within 3 business days.</div>
+    </div>
+    <div class="sub-divider"></div>
+    <div style="font-size:var(--t5);color:var(--ink-3);text-align:center;margin-bottom:14px;" data-i18n="privacy_full_note">For the full policy, visit our website.</div>
+    <button class="sub-btn" onclick="window.open('https://yourdis.com','_blank')" data-i18n="privacy_visit_btn">Visit yourdis.com</button>
+    <div style="height:8px;"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SUB-PAGE: MY INTERESTS
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-sub-interests">
+  <div class="sub-header">
+    <button class="dip-back-btn" onclick="switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" data-i18n="interests_title">My Interests</span>
+  </div>
+  <div class="sub-body">
+    <div class="sub-notice" style="margin-top:0;margin-bottom:20px;" data-i18n="interests_sub">Select the accords you enjoy most. We'll use these to personalise your recommendations.</div>
+    <div class="interests-grid" id="interests-grid"></div>
+    <button class="sub-btn" style="margin-top:20px;" onclick="interestsSave()" data-i18n="sub_save">Save Changes</button>
+    <div class="sub-success" id="interests-success" data-i18n="sub_saved_ok">✓ Saved successfully</div>
   </div>
 </div>
 
@@ -3093,6 +3512,7 @@ function toggleBookmark() {
   var icon = document.getElementById('bookmarkIcon');
   icon.setAttribute('fill',   _bookmarkSaved ? 'var(--gold)' : 'none');
   icon.setAttribute('stroke', _bookmarkSaved ? 'var(--gold)' : 'currentColor');
+  if (_bookmarkSaved) showPdpToast(T('toast_bookmark'));
 }
 
 function toggleAlert() {
@@ -3104,7 +3524,22 @@ function toggleAlert() {
   } else {
     icon.setAttribute('fill', 'var(--gold)');
     icon.setAttribute('stroke', 'var(--gold)');
+    showPdpToast(T('toast_alert'));
   }
+}
+
+function showPdpToast(msg) {
+  var el = document.getElementById('pdp-toast');
+  if (!el) return;
+  if (el._hideTimer) clearTimeout(el._hideTimer);
+  el.textContent = msg;
+  el.style.opacity = '1';
+  el.style.transform = 'translateY(0)';
+  el.style.pointerEvents = 'none';
+  el._hideTimer = setTimeout(function() {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(10px)';
+  }, 3500);
 }
 
 function toggleReaction(btn) {
@@ -4054,8 +4489,289 @@ function guestGuard() {
 }
 
 
+/* ══════════════════════════════════════════════════════════
+   SUB-PAGE FUNCTIONS
+══════════════════════════════════════════════════════════ */
+
+/* ── Helpers ── */
+function subShowSuccess(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.style.display = 'block';
+  setTimeout(function() { el.style.display = 'none'; }, 3000);
+}
+
+/* ── Profile ── */
+function subProfileSave() {
+  var val = (document.getElementById('sub-profile-input').value || '').trim();
+  if (!val) return;
+  document.querySelectorAll('.user-name').forEach(function(el) { el.textContent = val; });
+  document.querySelectorAll('.act-ssub').forEach(function(el) {
+    if (el.closest('.act-settings-row') && el.closest('.act-settings-row').querySelector('[data-i18n="set_profile"]')) {
+      el.textContent = val;
+    }
+  });
+  subShowSuccess('sub-profile-success');
+}
+
+/* ── Email OTP flow ── */
+var _subEmailOtpSent = false;
+
+function subEmailSendOtp() {
+  var email = (document.getElementById('sub-email-input').value || '').trim();
+  var errEl = document.getElementById('sub-email-send-err');
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errEl.style.display = 'block';
+    setTimeout(function() { errEl.style.display = 'none'; }, 3000);
+    return;
+  }
+  errEl.style.display = 'none';
+  _subEmailOtpSent = true;
+  /* Show step 2 */
+  document.getElementById('sub-email-step1').style.display = 'none';
+  var step2 = document.getElementById('sub-email-step2');
+  step2.style.display = 'block';
+  var noticeEl = document.getElementById('sub-email-otp-notice');
+  noticeEl.textContent = T('sub_email_otp_sent_to') + ' ' + email + '. ' + T('sub_email_default_code');
+  /* Clear boxes */
+  for (var i = 0; i < 4; i++) { document.getElementById('sub-otp-' + i).value = ''; }
+  setTimeout(function() { document.getElementById('sub-otp-0').focus(); }, 80);
+}
+
+function subOtpMove(el, idx) {
+  var v = el.value.replace(/\D/g, '');
+  el.value = v ? v[0] : '';
+  if (v && idx < 3) { document.getElementById('sub-otp-' + (idx + 1)).focus(); }
+}
+
+function subOtpBack(e, idx) {
+  if (e.key === 'Backspace' && !e.target.value && idx > 0) {
+    document.getElementById('sub-otp-' + (idx - 1)).focus();
+  }
+}
+
+function subEmailConfirmOtp() {
+  var code = '';
+  for (var i = 0; i < 4; i++) { code += (document.getElementById('sub-otp-' + i).value || ''); }
+  var errEl = document.getElementById('sub-email-otp-err');
+  var sucEl = document.getElementById('sub-email-success');
+  if (code !== '0000') {
+    errEl.style.display = 'block';
+    setTimeout(function() { errEl.style.display = 'none'; }, 3000);
+    return;
+  }
+  errEl.style.display = 'none';
+  /* Update email display in activity screen */
+  var newEmail = document.getElementById('sub-email-input').value.trim();
+  document.querySelectorAll('.act-settings-row').forEach(function(row) {
+    var nameEl = row.querySelector('[data-i18n="set_email"]');
+    if (nameEl) {
+      var sub = row.querySelector('.act-ssub');
+      if (sub) sub.textContent = newEmail;
+    }
+  });
+  sucEl.style.display = 'block';
+  setTimeout(function() {
+    sucEl.style.display = 'none';
+    subEmailReset();
+    switchScreen('activity');
+  }, 2000);
+}
+
+function subEmailBackToStep1() {
+  document.getElementById('sub-email-step2').style.display = 'none';
+  document.getElementById('sub-email-step1').style.display = 'block';
+}
+
+function subEmailReset() {
+  document.getElementById('sub-email-step1').style.display = 'block';
+  document.getElementById('sub-email-step2').style.display = 'none';
+  document.getElementById('sub-email-input').value = '';
+  for (var i = 0; i < 4; i++) { document.getElementById('sub-otp-' + i).value = ''; }
+}
+
+/* ── Phone ── */
+function subPhoneSave() {
+  var val = (document.getElementById('sub-phone-input').value || '').trim();
+  if (!val) return;
+  document.querySelectorAll('.act-settings-row').forEach(function(row) {
+    var nameEl = row.querySelector('[data-i18n="set_phone"]');
+    if (nameEl) {
+      var sub = row.querySelector('.act-ssub');
+      if (sub) sub.textContent = val;
+    }
+  });
+  subShowSuccess('sub-phone-success');
+}
+
+/* ── Currency ── */
+var _subSelectedCurrency = 'SAR';
+
+function subCurrencySelect(code) {
+  _subSelectedCurrency = code;
+  document.getElementById('sub-cur-sar').classList.toggle('selected', code === 'SAR');
+  document.getElementById('sub-cur-usd').classList.toggle('selected', code === 'USD');
+}
+
+function subCurrencySave() {
+  var label = _subSelectedCurrency === 'SAR' ? T('sub_currency_sar') : T('sub_currency_usd');
+  var sub = document.getElementById('settings-currency-sub');
+  if (sub) sub.textContent = label;
+  subShowSuccess('sub-currency-success');
+}
+
+/* ── Language ── */
+var _subSelectedLang = 'en';
+
+function subLangSelect(code) {
+  _subSelectedLang = code;
+  document.getElementById('sub-lang-en').classList.toggle('selected', code === 'en');
+  document.getElementById('sub-lang-ar').classList.toggle('selected', code === 'ar');
+}
+
+function subLangSave() {
+  setLang(_subSelectedLang);
+  /* Update the selected state to match current LANG after setLang */
+  _subSelectedLang = LANG;
+  document.getElementById('sub-lang-en').classList.toggle('selected', LANG === 'en');
+  document.getElementById('sub-lang-ar').classList.toggle('selected', LANG === 'ar');
+  subShowSuccess('sub-lang-success');
+}
+
+/* Keep language sub-page selection in sync when screen opens */
+var _origSwitchScreen = switchScreen;
+switchScreen = function(id) {
+  _origSwitchScreen(id);
+  if (id === 'sub-interests') {
+    renderInterestsGrid();
+  }
+  if (id === 'sub-language') {
+    _subSelectedLang = LANG;
+    document.getElementById('sub-lang-en').classList.toggle('selected', LANG === 'en');
+    document.getElementById('sub-lang-ar').classList.toggle('selected', LANG === 'ar');
+  }
+  if (id === 'sub-currency') {
+    document.getElementById('sub-cur-sar').classList.toggle('selected', _subSelectedCurrency === 'SAR');
+    document.getElementById('sub-cur-usd').classList.toggle('selected', _subSelectedCurrency === 'USD');
+  }
+  if (id === 'sub-email') {
+    subEmailReset();
+  }
+};
+
+/* ── Support ── */
+function subSupportSend() {
+  var msg = (document.getElementById('sub-support-msg').value || '').trim();
+  if (!msg) return;
+  document.getElementById('sub-support-msg').value = '';
+  subShowSuccess('sub-support-success');
+}
+
+/* ══════════════════════════════════════════════════════════
+   MY INTERESTS
+══════════════════════════════════════════════════════════ */
+var INTERESTS = [
+  { id: 'sweet',    emoji: '🍬', en: 'Sweet',    ar: 'حلو'     },
+  { id: 'gourmand', emoji: '🍰', en: 'Gourmand', ar: 'جورماند' },
+  { id: 'fresh',    emoji: '🌿', en: 'Fresh',    ar: 'منعش'    },
+  { id: 'woody',    emoji: '🌲', en: 'Woody',    ar: 'خشبي'    },
+  { id: 'musky',    emoji: '🌫️', en: 'Musky',    ar: 'مسكي'    },
+  { id: 'amber',    emoji: '🟠', en: 'Amber',    ar: 'عنبري'   },
+  { id: 'spicy',    emoji: '🌶️', en: 'Spicy',    ar: 'حار'     },
+  { id: 'powdery',  emoji: '🌸', en: 'Powdery',  ar: 'بودري'   },
+  { id: 'aquatic',  emoji: '💧', en: 'Aquatic',  ar: 'مائي'    },
+  { id: 'citrus',   emoji: '🍋', en: 'Citrus',   ar: 'حمضي'    }
+];
+
+/* Background colours paired to each accord — reuse existing tokens */
+var INTEREST_COLORS = {
+  sweet:    'var(--b-pink)',
+  gourmand: 'var(--b-amber)',
+  fresh:    'var(--b-teal)',
+  woody:    'var(--b-sage)',
+  musky:    'var(--b-purple)',
+  amber:    'var(--b-amber)',
+  spicy:    'var(--b-pink)',
+  powdery:  'var(--b-purple)',
+  aquatic:  'var(--b-blue)',
+  citrus:   'var(--b-teal)'
+};
+
+/* Selected state — default: woody, fresh selected */
+var _selectedInterests = { woody: true, fresh: true };
+
+function renderInterestsGrid() {
+  var grid = document.getElementById('interests-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  INTERESTS.forEach(function(acc) {
+    var card = document.createElement('div');
+    card.className = 'interest-card' + (_selectedInterests[acc.id] ? ' selected' : '');
+    card.style.background = INTEREST_COLORS[acc.id];
+    card.setAttribute('data-id', acc.id);
+    card.innerHTML =
+      '<span class="interest-card-emoji">' + acc.emoji + '</span>' +
+      '<span class="interest-card-name">'  + (LANG === 'ar' ? acc.ar : acc.en) + '</span>' +
+      '<div class="interest-card-check"></div>';
+    card.addEventListener('click', function() { interestsToggle(acc.id); });
+    grid.appendChild(card);
+  });
+}
+
+function interestsToggle(id) {
+  _selectedInterests[id] = !_selectedInterests[id];
+  var card = document.querySelector('#interests-grid [data-id="' + id + '"]');
+  if (card) card.classList.toggle('selected', !!_selectedInterests[id]);
+}
+
+function interestsSave() {
+  /* Rebuild the pref-chips strip in the activity screen */
+  var container = document.querySelector('.pref-chips');
+  if (container) {
+    container.innerHTML = '';
+    INTERESTS.forEach(function(acc) {
+      var chip = document.createElement('span');
+      chip.className = 'pref-chip' + (_selectedInterests[acc.id] ? ' on' : '');
+      chip.textContent = LANG === 'ar' ? acc.ar : acc.en;
+      container.appendChild(chip);
+    });
+  }
+  var sucEl = document.getElementById('interests-success');
+  if (sucEl) {
+    sucEl.style.display = 'block';
+    setTimeout(function() { sucEl.style.display = 'none'; }, 3000);
+  }
+}
+
+/* Re-render grid labels and activity chips on language change */
+(function() {
+  var _prevOnLangChange = typeof onLangChange === 'function' ? onLangChange : null;
+  onLangChange = function(lang) {
+    if (_prevOnLangChange) _prevOnLangChange(lang);
+    renderInterestsGrid();
+    /* Re-render pref-chips strip on the activity screen */
+    var container = document.querySelector('.pref-chips');
+    if (container) {
+      container.innerHTML = '';
+      INTERESTS.forEach(function(acc) {
+        var chip = document.createElement('span');
+        chip.className = 'pref-chip' + (_selectedInterests[acc.id] ? ' on' : '');
+        chip.textContent = lang === 'ar' ? acc.ar : acc.en;
+        container.appendChild(chip);
+      });
+    }
+    /* Re-render accord filter chips in the search filter sheet */
+    document.querySelectorAll('.filter-chip[data-group="accord"]').forEach(function(chip) {
+      chip.textContent = lang === 'ar'
+        ? (chip.getAttribute('data-val-ar') || chip.getAttribute('data-val-en'))
+        : chip.getAttribute('data-val-en');
+    });
+  };
+})();
+
 document.addEventListener('DOMContentLoaded', function() {
   setLang('en'); /* triggers renderProductCards + onLangChange → renderStores + renderAlerts */
+  renderInterestsGrid();
 });
 </script>
 
