@@ -2121,17 +2121,8 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="dip-header-spacer"></div>
   </div>
 
-  <!-- Size filter chips -->
-  <div class="dip-filters-bar" id="compare-filters">
-    <button class="dip-chip dip-active" onclick="compareResetFilter(this)" data-i18n="filter_all">All</button>
-    <button class="dip-chip" onclick="compareFilterSize(this,'50ml')">50ml</button>
-    <button class="dip-chip" onclick="compareFilterSize(this,'60ml')">60ml</button>
-    <button class="dip-chip" onclick="compareFilterSize(this,'70ml')">70ml</button>
-    <button class="dip-chip" onclick="compareFilterSize(this,'90ml')">90ml</button>
-    <button class="dip-chip" onclick="compareFilterSize(this,'100ml')">100ml</button>
-    <button class="dip-chip" onclick="compareFilterSize(this,'150ml')">150ml</button>
-    <button class="dip-chip" onclick="compareFilterSize(this,'200ml')">200ml</button>
-  </div>
+  <!-- Size filter chips — populated dynamically by openComparePage -->
+  <div class="dip-filters-bar" id="compare-filters"></div>
 
   <div class="dip-scroll">
 
@@ -2198,7 +2189,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <div id="product-store-section" onclick="if(window._pdpStoreKey)openStorePage(window._pdpStoreKey)" style="display:flex;align-items:center;gap:8px;margin-top:10px;padding:0 2px;cursor:pointer;">
         <div id="product-store-icon" style="width:22px;height:22px;border-radius:50%;background:var(--b-blue);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--ink-2);flex-shrink:0;">GS</div>
         <span style="font-size:var(--t5);color:var(--ink-3);" data-i18n="pdp_best_price_at">Best price at</span>
-        <span id="product-store-name-link" style="font-size:var(--t5);font-weight:500;color:#2563EB;">—</span>
+        <span id="product-store-name-link" style="font-size:var(--t5);font-weight:600;color:#2563EB;">—</span>
         <div id="product-store-pill" style="display:none;"></div><!-- kept for JS compat -->
       </div>
     </div>
@@ -3010,39 +3001,47 @@ var STORES = [
 (function() {
   var cmp = {
     'chanel-bleu-edp': [
-      { storeId:'golden-scent',    price:485,  shipping:'Free · 1–2 days' },
-      { storeId:'namshi',          price:510,  shipping:'Free · 2–3 days' },
-      { storeId:'asheq-al-otor',   price:545,  shipping:'3–5 days' },
-      { storeId:'noon',            price:555,  shipping:'Free · 2–4 days' },
-      { storeId:'najd-al-otheyah', price:570,  shipping:'4–6 days' }
+      { storeId:'golden-scent',    price:485,  size:'100ml', shipping:'Free · 1–2 days' },
+      { storeId:'namshi',          price:510,  size:'100ml', shipping:'Free · 2–3 days' },
+      { storeId:'asheq-al-otor',   price:545,  size:'100ml', shipping:'3–5 days' },
+      { storeId:'noon',            price:555,  size:'100ml', shipping:'Free · 2–4 days' },
+      { storeId:'najd-al-otheyah', price:570,  size:'100ml', shipping:'4–6 days' }
     ],
     'dior-sauvage-elixir': [
-      { storeId:'najd-al-otheyah', price:580,  shipping:'Free · 1–2 days' },
-      { storeId:'golden-scent',    price:620,  shipping:'Free · 2–3 days' },
-      { storeId:'namshi',          price:665,  shipping:'3–5 days' },
-      { storeId:'sephora',         price:690,  shipping:'Free · 2–4 days' },
-      { storeId:'asheq-al-otor',   price:720,  shipping:'4–6 days' }
+      { storeId:'najd-al-otheyah', price:415,  size:'60ml',  shipping:'Free · 1–2 days' },
+      { storeId:'golden-scent',    price:440,  size:'60ml',  shipping:'Free · 2–3 days' },
+      { storeId:'namshi',          price:465,  size:'60ml',  shipping:'3–5 days' },
+      { storeId:'sephora',         price:480,  size:'60ml',  shipping:'Free · 2–4 days' },
+      { storeId:'asheq-al-otor',   price:495,  size:'60ml',  shipping:'4–6 days' },
+      { storeId:'golden-scent',    price:580,  size:'100ml', shipping:'Free · 1–2 days' },
+      { storeId:'najd-al-otheyah', price:610,  size:'100ml', shipping:'Free · 2–3 days' },
+      { storeId:'namshi',          price:640,  size:'100ml', shipping:'3–5 days' },
+      { storeId:'noon',            price:660,  size:'100ml', shipping:'Free · 2–4 days' },
+      { storeId:'sephora',         price:690,  size:'100ml', shipping:'4–6 days' },
+      { storeId:'asheq-al-otor',   price:850,  size:'200ml', shipping:'Free · 1–2 days' },
+      { storeId:'golden-scent',    price:890,  size:'200ml', shipping:'Free · 2–3 days' },
+      { storeId:'noon',            price:920,  size:'200ml', shipping:'3–5 days' }
     ],
     'tomford-black-orchid': [
-      { storeId:'sephora',         price:420,  shipping:'Free · 2–3 days' },
-      { storeId:'golden-scent',    price:455,  shipping:'Free · 1–2 days' },
-      { storeId:'noon',            price:490,  shipping:'3–5 days' },
-      { storeId:'namshi',          price:520,  shipping:'Free · 2–4 days' },
-      { storeId:'asheq-al-otor',   price:550,  shipping:'4–6 days' }
+      { storeId:'sephora',         price:420,  size:'50ml',  shipping:'Free · 2–3 days' },
+      { storeId:'golden-scent',    price:455,  size:'50ml',  shipping:'Free · 1–2 days' },
+      { storeId:'noon',            price:490,  size:'50ml',  shipping:'3–5 days' },
+      { storeId:'namshi',          price:520,  size:'100ml', shipping:'Free · 2–4 days' },
+      { storeId:'asheq-al-otor',   price:550,  size:'100ml', shipping:'4–6 days' }
     ],
     'ysl-libre-intense': [
-      { storeId:'asheq-al-otor',   price:460,  shipping:'Free · 2–3 days' },
-      { storeId:'golden-scent',    price:490,  shipping:'Free · 1–2 days' },
-      { storeId:'sephora',         price:520,  shipping:'3–5 days' },
-      { storeId:'namshi',          price:545,  shipping:'Free · 2–4 days' },
-      { storeId:'noon',            price:580,  shipping:'4–6 days' }
+      { storeId:'asheq-al-otor',   price:460,  size:'50ml',  shipping:'Free · 2–3 days' },
+      { storeId:'golden-scent',    price:490,  size:'50ml',  shipping:'Free · 1–2 days' },
+      { storeId:'sephora',         price:520,  size:'90ml',  shipping:'3–5 days' },
+      { storeId:'namshi',          price:545,  size:'90ml',  shipping:'Free · 2–4 days' },
+      { storeId:'noon',            price:580,  size:'90ml',  shipping:'4–6 days' }
     ],
     'mfk-baccarat-rouge-540': [
-      { storeId:'asheq-al-otor',   price:1250, shipping:'Free · 2–3 days' },
-      { storeId:'golden-scent',    price:1320, shipping:'Free · 1–2 days' },
-      { storeId:'sephora',         price:1380, shipping:'3–5 days' },
-      { storeId:'noon',            price:1450, shipping:'Free · 2–4 days' },
-      { storeId:'najd-al-otheyah', price:1500, shipping:'4–6 days' }
+      { storeId:'asheq-al-otor',   price:1250, size:'70ml',  shipping:'Free · 2–3 days' },
+      { storeId:'golden-scent',    price:1320, size:'70ml',  shipping:'Free · 1–2 days' },
+      { storeId:'sephora',         price:1380, size:'70ml',  shipping:'3–5 days' },
+      { storeId:'noon',            price:1450, size:'200ml', shipping:'Free · 2–4 days' },
+      { storeId:'najd-al-otheyah', price:1500, size:'200ml', shipping:'4–6 days' }
     ]
   };
   PRODUCTS.forEach(function(p) { p.storeComparison = cmp[p.id] || []; });
@@ -3659,12 +3658,29 @@ function openComparePage(productId, origin) {
   _compareOrigin    = origin || 'home';
   _compareProductId = productId;
 
-  /* Reset filter chips */
-  document.querySelectorAll('#compare-filters .dip-chip').forEach(function(c) { c.classList.remove('dip-active'); });
-  document.querySelector('#compare-filters .dip-chip').classList.add('dip-active');
+  /* Derive distinct sizes from this product's storeComparison, preserving numeric order */
+  var comps = (p.storeComparison || []);
+  var sizes = comps.reduce(function(acc, e) {
+    if (e.size && acc.indexOf(e.size) === -1) acc.push(e.size);
+    return acc;
+  }, []).sort(function(a, b) {
+    return parseInt(a, 10) - parseInt(b, 10);
+  });
 
-  /* Store cards */
-  _compareRenderStores(p, null);
+  /* Build size chips dynamically */
+  var bar = document.getElementById('compare-filters');
+  bar.innerHTML = '';
+  sizes.forEach(function(sz, i) {
+    var btn = document.createElement('button');
+    btn.className = 'dip-chip' + (i === 0 ? ' dip-active' : '');
+    btn.textContent = sz;
+    btn.addEventListener('click', function() { compareFilterSize(btn, sz); });
+    bar.appendChild(btn);
+  });
+
+  /* Render stores for the first (smallest) size by default */
+  var defaultSize = sizes[0] || null;
+  _compareRenderStores(p, defaultSize);
 
   /* Similar products */
   var simList = document.getElementById('compare-similar-list');
@@ -3680,15 +3696,22 @@ function openComparePage(productId, origin) {
 
 function _compareRenderStores(p, sizeFilter) {
   var list  = document.getElementById('compare-stores-list');
-  var comps = (p.storeComparison || []).slice().sort(function(a,b) { return a.price - b.price; });
-  var filtered = sizeFilter ? comps.filter(function() { return p.size === sizeFilter; }) : comps;
+  var comps = (p.storeComparison || []).slice().sort(function(a, b) { return a.price - b.price; });
+  var filtered = sizeFilter
+    ? comps.filter(function(e) { return e.size === sizeFilter; })
+    : comps;
 
-  list.innerHTML = 
+  list.innerHTML =
     '<div class="dip-product-info" style="border-bottom:1px solid var(--border);">' +
-      '<div class="dip-product-name" id="compare-product-name">' + P(p, 'name') + ' (' + p.size + ')</div>' +
-      '<div class="dip-store-count" id="compare-store-count">' + T('compare_available_in') + ' ' + filtered.length + ' ' + T('compare_stores') + '</div>' +
+      '<div class="dip-product-name" id="compare-product-name">' +
+        P(p, 'name') + (sizeFilter ? ' (' + sizeFilter + ')' : '') +
+      '</div>' +
+      '<div class="dip-store-count" id="compare-store-count">' +
+        T('compare_available_in') + ' ' + filtered.length + ' ' + T('compare_stores') +
+      '</div>' +
     '</div>';
   list.className = 'dip-alt-list';
+
   filtered.forEach(function(entry, idx) {
     var store     = STORES.find(function(s) { return s.id === entry.storeId; }) || {};
     var storeName = S(store, 'name') || entry.storeId;
@@ -3713,7 +3736,7 @@ function _compareRenderStores(p, sizeFilter) {
           bestBadge +
         '</div>' +
         '<div class="dip-alt-sub" style="color:#000;display:flex;align-items:center;justify-content:space-between;gap:6px;">' +
-          '<span>' + P(p,'brand') + ' · ' + p.size + '</span>' +
+          '<span>' + P(p,'brand') + ' · ' + entry.size + '</span>' +
           '<span style="font-weight:700;font-size:var(--t4);white-space:nowrap;">' + entry.price + ' ' + cur + '</span>' +
         '</div>' +
       '</div>' +
@@ -3749,13 +3772,6 @@ function compareFilterSize(btn, size) {
   btn.classList.add('dip-active');
   var p = PRODUCTS.find(function(pr) { return pr.id === _compareProductId; });
   if (p) _compareRenderStores(p, size);
-}
-
-function compareResetFilter(btn) {
-  document.querySelectorAll('#compare-filters .dip-chip').forEach(function(c) { c.classList.remove('dip-active'); });
-  btn.classList.add('dip-active');
-  var p = PRODUCTS.find(function(pr) { return pr.id === _compareProductId; });
-  if (p) _compareRenderStores(p, null);
 }
 
 function closeComparePage() {
@@ -3944,8 +3960,9 @@ setLang = function(lang) {
   if (_compareProductId) {
     var cp = PRODUCTS.find(function(pr) { return pr.id === _compareProductId; });
     if (cp) {
-      document.getElementById('compare-product-name').textContent = P(cp, 'name') + ' (' + cp.size + ')';
-      _compareRenderStores(cp, null);
+      var activeChip = document.querySelector('#compare-filters .dip-chip.dip-active');
+      var activeSize = activeChip ? activeChip.textContent : null;
+      _compareRenderStores(cp, activeSize);
       /* Re-render similar list with new language */
       var simList = document.getElementById('compare-similar-list');
       if (simList) {
