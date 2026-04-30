@@ -38,9 +38,9 @@ input  { font-family: inherit; }
   --red:           #79002F;
   --red-light:     #F9E6EC;
 
-  --ink-1:         #0E0E0E;
-  --ink-2:         #4A4A4A;
-  --ink-3:         #8A8A8A;
+  --ink-1:         #000000;
+  --ink-2:         #1A1A1A;
+  --ink-3:         #555555;
   --bg-page:       #DDE1E7;
   --bg-phone:      #FFFFFF;
   --bg-surface:    #F7F7F5;
@@ -76,7 +76,7 @@ input  { font-family: inherit; }
 ══════════════════════════════════════════════════════════ */
 html, body { height: 100%; background: var(--bg-page); font-family: var(--font-body); color: var(--ink-1); -webkit-font-smoothing: antialiased; }
 
-/* ── Arabic typography: override EVERY element in RTL mode ── */
+/* ── Optimized Arabic Typography (RTL) ── */
 [dir="rtl"],
 [dir="rtl"] *,
 [dir="rtl"] input,
@@ -84,33 +84,42 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 [dir="rtl"] textarea,
 [dir="rtl"] select {
   font-family: var(--font-ar) !important;
+  /* Tighten characters slightly to reduce excessive spacing */
+  letter-spacing: -0.015em !important;
 }
-/* Preserve display font contexts in RTL — use Tajawal Bold instead */
+/* Titles and headings: Tajawal 700 for balanced display contexts */
 [dir="rtl"] .auth-wordmark,
 [dir="rtl"] .otp-title,
 [dir="rtl"] .ai-chat-title,
 [dir="rtl"] .store-page-name,
 [dir="rtl"] .stat-v,
-[dir="rtl"] .dip-card-price,
+[dir="rtl"] .dip-product-name,
+[dir="rtl"] .prod-name,
 [dir="rtl"] .avatar-fallback {
   font-family: var(--font-ar) !important;
-  font-weight: 800;
-  letter-spacing: 0;
+  font-weight: 700;
 }
-/* Arabic typography refinements — Tajawal reads better with slightly more line-height */
+/* Line Height: Reduced to tighten vertical spacing */
 [dir="rtl"] .ai-bubble,
 [dir="rtl"] .auth-tagline,
 [dir="rtl"] .otp-sub,
 [dir="rtl"] .notif-sub,
-[dir="rtl"] .search-empty-sub { line-height: 1.8; }
+[dir="rtl"] .search-empty-sub,
+[dir="rtl"] p,
+[dir="rtl"] .sub-notice { 
+  line-height: 1.5; 
+}
 [dir="rtl"] .notif-title-text,
 [dir="rtl"] .drop-name,
 [dir="rtl"] .result-name,
 [dir="rtl"] .pc-name,
 [dir="rtl"] .wl-card-h-name,
 [dir="rtl"] .rn,
-[dir="rtl"] .act-sname { line-height: 1.4; }
-/* Tajawal uppercase labels look better without letter-spacing */
+[dir="rtl"] .act-sname,
+[dir="rtl"] .screen-title { 
+  line-height: 1.3; 
+}
+/* Weight mapping: Balanced UI weights */
 [dir="rtl"] .sec-label,
 [dir="rtl"] .stores-section-label,
 [dir="rtl"] .dip-best-banner,
@@ -120,20 +129,25 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 [dir="rtl"] .store-deals-label,
 [dir="rtl"] .stat-l,
 [dir="rtl"] .notif-section-label,
-[dir="rtl"] .notif-tag { letter-spacing: 0; text-transform: none; font-weight: 700; }
-/* Weight mapping: Tajawal 500 feels lighter than DM Sans 500 — nudge up key UI weights */
-[dir="rtl"] .bn-item span { font-weight: 500; }
+[dir="rtl"] .notif-tag { letter-spacing: -0.01em; text-transform: none; font-weight: 600; }
+[dir="rtl"] .bn-item span,
 [dir="rtl"] .badge,
 [dir="rtl"] .dip-chip,
 [dir="rtl"] .filter-chip,
 [dir="rtl"] .notif-filter-chip,
 [dir="rtl"] .pref-chip,
 [dir="rtl"] .trend-chip .trend-name { font-weight: 500; }
-[dir="rtl"] .auth-btn,
+
+/* Login buttons: Reduce size and weight specifically for Arabic */
+[dir="rtl"] .auth-btn {
+  font-size: var(--t4) !important; /* Reduced from 17px to 15px */
+  font-weight: 500 !important;    /* Reduced from 700 to 500 */
+}
+
 [dir="rtl"] .otp-confirm,
 [dir="rtl"] .filter-apply-btn,
 [dir="rtl"] .store-follow-btn,
-[dir="rtl"] .logout-btn { font-weight: 700; }
+[dir="rtl"] .logout-btn { font-weight: 600; }
 
 /* ══════════════════════════════════════════════════════════
    APP SHELL
@@ -314,7 +328,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .auth-panel { flex: 1; background: var(--bg-phone); padding: 28px 24px 36px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; }
 .auth-panel-title { font-size: var(--t4); font-weight: 600; color: var(--ink-3); text-align: center; margin-bottom: 4px; }
 
-.auth-btn { width: 100%; height: 48px; padding: 0; border-radius: var(--radius-md); font-size: var(--t3); font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 12px; cursor: pointer; transition: opacity 0.15s; border: none; }
+.auth-btn { width: 100%; height: 48px; padding: 0; border-radius: var(--radius-md); font-size: var(--t3); font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 12px; cursor: pointer; transition: opacity 0.15s; border: none; }
 .auth-btn:hover { opacity: 0.88; }
 .auth-btn-google  { background: var(--bg-phone); color: var(--ink-1); border: 1px solid var(--border-strong); }
 .auth-btn-apple   { background: #000; color: #fff; }
