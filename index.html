@@ -1207,6 +1207,11 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   background: #fff;
   border-radius: 50%;
 }
+#review-text-input::placeholder {
+  font-size: var(--t5);
+  color: var(--ink-3);
+  opacity: 1;
+}
 </style>
 </head>
 <body>
@@ -1462,12 +1467,12 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         <div class="filter-section">
           <div class="filter-section-label" data-i18n="filter_concentration">Concentration</div>
           <div class="filter-chips-wrap">
-            <span class="filter-chip" data-group="concentration" data-val-en="EDC"    onclick="toggleFilterChip(this)">EDC</span>
-            <span class="filter-chip" data-group="concentration" data-val-en="EDT"    onclick="toggleFilterChip(this)">EDT</span>
-            <span class="filter-chip" data-group="concentration" data-val-en="EDP"    onclick="toggleFilterChip(this)">EDP</span>
-            <span class="filter-chip" data-group="concentration" data-val-en="Parfum" onclick="toggleFilterChip(this)">Parfum</span>
-            <span class="filter-chip" data-group="concentration" data-val-en="Elixir" onclick="toggleFilterChip(this)">Elixir</span>
-            <span class="filter-chip" data-group="concentration" data-val-en="Extrait" onclick="toggleFilterChip(this)">Extrait</span>
+            <span class="filter-chip" data-group="concentration" data-val-en="EDC"     data-val-ar="ماء كولونيا"      onclick="toggleFilterChip(this)">EDC</span>
+            <span class="filter-chip" data-group="concentration" data-val-en="EDT"     data-val-ar="ماء عطر"           onclick="toggleFilterChip(this)">EDT</span>
+            <span class="filter-chip" data-group="concentration" data-val-en="EDP"     data-val-ar="عطر"               onclick="toggleFilterChip(this)">EDP</span>
+            <span class="filter-chip" data-group="concentration" data-val-en="Parfum"  data-val-ar="عطر مركز"          onclick="toggleFilterChip(this)">Parfum</span>
+            <span class="filter-chip" data-group="concentration" data-val-en="Elixir"  data-val-ar="إكسير"             onclick="toggleFilterChip(this)">Elixir</span>
+            <span class="filter-chip" data-group="concentration" data-val-en="Extrait" data-val-ar="ماء عطري خفيف"     onclick="toggleFilterChip(this)">Extrait</span>
           </div>
         </div>
         <!-- Size -->
@@ -2189,6 +2194,13 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         </div>
       </button>
+      <!-- Best-price store row — sits directly below the CTA button -->
+      <div id="product-store-section" onclick="if(window._pdpStoreKey)openStorePage(window._pdpStoreKey)" style="display:flex;align-items:center;gap:8px;margin-top:10px;padding:0 2px;cursor:pointer;">
+        <div id="product-store-icon" style="width:22px;height:22px;border-radius:50%;background:var(--b-blue);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--ink-2);flex-shrink:0;">GS</div>
+        <span style="font-size:var(--t5);color:var(--ink-3);" data-i18n="pdp_best_price_at">Best price at</span>
+        <span id="product-store-name-link" style="font-size:var(--t5);font-weight:500;color:#2563EB;">—</span>
+        <div id="product-store-pill" style="display:none;"></div><!-- kept for JS compat -->
+      </div>
     </div>
 
     <div class="prod-info">
@@ -2241,6 +2253,16 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
             <div class="frag-id-label" data-i18n="pdp_rating">Rating</div>
             <div class="frag-id-value" id="product-rating">—</div>
           </div>
+          <div class="frag-id-card">
+            <div class="frag-id-icon" style="background:var(--b-amber);color:#B45309;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></div>
+            <div class="frag-id-label" data-i18n="pdp_season">Season</div>
+            <div class="frag-id-value" id="product-wear-season">—</div>
+          </div>
+          <div class="frag-id-card">
+            <div class="frag-id-icon" style="background:var(--b-blue);color:#1D4ED8;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></div>
+            <div class="frag-id-label" data-i18n="pdp_time_of_day">Time</div>
+            <div class="frag-id-value" id="product-wear-time">—</div>
+          </div>
         </div>
       </div>
 
@@ -2270,24 +2292,35 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         </div>
       </div>
 
-      <!-- When to Wear -->
-      <div class="wear-section">
-        <div class="wear-section-title" data-i18n="pdp_when_to_wear">When to Wear</div>
-        <div class="wear-grid">
-          <div class="wear-chip" onclick="toggleWear(this)"><span class="wear-chip-icon">❄️</span><span class="wear-chip-label" data-i18n="pdp_wear_winter">Winter</span><span class="wear-chip-count">212</span></div>
-          <div class="wear-chip" onclick="toggleWear(this)"><span class="wear-chip-icon">🌸</span><span class="wear-chip-label" data-i18n="pdp_wear_spring">Spring</span><span class="wear-chip-count">369</span></div>
-          <div class="wear-chip" onclick="toggleWear(this)"><span class="wear-chip-icon">☀️</span><span class="wear-chip-label" data-i18n="pdp_wear_summer">Summer</span><span class="wear-chip-count">191</span></div>
-          <div class="wear-chip" onclick="toggleWear(this)"><span class="wear-chip-icon">🍂</span><span class="wear-chip-label" data-i18n="pdp_wear_autumn">Autumn</span><span class="wear-chip-count">352</span></div>
-          <div class="wear-chip" onclick="toggleWear(this)"><span class="wear-chip-icon">🌤️</span><span class="wear-chip-label" data-i18n="pdp_wear_day">Day</span><span class="wear-chip-count">348</span></div>
-          <div class="wear-chip" onclick="toggleWear(this)"><span class="wear-chip-icon">🌙</span><span class="wear-chip-label" data-i18n="pdp_wear_night">Night</span><span class="wear-chip-count">255</span></div>
+      <!-- Compare Banner -->
+      <div id="pdp-compare-banner-wrap" style="margin:0 0 8px;">
+        <div id="pdp-compare-banner" onclick="openComparePage(_pdpProductId,'product-detail')" style="
+          display:flex; align-items:center; gap:16px;
+          background:var(--bg-surface);
+          border-top:1px solid var(--border);
+          border-bottom:1px solid var(--border);
+          padding:16px 20px;
+          cursor:pointer;
+          transition:background 0.14s;
+        ">
+          <!-- product image -->
+          <div id="pdp-compare-banner-img" style="
+            width:56px; height:56px; border-radius:var(--radius-md);
+            overflow:hidden; flex-shrink:0; background:var(--bg-input);
+          ">
+            <div class="prod-img-wrap" id="pdp-compare-banner-imgwrap" style="height:100%;">
+              <img id="pdp-compare-banner-photo" src="" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">
+            </div>
+          </div>
+          <!-- text -->
+          <div style="flex:1; min-width:0;">
+            <div id="pdp-compare-banner-title" style="font-size:var(--t4);font-weight:600;color:var(--ink-1);line-height:1.45;margin-bottom:5px;"></div>
+            <div style="display:inline-flex;align-items:center;gap:5px;">
+              <span style="font-size:var(--t5);color:var(--red);font-weight:600;" data-i18n="pdp_compare_banner_cta">Compare now</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <!-- Exact Match Products -->
-      <div class="pdp-rec-section" id="pdp-exact-match-section">
-        <div class="pdp-rec-title" data-i18n="pdp_exact_match">Exact Match Products</div>
-        <div class="pdp-rec-subtitle" data-i18n="pdp_exact_match_sub">Same fragrance, possibly only different size</div>
-        <div class="h-scroll pdp-rec-scroll" id="pdp-exact-match-list" style="padding:0 0 4px;"></div>
       </div>
 
       <!-- Similar Feel -->
@@ -2295,16 +2328,6 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         <div class="pdp-rec-title" data-i18n="pdp_similar_feel">Similar Feel</div>
         <div class="pdp-rec-subtitle" data-i18n="pdp_similar_feel_sub">Same vibe, different brand or style</div>
         <div class="h-scroll pdp-rec-scroll" id="pdp-similar-feel-list" style="padding:0 0 4px;"></div>
-      </div>
-
-      <!-- Store Pill -->
-      <div id="product-store-section">
-        <div class="store-pill" id="product-store-pill">
-          <div class="store-pill-avatar" id="product-store-icon" style="background:var(--b-blue);">GS</div>
-          <span class="store-pill-name" id="product-store-name-link">—</span>
-          <span class="store-pill-sub" data-i18n="pdp_best_price">· Best price</span>
-          <span class="store-pill-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></span>
-        </div>
       </div>
 
       <!-- Reviews -->
@@ -2699,6 +2722,10 @@ var PRODUCTS = [
     perfumerAr: 'جاك بولج',
     year: '2014',
     rating: '4.6',
+    wearSeasonEn: 'All Seasons',
+    wearSeasonAr: 'كل الفصول',
+    wearTimeEn: 'Day & Night',
+    wearTimeAr: 'نهاري وليلي',
     discountPercent: 20,
     discountLabelEn: '20% OFF',
     discountLabelAr: 'خصم 20%',
@@ -2743,6 +2770,10 @@ var PRODUCTS = [
     perfumerAr: 'فرانسوا ديماشي',
     year: '2021',
     rating: '4.8',
+    wearSeasonEn: 'Winter',
+    wearSeasonAr: 'شتوي',
+    wearTimeEn: 'Night',
+    wearTimeAr: 'ليلي',
     discountPercent: 9,
     discountLabelEn: '9% OFF',
     discountLabelAr: 'خصم 9%',
@@ -2787,6 +2818,10 @@ var PRODUCTS = [
     perfumerAr: 'جيفودان',
     year: '2006',
     rating: '4.4',
+    wearSeasonEn: 'Autumn',
+    wearSeasonAr: 'خريفي',
+    wearTimeEn: 'Night',
+    wearTimeAr: 'ليلي',
     discountPercent: 17,
     discountLabelEn: '17% OFF',
     discountLabelAr: 'خصم 17%',
@@ -2831,6 +2866,10 @@ var PRODUCTS = [
     perfumerAr: 'آن فليبو',
     year: '2020',
     rating: '4.7',
+    wearSeasonEn: 'Spring',
+    wearSeasonAr: 'ربيعي',
+    wearTimeEn: 'Day',
+    wearTimeAr: 'نهاري',
 	discountPercent: 20,
     discountLabelEn: '20% OFF',
     discountLabelAr: 'خصم 20%',
@@ -2875,6 +2914,10 @@ var PRODUCTS = [
     perfumerAr: 'فرانسيس كوردجيان',
     year: '2015',
     rating: '4.5',
+    wearSeasonEn: 'Summer',
+    wearSeasonAr: 'صيفي',
+    wearTimeEn: 'Day',
+    wearTimeAr: 'نهاري',
 	discountPercent: 20,
     discountLabelEn: '20% OFF',
     discountLabelAr: 'خصم 20%',
@@ -3328,8 +3371,10 @@ function _pdpAdapt(p) {
     gender:   P(p,'gender'),
     country:  P(p,'country'),
     perfumer: P(p,'perfumer'),
-    year:     p.year,
-    rating:   p.rating,
+    year:       p.year,
+    rating:     p.rating,
+    wearSeason: LANG === 'ar' ? p.wearSeasonAr : p.wearSeasonEn,
+    wearTime:   LANG === 'ar' ? p.wearTimeAr   : p.wearTimeEn,
     img:      p.img, bg: p.bg, initials: p.initials,
     desc:     LANG === 'ar' ? p.descAr : p.descEn,
     notes:    notesHtml,
@@ -3405,13 +3450,15 @@ function openProduct(productId, origin) {
   });
 
   /* Identity strip */
-  document.getElementById('product-frag-house').textContent  = p.house || '--';
-  document.getElementById('product-family').textContent      = p.family || '--';
-  document.getElementById('product-gender').textContent      = p.gender || '--';
-  document.getElementById('product-country').textContent     = p.country || '--';
-  document.getElementById('product-perfumer').textContent    = p.perfumer || '--';
-  document.getElementById('product-year').textContent        = p.year || '--';
-  document.getElementById('product-rating').textContent      = (p.rating || '--') + ' ★';
+  document.getElementById('product-frag-house').textContent  = p.house      || '--';
+  document.getElementById('product-family').textContent      = p.family     || '--';
+  document.getElementById('product-gender').textContent      = p.gender     || '--';
+  document.getElementById('product-country').textContent     = p.country    || '--';
+  document.getElementById('product-perfumer').textContent    = p.perfumer   || '--';
+  document.getElementById('product-year').textContent        = p.year       || '--';
+  document.getElementById('product-rating').textContent      = (p.rating    || '--') + ' ★';
+  document.getElementById('product-wear-season').textContent = p.wearSeason || '--';
+  document.getElementById('product-wear-time').textContent   = p.wearTime   || '--';
 
   /* Accords — not in rebuild data yet, hide */
   document.getElementById('product-accords').style.display = 'none';
@@ -3423,6 +3470,7 @@ function openProduct(productId, origin) {
 
   /* Store pill */
   var storeData = p.storeKey ? STORES.find(function(s){ return s.id === p.storeKey; }) : null;
+  window._pdpStoreKey = p.storeKey || null;
   var sIcon = document.getElementById('product-store-icon');
   var sName = document.getElementById('product-store-name-link');
   if (storeData) {
@@ -3451,17 +3499,25 @@ function openProduct(productId, origin) {
   var showMore = document.getElementById('reviews-show-more-btn');
   if (showMore) showMore.textContent = 'Show all ' + p.reviews + ' reviews →';
 
-  /* Rec strips — other products */
-  var exactList   = document.getElementById('pdp-exact-match-list');
+  /* Compare banner — store count + product image for this product */
+  var storeCount = (p.storeComparison && p.storeComparison.length) ? p.storeComparison.length : 1;
+  var bannerTitle = document.getElementById('pdp-compare-banner-title');
+  if (bannerTitle) {
+    bannerTitle.setAttribute('data-i18n-store-count', storeCount);
+    var tpl = T('pdp_compare_banner_title');
+    bannerTitle.textContent = tpl ? tpl.replace('{n}', storeCount) : storeCount + ' exact matching products are available for this item from different stores.';
+  }
+  var bannerImgWrap = document.getElementById('pdp-compare-banner-imgwrap');
+  var bannerPhoto   = document.getElementById('pdp-compare-banner-photo');
+  if (bannerImgWrap) bannerImgWrap.style.background = p.bg || '';
+  if (bannerPhoto)   { bannerPhoto.src = p.img || ''; bannerPhoto.style.display = ''; }
+
+  /* Rec strips — similar feel only */
   var similarList = document.getElementById('pdp-similar-feel-list');
-  exactList.innerHTML = ''; similarList.innerHTML = '';
-  PRODUCTS.filter(function(pr){ return pr.id !== productId; }).slice(0,3).forEach(function(pr){
-    exactList.appendChild(_pdpBuildRecCard(pr));
-  });
+  similarList.innerHTML = '';
   PRODUCTS.filter(function(pr){ return pr.id !== productId; }).slice(1,4).forEach(function(pr){
     similarList.appendChild(_pdpBuildRecCard(pr));
   });
-  document.getElementById('pdp-exact-match-section').style.display  = '';
   document.getElementById('pdp-similar-feel-section').style.display = '';
 
   /* Reset bookmark + alert icons */
@@ -4759,6 +4815,14 @@ function interestsSave() {
         chip.textContent = lang === 'ar' ? acc.ar : acc.en;
         container.appendChild(chip);
       });
+    }
+    /* Re-render compare banner title if PDP is open */
+    var bannerTitle = document.getElementById('pdp-compare-banner-title');
+    if (bannerTitle) {
+      var n = bannerTitle.getAttribute('data-i18n-store-count') || '1';
+      var tpl = T('pdp_compare_banner_title');
+      if (tpl) bannerTitle.textContent = tpl.replace('{n}', n);
+      else bannerTitle.textContent = n + ' exact matching products are available for this item from different stores.';
     }
     /* Re-render accord filter chips in the search filter sheet */
     document.querySelectorAll('.filter-chip[data-group="accord"]').forEach(function(chip) {
