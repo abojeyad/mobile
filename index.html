@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Yourdis"/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="translations.js"></script>
 <style>
 
@@ -68,7 +68,7 @@ input  { font-family: inherit; }
 
   --font-display: 'DM Serif Display', serif;
   --font-body:    'DM Sans', sans-serif;
-  --font-ar:      'IBM Plex Sans Arabic', sans-serif;
+  --font-ar:      'Cairo', sans-serif;
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -76,7 +76,7 @@ input  { font-family: inherit; }
 ══════════════════════════════════════════════════════════ */
 html, body { height: 100%; background: var(--bg-page); font-family: var(--font-body); color: var(--ink-1); -webkit-font-smoothing: antialiased; }
 
-/* ── Arabic typography: override EVERY element in RTL mode ── */
+/* ── Arabic typography: Cairo — optimised weights & sizing ── */
 [dir="rtl"],
 [dir="rtl"] *,
 [dir="rtl"] input,
@@ -85,61 +85,28 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 [dir="rtl"] select {
   font-family: var(--font-ar) !important;
 }
-/* Preserve display font contexts in RTL — use IBM Plex Sans Arabic Bold instead */
+
+/* ── Zero letter-spacing — Cairo has correct built-in spacing ── */
+[dir="rtl"] * { letter-spacing: 0 !important; }
+
+/* ── Base weight: 400 is the sweet spot for Cairo body text ── */
+[dir="rtl"] body { font-weight: 400; }
+
+/* ── Display / hero contexts — Cairo 600 replaces DM Serif Display ── */
 [dir="rtl"] .auth-wordmark,
 [dir="rtl"] .otp-title,
 [dir="rtl"] .ai-chat-title,
 [dir="rtl"] .store-page-name,
 [dir="rtl"] .stat-v,
 [dir="rtl"] .dip-card-price,
-[dir="rtl"] .avatar-fallback {
+[dir="rtl"] .avatar-fallback,
+[dir="rtl"] .flib-name {
   font-family: var(--font-ar) !important;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0;
 }
-/* Arabic line-height refinements */
-[dir="rtl"] .ai-bubble,
-[dir="rtl"] .auth-tagline,
-[dir="rtl"] .otp-sub,
-[dir="rtl"] .notif-sub,
-[dir="rtl"] .search-empty-sub { line-height: 1.75; }
-[dir="rtl"] .notif-title-text,
-[dir="rtl"] .drop-name,
-[dir="rtl"] .result-name,
-[dir="rtl"] .pc-name,
-[dir="rtl"] .wl-card-h-name,
-[dir="rtl"] .rn,
-[dir="rtl"] .act-sname { line-height: 1.4; }
-/* Zero letter-spacing everywhere in Arabic — IBM Plex Sans Arabic has correct built-in spacing */
-[dir="rtl"] * { letter-spacing: 0 !important; }
-/* Section/label overrides */
-[dir="rtl"] .sec-label,
-[dir="rtl"] .stores-section-label,
-[dir="rtl"] .dip-best-banner,
-[dir="rtl"] .dip-section-label,
-[dir="rtl"] .filter-section-label,
-[dir="rtl"] .act-settings-label,
-[dir="rtl"] .store-deals-label,
-[dir="rtl"] .stat-l,
-[dir="rtl"] .notif-section-label,
-[dir="rtl"] .notif-tag { text-transform: none; font-weight: 700; }
-/* Button & chip weight */
-[dir="rtl"] .bn-item span { font-weight: 500; }
-[dir="rtl"] .badge,
-[dir="rtl"] .dip-chip,
-[dir="rtl"] .filter-chip,
-[dir="rtl"] .notif-filter-chip,
-[dir="rtl"] .pref-chip,
-[dir="rtl"] .trend-chip .trend-name { font-weight: 500; }
-/* Auth / action buttons — reduce size slightly for Arabic so text fits naturally */
-[dir="rtl"] .auth-btn { font-size: 16px; font-weight: 600; }
-[dir="rtl"] .otp-confirm,
-[dir="rtl"] .filter-apply-btn,
-[dir="rtl"] .store-follow-btn,
-[dir="rtl"] .logout-btn { font-weight: 600; }
-/* Primary text: pure black in Arabic mode for maximum contrast */
-[dir="rtl"] .auth-wordmark,
-[dir="rtl"] .otp-title,
+
+/* ── Primary headings & names: 500 — readable without looking heavy ── */
 [dir="rtl"] .prod-name,
 [dir="rtl"] .pc-name,
 [dir="rtl"] .drop-name,
@@ -150,7 +117,89 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 [dir="rtl"] .brand-page-title,
 [dir="rtl"] .sub-header-title,
 [dir="rtl"] .frag-id-value,
-[dir="rtl"] .user-name { color: #000000 !important; }
+[dir="rtl"] .user-name,
+[dir="rtl"] .screen-title,
+[dir="rtl"] .notif-title-text,
+[dir="rtl"] .rn,
+[dir="rtl"] .wl-card-h-name { font-weight: 500; }
+
+/* ── Section labels & uppercase tags: remove caps, use 500 ── */
+[dir="rtl"] .sec-label,
+[dir="rtl"] .stores-section-label,
+[dir="rtl"] .dip-best-banner,
+[dir="rtl"] .dip-section-label,
+[dir="rtl"] .filter-section-label,
+[dir="rtl"] .act-settings-label,
+[dir="rtl"] .store-deals-label,
+[dir="rtl"] .stat-l,
+[dir="rtl"] .notif-section-label,
+[dir="rtl"] .notif-tag,
+[dir="rtl"] .brand-sec-label,
+[dir="rtl"] .brands-search-bar input::placeholder {
+  text-transform: none;
+  font-weight: 500;
+}
+
+/* ── Bottom nav labels ── */
+[dir="rtl"] .bn-item span { font-weight: 400; font-size: 12px; }
+
+/* ── Chips & badges: 400 — lighter feels cleaner ── */
+[dir="rtl"] .badge,
+[dir="rtl"] .dip-chip,
+[dir="rtl"] .filter-chip,
+[dir="rtl"] .notif-filter-chip,
+[dir="rtl"] .pref-chip,
+[dir="rtl"] .trend-chip .trend-name { font-weight: 400; }
+
+/* ── Action buttons: 500 — clear without being loud ── */
+[dir="rtl"] .auth-btn       { font-size: 15px; font-weight: 500; }
+[dir="rtl"] .otp-confirm,
+[dir="rtl"] .filter-apply-btn,
+[dir="rtl"] .store-follow-btn,
+[dir="rtl"] .logout-btn     { font-weight: 500; }
+
+/* ── Line-height: Cairo needs generous vertical rhythm ── */
+[dir="rtl"] .ai-bubble,
+[dir="rtl"] .auth-tagline,
+[dir="rtl"] .otp-sub,
+[dir="rtl"] .notif-sub,
+[dir="rtl"] .search-empty-sub,
+[dir="rtl"] .flib-persona-text,
+[dir="rtl"] .brand-desc-text { line-height: 1.85; }
+
+[dir="rtl"] .notif-title-text,
+[dir="rtl"] .drop-name,
+[dir="rtl"] .result-name,
+[dir="rtl"] .pc-name,
+[dir="rtl"] .wl-card-h-name,
+[dir="rtl"] .rn,
+[dir="rtl"] .act-sname { line-height: 1.5; }
+
+/* ── Colour: softer black for Arabic body — pure #000 is harsh ── */
+[dir="rtl"] .auth-wordmark  { color: var(--ink-1) !important; }
+[dir="rtl"] .otp-title      { color: var(--ink-1) !important; }
+[dir="rtl"] .prod-name,
+[dir="rtl"] .pc-name,
+[dir="rtl"] .drop-name,
+[dir="rtl"] .result-name,
+[dir="rtl"] .act-sname,
+[dir="rtl"] .brand-list-name,
+[dir="rtl"] .brand-product-name,
+[dir="rtl"] .brand-page-title,
+[dir="rtl"] .sub-header-title,
+[dir="rtl"] .frag-id-value,
+[dir="rtl"] .user-name      { color: var(--ink-1) !important; }
+
+/* ── Size nudges: Cairo renders slightly larger — pull back 1px on micro ── */
+[dir="rtl"] .sec-label,
+[dir="rtl"] .stat-l,
+[dir="rtl"] .notif-section-label { font-size: 12px; }
+[dir="rtl"] .act-ssub,
+[dir="rtl"] .pc-avail,
+[dir="rtl"] .drop-sub,
+[dir="rtl"] .result-brand,
+[dir="rtl"] .result-stores { font-size: 12px; color: var(--ink-3); }
+[dir="rtl"] .brand-page-tag { font-size: 12px; }
 
 /* ══════════════════════════════════════════════════════════
    APP SHELL
@@ -3668,6 +3717,7 @@ var PRODUCTS = [
   }
 
 ];
+
 
 /* ══════════════════════════════════════════════════════════
    BRAND DESCRIPTIONS & METADATA
