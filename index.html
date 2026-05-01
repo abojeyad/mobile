@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Yourdis"/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="translations.js"></script>
 <style>
 
@@ -38,9 +38,9 @@ input  { font-family: inherit; }
   --red:           #79002F;
   --red-light:     #F9E6EC;
 
-  --ink-1:         #000000;
-  --ink-2:         #1A1A1A;
-  --ink-3:         #555555;
+  --ink-1:         #0E0E0E;
+  --ink-2:         #4A4A4A;
+  --ink-3:         #8A8A8A;
   --bg-page:       #DDE1E7;
   --bg-phone:      #FFFFFF;
   --bg-surface:    #F7F7F5;
@@ -68,7 +68,7 @@ input  { font-family: inherit; }
 
   --font-display: 'DM Serif Display', serif;
   --font-body:    'DM Sans', sans-serif;
-  --font-ar:      'Tajawal', sans-serif;
+  --font-ar:      'IBM Plex Sans Arabic', sans-serif;
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -76,7 +76,7 @@ input  { font-family: inherit; }
 ══════════════════════════════════════════════════════════ */
 html, body { height: 100%; background: var(--bg-page); font-family: var(--font-body); color: var(--ink-1); -webkit-font-smoothing: antialiased; }
 
-/* ── Optimized Arabic Typography (RTL) ── */
+/* ── Arabic typography: override EVERY element in RTL mode ── */
 [dir="rtl"],
 [dir="rtl"] *,
 [dir="rtl"] input,
@@ -84,42 +84,35 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 [dir="rtl"] textarea,
 [dir="rtl"] select {
   font-family: var(--font-ar) !important;
-  /* Tighten characters slightly to reduce excessive spacing */
-  letter-spacing: -0.015em !important;
 }
-/* Titles and headings: Tajawal 700 for balanced display contexts */
+/* Preserve display font contexts in RTL — use IBM Plex Sans Arabic Bold instead */
 [dir="rtl"] .auth-wordmark,
 [dir="rtl"] .otp-title,
 [dir="rtl"] .ai-chat-title,
 [dir="rtl"] .store-page-name,
 [dir="rtl"] .stat-v,
-[dir="rtl"] .dip-product-name,
-[dir="rtl"] .prod-name,
+[dir="rtl"] .dip-card-price,
 [dir="rtl"] .avatar-fallback {
   font-family: var(--font-ar) !important;
   font-weight: 700;
+  letter-spacing: 0;
 }
-/* Line Height: Reduced to tighten vertical spacing */
+/* Arabic line-height refinements */
 [dir="rtl"] .ai-bubble,
 [dir="rtl"] .auth-tagline,
 [dir="rtl"] .otp-sub,
 [dir="rtl"] .notif-sub,
-[dir="rtl"] .search-empty-sub,
-[dir="rtl"] p,
-[dir="rtl"] .sub-notice { 
-  line-height: 1.5; 
-}
+[dir="rtl"] .search-empty-sub { line-height: 1.75; }
 [dir="rtl"] .notif-title-text,
 [dir="rtl"] .drop-name,
 [dir="rtl"] .result-name,
 [dir="rtl"] .pc-name,
 [dir="rtl"] .wl-card-h-name,
 [dir="rtl"] .rn,
-[dir="rtl"] .act-sname,
-[dir="rtl"] .screen-title { 
-  line-height: 1.3; 
-}
-/* Weight mapping: Balanced UI weights */
+[dir="rtl"] .act-sname { line-height: 1.4; }
+/* Zero letter-spacing everywhere in Arabic — IBM Plex Sans Arabic has correct built-in spacing */
+[dir="rtl"] * { letter-spacing: 0 !important; }
+/* Section/label overrides */
 [dir="rtl"] .sec-label,
 [dir="rtl"] .stores-section-label,
 [dir="rtl"] .dip-best-banner,
@@ -129,25 +122,35 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 [dir="rtl"] .store-deals-label,
 [dir="rtl"] .stat-l,
 [dir="rtl"] .notif-section-label,
-[dir="rtl"] .notif-tag { letter-spacing: -0.01em; text-transform: none; font-weight: 600; }
-[dir="rtl"] .bn-item span,
+[dir="rtl"] .notif-tag { text-transform: none; font-weight: 700; }
+/* Button & chip weight */
+[dir="rtl"] .bn-item span { font-weight: 500; }
 [dir="rtl"] .badge,
 [dir="rtl"] .dip-chip,
 [dir="rtl"] .filter-chip,
 [dir="rtl"] .notif-filter-chip,
 [dir="rtl"] .pref-chip,
 [dir="rtl"] .trend-chip .trend-name { font-weight: 500; }
-
-/* Login buttons: Reduce size and weight specifically for Arabic */
-[dir="rtl"] .auth-btn {
-  font-size: var(--t4) !important; /* Reduced from 17px to 15px */
-  font-weight: 500 !important;    /* Reduced from 700 to 500 */
-}
-
+/* Auth / action buttons — reduce size slightly for Arabic so text fits naturally */
+[dir="rtl"] .auth-btn { font-size: 16px; font-weight: 600; }
 [dir="rtl"] .otp-confirm,
 [dir="rtl"] .filter-apply-btn,
 [dir="rtl"] .store-follow-btn,
 [dir="rtl"] .logout-btn { font-weight: 600; }
+/* Primary text: pure black in Arabic mode for maximum contrast */
+[dir="rtl"] .auth-wordmark,
+[dir="rtl"] .otp-title,
+[dir="rtl"] .prod-name,
+[dir="rtl"] .pc-name,
+[dir="rtl"] .drop-name,
+[dir="rtl"] .result-name,
+[dir="rtl"] .act-sname,
+[dir="rtl"] .brand-list-name,
+[dir="rtl"] .brand-product-name,
+[dir="rtl"] .brand-page-title,
+[dir="rtl"] .sub-header-title,
+[dir="rtl"] .frag-id-value,
+[dir="rtl"] .user-name { color: #000000 !important; }
 
 /* ══════════════════════════════════════════════════════════
    APP SHELL
@@ -328,7 +331,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .auth-panel { flex: 1; background: var(--bg-phone); padding: 28px 24px 36px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; }
 .auth-panel-title { font-size: var(--t4); font-weight: 600; color: var(--ink-3); text-align: center; margin-bottom: 4px; }
 
-.auth-btn { width: 100%; height: 48px; padding: 0; border-radius: var(--radius-md); font-size: var(--t3); font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 12px; cursor: pointer; transition: opacity 0.15s; border: none; }
+.auth-btn { width: 100%; height: 48px; padding: 0; border-radius: var(--radius-md); font-size: var(--t3); font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 12px; cursor: pointer; transition: opacity 0.15s; border: none; }
 .auth-btn:hover { opacity: 0.88; }
 .auth-btn-google  { background: var(--bg-phone); color: var(--ink-1); border: 1px solid var(--border-strong); }
 .auth-btn-apple   { background: #000; color: #fff; }
@@ -590,6 +593,192 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .wl-card-h-low  { display:inline-flex; align-items:center; background:var(--gold); color:#fff; font-size:var(--t6); font-weight:700; padding:3px 8px; border-radius:20px; white-space:nowrap; }
 .wl-card-h-high { font-size:var(--t6); color:var(--ink-3); font-weight:500; white-space:nowrap; }
 .wl-card-h-save { font-size:var(--t6); color:var(--green); font-weight:700; white-space:nowrap; }
+
+/* ══════════════════════════════════════════════════════════
+   FRAGRANCE LIBRARY — external mosaic preview
+══════════════════════════════════════════════════════════ */
+.lib-mosaic-entry {
+  margin: 0 20px 20px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid var(--border);
+  transition: box-shadow 0.18s;
+}
+.lib-mosaic-entry:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.10); }
+.lib-mosaic-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 72px);
+  gap: 2px;
+  background: var(--border);
+}
+.lib-mosaic-cell {
+  overflow: hidden;
+  position: relative;
+}
+.lib-mosaic-cell img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.lib-mosaic-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(14,14,14,0.62) 0%, transparent 55%);
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 10px 14px; z-index: 2; pointer-events: none;
+}
+.lib-mosaic-label {
+  font-size: var(--t5); font-weight: 700; color: #fff;
+  letter-spacing: 0.03em;
+}
+.lib-mosaic-count {
+  font-size: var(--t6); font-weight: 600; color: rgba(255,255,255,0.82);
+  background: rgba(255,255,255,0.18); border-radius: 20px; padding: 3px 9px;
+  backdrop-filter: blur(4px);
+}
+
+/* ══════════════════════════════════════════════════════════
+   FRAGRANCE LIBRARY SCREEN
+══════════════════════════════════════════════════════════ */
+/* Profile hero */
+.flib-hero {
+  background: linear-gradient(160deg, #1a0a12 0%, #2d1020 45%, #1c1023 100%);
+  padding: 28px 20px 24px;
+  display: flex; flex-direction: column; align-items: center; gap: 0;
+  position: relative; flex-shrink: 0; overflow: hidden;
+}
+.flib-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 60%, rgba(121,0,47,0.35) 0%, transparent 65%),
+              radial-gradient(ellipse at 80% 20%, rgba(234,160,5,0.12) 0%, transparent 55%);
+  pointer-events: none;
+}
+.flib-avatar-ring {
+  width: 78px; height: 78px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold) 0%, #d4860a 100%);
+  padding: 2.5px; flex-shrink: 0; z-index: 1; margin-bottom: 12px;
+}
+.flib-avatar-inner {
+  width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
+  background: #2d1020;
+}
+.flib-avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
+.flib-avatar-fallback {
+  width: 100%; height: 100%; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 26px; color: var(--gold);
+}
+.flib-name {
+  font-family: var(--font-display); font-size: 22px; color: #fff;
+  letter-spacing: 0.01em; z-index: 1; text-align: center; line-height: 1.2;
+}
+.flib-meta-row {
+  display: flex; gap: 16px; margin-top: 14px; z-index: 1;
+}
+.flib-meta-item {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.flib-meta-v {
+  font-size: 18px; font-weight: 700; color: var(--gold);
+  font-family: var(--font-display); line-height: 1;
+}
+.flib-meta-l {
+  font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.55);
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.flib-meta-sep { width: 1px; background: rgba(255,255,255,0.15); align-self: stretch; margin: 2px 0; }
+
+/* AI personality card */
+.flib-persona-card {
+  margin: 16px 16px 0;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, #fdf8ee 0%, #fef3db 100%);
+  border: 1px solid rgba(234,160,5,0.22);
+  border-radius: var(--radius-md);
+  position: relative; overflow: hidden; flex-shrink: 0;
+}
+.flib-persona-card::before {
+  content: ''; position: absolute; top: -12px; right: -12px;
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(234,160,5,0.10); pointer-events: none;
+}
+.flib-persona-head {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+}
+.flib-persona-icon {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.flib-persona-icon svg { width: 13px; height: 13px; }
+.flib-persona-label {
+  font-size: var(--t6); font-weight: 700; color: var(--amber);
+  letter-spacing: 0.07em; text-transform: uppercase;
+}
+.flib-persona-text {
+  font-size: var(--t5); color: var(--ink-2); line-height: 1.75; font-style: italic;
+}
+.flib-persona-loading {
+  display: flex; align-items: center; gap: 8px;
+  font-size: var(--t5); color: var(--ink-3); font-style: italic;
+}
+.flib-persona-dots span {
+  display: inline-block; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gold); margin: 0 1px;
+  animation: flib-dot-bounce 1.2s ease-in-out infinite;
+}
+.flib-persona-dots span:nth-child(2) { animation-delay: 0.2s; }
+.flib-persona-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes flib-dot-bounce { 0%,80%,100% { transform: scale(0.7); opacity: 0.5; } 40% { transform: scale(1); opacity: 1; } }
+
+/* Tabs */
+.flib-tabs {
+  display: flex; gap: 0; border-bottom: 1px solid var(--border);
+  padding: 0 16px; flex-shrink: 0; background: var(--bg-phone);
+}
+.flib-tab {
+  flex: 1; padding: 12px 8px 10px; text-align: center;
+  font-size: var(--t5); font-weight: 600; color: var(--ink-3);
+  cursor: pointer; border-bottom: 2.5px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  position: relative; bottom: -1px;
+}
+.flib-tab.active { color: var(--red); border-bottom-color: var(--red); }
+
+/* Library grid */
+.flib-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  padding: 3px;
+}
+.flib-grid-item {
+  aspect-ratio: 1 / 1;
+  overflow: hidden; position: relative; cursor: pointer;
+  border-radius: 4px;
+}
+.flib-grid-item:hover .flib-item-overlay { opacity: 1; }
+.flib-item-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.flib-item-bg { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.flib-item-initials { font-family: var(--font-display); font-size: 18px; color: rgba(0,0,0,0.22); }
+.flib-item-overlay {
+  position: absolute; inset: 0;
+  background: rgba(14,14,14,0.45);
+  opacity: 0; transition: opacity 0.18s;
+  display: flex; align-items: flex-end;
+  padding: 6px;
+}
+.flib-item-overlay-name {
+  font-size: 9px; font-weight: 600; color: #fff;
+  line-height: 1.3; text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%;
+}
+.flib-empty {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 52px 32px; gap: 10px; text-align: center;
+}
+.flib-empty svg { color: var(--ink-3); opacity: 0.3; }
+.flib-empty-title { font-size: var(--t4); font-weight: 600; color: var(--ink-2); }
+.flib-empty-sub { font-size: var(--t5); color: var(--ink-3); line-height: 1.6; }
 
 .recent-scroll { display:flex; flex-direction:column; gap:10px; padding:0 20px; }
 .recent-chip { display:flex; align-items:center; gap:12px; background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 14px; cursor:pointer; transition:background 0.1s; }
@@ -1226,6 +1415,134 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   color: var(--ink-3);
   opacity: 1;
 }
+/* ══════════════════════════════════════════════════════════
+   ALL BRANDS PAGE
+══════════════════════════════════════════════════════════ */
+.brands-search-wrap {
+  padding: 8px 16px 14px;
+}
+.brands-search-bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 14px; height: 46px;
+  border-radius: var(--radius-md);
+  background: var(--bg-input); border: 1px solid var(--border);
+}
+.brands-search-bar svg { width: 16px; height: 16px; color: var(--ink-3); flex-shrink: 0; }
+.brands-search-bar input {
+  flex: 1; background: none; border: none; outline: none;
+  font-size: var(--t4); color: var(--ink-1); font-family: inherit;
+}
+.brands-list { display: flex; flex-direction: column; }
+.brand-list-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.12s;
+}
+.brand-list-row:active { background: var(--bg-input); }
+.brand-list-avatar {
+  width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--t5); font-weight: 700; color: var(--ink-1);
+}
+.brand-list-info { flex: 1; min-width: 0; }
+.brand-list-name {
+  font-size: var(--t4); font-weight: 700; color: var(--ink-1); margin-bottom: 2px;
+}
+.brand-list-sub { font-size: var(--t5); color: var(--ink-3); }
+.brand-list-chevron {
+  width: 18px; height: 18px; color: var(--ink-3); flex-shrink: 0;
+}
+.brands-empty {
+  display: none; flex-direction: column; align-items: center;
+  padding: 56px 20px; gap: 12px;
+}
+.brands-empty svg { color: var(--ink-3); opacity: 0.35; }
+.brands-empty-text { font-size: var(--t4); color: var(--ink-3); }
+
+/* ══════════════════════════════════════════════════════════
+   BRAND PAGE
+══════════════════════════════════════════════════════════ */
+.brand-page-banner {
+  position: relative; overflow: hidden;
+  padding: 32px 20px 28px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.brand-page-banner::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, var(--bg-phone) 100%);
+  pointer-events: none;
+}
+.brand-page-monogram {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  border: 2px solid rgba(255,255,255,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; font-weight: 800;
+  color: var(--ink-1); letter-spacing: -0.5px;
+  backdrop-filter: blur(6px); z-index: 1;
+}
+.brand-page-title {
+  font-family: var(--font-display); font-size: 26px;
+  font-weight: 700; color: var(--ink-1);
+  letter-spacing: -0.3px; z-index: 1; text-align: center;
+}
+.brand-page-tags {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  justify-content: center; z-index: 1;
+}
+.brand-page-tag {
+  font-size: var(--t6); font-weight: 600;
+  color: var(--ink-2); background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 20px; padding: 3px 10px;
+  backdrop-filter: blur(4px);
+}
+/* Description card */
+.brand-desc-card {
+  margin: 0 16px 4px;
+  padding: 16px 18px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.brand-desc-text {
+  font-size: var(--t5); color: var(--ink-2);
+  line-height: 1.75; font-style: italic;
+}
+/* Section label */
+.brand-sec-label {
+  font-size: var(--t6); font-weight: 700;
+  color: var(--ink-3); text-transform: uppercase;
+  letter-spacing: 0.07em; padding: 18px 20px 10px;
+}
+/* Product rows */
+.brand-product-list { display: flex; flex-direction: column; }
+.brand-product-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.12s;
+}
+.brand-product-row:active { background: var(--bg-input); }
+.brand-product-thumb {
+  width: 66px; height: 66px; border-radius: var(--radius-md);
+  overflow: hidden; flex-shrink: 0;
+}
+.brand-product-info { flex: 1; min-width: 0; }
+.brand-product-name {
+  font-size: var(--t4); font-weight: 600; color: var(--ink-1);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+.brand-product-sub { font-size: var(--t5); color: var(--ink-3); margin-bottom: 4px; }
+.brand-product-rating {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: var(--t6); color: #CA8A04; font-weight: 600;
+}
+.brand-product-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; }
+.brand-product-from { font-size: var(--t6); color: var(--ink-3); }
+.brand-product-price { font-size: var(--t4); font-weight: 800; color: var(--ink-1); white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -1373,7 +1690,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <!-- BROWSE BY BRAND -->
     <div class="sec-head">
       <span class="sec-label" data-i18n="home_brands">Browse by Brand</span>
-      <span class="sec-link" data-i18n="home_all_brands">All brands</span>
+      <span class="sec-link" data-i18n="home_all_brands" onclick="openAllBrandsPage()" style="cursor:pointer;">All brands</span>
     </div>
     <div class="h-scroll" id="strip-brands" style="margin-bottom:4px;"></div>
 
@@ -1543,10 +1860,13 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         <img loading="lazy" class="avatar-img" src="profile.jpg" alt="Profile" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
         <div class="avatar-fallback" style="display:none;">AH</div>
       </div>
-      <div>
+      <div style="flex:1;">
         <div class="user-name">Abdullah Hassan</div>
         <div class="user-joined"><span data-i18n="activity_joined">Joined</span>: 15-10-2025</div>
       </div>
+      <button onclick="switchScreen('settings')" style="width:38px;height:38px;border-radius:50%;background:var(--bg-surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;" aria-label="Settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink-2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      </button>
     </div>
 
     <!-- Stats -->
@@ -1575,12 +1895,20 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
     <div class="divider" style="margin:0 0 20px;"></div>
 
-    <!-- Wishlist -->
-    <div class="sec-head">
-      <span class="sec-label" data-i18n="activity_wishlist">Wishlist</span>
-      <span class="sec-link" data-i18n="activity_see_all">See all</span>
+    <!-- My Fragrance Library entry -->
+    <div class="sec-head" style="margin-bottom:12px;">
+      <span class="sec-label" data-i18n="activity_library">My Fragrance Library</span>
+      <span class="sec-link" data-i18n="activity_open_library" onclick="openFragranceLibrary()" style="cursor:pointer;" data-i18n="activity_open_library">Open</span>
     </div>
-    <div class="wishlist-list" id="activity-wishlist" style="margin-bottom:20px;"></div>
+    <div class="lib-mosaic-entry" id="lib-mosaic-entry" onclick="openFragranceLibrary()">
+      <div class="lib-mosaic-grid" id="lib-mosaic-grid">
+        <!-- populated by JS -->
+      </div>
+      <div class="lib-mosaic-overlay">
+        <span class="lib-mosaic-label" data-i18n="activity_library">My Fragrance Library</span>
+        <span class="lib-mosaic-count" id="lib-mosaic-count">—</span>
+      </div>
+    </div>
 
     <div class="divider" style="margin:0 0 20px;"></div>
 
@@ -1593,116 +1921,22 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
     <div class="divider" style="margin:0;"></div>
 
-    <!-- Account settings -->
-    <div class="act-settings-group">
-      <div class="act-settings-label" data-i18n="set_account">Account</div>
+    <!-- Settings entry row -->
+    <div class="act-settings-group" style="padding-bottom:32px;">
       <div class="act-settings-card">
-        <div class="act-settings-row" onclick="switchScreen('sub-profile')">
+        <div class="act-settings-row act-settings-row-last" onclick="switchScreen('settings')">
           <div class="act-settings-row-l">
-            <div class="act-sicon sri-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-            <div class="act-sinfo"><span class="act-sname" data-i18n="set_profile">Profile</span><span class="act-ssub">Abdullah Hassan</span></div>
-          </div>
-          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-        </div>
-        <div class="act-settings-row" onclick="switchScreen('sub-email')">
-          <div class="act-settings-row-l">
-            <div class="act-sicon sri-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-            <div class="act-sinfo"><span class="act-sname" data-i18n="set_email">Email</span><span class="act-ssub">you@gmail.com</span></div>
-          </div>
-          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-        </div>
-        <div class="act-settings-row act-settings-row-last" onclick="switchScreen('sub-phone')">
-          <div class="act-settings-row-l">
-            <div class="act-sicon sri-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
-            <div class="act-sinfo"><span class="act-sname" data-i18n="set_phone">Phone</span><span class="act-ssub" data-i18n="set_phone_empty">Not added yet</span></div>
+            <div class="act-sicon" style="background:var(--bg-input);color:var(--ink-2);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            </div>
+            <div class="act-sinfo">
+              <span class="act-sname" data-i18n="nav_settings">Settings</span>
+              <span class="act-ssub" data-i18n="settings_sub">Account, preferences, support</span>
+            </div>
           </div>
           <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </div>
       </div>
-    </div>
-
-    <!-- Preferences -->
-    <div class="act-settings-group">
-      <div class="act-settings-label" data-i18n="set_preferences">Preferences</div>
-      <div class="act-settings-card">
-        <div class="act-settings-row" onclick="switchScreen('sub-currency')">
-          <div class="act-settings-row-l">
-            <div class="act-sicon sri-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
-            <div class="act-sinfo"><span class="act-sname" data-i18n="set_currency">Currency</span><span class="act-ssub" id="settings-currency-sub">Saudi Riyal (SAR)</span></div>
-          </div>
-          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-        </div>
-        <div class="act-settings-row act-settings-row-last" onclick="switchScreen('sub-language')">
-          <div class="act-settings-row-l">
-            <div class="act-sicon sri-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
-            <div class="act-sinfo"><span class="act-sname" data-i18n="set_language">Language</span><span class="act-ssub" id="settings-lang-sub">English</span></div>
-          </div>
-          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-        </div>
-      </div>
-    </div>
-
-    <!-- Support -->
-    <div class="act-settings-group">
-      <div class="act-settings-label" data-i18n="set_support">Support</div>
-      <div class="act-settings-card">
-        <div class="act-settings-row" onclick="switchScreen('sub-support')">
-          <div class="act-settings-row-l">
-            <div class="act-sicon" style="background:var(--b-blue);color:#0E7490;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
-            <div class="act-sinfo"><span class="act-sname" data-i18n="set_support_row">Contact Support</span><span class="act-ssub" data-i18n="set_support_sub">Send us a message</span></div>
-          </div>
-          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-        </div>
-        <div class="act-settings-row" onclick="switchScreen('sub-help')">
-          <div class="act-settings-row-l">
-            <div class="act-sicon sri-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-            <div class="act-sinfo"><span class="act-sname" data-i18n="set_help">Help &amp; FAQ</span><span class="act-ssub" data-i18n="set_help_sub">Get answers to common questions</span></div>
-          </div>
-          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-        </div>
-        <div class="act-settings-row act-settings-row-last" onclick="switchScreen('sub-privacy')">
-          <div class="act-settings-row-l">
-            <div class="act-sicon" style="background:var(--bg-input);color:var(--ink-3);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-            <div class="act-sinfo"><span class="act-sname" data-i18n="set_privacy">Privacy Policy</span><span class="act-ssub" data-i18n="set_privacy_sub">Version 2.1</span></div>
-          </div>
-          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-        </div>
-      </div>
-    </div>
-
-    <!-- App Info -->
-    <div class="act-settings-group">
-      <div class="act-settings-label" data-i18n="set_app_info">App Info</div>
-      <div class="act-settings-card">
-        <div class="act-settings-row act-settings-row-last" style="cursor:default;">
-          <div class="act-settings-row-l">
-            <div class="act-sicon" style="background:var(--b-purple);color:var(--red);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-            <div class="act-sinfo"><span class="act-sname">Yourdis</span><span class="act-ssub">Version 2.1</span></div>
-          </div>
-          <span style="font-size:var(--t6);font-weight:600;background:var(--green-light);color:var(--green);padding:3px 8px;border-radius:10px;" data-i18n="set_up_to_date">Up to date</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sign Out -->
-    <div style="padding:4px 0 0;">
-      <button class="logout-btn" onclick="confirmLogout()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        <span data-i18n="set_sign_out">Sign Out</span>
-      </button>
-    </div>
-
-    <!-- Sign out confirmation sheet -->
-    <div class="sheet-backdrop" id="logout-backdrop" onclick="cancelLogout()"></div>
-    <div class="overlay-sheet" id="logout-sheet">
-      <div class="overlay-handle"></div>
-      <div style="padding:12px 24px 8px;text-align:center;">
-        <div style="font-size:28px;margin-bottom:10px;">👋</div>
-        <div style="font-family:var(--font-display);font-size:var(--t2);color:var(--ink-1);margin-bottom:8px;line-height:1.3;" data-i18n="set_sign_out_confirm">Are you sure you want to sign out?</div>
-        <button onclick="doLogout()" style="width:100%;padding:14px;border-radius:var(--radius-md);background:var(--red);color:#fff;font-size:var(--t4);font-weight:600;border:none;cursor:pointer;font-family:inherit;margin-bottom:10px;" data-i18n="set_sign_out_yes">Yes, sign out</button>
-        <button onclick="cancelLogout()" style="width:100%;padding:14px;border-radius:var(--radius-md);background:var(--bg-surface);color:var(--ink-2);font-size:var(--t4);font-weight:600;border:1px solid var(--border-strong);cursor:pointer;font-family:inherit;" data-i18n="set_cancel">Cancel</button>
-      </div>
-      <div style="height:16px;" aria-hidden="true"></div>
     </div>
 
   </div><!-- /scroll-area -->
@@ -2371,6 +2605,64 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     z-index:50;
   "></div>
 
+  <!-- Add to Library modal -->
+  <div class="sheet-backdrop" id="pdp-library-backdrop" onclick="closePdpLibraryModal()"></div>
+  <div class="overlay-sheet" id="pdp-library-sheet">
+    <div class="overlay-handle"></div>
+    <div style="padding:4px 24px 32px;">
+      <!-- Header -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+        <div style="width:34px;height:34px;border-radius:50%;background:var(--gold-light);border:1px solid rgba(234,160,5,0.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" style="width:16px;height:16px;"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+        <div>
+          <div style="font-size:var(--t3);font-weight:700;color:var(--ink-1);line-height:1.2;" data-i18n="pdp_library_modal_title">Add to Fragrance Library</div>
+          <div style="font-size:var(--t5);color:var(--ink-3);margin-top:2px;" data-i18n="pdp_library_modal_sub">This fragrance will be added to your library.</div>
+        </div>
+      </div>
+      <!-- Divider -->
+      <div style="height:1px;background:var(--border);margin:14px 0 16px;"></div>
+      <!-- Section label -->
+      <div style="font-size:var(--t6);font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px;" data-i18n="pdp_library_modal_choose">Choose a section</div>
+      <!-- Options -->
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <!-- Owned -->
+        <div onclick="addToLibrary('owned')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--radius-md);border:1px solid var(--border);background:var(--bg-surface);cursor:pointer;transition:background 0.12s;" onmouseover="this.style.background='var(--bg-input)'" onmouseout="this.style.background='var(--bg-surface)'">
+          <div style="width:38px;height:38px;border-radius:50%;background:var(--green-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8" style="width:17px;height:17px;"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          </div>
+          <div>
+            <div style="font-size:var(--t4);font-weight:600;color:var(--ink-1);" data-i18n="library_owned">Owned</div>
+            <div style="font-size:var(--t5);color:var(--ink-3);margin-top:2px;" data-i18n="pdp_library_owned_sub">Fragrances you own</div>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="2" style="width:15px;height:15px;margin-left:auto;flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <!-- Liked -->
+        <div onclick="addToLibrary('liked')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--radius-md);border:1px solid var(--border);background:var(--bg-surface);cursor:pointer;transition:background 0.12s;" onmouseover="this.style.background='var(--bg-input)'" onmouseout="this.style.background='var(--bg-surface)'">
+          <div style="width:38px;height:38px;border-radius:50%;background:var(--b-pink);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#8C3066" stroke-width="1.8" style="width:17px;height:17px;"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg>
+          </div>
+          <div>
+            <div style="font-size:var(--t4);font-weight:600;color:var(--ink-1);" data-i18n="library_liked">Liked</div>
+            <div style="font-size:var(--t5);color:var(--ink-3);margin-top:2px;" data-i18n="pdp_library_liked_sub">Fragrances you enjoy</div>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="2" style="width:15px;height:15px;margin-left:auto;flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <!-- Want to Try -->
+        <div onclick="addToLibrary('want')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--radius-md);border:1px solid var(--border);background:var(--bg-surface);cursor:pointer;transition:background 0.12s;" onmouseover="this.style.background='var(--bg-input)'" onmouseout="this.style.background='var(--bg-surface)'">
+          <div style="width:38px;height:38px;border-radius:50%;background:var(--b-amber);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.8" style="width:17px;height:17px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          </div>
+          <div>
+            <div style="font-size:var(--t4);font-weight:600;color:var(--ink-1);" data-i18n="library_want">Want to Try</div>
+            <div style="font-size:var(--t5);color:var(--ink-3);margin-top:2px;" data-i18n="pdp_library_want_sub">On your wishlist</div>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="2" style="width:15px;height:15px;margin-left:auto;flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /screen-product-detail -->
 
 
@@ -2456,11 +2748,136 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 </div>
 
 <!-- ═══════════════════════════════════════
-     SUB-PAGE: PROFILE
+     SCREEN: SETTINGS
 ═══════════════════════════════════════ -->
-<div class="screen" id="screen-sub-profile">
+<div class="screen" id="screen-settings">
   <div class="sub-header">
     <button class="dip-back-btn" onclick="switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" data-i18n="nav_settings">Settings</span>
+  </div>
+
+  <div class="sub-body" style="padding:0 0 40px;">
+
+    <!-- Account -->
+    <div class="act-settings-group">
+      <div class="act-settings-label" data-i18n="set_account">Account</div>
+      <div class="act-settings-card">
+        <div class="act-settings-row" onclick="switchScreen('sub-profile')">
+          <div class="act-settings-row-l">
+            <div class="act-sicon sri-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="act-sinfo"><span class="act-sname" data-i18n="set_profile">Profile</span><span class="act-ssub">Abdullah Hassan</span></div>
+          </div>
+          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <div class="act-settings-row" onclick="switchScreen('sub-email')">
+          <div class="act-settings-row-l">
+            <div class="act-sicon sri-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div class="act-sinfo"><span class="act-sname" data-i18n="set_email">Email</span><span class="act-ssub">you@gmail.com</span></div>
+          </div>
+          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <div class="act-settings-row act-settings-row-last" onclick="switchScreen('sub-phone')">
+          <div class="act-settings-row-l">
+            <div class="act-sicon sri-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+            <div class="act-sinfo"><span class="act-sname" data-i18n="set_phone">Phone</span><span class="act-ssub" data-i18n="set_phone_empty">Not added yet</span></div>
+          </div>
+          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preferences -->
+    <div class="act-settings-group">
+      <div class="act-settings-label" data-i18n="set_preferences">Preferences</div>
+      <div class="act-settings-card">
+        <div class="act-settings-row" onclick="switchScreen('sub-currency')">
+          <div class="act-settings-row-l">
+            <div class="act-sicon sri-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+            <div class="act-sinfo"><span class="act-sname" data-i18n="set_currency">Currency</span><span class="act-ssub" id="settings-currency-sub">Saudi Riyal (SAR)</span></div>
+          </div>
+          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <div class="act-settings-row act-settings-row-last" onclick="switchScreen('sub-language')">
+          <div class="act-settings-row-l">
+            <div class="act-sicon sri-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+            <div class="act-sinfo"><span class="act-sname" data-i18n="set_language">Language</span><span class="act-ssub" id="settings-lang-sub">English</span></div>
+          </div>
+          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Support -->
+    <div class="act-settings-group">
+      <div class="act-settings-label" data-i18n="set_support">Support</div>
+      <div class="act-settings-card">
+        <div class="act-settings-row" onclick="switchScreen('sub-support')">
+          <div class="act-settings-row-l">
+            <div class="act-sicon" style="background:var(--b-blue);color:#0E7490;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+            <div class="act-sinfo"><span class="act-sname" data-i18n="set_support_row">Contact Support</span><span class="act-ssub" data-i18n="set_support_sub">Send us a message</span></div>
+          </div>
+          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <div class="act-settings-row" onclick="switchScreen('sub-help')">
+          <div class="act-settings-row-l">
+            <div class="act-sicon sri-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+            <div class="act-sinfo"><span class="act-sname" data-i18n="set_help">Help &amp; FAQ</span><span class="act-ssub" data-i18n="set_help_sub">Get answers to common questions</span></div>
+          </div>
+          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <div class="act-settings-row act-settings-row-last" onclick="switchScreen('sub-privacy')">
+          <div class="act-settings-row-l">
+            <div class="act-sicon" style="background:var(--bg-input);color:var(--ink-3);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="act-sinfo"><span class="act-sname" data-i18n="set_privacy">Privacy Policy</span><span class="act-ssub" data-i18n="set_privacy_sub">Version 2.1</span></div>
+          </div>
+          <svg class="act-schevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- App Info -->
+    <div class="act-settings-group">
+      <div class="act-settings-label" data-i18n="set_app_info">App Info</div>
+      <div class="act-settings-card">
+        <div class="act-settings-row act-settings-row-last" style="cursor:default;">
+          <div class="act-settings-row-l">
+            <div class="act-sicon" style="background:var(--b-purple);color:var(--red);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+            <div class="act-sinfo"><span class="act-sname">Yourdis</span><span class="act-ssub">Version 2.1</span></div>
+          </div>
+          <span style="font-size:var(--t6);font-weight:600;background:var(--green-light);color:var(--green);padding:3px 8px;border-radius:10px;" data-i18n="set_up_to_date">Up to date</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sign Out -->
+    <div style="padding:4px 20px 0;">
+      <button class="logout-btn" onclick="confirmLogout()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span data-i18n="set_sign_out">Sign Out</span>
+      </button>
+    </div>
+
+  </div><!-- /sub-body -->
+
+  <!-- Sign out confirmation sheet (belongs to settings screen) -->
+  <div class="sheet-backdrop" id="logout-backdrop" onclick="cancelLogout()"></div>
+  <div class="overlay-sheet" id="logout-sheet">
+    <div class="overlay-handle"></div>
+    <div style="padding:12px 24px 8px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:10px;">👋</div>
+      <div style="font-family:var(--font-display);font-size:var(--t2);color:var(--ink-1);margin-bottom:8px;line-height:1.3;" data-i18n="set_sign_out_confirm">Are you sure you want to sign out?</div>
+      <button onclick="doLogout()" style="width:100%;padding:14px;border-radius:var(--radius-md);background:var(--red);color:#fff;font-size:var(--t4);font-weight:600;border:none;cursor:pointer;font-family:inherit;margin-bottom:10px;" data-i18n="set_sign_out_yes">Yes, sign out</button>
+      <button onclick="cancelLogout()" style="width:100%;padding:14px;border-radius:var(--radius-md);background:var(--bg-surface);color:var(--ink-2);font-size:var(--t4);font-weight:600;border:1px solid var(--border-strong);cursor:pointer;font-family:inherit;" data-i18n="set_cancel">Cancel</button>
+    </div>
+    <div style="height:16px;" aria-hidden="true"></div>
+  </div>
+
+</div><!-- /screen-settings -->
+<div class="screen" id="screen-sub-profile">
+  <div class="sub-header">
+    <button class="dip-back-btn" onclick="switchScreen('settings')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
     </button>
     <span class="sub-header-title" data-i18n="set_profile">Profile</span>
@@ -2478,7 +2895,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 ═══════════════════════════════════════ -->
 <div class="screen" id="screen-sub-email">
   <div class="sub-header">
-    <button class="dip-back-btn" onclick="switchScreen('activity')">
+    <button class="dip-back-btn" onclick="switchScreen('settings')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
     </button>
     <span class="sub-header-title" data-i18n="set_email">Email</span>
@@ -2515,7 +2932,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 ═══════════════════════════════════════ -->
 <div class="screen" id="screen-sub-phone">
   <div class="sub-header">
-    <button class="dip-back-btn" onclick="switchScreen('activity')">
+    <button class="dip-back-btn" onclick="switchScreen('settings')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
     </button>
     <span class="sub-header-title" data-i18n="set_phone">Phone</span>
@@ -2534,7 +2951,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 ═══════════════════════════════════════ -->
 <div class="screen" id="screen-sub-currency">
   <div class="sub-header">
-    <button class="dip-back-btn" onclick="switchScreen('activity')">
+    <button class="dip-back-btn" onclick="switchScreen('settings')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
     </button>
     <span class="sub-header-title" data-i18n="set_currency">Currency</span>
@@ -2559,7 +2976,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 ═══════════════════════════════════════ -->
 <div class="screen" id="screen-sub-language">
   <div class="sub-header">
-    <button class="dip-back-btn" onclick="switchScreen('activity')">
+    <button class="dip-back-btn" onclick="switchScreen('settings')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
     </button>
     <span class="sub-header-title" data-i18n="set_language">Language</span>
@@ -2584,7 +3001,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 ═══════════════════════════════════════ -->
 <div class="screen" id="screen-sub-support">
   <div class="sub-header">
-    <button class="dip-back-btn" onclick="switchScreen('activity')">
+    <button class="dip-back-btn" onclick="switchScreen('settings')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
     </button>
     <span class="sub-header-title" data-i18n="set_support_row">Contact Support</span>
@@ -2604,7 +3021,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 ═══════════════════════════════════════ -->
 <div class="screen" id="screen-sub-help">
   <div class="sub-header">
-    <button class="dip-back-btn" onclick="switchScreen('activity')">
+    <button class="dip-back-btn" onclick="switchScreen('settings')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
     </button>
     <span class="sub-header-title" data-i18n="set_help">Help &amp; FAQ</span>
@@ -2642,7 +3059,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 ═══════════════════════════════════════ -->
 <div class="screen" id="screen-sub-privacy">
   <div class="sub-header">
-    <button class="dip-back-btn" onclick="switchScreen('activity')">
+    <button class="dip-back-btn" onclick="switchScreen('settings')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
     </button>
     <span class="sub-header-title" data-i18n="set_privacy">Privacy Policy</span>
@@ -2693,6 +3110,163 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════
+     SCREEN: FRAGRANCE LIBRARY
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-fragrance-library">
+
+  <!-- Back header -->
+  <div class="search-header" style="padding-bottom:12px;">
+    <div class="back-btn" onclick="switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </div>
+    <span class="screen-title" data-i18n="library_title">My Fragrance Library</span>
+    <div style="width:36px;"></div>
+  </div>
+
+  <div class="scroll-area">
+
+    <!-- Profile Hero -->
+    <div class="flib-hero">
+      <div class="flib-avatar-ring">
+        <div class="flib-avatar-inner">
+          <img src="profile.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div class="flib-avatar-fallback">AH</div>
+        </div>
+      </div>
+      <div class="flib-name">Abdullah Hassan</div>
+      <!-- Privacy + Share row -->
+      <div style="margin-top:8px;z-index:1;display:flex;align-items:center;gap:8px;">
+        <div id="flib-privacy-pill" style="display:flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:0.04em;cursor:pointer;transition:all 0.18s;" onclick="flibTogglePrivacy()">
+          <!-- filled by JS -->
+        </div>
+        <div style="display:flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:0.04em;cursor:pointer;transition:opacity 0.15s;background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.90);border:1px solid rgba(255,255,255,0.25);" onclick="flibShare()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;flex-shrink:0;"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          <span data-i18n="library_share">Share</span>
+        </div>
+      </div>
+      <div class="flib-meta-row">
+        <div class="flib-meta-item">
+          <div class="flib-meta-v" id="flib-stat-owned">8</div>
+          <div class="flib-meta-l" data-i18n="library_owned">Owned</div>
+        </div>
+        <div class="flib-meta-sep"></div>
+        <div class="flib-meta-item">
+          <div class="flib-meta-v" id="flib-stat-liked">5</div>
+          <div class="flib-meta-l" data-i18n="library_liked">Liked</div>
+        </div>
+        <div class="flib-meta-sep"></div>
+        <div class="flib-meta-item">
+          <div class="flib-meta-v" id="flib-stat-want">4</div>
+          <div class="flib-meta-l" data-i18n="library_want">Want to Try</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Personality Card -->
+    <div class="flib-persona-card">
+      <div class="flib-persona-head">
+        <div class="flib-persona-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2a10 10 0 0110 10c0 4-2.5 7.5-6.2 9.1M12 2a10 10 0 00-10 10c0 4 2.5 7.5 6.2 9.1"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <span class="flib-persona-label" data-i18n="library_ai_taste">Fragrance Personality</span>
+      </div>
+      <div id="flib-persona-text" class="flib-persona-loading">
+        <div class="flib-persona-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flib-tabs" style="margin-top:16px;">
+      <div class="flib-tab active" id="flib-tab-owned" onclick="flibSwitchTab('owned')" data-i18n="library_owned">Owned</div>
+      <div class="flib-tab" id="flib-tab-liked" onclick="flibSwitchTab('liked')" data-i18n="library_liked">Liked</div>
+      <div class="flib-tab" id="flib-tab-want" onclick="flibSwitchTab('want')" data-i18n="library_want">Want to Try</div>
+    </div>
+
+    <!-- Grid containers -->
+    <div id="flib-grid-owned" class="flib-grid"></div>
+    <div id="flib-grid-liked" class="flib-grid" style="display:none;"></div>
+    <div id="flib-grid-want"  class="flib-grid" style="display:none;"></div>
+
+    <div style="height:24px;" aria-hidden="true"></div>
+  </div>
+
+  <!-- Toast -->
+  <div id="flib-toast" style="
+    position:absolute; bottom:28px; left:16px; right:16px;
+    background:var(--ink-1); color:#fff;
+    border-radius:var(--radius-md); padding:13px 16px;
+    font-size:var(--t5); font-weight:500;
+    box-shadow:0 6px 24px rgba(0,0,0,0.22);
+    opacity:0; pointer-events:none;
+    transform:translateY(10px);
+    transition:opacity 0.22s ease, transform 0.22s ease;
+    z-index:50; text-align:center;
+  "></div>
+
+</div><!-- /screen-fragrance-library -->
+
+<!-- ═══════════════════════════════════════
+     SCREEN: ALL BRANDS
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-all-brands">
+  <div class="sub-header">
+    <button class="dip-back-btn" onclick="switchScreen('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" data-i18n="home_brands">Browse by Brand</span>
+  </div>
+
+  <div class="brands-search-wrap">
+    <div class="brands-search-bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="brands-search-input" type="text" data-i18n="brands_search_ph" placeholder="Search brands…" oninput="filterBrandsSearch(this.value)"/>
+    </div>
+  </div>
+
+  <div class="sub-body" style="padding:0 0 24px;">
+    <div class="brands-list" id="brands-grid"></div>
+    <div class="brands-empty" id="brands-empty">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <div class="brands-empty-text" data-i18n="brands_no_results">No brands found</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: BRAND PAGE
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-brand-page">
+
+  <!-- Floating back button over the banner -->
+  <div style="position:absolute;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;padding:10px 14px;">
+    <button class="dip-back-btn" id="brand-page-back-btn" onclick="switchScreen('all-brands')" style="background:rgba(255,255,255,0.7);backdrop-filter:blur(6px);border:1px solid rgba(0,0,0,0.08);">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+  </div>
+
+  <div class="scroll-area" style="padding-top:0;">
+
+    <!-- Banner hero -->
+    <div class="brand-page-banner" id="brand-page-banner">
+      <div class="brand-page-monogram" id="brand-page-avatar">–</div>
+      <div class="brand-page-title"   id="brand-page-name">–</div>
+      <div class="brand-page-tags"    id="brand-page-tags"></div>
+    </div>
+
+    <!-- Description -->
+    <div class="brand-desc-card" id="brand-desc-card">
+      <div class="brand-desc-text" id="brand-page-desc">–</div>
+    </div>
+
+    <!-- Products -->
+    <div class="brand-sec-label" id="brand-sec-label">All Products</div>
+    <div class="brand-product-list" id="brand-product-list"></div>
+
+    <div style="height:28px;" aria-hidden="true"></div>
+  </div>
+</div>
+
 </div><!-- /phone-frame -->
 </div><!-- /app-root -->
 
@@ -2707,57 +3281,10 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
    PRODUCT DATA
 ══════════════════════════════════════════════════════════ */
 var PRODUCTS = [
-  {
-    id: 'chanel-bleu-edp',
-    img: 'jpeg1.jpg',
-    bg: '#EAE9FB',
-    nameEn: 'Bleu de Chanel EDP',
-    nameAr: 'بلو دو شانيل (أو دو بارفيوم)',
-    brandEn: 'Chanel',
-    brandAr: 'شانيل',
-    houseEn: 'Chanel',
-    houseAr: 'شانيل',
-    familyEn: 'Woody Aromatic',
-    familyAr: 'أروماتك خشبي',
-    genderEn: 'Masculine',
-    genderAr: 'رجالي',
-    countryEn: 'France',
-    countryAr: 'فرنسا',
-    perfumerEn: 'Jacques Polge',
-    perfumerAr: 'جاك بولج',
-    year: '2014',
-    rating: '4.6',
-    wearSeasonEn: 'All Seasons',
-    wearSeasonAr: 'كل الفصول',
-    wearTimeEn: 'Day & Night',
-    wearTimeAr: 'نهاري وليلي',
-    discountPercent: 20,
-    discountLabelEn: '20% OFF',
-    discountLabelAr: 'خصم 20%',
-    size: '100ml',
-    concentrationEn: 'Eau de Parfum',
-    concentrationAr: 'أو دو بارفيوم',
-    lowestPrice: 485,
-    highestPrice: 600,
-    savings: 115,
-    currencyEn: 'SAR',
-    currencyAr: 'ريال',
-    storesCount: 5,
-    initials: 'Cd',
-    descEn: 'A modern masculine icon. Citrus and bergamot open brightly before settling into a deep woody heart of vetiver and cedarwood.',
-    descAr: 'أيقونة ذكورية عصرية. تفتتح الرائحة بانتعاش الحمضيات والبرغموت قبل أن تستقر في قلب خشبي عميق من نجيل الهند وخشب الأرز.',
-    notes: {
-      topEn:   ['Citrus', 'Bergamot', 'Pink Pepper', 'Coriander', ],
-      topAr:   ['الحمضيات', 'البرغموت', 'الفلفل الوردي', 'الكزبرة',],
-      heartEn: ['Vetiver', 'Cedarwood', 'Melon'],
-      heartAr: ['نجيل الهند', 'خشب الأرز', 'البطيخ'],
-      baseEn:  ['Patchouli', 'Labnum', 'Sandalwood', 'Amberwood'],
-      baseAr:  ['الباتشولي', 'اللابدانوم', 'خشب الصندل', 'خشب العنبر']
-    }
-  },
+
   {
     id: 'dior-sauvage-elixir',
-    img: 'jpeg2.jpg',
+    img: 'jpeg1.jpg',
     bg: '#E0F4ED',
     nameEn: 'Sauvage Elixir',
     nameAr: 'سوفاج إكسير',
@@ -2801,6 +3328,54 @@ var PRODUCTS = [
       heartAr: ['اللافندر'],
       baseEn:  ['Licorice', 'Sandalwood', 'Amber', 'Patchouli', 'Haiti Vetiver'],
       baseAr:  ['العرقسوس', 'خشب الصندل', 'العنبر', 'الباتشولي', 'نجيل الهند']
+    }
+  },
+    {
+    id: 'chanel-bleu-edp',
+    img: 'jpeg2.jpg',
+    bg: '#EAE9FB',
+    nameEn: 'Bleu de Chanel EDP',
+    nameAr: 'بلو دو شانيل (أو دو بارفيوم)',
+    brandEn: 'Chanel',
+    brandAr: 'شانيل',
+    houseEn: 'Chanel',
+    houseAr: 'شانيل',
+    familyEn: 'Woody Aromatic',
+    familyAr: 'أروماتك خشبي',
+    genderEn: 'Masculine',
+    genderAr: 'رجالي',
+    countryEn: 'France',
+    countryAr: 'فرنسا',
+    perfumerEn: 'Jacques Polge',
+    perfumerAr: 'جاك بولج',
+    year: '2014',
+    rating: '4.6',
+    wearSeasonEn: 'All Seasons',
+    wearSeasonAr: 'كل الفصول',
+    wearTimeEn: 'Day & Night',
+    wearTimeAr: 'نهاري وليلي',
+    discountPercent: 20,
+    discountLabelEn: '20% OFF',
+    discountLabelAr: 'خصم 20%',
+    size: '100ml',
+    concentrationEn: 'Eau de Parfum',
+    concentrationAr: 'أو دو بارفيوم',
+    lowestPrice: 485,
+    highestPrice: 600,
+    savings: 115,
+    currencyEn: 'SAR',
+    currencyAr: 'ريال',
+    storesCount: 5,
+    initials: 'Cd',
+    descEn: 'A modern masculine icon. Citrus and bergamot open brightly before settling into a deep woody heart of vetiver and cedarwood.',
+    descAr: 'أيقونة ذكورية عصرية. تفتتح الرائحة بانتعاش الحمضيات والبرغموت قبل أن تستقر في قلب خشبي عميق من نجيل الهند وخشب الأرز.',
+    notes: {
+      topEn:   ['Citrus', 'Bergamot', 'Pink Pepper', 'Coriander', ],
+      topAr:   ['الحمضيات', 'البرغموت', 'الفلفل الوردي', 'الكزبرة',],
+      heartEn: ['Vetiver', 'Cedarwood', 'Melon'],
+      heartAr: ['نجيل الهند', 'خشب الأرز', 'البطيخ'],
+      baseEn:  ['Patchouli', 'Labnum', 'Sandalwood', 'Amberwood'],
+      baseAr:  ['الباتشولي', 'اللابدانوم', 'خشب الصندل', 'خشب العنبر']
     }
   },
   {
@@ -2946,53 +3521,198 @@ var PRODUCTS = [
       baseEn:  ['Ambergris', 'Woody Notes', 'Musk'],
       baseAr:  ['العنبر', 'ملاحظات خشبية', 'المسك']
     }
+  },
+  {
+    id: 'bleu-de-chanel-parfum',
+    img: 'jpeg6.jpg',
+    bg: '#E5E4E2',
+    nameEn: 'Bleu de Chanel Parfum',
+    nameAr: 'بلو دي شانيل بارفيوم',
+    brandEn: 'Chanel',
+    brandAr: 'شانيل',
+    houseEn: 'Chanel',
+    houseAr: 'شانيل',
+    familyEn: 'Woody Aromatic',
+    familyAr: 'وودي أروماتك',
+    genderEn: 'Masculine',
+    genderAr: 'رجالي',
+    countryEn: 'France',
+    countryAr: 'فرنسا',
+    perfumerEn: 'Olivier Polge',
+    perfumerAr: 'أوليفييه بولج',
+    year: '2018',
+    rating: '4.8',
+    wearSeasonEn: 'All Seasons',
+    wearSeasonAr: 'جميع المواسم',
+    wearTimeEn: 'Evening',
+    wearTimeAr: 'مسائي',
+    discountPercent: 10,
+    discountLabelEn: '10% OFF',
+    discountLabelAr: 'خصم 10%',
+    size: '100ml',
+    concentrationEn: 'Parfum',
+    concentrationAr: 'بارفيوم',
+    lowestPrice: 550,
+    highestPrice: 620,
+    savings: 70,
+    currencyEn: 'SAR',
+    currencyAr: 'ريال',
+    storesCount: 8,
+    initials: 'BDC',
+    descEn: 'An intense, aromatic fragrance that opens with powerful freshness and lingers with a deep, woody trail.',
+    descAr: 'عطر أروماتك مكثف يفتتح بنضارة قوية ويستقر بأثر خشبي عميق وفخم.',
+    notes: {
+      topEn:   ['Lemon Zest', 'Bergamot', 'Mint', 'Artemisia'],
+      topAr:   ['قشر الليمون', 'البرغموت', 'النعناع', 'الشيح'],
+      heartEn: ['Lavender', 'Pineapple', 'Geranium', 'Green Notes'],
+      heartAr: ['اللافندر', 'الأناناس', 'إبرة الراعي', 'مكونات خضراء'],
+      baseEn:  ['Sandalwood', 'Cedar', 'Amberwood', 'Iso E Super', 'Tonka Bean'],
+      baseAr:  ['خشب الصندل', 'الأرز', 'خشب العنبر', 'أيزو إي سوبر', 'حبوب التونكا']
+    }
+  },
+  {
+    id: 'br-540-extrait',
+    img: 'jpeg7.jpg',
+    bg: '#FDF2E9',
+    nameEn: 'Baccarat Rouge 540 Extrait',
+    nameAr: 'باكارات روج 540 إكستريت',
+    brandEn: 'MFK',
+    brandAr: 'إم إف كيه',
+    houseEn: 'Maison Francis Kurkdjian',
+    houseAr: 'ميزون فرانسيس كوركدجيان',
+    familyEn: 'Amber Floral',
+    familyAr: 'عنبري زهري',
+    genderEn: 'Unisex',
+    genderAr: 'للجنسين',
+    countryEn: 'France',
+    countryAr: 'فرنسا',
+    perfumerEn: 'Francis Kurkdjian',
+    perfumerAr: 'فرانسيس كوركدجيان',
+    year: '2017',
+    rating: '4.9',
+    wearSeasonEn: 'Winter',
+    wearSeasonAr: 'شتوي',
+    wearTimeEn: 'Evening',
+    wearTimeAr: 'مسائي',
+    discountPercent: 5,
+    discountLabelEn: '5% OFF',
+    discountLabelAr: 'خصم 5%',
+    size: '70ml',
+    concentrationEn: 'Extrait de Parfum',
+    concentrationAr: 'إكستريت دو بارفيوم',
+    lowestPrice: 1400,
+    highestPrice: 1600,
+    savings: 200,
+    currencyEn: 'SAR',
+    currencyAr: 'ريال',
+    storesCount: 4,
+    initials: 'BR',
+    descEn: 'A dense and intense version of the iconic Baccarat Rouge, with a floral and woody depth that leaves a lasting impression.',
+    descAr: 'نسخة مكثفة وكثيفة من العطر الأيقوني باكارات روج، بعمق زهري وخشبي يترك انطباعاً لا ينسى.',
+    notes: {
+      topEn:   ['Bitter Almond', 'Saffron'],
+      topAr:   ['اللوز المر', 'الزعفران'],
+      heartEn: ['Egyptian Jasmine', 'Cedar'],
+      heartAr: ['الياسمين المصري', 'خشب الأرز'],
+      baseEn:  ['Ambergris', 'Woody Notes', 'Musk'],
+      baseAr:  ['العنبر', 'مكونات خشبية', 'المسك']
+    }
+  },
+  {
+    id: 'dior-sauvage-elixir',
+    img: 'jpeg8.jpg',
+    bg: '#2C3E50',
+    nameEn: 'Sauvage Elixir',
+    nameAr: 'سوفاج إكسير',
+    brandEn: 'Dior',
+    brandAr: 'ديور',
+    houseEn: 'Christian Dior',
+    houseAr: 'كريستيان ديور',
+    familyEn: 'Aromatic',
+    familyAr: 'أروماتك',
+    genderEn: 'Masculine',
+    genderAr: 'رجالي',
+    countryEn: 'France',
+    countryAr: 'فرنسا',
+    perfumerEn: 'Francois Demachy',
+    perfumerAr: 'فرانسوا ديماشي',
+    year: '2021',
+    rating: '4.6',
+    wearSeasonEn: 'Autumn/Winter',
+    wearSeasonAr: 'خريفي وشتوي',
+    wearTimeEn: 'Evening',
+    wearTimeAr: 'مسائي',
+    discountPercent: 15,
+    discountLabelEn: '15% OFF',
+    discountLabelAr: 'خصم 15%',
+    size: '60ml',
+    concentrationEn: 'Elixir',
+    concentrationAr: 'إكسير',
+    lowestPrice: 580,
+    highestPrice: 680,
+    savings: 100,
+    currencyEn: 'SAR',
+    currencyAr: 'ريال',
+    storesCount: 7,
+    initials: 'DS',
+    descEn: 'Concentrated to the extreme, an elixir with an unprecedented trail that explores the unchartered territory of spicy freshness.',
+    descAr: 'تركيز فائق، إكسير بأثر غير مسبوق يستكشف أراضي جديدة من الانتعاش الحار.',
+    notes: {
+      topEn:   ['Cinnamon', 'Nutmeg', 'Cardamom', 'Grapefruit'],
+      topAr:   ['القرفة', 'جوزة الطيب', 'الهيل', 'الجريب فروت'],
+      heartEn: ['Lavender'],
+      heartAr: ['اللافندر'],
+      baseEn:  ['Licorice', 'Sandalwood', 'Amber', 'Patchouli', 'Haitian Vetiver'],
+      baseAr:  ['عرق السوس', 'خشب الصندل', 'العنبر', 'الباتشولي', 'نجيل الهند الهايتي']
+    }
   }
+
 ];
+
+/* ══════════════════════════════════════════════════════════
+   BRAND DESCRIPTIONS & METADATA
+══════════════════════════════════════════════════════════ */
+var BRAND_DATA = {
+  'chanel': {
+    countryEn: 'France', countryAr: 'فرنسا',
+    founded: '1910',
+    descEn: 'Chanel is a legendary French luxury house founded in 1910 by Coco Chanel. Renowned worldwide, it creates timeless, iconic fragrances that define the history of modern perfumery.',
+    descAr: 'شانيل دار أزياء وعطور فرنسية عريقة تأسست عام 1910 على يد كوكو شانيل. تشتهر عالمياً بتقديم عطور أيقونية خالدة تركت بصمة فريدة في تاريخ العطور.'
+  },
+  'dior': {
+    countryEn: 'France', countryAr: 'فرنسا',
+    founded: '1946',
+    descEn: 'Christian Dior is a Parisian luxury house founded in 1946. It is celebrated for its elegant, bold, and masterfully composed fragrances that embody French sophistication.',
+    descAr: 'ديور دار فرنسية فاخرة تأسست في باريس عام 1946. وتشتهر بعطورها الأنيقة والجريئة التي تجمع بين الابتكار والتركيبات المتقنة.'
+  },
+  'tom-ford': {
+    countryEn: 'USA', countryAr: 'أمريكا',
+    founded: '2005',
+    descEn: 'Tom Ford Beauty is an American luxury brand founded in 2005. It is highly regarded for its sensual, bold aesthetic and its exclusive Private Blend collection of niche perfumes.',
+    descAr: 'توم فورد علامة أمريكية فاخرة تأسست عام 2005. وتشتهر بطابعها الجريء والفاخر، وبشكل خاص مجموعة "برايفت بلند" التي أثرت عالم عطور النيش.'
+  },
+  'laurent': {
+    countryEn: 'France', countryAr: 'فرنسا',
+    founded: '1961',
+    descEn: 'Yves Saint Laurent is a French luxury house founded in 1961. It translates a daring and provocative spirit into iconic fragrances that celebrate freedom and modern elegance.',
+    descAr: 'إيف سان لوران دار فرنسية فاخرة تأسست عام 1961. تعكس عطورها الروح الجريئة والمبتكرة للدار، وتجمع بين الأناقة والجاذبية العصرية.'
+  },
+  'kurkdjian': {
+    countryEn: 'France', countryAr: 'فرنسا',
+    founded: '2009',
+    descEn: 'Maison Francis Kurkdjian is a French niche house founded in 2009. It is celebrated for artistic perfumes that perfectly balance high-quality raw materials with poetic precision.',
+    descAr: 'فرانسيس كوردجيان دار عطور نيشية فرنسية تأسست عام 2009. تشتهر بتقديم عطور فنية فاخرة تعتمد على أجود المواد الخام بتوازن ودقة متناهية.'
+  }
+};
 
 /* ══════════════════════════════════════════════════════════
    STORES DATA
 ══════════════════════════════════════════════════════════ */
 var STORES = [
   {
-    id: 'golden-scent',
-    initials: 'GS', bg: 'var(--b-blue)',
-    nameEn: 'Golden Scent',   nameAr: 'جولدن سنت',
-    url: 'goldenscent.com',
-    productCount: '480+',
-    followersCount: '2.4k',
-    verified: true
-  },
-  {
-    id: 'namshi',
-    initials: 'Nm', bg: 'var(--b-teal)',
-    nameEn: 'Namshi',         nameAr: 'نمشي',
-    url: 'namshi.com',
-    productCount: '190+',
-    followersCount: '1.8k',
-    verified: true
-  },
-  {
-    id: 'sephora',
-    initials: 'Sp', bg: 'var(--b-pink)',
-    nameEn: 'Sephora',        nameAr: 'سيفورا',
-    url: 'sephora.com.sa',
-    productCount: '450+',
-    followersCount: '3.1k',
-    verified: true
-  },
-  {
-    id: 'noon',
-    initials: 'Nn', bg: 'var(--b-amber)',
-    nameEn: 'Noon',           nameAr: 'نون',
-    url: 'noon.com',
-    productCount: '210+',
-    followersCount: '1.2k',
-    verified: true
-  },
-  {
     id: 'asheq-al-otor',
     initials: 'AO', bg: 'var(--b-sage)',
-    nameEn: 'Asheq Al-Otor',  nameAr: 'عاشق العطور',
+    nameEn: 'Asheq Al-Otor',   nameAr: 'عاشق العطور',
     url: 'asheqalotor.com',
     productCount: '320+',
     followersCount: '980',
@@ -3001,10 +3721,145 @@ var STORES = [
   {
     id: 'najd-al-otheyah',
     initials: 'NO', bg: 'var(--b-purple)',
-    nameEn: 'Najd Al-Otheyah',nameAr: 'نجد العطيه',
+    nameEn: 'Najd Al-Otheyah', nameAr: 'نجد العذية',
     url: 'najdalotheya.com',
     productCount: '140+',
     followersCount: '620',
+    verified: true
+  },
+  {
+    id: 'be-on-one',
+    initials: 'B1', bg: 'var(--b-blue)',
+    nameEn: 'Be On One',       nameAr: 'بي أون ون',
+    url: 'beonone.com',
+    productCount: '210+',
+    followersCount: '1.1k',
+    verified: true
+  },
+  {
+    id: 'loja',
+    initials: 'LJ', bg: 'var(--b-pink)',
+    nameEn: 'Loja',            nameAr: 'لوجا',
+    url: 'loja.sa',
+    productCount: '180+',
+    followersCount: '850',
+    verified: true
+  },
+  {
+    id: 'yvain',
+    initials: 'YV', bg: 'var(--b-teal)',
+    nameEn: 'Yvain',           nameAr: 'يفاين',
+    url: 'yvain.sa',
+    productCount: '150+',
+    followersCount: '430',
+    verified: true
+  },
+  {
+    id: 'abaq',
+    initials: 'AB', bg: 'var(--b-amber)',
+    nameEn: 'Abaq',            nameAr: 'عبق',
+    url: 'abaq.sa',
+    productCount: '270+',
+    followersCount: '1.5k',
+    verified: true
+  },
+  {
+    id: 'candy-niche',
+    initials: 'CN', bg: 'var(--b-rose)',
+    nameEn: 'Candy Niche',     nameAr: 'كاندي نيش',
+    url: 'candyniche.com',
+    productCount: '310+',
+    followersCount: '2.1k',
+    verified: true
+  },
+  {
+    id: 'sara-makeup',
+    initials: 'SM', bg: 'var(--b-red)',
+    nameEn: 'Sara Makeup',     nameAr: 'سارا ميك اب',
+    url: 'saramakeup.com',
+    productCount: '500+',
+    followersCount: '4.2k',
+    verified: true
+  },
+  {
+    id: 'al-sultan-perfumes',
+    initials: 'AS', bg: 'var(--b-gold)',
+    nameEn: 'Al Sultan Perfumes', nameAr: 'السلطان للعطور',
+    url: 'alsultan-perfumes.com',
+    productCount: '290+',
+    followersCount: '1.7k',
+    verified: true
+  },
+  {
+    id: 'faces',
+    initials: 'FC', bg: 'var(--b-indigo)',
+    nameEn: 'Faces',           nameAr: 'وجوه',
+    url: 'faces.com',
+    productCount: '600+',
+    followersCount: '5.4k',
+    verified: true
+  },
+  {
+    id: 'perfume-expert',
+    initial: 'PE', bg: 'var(--b-brown)',
+    nameEn: 'Perfume Expert',  nameAr: 'خبير العطور',
+    url: 'perfume-expert.net',
+    productCount: '230+',
+    followersCount: '920',
+    verified: true
+  },
+  {
+    id: 'vanilla',
+    initials: 'VN', bg: 'var(--b-cream)',
+    nameEn: 'Vanilla',         nameAr: 'فانيلا',
+    url: 'vanilla.sa',
+    productCount: '410+',
+    followersCount: '3.3k',
+    verified: true
+  },
+  {
+    id: 'labrizza-perfumes',
+    initials: 'LP', bg: 'var(--b-violet)',
+    nameEn: 'Labrizza Perfumes', nameAr: 'عطور لابريزا',
+    url: 'labrizza.com',
+    productCount: '160+',
+    followersCount: '540',
+    verified: true
+  },
+  {
+    id: 'nobles-scent',
+    initials: 'NS', bg: 'var(--b-navy)',
+    nameEn: 'Nobles Scent',    nameAr: 'عطور نوبلز سينت',
+    url: 'noblesscent.com',
+    productCount: '195+',
+    followersCount: '780',
+    verified: true
+  },
+  {
+    id: 'baqshan-perfumes',
+    initials: 'BQ', bg: 'var(--b-slate)',
+    nameEn: 'Baqshan Perfumes', nameAr: 'عطور متجر بقشان',
+    url: 'baqshan.com.sa',
+    productCount: '380+',
+    followersCount: '2.8k',
+    verified: true
+  },
+  {
+    id: 'laromeos',
+    initials: 'LR', bg: 'var(--b-orange)',
+    nameEn: 'Laromeos',        nameAr: 'لاروميوس',
+    url: 'laromeos.com',
+    productCount: '185+',
+    followersCount: '690',
+    verified: true
+  },
+  {
+    id: 'al-mutanabbi',
+    initials: 'MT', bg: 'var(--b-cyan)',
+    nameEn: 'Al Mutanabbi Store', nameAr: 'عطور متجر المتنبي',
+    url: 'almutanabbi.sa',
+    productCount: '205+',
+    followersCount: '810',
     verified: true
   }
 ];
@@ -3013,51 +3868,59 @@ var STORES = [
    STORE COMPARISON DATA
 ══════════════════════════════════════════════════════════ */
 (function() {
-  var cmp = {
-    'chanel-bleu-edp': [
-      { storeId:'golden-scent',    price:485,  size:'100ml', shipping:'Free · 1–2 days' },
-      { storeId:'namshi',          price:510,  size:'100ml', shipping:'Free · 2–3 days' },
-      { storeId:'asheq-al-otor',   price:545,  size:'100ml', shipping:'3–5 days' },
-      { storeId:'noon',            price:555,  size:'100ml', shipping:'Free · 2–4 days' },
-      { storeId:'najd-al-otheyah', price:570,  size:'100ml', shipping:'4–6 days' }
-    ],
-    'dior-sauvage-elixir': [
-      { storeId:'najd-al-otheyah', price:415,  size:'60ml',  shipping:'Free · 1–2 days' },
-      { storeId:'golden-scent',    price:440,  size:'60ml',  shipping:'Free · 2–3 days' },
-      { storeId:'namshi',          price:465,  size:'60ml',  shipping:'3–5 days' },
-      { storeId:'sephora',         price:480,  size:'60ml',  shipping:'Free · 2–4 days' },
-      { storeId:'asheq-al-otor',   price:495,  size:'60ml',  shipping:'4–6 days' },
-      { storeId:'golden-scent',    price:580,  size:'100ml', shipping:'Free · 1–2 days' },
-      { storeId:'najd-al-otheyah', price:610,  size:'100ml', shipping:'Free · 2–3 days' },
-      { storeId:'namshi',          price:640,  size:'100ml', shipping:'3–5 days' },
-      { storeId:'noon',            price:660,  size:'100ml', shipping:'Free · 2–4 days' },
-      { storeId:'sephora',         price:690,  size:'100ml', shipping:'4–6 days' },
-      { storeId:'asheq-al-otor',   price:850,  size:'200ml', shipping:'Free · 1–2 days' },
-      { storeId:'golden-scent',    price:890,  size:'200ml', shipping:'Free · 2–3 days' },
-      { storeId:'noon',            price:920,  size:'200ml', shipping:'3–5 days' }
-    ],
-    'tomford-black-orchid': [
-      { storeId:'sephora',         price:420,  size:'50ml',  shipping:'Free · 2–3 days' },
-      { storeId:'golden-scent',    price:455,  size:'50ml',  shipping:'Free · 1–2 days' },
-      { storeId:'noon',            price:490,  size:'50ml',  shipping:'3–5 days' },
-      { storeId:'namshi',          price:520,  size:'100ml', shipping:'Free · 2–4 days' },
-      { storeId:'asheq-al-otor',   price:550,  size:'100ml', shipping:'4–6 days' }
-    ],
-    'ysl-libre-intense': [
-      { storeId:'asheq-al-otor',   price:460,  size:'50ml',  shipping:'Free · 2–3 days' },
-      { storeId:'golden-scent',    price:490,  size:'50ml',  shipping:'Free · 1–2 days' },
-      { storeId:'sephora',         price:520,  size:'90ml',  shipping:'3–5 days' },
-      { storeId:'namshi',          price:545,  size:'90ml',  shipping:'Free · 2–4 days' },
-      { storeId:'noon',            price:580,  size:'90ml',  shipping:'4–6 days' }
-    ],
-    'mfk-baccarat-rouge-540': [
-      { storeId:'asheq-al-otor',   price:1250, size:'70ml',  shipping:'Free · 2–3 days' },
-      { storeId:'golden-scent',    price:1320, size:'70ml',  shipping:'Free · 1–2 days' },
-      { storeId:'sephora',         price:1380, size:'70ml',  shipping:'3–5 days' },
-      { storeId:'noon',            price:1450, size:'200ml', shipping:'Free · 2–4 days' },
-      { storeId:'najd-al-otheyah', price:1500, size:'200ml', shipping:'4–6 days' }
-    ]
-  };
+var cmp = {
+  'chanel-bleu-edp': [
+    { storeId:'golden-scent',    price:485,  size:'100ml', shipping:'Free · 1–2 days' },
+    { storeId:'namshi',          price:510,  size:'100ml', shipping:'Free · 2–3 days' },
+    { storeId:'asheq-al-otor',   price:545,  size:'100ml', shipping:'3–5 days' },
+    { storeId:'noon',            price:555,  size:'100ml', shipping:'Free · 2–4 days' },
+    { storeId:'najd-al-otheyah', price:570,  size:'100ml', shipping:'4–6 days' },
+    { storeId:'sephora',         price:390,  size:'50ml',  shipping:'Free · 2–3 days' },
+    { storeId:'golden-scent',    price:720,  size:'150ml', shipping:'Free · 1–2 days' }
+  ],
+  'dior-sauvage-elixir': [
+    { storeId:'najd-al-otheyah', price:415,  size:'60ml',  shipping:'Free · 1–2 days' },
+    { storeId:'golden-scent',    price:440,  size:'60ml',  shipping:'Free · 2–3 days' },
+    { storeId:'namshi',          price:465,  size:'60ml',  shipping:'3–5 days' },
+    { storeId:'sephora',         price:480,  size:'60ml',  shipping:'Free · 2–4 days' },
+    { storeId:'asheq-al-otor',   price:495,  size:'60ml',  shipping:'4–6 days' },
+    { storeId:'golden-scent',    price:580,  size:'100ml', shipping:'Free · 1–2 days' },
+    { storeId:'najd-al-otheyah', price:610,  size:'100ml', shipping:'Free · 2–3 days' },
+    { storeId:'namshi',          price:640,  size:'100ml', shipping:'3–5 days' },
+    { storeId:'noon',            price:660,  size:'100ml', shipping:'Free · 2–4 days' },
+    { storeId:'sephora',         price:690,  size:'100ml', shipping:'4–6 days' },
+    { storeId:'asheq-al-otor',   price:850,  size:'200ml', shipping:'Free · 1–2 days' },
+    { storeId:'golden-scent',    price:890,  size:'200ml', shipping:'Free · 2–3 days' },
+    { storeId:'noon',            price:920,  size:'200ml', shipping:'3–5 days' }
+  ],
+  'tomford-black-orchid': [
+    { storeId:'sephora',         price:420,  size:'50ml',  shipping:'Free · 2–3 days' },
+    { storeId:'golden-scent',    price:455,  size:'50ml',  shipping:'Free · 1–2 days' },
+    { storeId:'noon',            price:490,  size:'50ml',  shipping:'3–5 days' },
+    { storeId:'namshi',          price:520,  size:'100ml', shipping:'Free · 2–4 days' },
+    { storeId:'asheq-al-otor',   price:550,  size:'100ml', shipping:'4–6 days' },
+    { storeId:'sephora',         price:320,  size:'30ml',  shipping:'Free · 2–3 days' },
+    { storeId:'noon',            price:750,  size:'100ml', shipping:'3–5 days' }
+  ],
+  'ysl-libre-intense': [
+    { storeId:'asheq-al-otor',   price:460,  size:'50ml',  shipping:'Free · 2–3 days' },
+    { storeId:'golden-scent',    price:490,  size:'50ml',  shipping:'Free · 1–2 days' },
+    { storeId:'sephora',         price:520,  size:'90ml',  shipping:'3–5 days' },
+    { storeId:'namshi',          price:545,  size:'90ml',  shipping:'Free · 2–4 days' },
+    { storeId:'noon',            price:580,  size:'90ml',  shipping:'4–6 days' },
+    { storeId:'sephora',         price:380,  size:'30ml',  shipping:'Free · 2–3 days' },
+    { storeId:'golden-scent',    price:750,  size:'150ml', shipping:'Free · 1–2 days' }
+  ],
+  'mfk-baccarat-rouge-540': [
+    { storeId:'asheq-al-otor',   price:1250, size:'70ml',  shipping:'Free · 2–3 days' },
+    { storeId:'golden-scent',    price:1320, size:'70ml',  shipping:'Free · 1–2 days' },
+    { storeId:'sephora',         price:1380, size:'70ml',  shipping:'3–5 days' },
+    { storeId:'noon',            price:1450, size:'200ml', shipping:'Free · 2–4 days' },
+    { storeId:'najd-al-otheyah', price:1500, size:'200ml', shipping:'4–6 days' },
+    { storeId:'sephora',         price:950,  size:'35ml',  shipping:'Free · 2–3 days' },
+    { storeId:'noon',            price:1800, size:'200ml', shipping:'3–5 days' }
+  ]
+};
   PRODUCTS.forEach(function(p) { p.storeComparison = cmp[p.id] || []; });
 })();
 
@@ -3102,13 +3965,18 @@ function buildProductCard(p, badgeHtml) {
 
 /* Populate all dynamic card strips on the home screen */
 function renderProductCards() {
-  /* Brands — one circle per product, name from brandEn/brandAr */
+  /* Brands — one circle per unique brand, clickable */
   var brands = document.getElementById('strip-brands');
   if (brands) {
     brands.innerHTML = '';
+    var seenBrands = {};
     PRODUCTS.forEach(function(p) {
+      if (seenBrands[p.brandEn]) return;
+      seenBrands[p.brandEn] = true;
+      var brandId = p.brandEn.toLowerCase().replace(/\s+/g, '-');
       var item = document.createElement('div');
       item.className = 'brand-circle-item';
+      item.setAttribute('onclick', 'openBrandPage("' + brandId + '","home")');
       item.innerHTML =
         '<div class="brand-circle" style="background:' + p.bg + ';">' + p.initials + '</div>' +
         '<div class="brand-label">' + P(p, 'brand') + '</div>';
@@ -3116,11 +3984,11 @@ function renderProductCards() {
     });
   }
 
-  /* Top Deals — all 5 products */
+  /* Top Deals — original 5 products only */
   var topDeals = document.getElementById('strip-top-deals');
   if (topDeals) {
     topDeals.innerHTML = '';
-    PRODUCTS.forEach(function(p) {
+    PRODUCTS.slice(0, 5).forEach(function(p) {
       topDeals.appendChild(buildProductCard(p, null));
     });
   }
@@ -3138,11 +4006,11 @@ function renderProductCards() {
     });
   }
 
-  /* Price Drops — dynamic rows from PRODUCTS */
+  /* Price Drops — original 5 products only */
   var drops = document.getElementById('strip-price-drops');
   if (drops) {
     drops.innerHTML = '';
-    PRODUCTS.forEach(function(p) {
+    PRODUCTS.slice(0, 5).forEach(function(p) {
       var row = document.createElement('div');
       row.className = 'drop-row';
       row.setAttribute('data-product-id', p.id);
@@ -3208,6 +4076,7 @@ function switchScreen(id) {
     if (badge) badge.style.display = 'none';
   }
   if (id === 'ai-chat') { aiOpen(); }
+  if (id === 'activity') { renderActivity(); }
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -3577,11 +4446,41 @@ function goBackFromProduct() {
 }
 
 function toggleBookmark() {
-  _bookmarkSaved = !_bookmarkSaved;
+  openPdpLibraryModal();
+}
+
+function openPdpLibraryModal() {
+  var backdrop = document.getElementById('pdp-library-backdrop');
+  var sheet    = document.getElementById('pdp-library-sheet');
+  if (backdrop) backdrop.classList.add('visible');
+  if (sheet)    sheet.classList.add('visible');
+}
+
+function closePdpLibraryModal() {
+  var backdrop = document.getElementById('pdp-library-backdrop');
+  var sheet    = document.getElementById('pdp-library-sheet');
+  if (backdrop) backdrop.classList.remove('visible');
+  if (sheet)    sheet.classList.remove('visible');
+}
+
+function addToLibrary(section) {
+  closePdpLibraryModal();
+  /* Fill bookmark icon to confirm */
   var icon = document.getElementById('bookmarkIcon');
-  icon.setAttribute('fill',   _bookmarkSaved ? 'var(--gold)' : 'none');
-  icon.setAttribute('stroke', _bookmarkSaved ? 'var(--gold)' : 'currentColor');
-  if (_bookmarkSaved) showPdpToast(T('toast_bookmark'));
+  if (icon) {
+    icon.setAttribute('fill',   'var(--gold)');
+    icon.setAttribute('stroke', 'var(--gold)');
+  }
+  /* Show confirmation toast */
+  var labels = {
+    owned: LANG === 'ar' ? 'أمتلكها' : 'Owned',
+    liked: LANG === 'ar' ? 'أحبها'   : 'Liked',
+    want:  LANG === 'ar' ? 'أريد تجربتها' : 'Want to Try'
+  };
+  var msg = LANG === 'ar'
+    ? '✓ تمت الإضافة إلى مكتبتك · ' + labels[section]
+    : '✓ Added to your library · ' + labels[section];
+  showPdpToast(msg);
 }
 
 function toggleAlert() {
@@ -3790,8 +4689,11 @@ function compareFilterSize(btn, size) {
 
 function closeComparePage() {
   var dest = _compareOrigin;
-  if (dest === 'compare') dest = 'home'; /* avoid loop */
-  switchScreen(dest === 'search' ? 'search' : dest === 'stores' ? 'stores' : 'home');
+  if (dest === 'compare') dest = 'home';
+  if (dest === 'brand-page')   { switchScreen('brand-page');   return; }
+  if (dest === 'all-brands')   { switchScreen('all-brands');   return; }
+  if (dest === 'fragrance-library') { switchScreen('fragrance-library'); return; }
+  switchScreen(dest === 'search' ? 'search' : dest === 'stores' ? 'stores' : dest === 'activity' ? 'activity' : 'home');
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -4012,42 +4914,187 @@ function handleAuth(guest) {
    ACTIVITY SCREEN
 ══════════════════════════════════════════════════════════ */
 function renderActivity() {
-  renderWishlist();
+  renderLibraryMosaic();
   renderRecentlyViewed();
   /* Update language sub-label */
   var langSub = document.getElementById('settings-lang-sub');
   if (langSub) langSub.textContent = LANG === 'ar' ? 'العربية' : 'English';
 }
 
-function renderWishlist() {
-  var container = document.getElementById('activity-wishlist');
-  if (!container) return;
-  container.innerHTML = '';
-  /* Show first 4 products as wishlist items */
-  PRODUCTS.slice(0, 4).forEach(function(p) {
-    var card = document.createElement('div');
-    card.className = 'wl-card-h';
-    card.setAttribute('data-product-id', p.id);
-    card.style.cursor = 'pointer';
-    card.onclick = function() { openProduct(p.id, 'activity'); };
-    card.innerHTML =
-      '<div class="wl-img-zone">' +
-        '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
-          '<img loading="lazy" src="' + p.img + '" alt="" onerror="this.style.display=\'none\'">' +
-        '</div>' +
-        '<div class="wl-heart"><svg viewBox="0 0 24 24"><path fill="var(--red)" d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>' +
-      '</div>' +
-      '<div class="wl-card-h-body">' +
-        '<div class="wl-card-h-name">'  + P(p,'name')  + '</div>' +
-        '<div class="wl-card-h-avail">' + storesLabel(p) + '</div>' +
-        '<div class="wl-card-h-prices">' +
-          '<span class="wl-card-h-low">'  + T('card_lowest')  + ' ' + price(p.lowestPrice, p)  + '</span>' +
-          '<span class="wl-card-h-high">' + T('card_highest') + ' ' + price(p.highestPrice, p) + '</span>' +
-          '<span class="wl-card-h-save">' + T('card_savings') + ' ' + price(p.savings, p)      + '</span>' +
-        '</div>' +
+/* ── Library mosaic preview (activity screen) ── */
+function renderLibraryMosaic() {
+  var grid      = document.getElementById('lib-mosaic-grid');
+  var countEl   = document.getElementById('lib-mosaic-count');
+  if (!grid) return;
+  /* Use first 8 products as "owned" for preview */
+  var preview = PRODUCTS.slice(0, 8);
+  grid.innerHTML = '';
+  preview.forEach(function(p) {
+    var cell = document.createElement('div');
+    cell.className = 'lib-mosaic-cell';
+    cell.innerHTML =
+      '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
+        '<img loading="lazy" src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
       '</div>';
-    container.appendChild(card);
+    grid.appendChild(cell);
   });
+  var total = PRODUCTS.length;
+  if (countEl) countEl.textContent = total + (LANG === 'ar' ? ' عطر' : (total === 1 ? ' fragrance' : ' fragrances'));
+}
+
+/* ══════════════════════════════════════════════════════════
+   FRAGRANCE LIBRARY SCREEN
+══════════════════════════════════════════════════════════ */
+
+/* Privacy state */
+var _flibIsPublic = true;
+
+/* Distribute products across tabs — 3 / 2 / 2 sample products */
+var _flibData = {
+  owned: [],
+  liked: [],
+  want:  []
+};
+
+function _initFlibData() {
+  /* Sample products: Owned = first 3, Liked = next 2, Want = next 2 */
+  _flibData.owned = PRODUCTS.slice(0, 3);
+  _flibData.liked = PRODUCTS.slice(3, 5);
+  _flibData.want  = PRODUCTS.slice(5, 7);
+}
+
+function openFragranceLibrary() {
+  _initFlibData();
+  /* Update stats */
+  var ownedStat = document.getElementById('flib-stat-owned');
+  var likedStat = document.getElementById('flib-stat-liked');
+  var wantStat  = document.getElementById('flib-stat-want');
+  if (ownedStat) ownedStat.textContent = _flibData.owned.length;
+  if (likedStat) likedStat.textContent = _flibData.liked.length;
+  if (wantStat)  wantStat.textContent  = _flibData.want.length;
+  /* Render grids */
+  flibRenderGrid('owned');
+  flibRenderGrid('liked');
+  flibRenderGrid('want');
+  flibSwitchTab('owned');
+  /* Privacy UI */
+  flibUpdatePrivacyUI();
+  /* Trigger AI persona */
+  flibRenderPersona();
+  switchScreen('fragrance-library');
+  var scroll = document.querySelector('#screen-fragrance-library .scroll-area');
+  if (scroll) scroll.scrollTop = 0;
+}
+
+function flibUpdatePrivacyUI() {
+  /* Header icon */
+  var iconPublic  = document.getElementById('flib-privacy-icon-public');
+  var iconPrivate = document.getElementById('flib-privacy-icon-private');
+  if (iconPublic)  iconPublic.style.display  = _flibIsPublic ? 'block' : 'none';
+  if (iconPrivate) iconPrivate.style.display = _flibIsPublic ? 'none'  : 'block';
+  /* Hero pill */
+  var pill = document.getElementById('flib-privacy-pill');
+  if (!pill) return;
+  if (_flibIsPublic) {
+    pill.style.background = 'rgba(255,255,255,0.15)';
+    pill.style.color      = 'rgba(255,255,255,0.90)';
+    pill.style.border     = '1px solid rgba(255,255,255,0.25)';
+    pill.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>' +
+      '<span>' + (LANG === 'ar' ? 'عامة' : 'Public') + '</span>';
+  } else {
+    pill.style.background = 'rgba(121,0,47,0.55)';
+    pill.style.color      = 'rgba(255,255,255,0.92)';
+    pill.style.border     = '1px solid rgba(255,255,255,0.18)';
+    pill.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>' +
+      '<span>' + (LANG === 'ar' ? 'خاصة' : 'Private') + '</span>';
+  }
+}
+
+function flibTogglePrivacy() {
+  _flibIsPublic = !_flibIsPublic;
+  flibUpdatePrivacyUI();
+  /* Toast feedback */
+  var msg = _flibIsPublic
+    ? (LANG === 'ar' ? 'المكتبة أصبحت عامة' : 'Library is now Public')
+    : (LANG === 'ar' ? 'المكتبة أصبحت خاصة' : 'Library is now Private');
+  flibShowToast(msg);
+}
+
+function flibShare() {
+  flibShowToast(LANG === 'ar' ? 'تم نسخ رابط المكتبة ✓' : 'Library link copied ✓');
+}
+
+function flibShowToast(msg) {
+  var toast = document.getElementById('flib-toast');
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateY(0)';
+  setTimeout(function() {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(10px)';
+  }, 2400);
+}
+
+function flibSwitchTab(tab) {
+  ['owned', 'liked', 'want'].forEach(function(t) {
+    var tabEl  = document.getElementById('flib-tab-' + t);
+    var gridEl = document.getElementById('flib-grid-' + t);
+    if (tabEl)  tabEl.classList.toggle('active', t === tab);
+    if (gridEl) gridEl.style.display = (t === tab) ? 'grid' : 'none';
+  });
+}
+
+function flibRenderGrid(tab) {
+  var container = document.getElementById('flib-grid-' + tab);
+  if (!container) return;
+  var items = _flibData[tab];
+  container.innerHTML = '';
+  if (!items || items.length === 0) {
+    var emptyDiv = document.createElement('div');
+    emptyDiv.className = 'flib-empty';
+    emptyDiv.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:48px;height:48px;">' +
+        '<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>' +
+      '</svg>' +
+      '<div class="flib-empty-title">' + (LANG === 'ar' ? 'لا توجد عطور هنا بعد' : 'Nothing here yet') + '</div>' +
+      '<div class="flib-empty-sub">' + (LANG === 'ar' ? 'ابدأ بإضافة عطورك المفضلة.' : 'Start adding fragrances to your collection.') + '</div>';
+    container.appendChild(emptyDiv);
+    return;
+  }
+  items.forEach(function(p) {
+    var item = document.createElement('div');
+    item.className = 'flib-grid-item';
+    item.onclick = function() { openComparePage(p.id, 'fragrance-library'); };
+    item.innerHTML =
+      '<div class="flib-item-bg" style="background:' + p.bg + ';">' +
+        '<img loading="lazy" class="flib-item-img" src="' + p.img + '" alt="" onerror="this.parentElement.innerHTML=\'<div class=flib-item-initials>' + (p.initials || '◈') + '</div>\'">' +
+      '</div>' +
+      '<div class="flib-item-overlay">' +
+        '<span class="flib-item-overlay-name">' + P(p, 'name') + '</span>' +
+      '</div>';
+    container.appendChild(item);
+  });
+}
+
+/* AI persona description */
+var _flibPersonaTimer = null;
+function flibRenderPersona() {
+  var el = document.getElementById('flib-persona-text');
+  if (!el) return;
+  /* Show loading dots */
+  el.className = 'flib-persona-loading';
+  el.innerHTML = '<div class="flib-persona-dots"><span></span><span></span><span></span></div>';
+  if (_flibPersonaTimer) clearTimeout(_flibPersonaTimer);
+  _flibPersonaTimer = setTimeout(function() {
+    var text = LANG === 'ar'
+      ? 'أنت عاشق الفخامة الشرقية العميقة — تنجذب إلى العود والمسك والعنبر الدافئ. ذوقك يعكس شخصية واثقة بذاتها تُقدّر التعقيد والعمق، مع ميل واضح نحو العطور النيشية التي تترك أثراً لا يُنسى.'
+      : 'You are a connoisseur of deep oriental luxury — drawn to oud, musk, and warm amber. Your taste reflects a self-assured personality that values complexity and depth, with a clear inclination towards niche fragrances that leave an unforgettable trail.';
+    el.className = 'flib-persona-text';
+    el.textContent = text;
+  }, 1800);
 }
 
 function renderRecentlyViewed() {
@@ -4855,6 +5902,8 @@ function interestsSave() {
       if (tpl) bannerTitle.textContent = tpl.replace('{n}', n);
       else bannerTitle.textContent = n + ' exact matching products are available for this item from different stores.';
     }
+    /* Re-render library mosaic count label */
+    renderLibraryMosaic();
     /* Re-render accord filter chips in the search filter sheet */
     document.querySelectorAll('.filter-chip[data-group="accord"]').forEach(function(chip) {
       chip.textContent = lang === 'ar'
@@ -4863,6 +5912,156 @@ function interestsSave() {
     });
   };
 })();
+
+/* ══════════════════════════════════════════════════════════
+   ALL BRANDS PAGE
+══════════════════════════════════════════════════════════ */
+
+function _getBrands() {
+  var seen = {};
+  return PRODUCTS.reduce(function(acc, p) {
+    if (!seen[p.brandEn]) {
+      seen[p.brandEn] = true;
+      acc.push({
+        id:      p.brandEn.toLowerCase().replace(/\s+/g, '-'),
+        nameEn:  p.brandEn,
+        nameAr:  p.brandAr,
+        initials: p.initials,
+        bg:      p.bg
+      });
+    }
+    return acc;
+  }, []).sort(function(a, b) { return a.nameEn.localeCompare(b.nameEn); });
+}
+
+function _renderBrandsGrid(query) {
+  var list  = document.getElementById('brands-grid');
+  var empty = document.getElementById('brands-empty');
+  if (!list) return;
+  var q = (query || '').toLowerCase().trim();
+  var all = _getBrands();
+  var result = q ? all.filter(function(b) {
+    return b.nameEn.toLowerCase().includes(q) || b.nameAr.includes(q);
+  }) : all;
+
+  list.innerHTML = '';
+  empty.style.display = result.length === 0 ? 'flex' : 'none';
+
+  result.forEach(function(b) {
+    var count     = PRODUCTS.filter(function(p) { return p.brandEn === b.nameEn; }).length;
+    var bd        = BRAND_DATA[b.id] || {};
+    var origin    = bd.countryEn ? (LANG === 'ar' ? bd.countryAr : bd.countryEn) : '';
+    var countLbl  = count + (LANG === 'ar' ? ' منتج' : (count !== 1 ? ' products' : ' product'));
+    var subParts  = [countLbl];
+    if (origin) subParts.push(origin);
+    var row = document.createElement('div');
+    row.className = 'brand-list-row';
+    row.setAttribute('onclick', 'openBrandPage("' + b.id + '","all-brands")');
+    row.innerHTML =
+      '<div class="brand-list-avatar" style="background:' + b.bg + ';">' + b.initials + '</div>' +
+      '<div class="brand-list-info">' +
+        '<div class="brand-list-name">' + (LANG === 'ar' ? b.nameAr : b.nameEn) + '</div>' +
+        '<div class="brand-list-sub">' + subParts.join(' · ') + '</div>' +
+      '</div>' +
+      '<svg class="brand-list-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>';
+    list.appendChild(row);
+  });
+}
+
+function openAllBrandsPage() {
+  var inp = document.getElementById('brands-search-input');
+  if (inp) inp.value = '';
+  _renderBrandsGrid('');
+  switchScreen('all-brands');
+}
+
+function filterBrandsSearch(q) { _renderBrandsGrid(q); }
+
+/* ── Single brand page ── */
+var _currentBrandId  = null;
+var _brandPageOrigin = 'all-brands';
+
+function openBrandPage(brandId, origin) {
+  _currentBrandId  = brandId;
+  _brandPageOrigin = origin || 'all-brands';
+
+  var brand    = _getBrands().find(function(b) { return b.id === brandId; });
+  if (!brand) return;
+  var bd       = BRAND_DATA[brandId] || {};
+  var products = PRODUCTS.filter(function(p) { return p.brandEn === brand.nameEn; });
+  var count    = products.length;
+
+  /* Back button */
+  var backBtn = document.getElementById('brand-page-back-btn');
+  backBtn.onclick = function() { switchScreen(_brandPageOrigin); };
+
+  /* Banner background */
+  var banner = document.getElementById('brand-page-banner');
+  banner.style.background = brand.bg;
+
+  /* Monogram */
+  var avatar = document.getElementById('brand-page-avatar');
+  avatar.textContent = brand.initials;
+
+  /* Title */
+  document.getElementById('brand-page-name').textContent = LANG === 'ar' ? brand.nameAr : brand.nameEn;
+
+  /* Tags */
+  var tagsEl = document.getElementById('brand-page-tags');
+  tagsEl.innerHTML = '';
+  var tags = [];
+  if (bd.founded)   tags.push(T('brand_founded_label') ? T('brand_founded_label') + ' ' + bd.founded : 'Est. ' + bd.founded);
+  if (bd.countryEn) tags.push(LANG === 'ar' ? bd.countryAr : bd.countryEn);
+  tags.push(count + (LANG === 'ar' ? ' منتج' : (count !== 1 ? ' products' : ' product')));
+  tags.forEach(function(t) {
+    var span = document.createElement('span');
+    span.className = 'brand-page-tag';
+    span.textContent = t;
+    tagsEl.appendChild(span);
+  });
+
+  /* Description */
+  var desc = bd[LANG === 'ar' ? 'descAr' : 'descEn'] || '';
+  document.getElementById('brand-page-desc').textContent = desc;
+  document.getElementById('brand-desc-card').style.display = desc ? '' : 'none';
+
+  /* Section label */
+  var secLabel = document.getElementById('brand-sec-label');
+  secLabel.textContent = LANG === 'ar'
+    ? 'جميع المنتجات (' + count + ')'
+    : 'All Products (' + count + ')';
+
+  /* Product rows */
+  var list = document.getElementById('brand-product-list');
+  list.innerHTML = '';
+  products.forEach(function(p) {
+    var cur = LANG === 'ar' ? p.currencyAr : p.currencyEn;
+    var fromLabel = LANG === 'ar' ? 'يبدأ من' : 'from';
+    var row = document.createElement('div');
+    row.className = 'brand-product-row';
+    row.onclick = function() { openComparePage(p.id, 'brand-page'); };
+    row.innerHTML =
+      '<div class="brand-product-thumb">' +
+        '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
+          '<img loading="lazy" src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
+        '</div>' +
+      '</div>' +
+      '<div class="brand-product-info">' +
+        '<div class="brand-product-name">' + P(p, 'name') + '</div>' +
+        '<div class="brand-product-sub">' + P(p, 'concentration') + ' · ' + p.size + '</div>' +
+        '<div class="brand-product-rating">★ ' + (p.rating || '—') + '</div>' +
+      '</div>' +
+      '<div class="brand-product-right">' +
+        '<div class="brand-product-from">' + fromLabel + '</div>' +
+        '<div class="brand-product-price">' + p.lowestPrice + ' ' + cur + '</div>' +
+      '</div>';
+    list.appendChild(row);
+  });
+
+  switchScreen('brand-page');
+  var scroll = document.querySelector('#screen-brand-page .scroll-area');
+  if (scroll) scroll.scrollTop = 0;
+}
 
 document.addEventListener('DOMContentLoaded', function() {
   setLang('en'); /* triggers renderProductCards + onLangChange → renderStores + renderAlerts */

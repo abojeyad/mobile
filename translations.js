@@ -216,6 +216,16 @@ pdp_compare_banner_sub: { en: 'Tap to see all prices and find the best deal.', a
 pdp_compare_banner_cta: { en: 'Compare now', ar: 'قارن الآن' },
 pdp_best_price_at: { en: 'From store', ar: 'من متجر' },
 
+toast_bookmark: { en: 'This fragrance has been added to your fragrance library', ar: 'تمت اضافة هذا العطر الى مكتبتك العطرية' },
+toast_alert: { en: 'We will notify you when the price of this product drops or when it becomes available again.', ar: 'سننبهك عند انخفاض سعر هذا المنتج او إعادة توفره' },
+
+pdp_library_modal_title:  { en: 'Add to Fragrance Library', ar: 'أضف إلى مكتبة العطور' },
+pdp_library_modal_sub: { en: 'This fragrance will be added to your fragrance library.', ar: 'سيتم إضافة هذا العطر إلى مكتبتك العطرية.' },
+pdp_library_modal_choose: { en: 'Choose a section',    ar: 'اختر القسم' },
+pdp_library_owned_sub:    { en: 'Fragrances you own',  ar: 'العطور التي تمتلكها' },
+pdp_library_liked_sub:    { en: 'Fragrances you enjoy',  ar: 'العطور التي تستمتع بها' },
+pdp_library_want_sub:     { en: 'On your wishlist',  ar: 'في قائمة أمنياتك' },
+
 /* ══════════════════════════════════════════════════════════
    Notifications
 ══════════════════════════════════════════════════════════ */
@@ -348,15 +358,29 @@ privacy_b5: { en: 'For privacy questions, email us at privacy@yourdis.com. We re
 privacy_full_note: { en: 'For the full policy, visit our website.', ar: 'للاطلاع على السياسة الكاملة، زر موقعنا.' },
 privacy_visit_btn: { en: 'Visit yourdis.com', ar: 'زيارة yourdis.com' },
 
+nav_settings: { en: 'Settings', ar: 'الإعدادات' },
+settings_sub: { en: 'Account, preferences, support', ar: 'الحساب، التفضيلات، الدعم' },
+
+activity_library:      { en: 'My Fragrance Library', ar: 'مكتبتي العطرية' },
+activity_open_library: { en: 'Open', ar: 'فتح' },
+library_title:         { en: 'My Fragrance Library', ar: 'مكتبة عطوري' },
+library_owned:         { en: 'Owned', ar: 'أمتلكها' },
+library_liked:         { en: 'Liked', ar: 'أحبها' },
+library_want:          { en: 'Want to Try', ar: 'أريد تجربتها' },
+library_ai_taste: { en: 'My Fragrance Identity (by Syna AI)', ar: 'شخصيتي العطرية (بواسطة سينا AI)' },
+library_public:          { en: 'Public',               ar: 'عامة' },
+library_private:         { en: 'Private',              ar: 'خاصة' },
+library_now_public:      { en: 'Library is now Public',  ar: 'المكتبة أصبحت عامة' },
+library_now_private:     { en: 'Library is now Private', ar: 'المكتبة أصبحت خاصة' },
+library_link_copied:     { en: 'Library link copied ✓',  ar: 'تم نسخ رابط المكتبة ✓' },
+library_share: { en: 'Share', ar: 'مشاركة' },
+
 /* ══════════════════════════════════════════════════════════
     PAGE popup sign In
 ══════════════════════════════════════════════════════════ */
 guest_modal_title: { en: 'Sign in to continue', ar: 'سجّل دخولك للمتابعة' },
 guest_modal_sub:   { en: 'This feature is available to registered users. Create a free account to unlock it.', ar: 'هذه الميزة متاحة للمستخدمين المسجّلين. أنشئ حسابًا مجانيًا لتفعيلها.' },
 guest_modal_later: { en: 'Maybe later', ar: 'ربما لاحقاً' },
-
-toast_bookmark: { en: 'This product has been added to your fragrance collection. You will find it in the Favorites section inside your profile.', ar: 'تمت إضافة هذا المنتج إلى مجموعة عطورك. ستجده في قسم المفضلة داخل ملفك الشخصي.' },
-toast_alert: { en: 'This product has been added to your price tracking list. We will notify you when the price drops or when it becomes available again after being out of stock.', ar: 'تمت إضافة هذا المنتج إلى قائمة تتبع الأسعار. سنخطرك عند انخفاض السعر أو عند توفره مجدداً بعد نفاد المخزون.' },
 
 interests_title: { en: 'My Interests', ar: 'اهتماماتي' },
 interests_sub: { en: "Select the accords you enjoy most. We'll use these to personalise your recommendations.", ar: 'اختر العطريات التي تفضلها. سنستخدمها لتخصيص توصياتك.' },
@@ -366,6 +390,6 @@ interests_sub: { en: "Select the accords you enjoy most. We'll use these to pers
 ══════════════════════════════════════════════════════════ */
 brands_search_ph: { en: 'Search brands…', ar: 'ابحث عن ماركة…' },
 brands_no_results: { en: 'No brands found', ar: 'لا توجد ماركات' },
-
+brand_founded_label: { en: 'Est.', ar: 'تأسست' },
 
 };
