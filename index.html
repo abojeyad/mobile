@@ -140,6 +140,16 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   font-weight: 500;
 }
 
+[dir="rtl"] .comm-header-title,
+[dir="rtl"] .comm-modal-title,
+[dir="rtl"] .comm-type-label { font-weight: 600; }
+
+[dir="rtl"] .comm-badge-inquiry,
+[dir="rtl"] .comm-badge-sale,
+[dir="rtl"] .comm-card-meta { font-weight: 400; }
+
+[dir="rtl"] .comm-form-label { text-transform: none; letter-spacing: 0; }
+
 /* ── Bottom nav labels ── */
 [dir="rtl"] .bn-item span { font-weight: 400; font-size: 12px; }
 
@@ -880,6 +890,247 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .alert-v3-movement svg { width:11px; height:11px; flex-shrink:0; }
 .movement-down { background:var(--green-light); color:var(--green); }
 .movement-up   { background:var(--red-light);   color:var(--red); }
+
+/* ══════════════════════════════════════════════════════════
+   COMMUNITY SCREEN
+══════════════════════════════════════════════════════════ */
+.comm-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px 12px; flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+}
+.comm-header-title { font-size: var(--t2); font-weight: 700; color: var(--ink-1); }
+
+.comm-feed { display: flex; flex-direction: column; gap: 0; }
+
+.comm-card {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.1s; background: var(--bg-phone);
+}
+.comm-card:active { background: var(--bg-surface); }
+
+.comm-card-body { flex: 1; min-width: 0; }
+.comm-card-top { display: flex; align-items: center; justify-content: flex-start; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
+.comm-user { display: flex; align-items: center; gap: 8px; }
+.comm-user-avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--border); color: var(--ink-2); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.comm-username { font-size: var(--t5); font-weight: 600; color: var(--ink-2); }
+
+.comm-badge-inquiry, .comm-badge-sale { 
+  font-size: 10px; padding: 2px 8px; border-radius: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em;
+}
+.comm-badge-inquiry { background: var(--b-blue); color: #2563EB; }
+.comm-badge-sale    { background: var(--green-light); color: var(--green); }
+
+.comm-card-text {
+  font-size: var(--t4); color: var(--ink-1); line-height: 1.5;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; text-overflow: ellipsis; margin-bottom: 8px;
+}
+.comm-card-meta {
+  display: flex; align-items: center; gap: 12px;
+  font-size: var(--t6); color: var(--ink-3);
+}
+.comm-card-meta-item { display: flex; align-items: center; gap: 4px; }
+.comm-card-meta-item svg { width: 11px; height: 11px; flex-shrink: 0; }
+
+.comm-card-thumb {
+  width: 56px; height: 56px; border-radius: var(--radius-md);
+  overflow: hidden; flex-shrink: 0; border: 1px solid var(--border);
+  align-self: center;
+}
+.comm-card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.comm-card-thumb-initials {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 16px; color: rgba(0,0,0,0.22);
+}
+
+/* Price tag for For Sale posts */
+.comm-price-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--gold-light); color: var(--amber);
+  font-size: var(--t6); font-weight: 700; padding: 2px 8px;
+  border-radius: 20px; white-space: nowrap;
+}
+
+/* Post button */
+.comm-fab-header {
+  height: 34px; padding: 0 14px;
+  border-radius: 18px; background: var(--red); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  gap: 6px; font-size: var(--t5); font-weight: 600;
+  cursor: pointer; border: none; font-family: inherit;
+  transition: transform 0.1s, opacity 0.1s;
+}
+.comm-fab-header:active { transform: scale(0.95); opacity: 0.9; }
+.comm-fab-header svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* Post modal */
+.comm-modal-overlay {
+  position: absolute; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.45);
+  display: none; align-items: flex-end;
+}
+.comm-modal-overlay.visible { display: flex; }
+.comm-modal-sheet {
+  background: var(--bg-phone);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  width: 100%; max-height: 92%;
+  display: flex; flex-direction: column;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.14);
+  animation: sheetUp 0.28s cubic-bezier(0.32,0.72,0,1);
+}
+.comm-modal-handle {
+  width: 36px; height: 4px; border-radius: 2px;
+  background: var(--border-strong); margin: 12px auto 0; flex-shrink: 0;
+}
+.comm-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px 12px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.comm-modal-title { font-size: var(--t3); font-weight: 600; color: var(--ink-1); }
+.comm-modal-close {
+  width: 32px; height: 32px; border-radius: 50%; background: var(--bg-surface);
+  border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--ink-2);
+}
+.comm-modal-close svg { width: 16px; height: 16px; }
+.comm-modal-body { flex: 1; overflow-y: auto; padding: 20px 20px 0; }
+.comm-modal-footer { padding: 16px 20px 28px; flex-shrink: 0; }
+
+/* Type selector step */
+.comm-type-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 8px;
+}
+.comm-type-card {
+  border: 2px solid var(--border); border-radius: var(--radius-lg);
+  padding: 20px 16px; cursor: pointer; transition: all 0.15s;
+  display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;
+}
+.comm-type-card:active { transform: scale(0.97); }
+.comm-type-card.selected { border-color: var(--red); background: var(--red-light); }
+.comm-type-icon {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.comm-type-icon svg { width: 20px; height: 20px; }
+.comm-type-label { font-size: var(--t4); font-weight: 600; color: var(--ink-1); }
+.comm-type-sub   { font-size: var(--t5); color: var(--ink-3); line-height: 1.4; }
+
+/* Form elements */
+.comm-form-label {
+  font-size: var(--t6); font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; margin-top: 20px; display: block;
+}
+.comm-form-label:first-child { margin-top: 0; }
+.comm-textarea {
+  width: 100%; min-height: 100px; padding: 12px 14px; resize: none;
+  background: var(--bg-input); border: 1.5px solid var(--border);
+  border-radius: var(--radius-md); font-size: var(--t4);
+  color: var(--ink-1); outline: none; transition: border-color 0.15s;
+  font-family: inherit; line-height: 1.6;
+}
+.comm-textarea:focus { border-color: var(--red); }
+.comm-input {
+  width: 100%; height: 48px; padding: 0 14px;
+  background: var(--bg-input); border: 1.5px solid var(--border);
+  border-radius: var(--radius-md); font-size: var(--t4);
+  color: var(--ink-1); outline: none; transition: border-color 0.15s;
+  font-family: inherit;
+}
+.comm-input:focus { border-color: var(--red); }
+.comm-media-row {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px;
+}
+.comm-media-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-radius: var(--radius-md);
+  background: var(--bg-surface); border: 1px solid var(--border-strong);
+  font-size: var(--t5); font-weight: 500; color: var(--ink-2);
+  cursor: pointer; font-family: inherit; transition: background 0.12s;
+}
+.comm-media-btn:active { background: var(--bg-input); }
+.comm-media-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+.comm-submit-btn {
+  width: 100%; height: 50px; border-radius: var(--radius-md);
+  background: var(--red); color: #fff; font-size: var(--t4);
+  font-weight: 600; font-family: inherit; border: none; cursor: pointer;
+  transition: opacity 0.15s;
+}
+.comm-submit-btn:hover { opacity: 0.88; }
+.comm-submit-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* Product picker sheet */
+.comm-picker-overlay {
+  position: absolute; inset: 0; z-index: 300;
+  background: rgba(0,0,0,0.4);
+  display: none; align-items: flex-end;
+}
+.comm-picker-overlay.visible { display: flex; }
+.comm-picker-sheet {
+  background: var(--bg-phone);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  width: 100%; max-height: 75%;
+  display: flex; flex-direction: column;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.14);
+  animation: sheetUp 0.26s cubic-bezier(0.32,0.72,0,1);
+}
+.comm-picker-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px 12px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.comm-picker-title { font-size: var(--t3); font-weight: 600; color: var(--ink-1); }
+.comm-picker-list { flex: 1; overflow-y: auto; }
+.comm-picker-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 20px; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.1s;
+}
+.comm-picker-row:active { background: var(--bg-surface); }
+.comm-picker-thumb {
+  width: 48px; height: 48px; border-radius: var(--radius-sm);
+  overflow: hidden; flex-shrink: 0;
+}
+.comm-picker-info { flex: 1; min-width: 0; }
+.comm-picker-name { font-size: var(--t4); font-weight: 600; color: var(--ink-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.comm-picker-sub  { font-size: var(--t5); color: var(--ink-3); margin-top: 2px; }
+.comm-picker-check { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border-strong); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+
+/* Product picker search */
+.comm-picker-search { padding: 12px 20px 8px; flex-shrink: 0; }
+.comm-picker-search-inner { 
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 8px 12px;
+}
+.comm-picker-search-inner svg { width: 16px; height: 16px; color: var(--ink-3); }
+.comm-picker-search-inner input {
+  flex: 1; border: none; background: transparent; font-family: inherit;
+  font-size: var(--t5); color: var(--ink-1); outline: none;
+}
+.comm-picker-row.selected .comm-picker-check { background: var(--red); border-color: var(--red); }
+.comm-picker-row.selected .comm-picker-check::after { content: ''; display: block; width: 9px; height: 9px; background: #fff; border-radius: 50%; }
+
+/* Selected product preview */
+.comm-selected-product {
+  display: flex; align-items: center; gap: 10px; margin-top: 10px;
+  padding: 10px 12px; background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.comm-selected-thumb {
+  width: 40px; height: 40px; border-radius: var(--radius-sm); overflow: hidden; flex-shrink: 0;
+}
+.comm-selected-name { flex: 1; font-size: var(--t5); font-weight: 500; color: var(--ink-1); min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.comm-selected-remove { font-size: var(--t5); color: var(--ink-3); cursor: pointer; flex-shrink: 0; padding: 4px; }
+
+/* Empty community state */
+.comm-empty {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 64px 32px; gap: 12px; text-align: center;
+}
+.comm-empty svg { color: var(--ink-3); opacity: 0.35; }
+.comm-empty-title { font-size: var(--t3); font-weight: 600; color: var(--ink-1); }
+.comm-empty-sub   { font-size: var(--t4); color: var(--ink-3); line-height: 1.6; }
 
 /* ══════════════════════════════════════════════════════════
    STORES SCREEN
@@ -1779,7 +2030,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   <div class="bottom-nav">
     <div class="bn-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-i18n="nav_home">Home</span></div>
     <div class="bn-item" onclick="switchScreen('stores')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7"/><path d="M9 22V12h6v10"/><path d="M3 9v13h18V9"/><path d="M3 9h18"/></svg><span data-i18n="nav_stores">Stores</span></div>
-    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('alerts')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span data-i18n="nav_alerts">Alerts</span></div>
+    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('community')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span data-i18n="nav_community">Community</span></div>
     <div class="bn-item" onclick="if(guestGuard())return;switchScreen('activity')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span data-i18n="nav_activity">Activity</span></div>
   </div>
 
@@ -1961,6 +2212,15 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
     <div class="divider" style="margin:0 0 20px;"></div>
 
+    <!-- Price Alerts section -->
+    <div class="sec-head">
+      <span class="sec-label" data-i18n="nav_alerts">Price Alerts</span>
+      <span class="sec-link" data-i18n="activity_see_all" onclick="if(guestGuard())return;switchScreen('alerts')" style="cursor:pointer;">See all</span>
+    </div>
+    <div class="recent-scroll" id="activity-alerts" style="padding-bottom:20px;"></div>
+
+    <div class="divider" style="margin:0 0 20px;"></div>
+
     <!-- Recently Viewed -->
     <div class="sec-head">
       <span class="sec-label" data-i18n="activity_recently">Recently Viewed</span>
@@ -2000,9 +2260,9 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7"/><path d="M9 22V12h6v10"/><path d="M3 9v13h18V9"/><path d="M3 9h18"/></svg>
       <span data-i18n="nav_stores">Stores</span>
     </div>
-    <div class="bn-item" onclick="switchScreen('alerts')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span data-i18n="nav_alerts">Alerts</span>
+    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('community')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      <span data-i18n="nav_community">Community</span>
     </div>
     <div class="bn-item active">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -2013,14 +2273,16 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 </div><!-- /screen-activity -->
 
 <!-- ═══════════════════════════════════════
-     SCREEN: ALERTS (main — has bottom nav)
+     SCREEN: ALERTS (subpage — no bottom nav)
 ═══════════════════════════════════════ -->
 <div class="screen" id="screen-alerts">
 
   <!-- Header -->
-  <div class="stores-top-nav">
-    <span class="stores-top-title" data-i18n="alerts_title">Price Alerts</span>
-    <span style="font-size:var(--t5);color:var(--ink-3);" data-i18n="alerts_set_from">Set from any product page</span>
+  <div class="back-bar">
+    <button class="dip-back-btn" onclick="switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="notif-header-title" data-i18n="alerts_title">Price Alerts</span>
   </div>
 
   <div class="scroll-area">
@@ -2066,27 +2328,8 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div style="height:16px;" aria-hidden="true"></div>
   </div>
 
-  <!-- Bottom nav -->
-  <div class="bottom-nav">
-    <div class="bn-item" onclick="switchScreen('home')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span data-i18n="nav_home">Home</span>
-    </div>
-    <div class="bn-item" onclick="switchScreen('stores')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7"/><path d="M9 22V12h6v10"/><path d="M3 9v13h18V9"/><path d="M3 9h18"/></svg>
-      <span data-i18n="nav_stores">Stores</span>
-    </div>
-    <div class="bn-item active">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span data-i18n="nav_alerts">Alerts</span>
-    </div>
-    <div class="bn-item" onclick="switchScreen('activity')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      <span data-i18n="nav_activity">Activity</span>
-    </div>
-  </div>
-
 </div><!-- /screen-alerts -->
+
 <!-- ═══════════════════════════════════════
      SCREEN: NOTIFICATIONS (subpage — no bottom nav)
 ═══════════════════════════════════════ -->
@@ -2107,7 +2350,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="notif-section-label" data-i18n="notif_section_today">Today</div>
 
     <!-- Unread: Price Drop -->
-    <div class="notif-row notif-unread" onclick="notifTap(this)">
+    <div class="notif-row notif-unread" onclick="notifTap(this, 'chanel-bleu-edp')">
       <div class="notif-dot"></div>
       <div class="notif-icon-wrap notif-icon-drop">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
@@ -2126,7 +2369,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     </div>
 
     <!-- Unread: Back in Stock -->
-    <div class="notif-row notif-unread" onclick="notifTap(this)">
+    <div class="notif-row notif-unread" onclick="notifTap(this, 'dior-sauvage-elixir')">
       <div class="notif-dot"></div>
       <div class="notif-icon-wrap notif-icon-stock">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
@@ -2145,7 +2388,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     </div>
 
     <!-- Unread: Deal Alert -->
-    <div class="notif-row notif-unread" onclick="notifTap(this)">
+    <div class="notif-row notif-unread" onclick="notifTap(this, 'dior-sauvage-elixir')">
       <div class="notif-dot"></div>
       <div class="notif-icon-wrap notif-icon-deal">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
@@ -2164,7 +2407,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     </div>
 
     <!-- Read: Price Alert -->
-    <div class="notif-row" onclick="notifTap(this)">
+    <div class="notif-row" onclick="notifTap(this, 'tomford-black-orchid')">
       <div class="notif-dot notif-dot-hidden"></div>
       <div class="notif-icon-wrap notif-icon-drop" style="opacity:0.55;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
@@ -2186,7 +2429,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="notif-section-label" data-i18n="notif_section_yesterday">Yesterday</div>
 
     <!-- Read: Store Update -->
-    <div class="notif-row" onclick="notifTap(this)">
+    <div class="notif-row" onclick="notifTap(this, 'mfk-baccarat-rouge-540')">
       <div class="notif-dot notif-dot-hidden"></div>
       <div class="notif-icon-wrap notif-icon-store" style="opacity:0.55;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7"/><path d="M9 22V12h6v10"/><path d="M3 9v13h18V9"/></svg>
@@ -2205,7 +2448,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     </div>
 
     <!-- Read: Price Drop -->
-    <div class="notif-row" onclick="notifTap(this)">
+    <div class="notif-row" onclick="notifTap(this, 'ysl-libre-intense')">
       <div class="notif-dot notif-dot-hidden"></div>
       <div class="notif-icon-wrap notif-icon-drop" style="opacity:0.55;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
@@ -2226,7 +2469,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <!-- EARLIER -->
     <div class="notif-section-label" data-i18n="notif_section_earlier">Earlier</div>
 
-    <div class="notif-row" onclick="notifTap(this)">
+    <div class="notif-row" onclick="notifTap(this, 'mfk-baccarat-rouge-540')">
       <div class="notif-dot notif-dot-hidden"></div>
       <div class="notif-icon-wrap notif-icon-stock" style="opacity:0.55;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
@@ -2244,7 +2487,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       </div>
     </div>
 
-    <div class="notif-row" onclick="notifTap(this)">
+    <div class="notif-row" onclick="notifTap(this, 'creed-aventus')">
       <div class="notif-dot notif-dot-hidden"></div>
       <div class="notif-icon-wrap notif-icon-deal" style="opacity:0.55;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
@@ -2262,58 +2505,8 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       </div>
     </div>
 
-    <!-- Notification settings row -->
-    <div style="margin:20px 16px 8px;">
-      <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="openNotifSettings()">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="width:32px;height:32px;border-radius:50%;background:var(--b-purple);display:flex;align-items:center;justify-content:center;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.6" style="width:15px;height:15px;"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
-          </div>
-          <span style="font-size:var(--t5);font-weight:500;color:var(--ink-1);" data-i18n="notif_settings_title">Notification settings</span>
-        </div>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;color:var(--ink-3);"><path d="M9 18l6-6-6-6"/></svg>
-      </div>
-    </div>
-
     <div style="height:20px;" aria-hidden="true"></div>
   </div><!-- /scroll-area -->
-
-  <!-- Notification settings sheet -->
-  <div class="sheet-backdrop" id="notif-settings-backdrop" onclick="closeNotifSettings()"></div>
-  <div class="overlay-sheet" id="notif-settings-sheet">
-    <div class="overlay-handle"></div>
-    <div style="padding:16px 24px 8px;">
-      <div style="font-family:var(--font-display);font-size:var(--t2);color:var(--ink-1);margin-bottom:20px;line-height:1.3;" data-i18n="notif_settings_title">Notification settings</div>
-      <div class="notif-setting-row">
-        <div class="notif-setting-info">
-          <div class="notif-icon-wrap notif-icon-drop" style="width:32px;height:32px;flex-shrink:0;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px;height:14px;"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
-          </div>
-          <span style="font-size:var(--t4);font-weight:500;color:var(--ink-1);" data-i18n="notif_settings_price_drops">Price drops</span>
-        </div>
-        <label class="notif-toggle"><input type="checkbox" checked onchange="notifToggle(this)"><span class="notif-toggle-track"></span></label>
-      </div>
-      <div class="notif-setting-row">
-        <div class="notif-setting-info">
-          <div class="notif-icon-wrap notif-icon-stock" style="width:32px;height:32px;flex-shrink:0;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px;height:14px;"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/></svg>
-          </div>
-          <span style="font-size:var(--t4);font-weight:500;color:var(--ink-1);" data-i18n="notif_settings_back_stock">Back in stock</span>
-        </div>
-        <label class="notif-toggle"><input type="checkbox" checked onchange="notifToggle(this)"><span class="notif-toggle-track"></span></label>
-      </div>
-      <div class="notif-setting-row">
-        <div class="notif-setting-info">
-          <div class="notif-icon-wrap notif-icon-deal" style="width:32px;height:32px;flex-shrink:0;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px;height:14px;"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
-          </div>
-          <span style="font-size:var(--t4);font-weight:500;color:var(--ink-1);" data-i18n="notif_settings_deals">New deals</span>
-        </div>
-        <label class="notif-toggle"><input type="checkbox" onchange="notifToggle(this)"><span class="notif-toggle-track"></span></label>
-      </div>
-    </div>
-    <div style="height:24px;" aria-hidden="true"></div>
-  </div>
 
 </div><!-- /screen-notifications -->
 
@@ -2348,9 +2541,9 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7"/><path d="M9 22V12h6v10"/><path d="M3 9v13h18V9"/><path d="M3 9h18"/></svg>
       <span data-i18n="nav_stores">Stores</span>
     </div>
-    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('alerts')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span data-i18n="nav_alerts">Alerts</span>
+    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('community')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      <span data-i18n="nav_community">Community</span>
     </div>
     <div class="bn-item" onclick="if(guestGuard())return;switchScreen('activity')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -2504,55 +2697,67 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <div class="notes-pyramid" id="product-notes"></div>
 
       <!-- Fragrance identity strip -->
-      <div class="frag-identity-section">
+<div class="frag-identity-section">
         <div class="frag-identity-row">
+          
           <div class="frag-id-card">
             <div class="frag-id-icon" style="background:var(--b-purple);color:var(--red);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
             <div class="frag-id-label" data-i18n="pdp_house">House</div>
             <div class="frag-id-value" id="product-frag-house">—</div>
           </div>
+
           <div class="frag-id-card">
             <div class="frag-id-icon" style="background:var(--amber-light);color:var(--amber);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
             <div class="frag-id-label" data-i18n="pdp_family">Family</div>
             <div class="frag-id-value" id="product-family">—</div>
           </div>
+
           <div class="frag-id-card">
             <div class="frag-id-icon" style="background:var(--b-blue);color:#2563EB;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="7" r="4"/><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/></svg></div>
             <div class="frag-id-label" data-i18n="pdp_gender">Gender</div>
             <div class="frag-id-value" id="product-gender">—</div>
           </div>
-          <div class="frag-id-card">
-            <div class="frag-id-icon" style="background:var(--b-sage);color:#3A7D44;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
-            <div class="frag-id-label" data-i18n="pdp_country">Country</div>
-            <div class="frag-id-value" id="product-country">—</div>
-          </div>
-          <div class="frag-id-card">
-            <div class="frag-id-icon" style="background:var(--b-pink);color:#8C3066;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
-            <div class="frag-id-label" data-i18n="pdp_perfumer">Perfumer</div>
-            <div class="frag-id-value" id="product-perfumer">—</div>
-          </div>
-          <div class="frag-id-card">
-            <div class="frag-id-icon" style="background:var(--b-teal);color:#0E7490;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-            <div class="frag-id-label" data-i18n="pdp_year">Year</div>
-            <div class="frag-id-value" id="product-year">—</div>
-          </div>
-          <div class="frag-id-card">
-            <div class="frag-id-icon" style="background:#FEF9C3;color:#CA8A04;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-            <div class="frag-id-label" data-i18n="pdp_rating">Rating</div>
-            <div class="frag-id-value" id="product-rating">—</div>
-          </div>
+
           <div class="frag-id-card">
             <div class="frag-id-icon" style="background:var(--b-amber);color:#B45309;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></div>
             <div class="frag-id-label" data-i18n="pdp_season">Season</div>
             <div class="frag-id-value" id="product-wear-season">—</div>
           </div>
+
           <div class="frag-id-card">
             <div class="frag-id-icon" style="background:var(--b-blue);color:#1D4ED8;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></div>
             <div class="frag-id-label" data-i18n="pdp_time_of_day">Time</div>
             <div class="frag-id-value" id="product-wear-time">—</div>
           </div>
+
+          <div class="frag-id-card">
+            <div class="frag-id-icon" style="background:var(--b-pink);color:#8C3066;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+            <div class="frag-id-label" data-i18n="pdp_perfumer">Perfumer</div>
+            <div class="frag-id-value" id="product-perfumer">—</div>
+          </div>
+
+          <div class="frag-id-card">
+            <div class="frag-id-icon" style="background:var(--b-sage);color:#3A7D44;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+            <div class="frag-id-label" data-i18n="pdp_country">Country</div>
+            <div class="frag-id-value" id="product-country">—</div>
+          </div>
+
+          <div class="frag-id-card">
+            <div class="frag-id-icon" style="background:var(--b-teal);color:#0E7490;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <div class="frag-id-label" data-i18n="pdp_year">Year</div>
+            <div class="frag-id-value" id="product-year">—</div>
+          </div>
+
+          <div class="frag-id-card">
+            <div class="frag-id-icon" style="background:#FEF9C3;color:#CA8A04;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+            <div class="frag-id-label" data-i18n="pdp_rating">Rating</div>
+            <div class="frag-id-value" id="product-rating">—</div>
+          </div>
+
         </div>
       </div>
+      <div style="font-size:11px; color:var(--ink-3); margin:4px 20px 14px;" data-i18n="pdp_ai_generated_note"></div>
+      <div style="height:1px; background:var(--border); width:100%;"></div>
 
       <!-- Accords -->
       <div class="accords-wrap" id="product-accords"><div class="accord-title" data-i18n="pdp_accords">Accords</div></div>
@@ -2622,7 +2827,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <div style="font-size:var(--t5);letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-3);font-weight:500;margin-bottom:10px;" data-i18n="pdp_reviews">Reviews</div>
       <div style="margin-top:12px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px;">
         <div style="font-size:var(--t4);font-weight:500;color:var(--ink-1);margin-bottom:10px;" data-i18n="pdp_add_review">Add a Review</div>
-        <textarea id="review-text-input" data-i18n="pdp_review_ph" placeholder="Share your thoughts about this fragrance…" style="width:100%;min-height:72px;resize:none;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 11px;font-size:var(--t4);font-family:var(--font-body);color:var(--ink-1);outline:none;line-height:1.6;transition:border-color 0.15s;"></textarea>
+        <textarea id="review-text-input" data-i18n="pdp_review_ph" placeholder="Share your thoughts about this fragrance…" style="width:100%;min-height:72px;resize:none;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 11px;font-size:11px;font-family:var(--font-body);color:var(--ink-3);outline:none;line-height:1.6;transition:border-color 0.15s;"></textarea>
         <button onclick="if(guestGuard())return;submitReview()" style="margin-top:8px;width:100%;padding:10px;border-radius:var(--radius-sm);background:var(--gold);color:#fff;font-size:var(--t5);font-weight:500;border:none;cursor:pointer;" data-i18n="pdp_submit_review">Submit Review</button>
         <div id="review-submit-msg" style="display:none;margin-top:8px;font-size:var(--t5);color:var(--green);text-align:center;font-weight:500;" data-i18n="pdp_review_thanks">✓ Review submitted. Thank you!</div>
       </div>
@@ -3315,6 +3520,164 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div style="height:28px;" aria-hidden="true"></div>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: COMMUNITY (main — has bottom nav)
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-community">
+
+  <!-- Header -->
+  <div class="comm-header">
+    <span class="comm-header-title" data-i18n="comm_page_title">Community</span>
+    <button class="comm-fab-header" onclick="openCommModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <span data-i18n="comm_post_btn">Post</span>
+    </button>
+  </div>
+
+  <!-- Feed -->
+  <div class="scroll-area">
+    <div class="comm-feed" id="comm-feed"></div>
+    <div id="comm-empty" class="comm-empty" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:48px;height:48px;"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      <div class="comm-empty-title" data-i18n="comm_empty_title">No posts yet</div>
+      <div class="comm-empty-sub" data-i18n="comm_empty_sub">Be the first to ask a question or list a fragrance for sale.</div>
+    </div>
+    <div style="height:80px;" aria-hidden="true"></div>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav">
+    <div class="bn-item" onclick="switchScreen('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span data-i18n="nav_home">Home</span>
+    </div>
+    <div class="bn-item" onclick="switchScreen('stores')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7"/><path d="M9 22V12h6v10"/><path d="M3 9v13h18V9"/><path d="M3 9h18"/></svg>
+      <span data-i18n="nav_stores">Stores</span>
+    </div>
+    <div class="bn-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      <span data-i18n="nav_community">Community</span>
+    </div>
+    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span data-i18n="nav_activity">Activity</span>
+    </div>
+  </div>
+
+  <!-- Post modal overlay -->
+  <div class="comm-modal-overlay" id="comm-modal-overlay" onclick="if(event.target===this)closeCommModal()">
+    <div class="comm-modal-sheet" id="comm-modal-sheet">
+      <div class="comm-modal-handle"></div>
+      <div class="comm-modal-header">
+        <span class="comm-modal-title" id="comm-modal-title" data-i18n="comm_new_post">New Post</span>
+        <button class="comm-modal-close" onclick="closeCommModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="comm-modal-body" id="comm-modal-body">
+
+        <!-- Step 1: Type selector -->
+        <div id="comm-step-type">
+          <div style="font-size:var(--t4);color:var(--ink-3);margin-bottom:16px;" data-i18n="comm_choose_type">Choose a post type to get started:</div>
+          <div class="comm-type-grid">
+            <div class="comm-type-card" id="comm-type-inquiry" onclick="selectCommType('inquiry')">
+              <div class="comm-type-icon" style="background:var(--b-blue);color:#2563EB;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <div class="comm-type-label" data-i18n="comm_type_inquiry">Inquiry</div>
+              <div class="comm-type-sub" data-i18n="comm_type_inquiry_sub">Ask the community about a fragrance</div>
+            </div>
+            <div class="comm-type-card" id="comm-type-sale" onclick="selectCommType('sale')">
+              <div class="comm-type-icon" style="background:var(--green-light);color:var(--green);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              </div>
+              <div class="comm-type-label" data-i18n="comm_type_sale">For Sale</div>
+              <div class="comm-type-sub" data-i18n="comm_type_sale_sub">List a used fragrance for sale</div>
+            </div>
+          </div>
+		  </div> <div style="height: 30px;"></div>
+        </div>
+
+        <!-- Step 2a: Inquiry form -->
+        <div id="comm-form-inquiry" style="display:none;">
+          <label class="comm-form-label" data-i18n="comm_message_label">Message <span style="color:var(--red);">*</span></label>
+          <textarea id="comm-inquiry-msg" class="comm-textarea" rows="4" data-i18n="comm_inquiry_ph" placeholder="Write your question about a fragrance…"></textarea>
+
+          <label class="comm-form-label" data-i18n="comm_media_label">Media (optional)</label>
+          <div class="comm-media-row">
+            <button class="comm-media-btn" onclick="commPickProduct()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              <span data-i18n="comm_pick_product">Pick Product</span>
+            </button>
+            <button class="comm-media-btn" onclick="commPickGallery()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <span data-i18n="comm_gallery">Gallery</span>
+            </button>
+            <button class="comm-media-btn" onclick="commPickCamera()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              <span data-i18n="comm_camera">Camera</span>
+            </button>
+          </div>
+          <div id="comm-inquiry-product-preview" style="display:none;" class="comm-selected-product">
+            <div class="comm-selected-thumb" id="comm-inquiry-thumb"></div>
+            <span class="comm-selected-name" id="comm-inquiry-product-name"></span>
+            <span class="comm-selected-remove" onclick="commRemoveProduct('inquiry')">✕</span>
+          </div>
+        </div>
+
+        <!-- Step 2b: For Sale form -->
+        <div id="comm-form-sale" style="display:none;">
+          <label class="comm-form-label" data-i18n="comm_message_label">Message <span style="color:var(--red);">*</span></label>
+          <textarea id="comm-sale-msg" class="comm-textarea" rows="4" data-i18n="comm_sale_ph" placeholder="Describe the fragrance, condition, and any details…"></textarea>
+
+          <label class="comm-form-label" data-i18n="comm_price_label">Price (optional)</label>
+          <input id="comm-sale-price" class="comm-input" type="number" inputmode="numeric" data-i18n="comm_price_ph" placeholder="e.g. 250 SAR"/>
+
+          <label class="comm-form-label" data-i18n="comm_media_label">Photo (optional)</label>
+          <div class="comm-media-row">
+            <button class="comm-media-btn" onclick="commPickGallery()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <span data-i18n="comm_gallery">Gallery</span>
+            </button>
+            <button class="comm-media-btn" onclick="commPickCamera()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              <span data-i18n="comm_camera">Camera</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <div class="comm-modal-footer" id="comm-modal-footer" style="display:none;">
+        <button class="comm-submit-btn" id="comm-submit-btn" onclick="submitCommPost()">
+          <span data-i18n="comm_post_btn">Post</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product picker sheet (for inquiry) -->
+  <div class="comm-picker-overlay" id="comm-picker-overlay" onclick="if(event.target===this)closeCommPicker()">
+    <div class="comm-picker-sheet">
+      <div class="comm-modal-handle"></div>
+      <div class="comm-picker-header">
+        <span class="comm-picker-title" data-i18n="comm_pick_product">Pick a Product</span>
+        <button class="comm-modal-close" onclick="closeCommPicker()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="comm-picker-search">
+        <div class="comm-picker-search-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="comm-picker-search-input" data-i18n="comm_picker_search_ph" placeholder="Search by name or brand…" oninput="filterCommPicker(this.value)">
+        </div>
+      </div>
+      <div class="comm-picker-list" id="comm-picker-list"></div>
+    </div>
+  </div>
+
+</div><!-- /screen-community -->
 
 </div><!-- /phone-frame -->
 </div><!-- /app-root -->
@@ -4127,6 +4490,7 @@ function switchScreen(id) {
   }
   if (id === 'ai-chat') { aiOpen(); }
   if (id === 'activity') { renderActivity(); }
+  if (id === 'community') { renderCommunityFeed(); }
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -4359,9 +4723,9 @@ function openProduct(productId, origin) {
   temp.innerHTML = p.notes;
   var spans = temp.querySelectorAll('span');
   var layerConfig = [
-    { modifier:'top',   label:'Top Notes'   },
-    { modifier:'heart', label:'Heart Notes' },
-    { modifier:'base',  label:'Base Notes'  }
+    { modifier:'top',   label: T('pdp_top_notes')   },
+    { modifier:'heart', label: T('pdp_heart_notes') },
+    { modifier:'base',  label: T('pdp_base_notes')  }
   ];
   spans.forEach(function(s, idx) {
     var parts = s.textContent.split(':');
@@ -4385,12 +4749,12 @@ function openProduct(productId, origin) {
   document.getElementById('product-frag-house').textContent  = p.house      || '--';
   document.getElementById('product-family').textContent      = p.family     || '--';
   document.getElementById('product-gender').textContent      = p.gender     || '--';
-  document.getElementById('product-country').textContent     = p.country    || '--';
-  document.getElementById('product-perfumer').textContent    = p.perfumer   || '--';
-  document.getElementById('product-year').textContent        = p.year       || '--';
-  document.getElementById('product-rating').textContent      = (p.rating    || '--') + ' ★';
   document.getElementById('product-wear-season').textContent = p.wearSeason || '--';
   document.getElementById('product-wear-time').textContent   = p.wearTime   || '--';
+  document.getElementById('product-perfumer').textContent    = p.perfumer   || '--';
+  document.getElementById('product-country').textContent     = p.country    || '--';
+  document.getElementById('product-year').textContent        = p.year       || '--';
+  document.getElementById('product-rating').textContent      = (p.rating    || '--') + ' ★';
 
   /* Accords — not in rebuild data yet, hide */
   document.getElementById('product-accords').style.display = 'none';
@@ -4491,6 +4855,7 @@ function goBackFromProduct() {
   else if (_pdpOrigin === 'search')         switchScreen('search');
   else if (_pdpOrigin === 'stores')         switchScreen('stores');
   else if (_pdpOrigin === 'activity')       switchScreen('activity');
+  else if (_pdpOrigin === 'notifications')  switchScreen('notifications');
   else if (_pdpOrigin === 'product-detail') switchScreen('compare');
   else                                      switchScreen('home');
 }
@@ -4965,6 +5330,7 @@ function handleAuth(guest) {
 ══════════════════════════════════════════════════════════ */
 function renderActivity() {
   renderLibraryMosaic();
+  renderActivityAlerts();
   renderRecentlyViewed();
   /* Update language sub-label */
   var langSub = document.getElementById('settings-lang-sub');
@@ -4990,6 +5356,40 @@ function renderLibraryMosaic() {
   });
   var total = PRODUCTS.length;
   if (countEl) countEl.textContent = total + (LANG === 'ar' ? ' عطر' : (total === 1 ? ' fragrance' : ' fragrances'));
+}
+
+/* ── Alerts preview (activity screen) ── */
+function renderActivityAlerts() {
+  _initAlertStates();
+  var container = document.getElementById('activity-alerts');
+  if (!container) return;
+  container.innerHTML = '';
+  
+  var active = PRODUCTS.filter(function(p) { return _alertStates[p.id]; }).slice(0, 4);
+  
+  if (active.length === 0) {
+    container.innerHTML = '<div style="font-size:var(--t5);color:var(--ink-3);padding:0 20px;">' + T('alerts_empty_title') + '</div>';
+    return;
+  }
+
+  active.forEach(function(p) {
+    var chip = document.createElement('div');
+    chip.className = 'recent-chip';
+    chip.style.cursor = 'pointer';
+    chip.onclick = function() { openComparePage(p.id, 'activity'); };
+    chip.innerHTML =
+      '<div class="recent-thumb">' +
+        '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
+          '<img loading="lazy" src="' + p.img + '" alt="" onerror="this.style.display=\'none\'">' +
+        '</div>' +
+      '</div>' +
+      '<div class="recent-info">' +
+        '<div class="rn">' + P(p,'name') + '</div>' +
+        '<div class="rp">' + price(p.lowestPrice, p) + '</div>' +
+      '</div>' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px;color:var(--ink-3);flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>';
+    container.appendChild(chip);
+  });
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -5199,6 +5599,7 @@ function onLangChange(lang) {
   renderStores();
   renderAlerts();
   renderActivity();
+  renderCommunityFeed();
   /* Re-render store page if currently visible */
   var storePage = document.getElementById('screen-store-page');
   if (storePage && storePage.classList.contains('active')) {
@@ -5248,7 +5649,7 @@ function filterNotifs(btn, filter) {
   });
 }
 
-function notifTap(row) {
+function notifTap(row, productId) {
   /* Mark this row as read */
   row.classList.remove('notif-unread');
   var dot = row.querySelector('.notif-dot');
@@ -5257,16 +5658,12 @@ function notifTap(row) {
   if (body) body.classList.add('notif-body-read');
   var icons = row.querySelectorAll('.notif-icon-wrap');
   icons.forEach(function(ic) { ic.style.opacity = '0.55'; });
+
+  if (productId) {
+    openProduct(productId, 'notifications');
+  }
 }
 
-function openNotifSettings() {
-  document.getElementById('notif-settings-backdrop').classList.add('visible');
-  document.getElementById('notif-settings-sheet').classList.add('visible');
-}
-function closeNotifSettings() {
-  document.getElementById('notif-settings-backdrop').classList.remove('visible');
-  document.getElementById('notif-settings-sheet').classList.remove('visible');
-}
 function notifToggle(input) { /* toggle handled by CSS */ }
 
 
@@ -6111,6 +6508,277 @@ function openBrandPage(brandId, origin) {
   switchScreen('brand-page');
   var scroll = document.querySelector('#screen-brand-page .scroll-area');
   if (scroll) scroll.scrollTop = 0;
+}
+
+/* ══════════════════════════════════════════════════════════
+   COMMUNITY SCREEN
+══════════════════════════════════════════════════════════ */
+
+var _commPosts = [
+  {
+    id: 'c1', type: 'inquiry',
+    msgEn: 'Looking for a fragrance similar to Baccarat Rouge 540 but at a more affordable price point. Any recommendations from the community?',
+    msgAr: 'أبحث عن عطر مشابه لباكارات روج 540 ولكن بسعر أقل. هل لديكم توصيات؟',
+    time: '5m', replies: 4,
+    productId: null
+  },
+  {
+    id: 'c2', type: 'sale',
+    msgEn: 'Sauvage Elixir 60ml – used about 15%. Bought recently, selling because it doesn\'t suit my skin. Excellent condition.',
+    msgAr: 'سوفاج إكسير 60 مل - استخدام 15% تقريباً. بحالة ممتازة، أبيعه لأنه لا يناسب جلدي.',
+    time: '23m', replies: 2,
+    price: 480,
+    productId: 'dior-sauvage-elixir'
+  },
+  {
+    id: 'c3', type: 'inquiry',
+    msgEn: 'Does anyone know if Black Orchid performs better in cold or warm weather? Planning to buy it as a winter scent.',
+    msgAr: 'هل بلاك أوركيد أداؤه أفضل في الطقس البارد أم الحار؟ أفكر في شرائه كعطر شتوي.',
+    time: '1h', replies: 7,
+    productId: null
+  },
+  {
+    id: 'c4', type: 'sale',
+    msgEn: 'Libre Intense 90ml – 30% used. My wife bought it but prefers something lighter. Original box included.',
+    msgAr: 'ليبر إنتنس 90 مل – استخدام 30%. مع العلبة الأصلية.',
+    time: '3h', replies: 1,
+    price: 320,
+    productId: 'ysl-libre-intense'
+  },
+  {
+    id: 'c5', type: 'inquiry',
+    msgEn: 'What is the longevity like on Bleu de Chanel EDP? I\'ve heard mixed reviews about sillage.',
+    msgAr: 'كم تدوم رائحة بلو دو شانيل أو دو بارفيوم؟ سمعت آراء متباينة عن الأثر.',
+    time: '6h', replies: 12,
+    productId: 'chanel-bleu-edp'
+  },
+  {
+    id: 'c6', type: 'inquiry',
+    msgEn: 'What is the best fresh summer fragrance for 2026? Looking for something that lasts all day in the heat.',
+    msgAr: 'ما هو أفضل عطر صيفي منعش لعام 2026؟ أبحث عن شيء يدوم طوال اليوم في الحر.',
+    time: '8h', replies: 15,
+    productId: null
+  },
+  {
+    id: 'c7', type: 'sale',
+    msgEn: 'Creed Aventus 100ml - Brand new, still in plastic. Unwanted gift. Authenticity guaranteed.',
+    msgAr: 'كريد أفينتوس 100 مل - جديد تماماً، مازال مغلفاً. هدية غير مرغوب فيها. الأصالة مضمونة.',
+    time: '12h', replies: 0,
+    price: 1100,
+    productId: 'creed-aventus'
+  }
+];
+
+var _commSelectedType = null;
+var _commSelectedProductId = null;
+
+function renderCommunityFeed() {
+  var feed  = document.getElementById('comm-feed');
+  var empty = document.getElementById('comm-empty');
+  if (!feed) return;
+  feed.innerHTML = '';
+  if (_commPosts.length === 0) {
+    if (empty) empty.style.display = 'flex';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+
+  _commPosts.forEach(function(post) {
+    var card = document.createElement('div');
+    card.className = 'comm-card';
+
+    var isInquiry = post.type === 'inquiry';
+    var badgeClass = isInquiry ? 'comm-badge-inquiry' : 'comm-badge-sale';
+    var badgeLabel = isInquiry ? T('comm_badge_inquiry') : T('comm_badge_sale');
+    var msg = LANG === 'ar' ? post.msgAr : post.msgEn;
+
+    var priceTag = '';
+    if (!isInquiry && post.price) {
+      priceTag = '<span class="comm-price-tag">◈ ' + post.price + ' SAR</span>';
+    }
+
+    var product = post.productId ? PRODUCTS.find(function(p){ return p.id === post.productId; }) : null;
+    var thumbHtml = '';
+    if (product) {
+      thumbHtml =
+        '<div class="comm-card-thumb">' +
+          '<div class="prod-img-wrap" style="background:' + product.bg + ';height:100%;">' +
+            '<img loading="lazy" src="' + product.img + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
+          '</div>' +
+        '</div>';
+    }
+
+    var replyLabel = T('comm_replies');
+
+    /* Random user for demo */
+    var username = 'User_' + post.id.slice(-3);
+    var initials = username.charAt(0).toUpperCase();
+
+    card.innerHTML =
+      '<div class="comm-card-body">' +
+        '<div class="comm-card-top">' +
+          '<div class="comm-user">' +
+            '<div class="comm-user-avatar">' + initials + '</div>' +
+            '<span class="comm-username">' + username + '</span>' +
+          '</div>' +
+          '<div style="display:flex;align-items:center;gap:8px;">' +
+            priceTag +
+            '<span class="badge ' + badgeClass + '">' + badgeLabel + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="comm-card-text">' + msg + '</div>' +
+        '<div class="comm-card-meta">' +
+          '<span class="comm-card-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + post.time + '</span>' +
+          '<span class="comm-card-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>' + post.replies + ' ' + replyLabel + '</span>' +
+        '</div>' +
+      '</div>' +
+      thumbHtml;
+
+    feed.appendChild(card);
+  });
+}
+
+function openCommModal() {
+  _commSelectedType = null;
+  _commSelectedProductId = null;
+  document.getElementById('comm-step-type').style.display = '';
+  document.getElementById('comm-form-inquiry').style.display = 'none';
+  document.getElementById('comm-form-sale').style.display = 'none';
+  document.getElementById('comm-modal-footer').style.display = 'none';
+  document.getElementById('comm-type-inquiry').classList.remove('selected');
+  document.getElementById('comm-type-sale').classList.remove('selected');
+  var inquiryMsg = document.getElementById('comm-inquiry-msg');
+  var saleMsg    = document.getElementById('comm-sale-msg');
+  var salePrice  = document.getElementById('comm-sale-price');
+  if (inquiryMsg) inquiryMsg.value = '';
+  if (saleMsg)    saleMsg.value    = '';
+  if (salePrice)  salePrice.value  = '';
+  commRemoveProduct('inquiry');
+  document.getElementById('comm-modal-overlay').classList.add('visible');
+}
+
+function closeCommModal() {
+  document.getElementById('comm-modal-overlay').classList.remove('visible');
+}
+
+function selectCommType(type) {
+  _commSelectedType = type;
+  document.getElementById('comm-type-inquiry').classList.toggle('selected', type === 'inquiry');
+  document.getElementById('comm-type-sale').classList.toggle('selected', type === 'sale');
+  document.getElementById('comm-form-inquiry').style.display = type === 'inquiry' ? '' : 'none';
+  document.getElementById('comm-form-sale').style.display    = type === 'sale'    ? '' : 'none';
+  document.getElementById('comm-modal-footer').style.display = '';
+  document.getElementById('comm-step-type').style.display = 'none';
+}
+
+function commPickProduct() {
+  var search = document.getElementById('comm-picker-search-input');
+  if (search) search.value = '';
+  renderCommPickerList('');
+  document.getElementById('comm-picker-overlay').classList.add('visible');
+}
+
+function filterCommPicker(val) {
+  renderCommPickerList(val);
+}
+
+function renderCommPickerList(query) {
+  var list = document.getElementById('comm-picker-list');
+  if (!list) return;
+  list.innerHTML = '';
+  var q = (query || '').toLowerCase().trim();
+
+  var filtered = PRODUCTS.filter(function(p) {
+    return !q || P(p,'name').toLowerCase().includes(q) || P(p,'brand').toLowerCase().includes(q);
+  });
+
+  filtered.forEach(function(p) {
+    var row = document.createElement('div');
+    row.className = 'comm-picker-row' + (_commSelectedProductId === p.id ? ' selected' : '');
+    row.setAttribute('data-product-id', p.id);
+    row.innerHTML =
+      '<div class="comm-picker-thumb">' +
+        '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
+          '<img loading="lazy" src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
+        '</div>' +
+      '</div>' +
+      '<div class="comm-picker-info">' +
+        '<div class="comm-picker-name">' + P(p,'name') + '</div>' +
+        '<div class="comm-picker-sub">'  + P(p,'brand') + ' · ' + p.size + '</div>' +
+      '</div>' +
+      '<div class="comm-picker-check"></div>';
+    row.addEventListener('click', function() {
+      _commSelectedProductId = p.id;
+      commSetProductPreview(p);
+      closeCommPicker();
+    });
+    list.appendChild(row);
+  });
+}
+
+function closeCommPicker() {
+  document.getElementById('comm-picker-overlay').classList.remove('visible');
+}
+
+function commSetProductPreview(p) {
+  var preview = document.getElementById('comm-inquiry-product-preview');
+  var thumb   = document.getElementById('comm-inquiry-thumb');
+  var nameEl  = document.getElementById('comm-inquiry-product-name');
+  if (!preview) return;
+  thumb.innerHTML =
+    '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
+      '<img src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
+    '</div>';
+  nameEl.textContent = P(p,'name') + ' · ' + p.size;
+  preview.style.display = 'flex';
+}
+
+function commRemoveProduct(formType) {
+  _commSelectedProductId = null;
+  var preview = document.getElementById('comm-inquiry-product-preview');
+  if (preview) preview.style.display = 'none';
+}
+
+function commPickGallery() {
+  /* Native file picker — no-op in prototype */
+  var input = document.createElement('input');
+  input.type = 'file'; input.accept = 'image/*';
+  input.click();
+}
+
+function commPickCamera() {
+  /* Camera capture — no-op in prototype */
+  var input = document.createElement('input');
+  input.type = 'file'; input.accept = 'image/*'; input.capture = 'environment';
+  input.click();
+}
+
+function submitCommPost() {
+  var msg = '';
+  if (_commSelectedType === 'inquiry') {
+    msg = (document.getElementById('comm-inquiry-msg').value || '').trim();
+  } else if (_commSelectedType === 'sale') {
+    msg = (document.getElementById('comm-sale-msg').value || '').trim();
+  }
+  if (!msg) return;
+
+  var priceVal = _commSelectedType === 'sale'
+    ? parseInt(document.getElementById('comm-sale-price').value || '0') || null
+    : null;
+
+  var newPost = {
+    id: 'c' + Date.now(),
+    type: _commSelectedType,
+    msgEn: msg, msgAr: msg,
+    time: LANG === 'ar' ? 'الآن' : 'now',
+    replies: 0,
+    price: priceVal,
+    productId: _commSelectedProductId || null
+  };
+
+  _commPosts.unshift(newPost);
+  closeCommModal();
+  renderCommunityFeed();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
