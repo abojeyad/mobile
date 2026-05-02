@@ -429,7 +429,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .dip-scroll { flex:1; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; padding-bottom:32px; scrollbar-width:none; }
 .dip-scroll::-webkit-scrollbar { display:none; }
 
-.dip-filters-bar { display:flex; align-items:center; gap:7px; overflow-x:auto; padding:10px 16px; flex-shrink:0; scrollbar-width:none; border-bottom:1px solid var(--border); }
+.dip-filters-bar { display:flex; align-items:center; gap:7px; overflow-x:auto; padding:10px 16px; flex-shrink:0; scrollbar-width:none; }
 .dip-filters-bar::-webkit-scrollbar { display:none; }
 .dip-chip { flex-shrink:0; font-size:var(--t5); font-weight:600; padding:6px 13px; border-radius:20px; cursor:pointer; border:1.5px solid var(--border-strong); background:var(--bg-phone); color:var(--ink-2); transition:all 0.13s; user-select:none; white-space:nowrap; font-family:inherit; }
 .dip-chip.dip-active { background:var(--red); color:#fff; border-color:var(--red); }
@@ -449,29 +449,6 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .cmp-badge-stock  { background: var(--red-light); color: var(--red); }
 
 .dip-product-info { padding:14px 16px 12px; border-bottom:1px solid var(--border); }
-
-/* Compare page — product hero strip (image + name + store count) */
-.cmp-product-hero {
-  display: flex; align-items: center; gap: 14px;
-  padding: 14px 16px 12px;
-  border-bottom: 1px solid var(--border);
-}
-.cmp-product-hero-thumb {
-  width: 56px; height: 56px;
-  border-radius: var(--radius-md);
-  overflow: hidden; flex-shrink: 0;
-  border: 1px solid var(--border);
-}
-.cmp-product-hero-thumb .prod-img-wrap { height: 100%; }
-.cmp-product-hero-info { flex: 1; min-width: 0; }
-.cmp-product-hero-name {
-  font-size: var(--t2); font-weight: 700;
-  color: var(--ink-1); line-height: 1.2;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.cmp-product-hero-sub {
-  font-size: var(--t5); color: var(--ink-3); margin-top: 4px;
-}
 .dip-product-name { font-size:var(--t2); font-weight:700; color:var(--ink-1); line-height:1.2; }
 .dip-store-count { font-size:var(--t5); color:var(--ink-3); margin-top:4px; }
 
@@ -502,22 +479,6 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .dip-section-divider { height:6px; background:var(--border); margin-top:20px; }
 .dip-section-wrap { margin-top:16px; }
 .dip-section-label { font-size:var(--t6); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-3); padding:0 16px 10px; display:block; }
-
-.cmp-unified-card {
-  margin: 12px 16px 0;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--bg-phone);
-  flex-shrink: 0;
-}
-
-/* Inside the unified card, the stores list has no outer margin or border */
-.cmp-unified-card .dip-alt-list {
-  margin: 0;
-  border: none;
-  border-radius: 0;
-}
 
 .dip-alt-list { background:var(--bg-phone); border-radius:var(--radius-lg); margin:0 16px; border:1px solid var(--border); overflow:hidden; }
 .dip-alt-card { display:flex; align-items:center; gap:12px; padding:11px 14px 11px 12px; border-bottom:1px solid var(--border); cursor:pointer; transition:background 0.12s; }
@@ -3282,37 +3243,13 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="dip-header-spacer"></div>
   </div>
 
-  <!-- Unified card: hero + sizes + store cards -->
-  <div class="cmp-unified-card">
-
-    <!-- Section 1: product image, name, availability -->
-    <div class="cmp-product-hero" id="compare-product-hero">
-      <div class="cmp-product-hero-thumb">
-        <div class="prod-img-wrap" id="compare-hero-imgwrap" style="height:100%;">
-          <img id="compare-hero-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;">
-        </div>
-      </div>
-      <div class="cmp-product-hero-info">
-        <div class="cmp-product-hero-name" id="compare-hero-name"></div>
-        <div class="cmp-product-hero-sub"  id="compare-hero-sub"></div>
-      </div>
-    </div>
-
-    <!-- Section 2: available sizes -->
-    <div class="dip-filters-bar" id="compare-filters"></div>
-
-    <!-- Section 3: store cards -->
-    <div class="dip-alt-list" id="compare-stores-list"></div>
-
-  </div><!-- /cmp-unified-card -->
+  <!-- Size filter chips — populated dynamically by openComparePage -->
+  <div class="dip-filters-bar" id="compare-filters"></div>
 
   <div class="dip-scroll">
 
-    <!-- spacer so scroll starts below the unified card -->
-    <div style="height:4px;" aria-hidden="true"></div>
-
-    <!-- Store comparison cards placeholder (already above, kept for compat) -->
-    <div style="display:none;" id="compare-stores-list-compat"></div>
+    <!-- Store comparison cards -->
+    <div class="dip-alt-list" id="compare-stores-list"></div>
 
     <!-- Divider -->
     <div class="dip-section-divider" style="margin-top:24px;"></div>
@@ -5348,17 +5285,6 @@ function openComparePage(productId, origin) {
     bar.appendChild(btn);
   });
 
-  /* Populate the product hero strip */
-  var heroImgWrap = document.getElementById('compare-hero-imgwrap');
-  var heroImg     = document.getElementById('compare-hero-img');
-  var heroName    = document.getElementById('compare-hero-name');
-  var heroSub     = document.getElementById('compare-hero-sub');
-  if (heroImgWrap) heroImgWrap.style.background = p.bg;
-  if (heroImg)     { heroImg.src = p.img; }
-  if (heroName)    heroName.textContent = P(p, 'name');
-  if (heroSub)     heroSub.textContent  = T('compare_available_in') + ' '
-    + getStoresCount(p.id) + ' ' + T('compare_stores');
-
   /* Render stores for the clicked product's size */
   _compareRenderStores(p, p.size);
 
@@ -5432,12 +5358,15 @@ function _compareRenderStores(p, sizeFilter) {
   /* If same store wins both — elevate to "Best Value" */
   var bothSame = bestPriceIdx !== -1 && bestPriceIdx === bestChoiceIdx;
 
-  /* Update hero subtitle with store count for the selected size */
-  var heroSubEl = document.getElementById('compare-hero-sub');
-  if (heroSubEl) heroSubEl.textContent = T('compare_available_in') + ' '
-    + listings.length + ' ' + T('compare_stores');
-
-  list.innerHTML = '';
+  list.innerHTML =
+    '<div class="dip-product-info" style="border-bottom:1px solid var(--border);">' +
+      '<div class="dip-product-name" id="compare-product-name">' +
+        P(variant, 'name') + (sizeFilter ? ' (' + sizeFilter + ')' : '') +
+      '</div>' +
+      '<div class="dip-store-count" id="compare-store-count">' +
+        T('compare_available_in') + ' ' + listings.length + ' ' + T('compare_stores') +
+      '</div>' +
+    '</div>';
   list.className = 'dip-alt-list';
 
   /* SVG icons for badges */

@@ -429,49 +429,12 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .dip-scroll { flex:1; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; padding-bottom:32px; scrollbar-width:none; }
 .dip-scroll::-webkit-scrollbar { display:none; }
 
-.dip-filters-bar { display:flex; align-items:center; gap:7px; overflow-x:auto; padding:10px 16px; flex-shrink:0; scrollbar-width:none; border-bottom:1px solid var(--border); }
+.dip-filters-bar { display:flex; align-items:center; gap:7px; overflow-x:auto; padding:10px 16px; flex-shrink:0; scrollbar-width:none; }
 .dip-filters-bar::-webkit-scrollbar { display:none; }
 .dip-chip { flex-shrink:0; font-size:var(--t5); font-weight:600; padding:6px 13px; border-radius:20px; cursor:pointer; border:1.5px solid var(--border-strong); background:var(--bg-phone); color:var(--ink-2); transition:all 0.13s; user-select:none; white-space:nowrap; font-family:inherit; }
 .dip-chip.dip-active { background:var(--red); color:#fff; border-color:var(--red); }
 
-/* Best Price / Best Choice / Best Value badges on compare page */
-.cmp-badge {
-  display: inline-flex; align-items: center; gap: 4px;
-  font-size: 10px; font-weight: 700;
-  padding: 3px 8px; border-radius: 20px;
-  white-space: nowrap; flex-shrink: 0;
-  line-height: 1;
-}
-.cmp-badge svg { width: 10px; height: 10px; flex-shrink: 0; }
-.cmp-badge-price  { background: #D1FAE5; color: #065F46; }
-.cmp-badge-choice { background: #EDE9FE; color: #5B21B6; }
-.cmp-badge-value  { background: #FEF3C7; color: #78350F; }
-.cmp-badge-stock  { background: var(--red-light); color: var(--red); }
-
 .dip-product-info { padding:14px 16px 12px; border-bottom:1px solid var(--border); }
-
-/* Compare page — product hero strip (image + name + store count) */
-.cmp-product-hero {
-  display: flex; align-items: center; gap: 14px;
-  padding: 14px 16px 12px;
-  border-bottom: 1px solid var(--border);
-}
-.cmp-product-hero-thumb {
-  width: 56px; height: 56px;
-  border-radius: var(--radius-md);
-  overflow: hidden; flex-shrink: 0;
-  border: 1px solid var(--border);
-}
-.cmp-product-hero-thumb .prod-img-wrap { height: 100%; }
-.cmp-product-hero-info { flex: 1; min-width: 0; }
-.cmp-product-hero-name {
-  font-size: var(--t2); font-weight: 700;
-  color: var(--ink-1); line-height: 1.2;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.cmp-product-hero-sub {
-  font-size: var(--t5); color: var(--ink-3); margin-top: 4px;
-}
 .dip-product-name { font-size:var(--t2); font-weight:700; color:var(--ink-1); line-height:1.2; }
 .dip-store-count { font-size:var(--t5); color:var(--ink-3); margin-top:4px; }
 
@@ -503,22 +466,6 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .dip-section-wrap { margin-top:16px; }
 .dip-section-label { font-size:var(--t6); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-3); padding:0 16px 10px; display:block; }
 
-.cmp-unified-card {
-  margin: 12px 16px 0;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--bg-phone);
-  flex-shrink: 0;
-}
-
-/* Inside the unified card, the stores list has no outer margin or border */
-.cmp-unified-card .dip-alt-list {
-  margin: 0;
-  border: none;
-  border-radius: 0;
-}
-
 .dip-alt-list { background:var(--bg-phone); border-radius:var(--radius-lg); margin:0 16px; border:1px solid var(--border); overflow:hidden; }
 .dip-alt-card { display:flex; align-items:center; gap:12px; padding:11px 14px 11px 12px; border-bottom:1px solid var(--border); cursor:pointer; transition:background 0.12s; }
 .dip-alt-card:last-child { border-bottom:none; }
@@ -535,65 +482,6 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .dip-alt-chevron svg { width:15px; height:15px; }
 [dir="rtl"] .dip-alt-chevron svg { transform:scaleX(-1); }
 
-/* ── Compare page store card interior ── */
-.cmp-card-row1 {
-  display: flex; align-items: center;
-  justify-content: space-between; gap: 6px;
-}
-.cmp-store-name {
-  font-size: var(--t5); font-weight: 600; color: var(--ink-1);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  flex: 1; min-width: 0;
-}
-.cmp-card-row2 {
-  display: flex; align-items: center;
-  justify-content: space-between; gap: 6px;
-  margin-top: 4px;
-}
-.cmp-card-meta {
-  display: flex; align-items: center; gap: 6px; min-width: 0;
-  flex-wrap: nowrap; overflow: hidden;
-}
-.cmp-rating {
-  font-size: var(--t6); font-weight: 600; color: var(--ink-2);
-  white-space: nowrap;
-}
-.cmp-rating-star { color: #CA8A04; }
-.cmp-sep {
-  width: 3px; height: 3px; border-radius: 50%;
-  background: var(--ink-3); flex-shrink: 0;
-}
-.cmp-delivery {
-  font-size: var(--t6); white-space: nowrap;
-}
-.cmp-delivery-free { color: var(--green); font-weight: 600; }
-.cmp-delivery-paid { color: var(--ink-3); }
-.cmp-card-price-wrap {
-  display: flex; align-items: baseline; gap: 4px;
-  flex-shrink: 0;
-}
-.cmp-price {
-  font-size: var(--t3); font-weight: 800; color: var(--ink-1);
-  white-space: nowrap; line-height: 1;
-}
-.cmp-currency {
-  font-size: var(--t6); font-weight: 500; color: var(--ink-3);
-}
-.cmp-discount {
-  font-size: 10px; font-weight: 700; color: var(--red);
-}
-.cmp-card-row3 {
-  display: flex; align-items: center; gap: 8px;
-  margin-top: 6px;
-}
-.cmp-feat-icon {
-  display: flex; align-items: center; gap: 3px;
-  font-size: 10px; font-weight: 500; white-space: nowrap;
-}
-.cmp-feat-icon svg { width: 12px; height: 12px; flex-shrink: 0; }
-.cmp-feat-on  { color: var(--ink-2); }
-.cmp-feat-off { color: var(--border-strong); }
-
 /* ══════════════════════════════════════════════════════════
    PRODUCT DETAIL PAGE
 ══════════════════════════════════════════════════════════ */
@@ -607,7 +495,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .product-hero-img .prod-img-wrap .prod-img { width:100%; height:100%; object-fit:cover; object-position:center center; }
 
 .buy-cta-bar { margin:18px 20px 0; }
-.buy-cta-go-btn { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; margin-top:10px; padding:15px 18px; background:#79002F; color:#fff; border:none; border-radius:var(--radius-md); font-family:var(--font-body); font-size:var(--t3); font-weight:600; cursor:pointer; transition:opacity 0.15s; }
+.buy-cta-go-btn { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; margin-top:10px; padding:15px 18px; background:var(--amber); color:#fff; border:none; border-radius:var(--radius-md); font-family:var(--font-body); font-size:var(--t3); font-weight:600; cursor:pointer; transition:opacity 0.15s; }
 .buy-cta-go-btn:hover { opacity:0.88; }
 .buy-cta-go-btn svg { width:18px; height:18px; flex-shrink:0; }
 
@@ -616,62 +504,6 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .prod-brand  { font-size:var(--t4); color:var(--ink-3); margin-bottom:12px; }
 
 .accords-wrap  { margin-top:20px; padding-top:16px; border-top:1px solid var(--border); }
-
-/* ── Accord bar rows ── */
-.accord-row {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 10px;
-}
-.accord-row:last-child { margin-bottom: 0; }
-.accord-label {
-  font-size: var(--t5); font-weight: 600; color: var(--ink-1);
-  width: 90px; flex-shrink: 0; white-space: nowrap;
-  overflow: hidden; text-overflow: ellipsis;
-}
-[dir="rtl"] .accord-label { text-align: right; }
-.accord-bar-bg {
-  flex: 1; height: 11px; background: var(--bg-input);
-  border-radius: 6px; overflow: hidden;
-}
-.accord-bar-fill {
-  height: 100%; border-radius: 6px;
-  transition: width 0.65s cubic-bezier(0.4,0,0.2,1);
-  /* color set per-bar by JS via --accord-color custom property */
-  background: var(--accord-color, var(--red));
-}
-.accord-pct {
-  font-size: var(--t6); font-weight: 700; color: var(--ink-3);
-  width: 32px; text-align: right; flex-shrink: 0;
-}
-[dir="rtl"] .accord-pct { text-align: left; }
-
-/* ── Store features icon strip ── */
-.store-features-wrap {
-  display: flex; flex-direction: row; flex-wrap: nowrap;
-  gap: 7px; padding: 14px 0 6px;
-  overflow-x: auto; scrollbar-width: none;
-}
-.store-features-wrap::-webkit-scrollbar { display: none; }
-.store-feature-chip {
-  display: flex; align-items: center; gap: 5px;
-  border-radius: 20px; padding: 5px 10px;
-  font-size: var(--t6); font-weight: 500;
-  white-space: nowrap; flex-shrink: 0;
-  border: 1px solid transparent;
-}
-/* Active features — each gets its own accent color */
-.store-feature-chip.feat-delivery  { background: #D1FAE5; color: #065F46; border-color: #6EE7B7; }
-.store-feature-chip.feat-express   { background: #DBEAFE; color: #1E40AF; border-color: #93C5FD; }
-.store-feature-chip.feat-returns   { background: #F3E8FF; color: #6B21A8; border-color: #C4B5FD; }
-.store-feature-chip.feat-cashback  { background: #FEF3C7; color: #92400E; border-color: #FCD34D; }
-.store-feature-chip.feat-loyalty   { background: #FFF1F2; color: #9F1239; border-color: #FDA4AF; }
-.store-feature-chip.feat-install   { background: #F0FDFA; color: #115E59; border-color: #5EEAD4; }
-/* Inactive features — muted, same shape */
-.store-feature-chip.inactive {
-  background: var(--bg-surface); border-color: var(--border);
-  color: var(--ink-3); opacity: 0.5;
-}
-.store-feature-chip svg { width: 12px; height: 12px; flex-shrink: 0; }
 .accord-title  { font-size:var(--t4); font-weight:700; color:var(--ink-1); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.05em; }
 .accord-item   { margin-bottom:10px; display:flex; align-items:center; gap:12px; }
 .accord-label  { font-size:var(--t5); font-weight:500; color:var(--ink-2); width:75px; flex-shrink:0; }
@@ -702,7 +534,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .note-heart { background:var(--b-pink); color:#8C3066; }
 .note-base  { background:var(--green-light); color:var(--green); }
 
-.frag-identity-section { margin-bottom:0; }
+.frag-identity-section { margin-bottom:16px; }
 .frag-identity-row     { display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px; }
 .frag-identity-row::-webkit-scrollbar { display:none; }
 .frag-id-card  { display:flex; flex-direction:column; align-items:center; gap:5px; background:var(--bg-surface); border:1.5px solid var(--border); border-radius:var(--radius-md); padding:12px 10px; flex-shrink:0; min-width:76px; max-width:90px; cursor:default; }
@@ -1329,7 +1161,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .comm-media-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
 .comm-submit-btn {
   width: 100%; height: 50px; border-radius: var(--radius-md);
-  background: #79002F; color: #fff; font-size: var(--t4);
+  background: var(--red); color: #fff; font-size: var(--t4);
   font-weight: 600; font-family: inherit; border: none; cursor: pointer;
   transition: opacity 0.15s;
 }
@@ -3282,37 +3114,13 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="dip-header-spacer"></div>
   </div>
 
-  <!-- Unified card: hero + sizes + store cards -->
-  <div class="cmp-unified-card">
-
-    <!-- Section 1: product image, name, availability -->
-    <div class="cmp-product-hero" id="compare-product-hero">
-      <div class="cmp-product-hero-thumb">
-        <div class="prod-img-wrap" id="compare-hero-imgwrap" style="height:100%;">
-          <img id="compare-hero-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;">
-        </div>
-      </div>
-      <div class="cmp-product-hero-info">
-        <div class="cmp-product-hero-name" id="compare-hero-name"></div>
-        <div class="cmp-product-hero-sub"  id="compare-hero-sub"></div>
-      </div>
-    </div>
-
-    <!-- Section 2: available sizes -->
-    <div class="dip-filters-bar" id="compare-filters"></div>
-
-    <!-- Section 3: store cards -->
-    <div class="dip-alt-list" id="compare-stores-list"></div>
-
-  </div><!-- /cmp-unified-card -->
+  <!-- Size filter chips — populated dynamically by openComparePage -->
+  <div class="dip-filters-bar" id="compare-filters"></div>
 
   <div class="dip-scroll">
 
-    <!-- spacer so scroll starts below the unified card -->
-    <div style="height:4px;" aria-hidden="true"></div>
-
-    <!-- Store comparison cards placeholder (already above, kept for compat) -->
-    <div style="display:none;" id="compare-stores-list-compat"></div>
+    <!-- Store comparison cards -->
+    <div class="dip-alt-list" id="compare-stores-list"></div>
 
     <!-- Divider -->
     <div class="dip-section-divider" style="margin-top:24px;"></div>
@@ -3362,7 +3170,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="buy-cta-bar">
       <button class="buy-cta-go-btn" id="product-cta-go-btn" style="display:flex;justify-content:space-between;align-items:center;padding:0 20px;height:46px;">
         <div style="display:flex;align-items:center;gap:8px;">
-          <span id="product-cta-btn-price" style="font-size:var(--t2);font-weight:700;font-family:var(--font-body);letter-spacing:-0.01em;"></span>
+          <span id="product-cta-btn-price" style="font-size:var(--t5);opacity:0.92;font-family:var(--font-body);"></span>
           <span id="product-cta-btn-badge" style="font-size:var(--t5);background:rgba(255,255,255,0.22);border-radius:20px;padding:2px 8px;"></span>
         </div>
         <div style="display:flex;align-items:center;gap:6px;">
@@ -3451,26 +3259,11 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
         </div>
       </div>
+      <div style="font-size:11px; color:var(--ink-3); margin:4px 20px 14px;" data-i18n="pdp_ai_generated_note"></div>
+      <div style="height:1px; background:var(--border); width:100%;"></div>
 
-      <!-- AI note — tight footer inside the same block as the identity section -->
-      <div style="display:flex;align-items:flex-start;gap:5px;padding:6px 0 0;margin-top:4px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:11px;height:11px;color:var(--ink-3);flex-shrink:0;margin-top:2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <span style="font-size:12px;color:var(--ink-3);line-height:1.5;" data-i18n="pdp_ai_generated_note"></span>
-      </div>
-
-    </div><!-- /prod-info -->
-
-    <!-- Full-width divider — edge to edge -->
-    <div style="height:1px;background:var(--border);margin:12px 0 0;"></div>
-
-    <!-- Accords + Store features — same horizontal padding as prod-info -->
-    <div style="padding:0 20px;">
-
+      <!-- Accords -->
       <div class="accords-wrap" id="product-accords"><div class="accord-title" data-i18n="pdp_accords">Accords</div></div>
-
-      <!-- Store features icon strip -->
-      <div class="store-features-wrap" id="pdp-store-features" style="display:none;"></div>
-
     </div>
 
     <div style="padding:0 20px;">
@@ -3538,7 +3331,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <div style="margin-top:12px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px;">
         <div style="font-size:var(--t4);font-weight:500;color:var(--ink-1);margin-bottom:10px;" data-i18n="pdp_add_review">Add a Review</div>
         <textarea id="review-text-input" data-i18n="pdp_review_ph" placeholder="Share your thoughts about this fragrance…" style="width:100%;min-height:72px;resize:none;background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 11px;font-size:11px;font-family:var(--font-body);color:var(--ink-3);outline:none;line-height:1.6;transition:border-color 0.15s;"></textarea>
-        <button onclick="if(guestGuard())return;submitReview()" style="margin-top:8px;width:100%;padding:10px;border-radius:var(--radius-sm);background:#79002F;color:#fff;font-size:var(--t5);font-weight:500;border:none;cursor:pointer;" data-i18n="pdp_submit_review">Submit Review</button>
+        <button onclick="if(guestGuard())return;submitReview()" style="margin-top:8px;width:100%;padding:10px;border-radius:var(--radius-sm);background:var(--gold);color:#fff;font-size:var(--t5);font-weight:500;border:none;cursor:pointer;" data-i18n="pdp_submit_review">Submit Review</button>
         <div id="review-submit-msg" style="display:none;margin-top:8px;font-size:var(--t5);color:var(--green);text-align:center;font-weight:500;" data-i18n="pdp_review_thanks">✓ Review submitted. Thank you!</div>
       </div>
       <div style="margin-top:20px;"></div>
@@ -5003,99 +4796,8 @@ function openProduct(productId, origin) {
   document.getElementById('product-year').textContent        = p.year       || '--';
   document.getElementById('product-rating').textContent      = (p.rating    || '--') + ' ★';
 
-  /* Accords — render from product data, sorted descending */
-  var accordsWrap = document.getElementById('product-accords');
-  var srcProduct  = PRODUCTS.find(function(pr){ return pr.id === _pdpProductId; });
-  var accords     = (srcProduct && srcProduct.accords) ? srcProduct.accords.slice() : [];
-  if (accords.length > 0) {
-    accords.sort(function(a, b) { return b.percent - a.percent; });
-    accordsWrap.innerHTML = '<div class="accord-title" data-i18n="pdp_accords">' + T('pdp_accords') + '</div>';
-    /* Color palette — cycles if more than 7 accords */
-    var accordColors = [
-      '#79002F',  /* burgundy   */
-      '#2563EB',  /* blue       */
-      '#059669',  /* green      */
-      '#D97706',  /* amber      */
-      '#7C3AED',  /* violet     */
-      '#0891B2',  /* cyan       */
-      '#DB2777'   /* pink       */
-    ];
-    accords.forEach(function(acc, i) {
-      var label = LANG === 'ar' ? acc.nameAr : acc.nameEn;
-      var color = accordColors[i % accordColors.length];
-      var row = document.createElement('div');
-      row.className = 'accord-row';
-      row.innerHTML =
-        '<div class="accord-label">' + label + '</div>' +
-        '<div class="accord-bar-bg">' +
-          '<div class="accord-bar-fill" style="width:0%;--accord-color:' + color + ';" data-target="' + acc.percent + '"></div>' +
-        '</div>' +
-        '<div class="accord-pct">' + acc.percent + '%</div>';
-      accordsWrap.appendChild(row);
-    });
-    accordsWrap.style.display = '';
-    /* Animate bars after paint */
-    setTimeout(function() {
-      accordsWrap.querySelectorAll('.accord-bar-fill').forEach(function(bar) {
-        bar.style.width = bar.getAttribute('data-target') + '%';
-      });
-    }, 80);
-  } else {
-    accordsWrap.style.display = 'none';
-  }
-
-  /* Store features icon strip */
-  var featuresWrap = document.getElementById('pdp-store-features');
-  var bestStore    = srcProduct ? (function() {
-    var bl = getBestListing(srcProduct.id);
-    return bl ? STORES.find(function(s){ return s.id === bl.storeId; }) : null;
-  })() : null;
-  if (featuresWrap && bestStore) {
-    featuresWrap.innerHTML = '';
-    var features = [
-      {
-        key: 'freeDelivery',    colorClass: 'feat-delivery',
-        labelEn: 'Free Delivery', labelAr: 'شحن مجاني',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 4v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>'
-      },
-      {
-        key: 'expressDelivery', colorClass: 'feat-express',
-        labelEn: 'Express', labelAr: 'توصيل سريع',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>'
-      },
-      {
-        key: 'returnPolicy',    colorClass: 'feat-returns',
-        labelEn: 'Returns', labelAr: 'سياسة إرجاع',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>'
-      },
-      {
-        key: 'cashback',        colorClass: 'feat-cashback',
-        labelEn: 'Cashback', labelAr: 'استرداد نقدي',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>'
-      },
-      {
-        key: 'loyaltyPoints',   colorClass: 'feat-loyalty',
-        labelEn: 'Loyalty Points', labelAr: 'نقاط ولاء',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'
-      },
-      {
-        key: 'installments',    colorClass: 'feat-install',
-        labelEn: 'Installments', labelAr: 'أقساط',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg>'
-      }
-    ];
-    features.forEach(function(f) {
-      var isActive = !!bestStore[f.key];
-      var chip = document.createElement('div');
-      chip.className = 'store-feature-chip ' + f.colorClass + ' ' + (isActive ? '' : 'inactive');
-      var label = LANG === 'ar' ? f.labelAr : f.labelEn;
-      chip.innerHTML = f.icon + '<span>' + label + '</span>';
-      featuresWrap.appendChild(chip);
-    });
-    featuresWrap.style.display = '';
-  } else if (featuresWrap) {
-    featuresWrap.style.display = 'none';
-  }
+  /* Accords — not in rebuild data yet, hide */
+  document.getElementById('product-accords').style.display = 'none';
 
   /* CTA */
   document.getElementById('product-cta-btn-price').textContent = p.price;
@@ -5327,73 +5029,40 @@ function openComparePage(productId, origin) {
   _compareOrigin    = origin || 'home';
   _compareProductId = productId;
 
-  /* All size variants for this fragrance group, sorted numerically */
-  var gid      = p.variantGroupId || p.id;
-  var variants = PRODUCTS.filter(function(pr) {
-    return (pr.variantGroupId || pr.id) === gid;
+  /* Derive distinct sizes from this product's storeComparison, preserving numeric order */
+  var comps = (p.storeComparison || []);
+  var sizes = comps.reduce(function(acc, e) {
+    if (e.size && acc.indexOf(e.size) === -1) acc.push(e.size);
+    return acc;
+  }, []).sort(function(a, b) {
+    return parseInt(a, 10) - parseInt(b, 10);
   });
-  var sizes = variants
-    .map(function(v) { return v.size; })
-    .filter(function(s, i, a) { return a.indexOf(s) === i; })
-    .sort(function(a, b) { return parseInt(a, 10) - parseInt(b, 10); });
 
-  /* Build size chips — active chip = the size of the product that was clicked */
+  /* Build size chips dynamically */
   var bar = document.getElementById('compare-filters');
   bar.innerHTML = '';
-  sizes.forEach(function(sz) {
+  sizes.forEach(function(sz, i) {
     var btn = document.createElement('button');
-    btn.className = 'dip-chip' + (sz === p.size ? ' dip-active' : '');
+    btn.className = 'dip-chip' + (i === 0 ? ' dip-active' : '');
     btn.textContent = sz;
     btn.addEventListener('click', function() { compareFilterSize(btn, sz); });
     bar.appendChild(btn);
   });
 
-  /* Populate the product hero strip */
-  var heroImgWrap = document.getElementById('compare-hero-imgwrap');
-  var heroImg     = document.getElementById('compare-hero-img');
-  var heroName    = document.getElementById('compare-hero-name');
-  var heroSub     = document.getElementById('compare-hero-sub');
-  if (heroImgWrap) heroImgWrap.style.background = p.bg;
-  if (heroImg)     { heroImg.src = p.img; }
-  if (heroName)    heroName.textContent = P(p, 'name');
-  if (heroSub)     heroSub.textContent  = T('compare_available_in') + ' '
-    + getStoresCount(p.id) + ' ' + T('compare_stores');
+  /* Render stores for the first (smallest) size by default */
+  var defaultSize = sizes[0] || null;
+  _compareRenderStores(p, defaultSize);
 
-  /* Render stores for the clicked product's size */
-  _compareRenderStores(p, p.size);
-
-  /* Similar products — one per unique fragrance group, excluding current group */
+  /* Similar products */
   var simList = document.getElementById('compare-similar-list');
   simList.innerHTML = '';
-  uniqueProducts().filter(function(pr) {
-    return (pr.variantGroupId || pr.id) !== gid;
-  }).forEach(function(pr) {
+  PRODUCTS.filter(function(pr) { return pr.id !== productId; }).forEach(function(pr) {
     simList.appendChild(_compareAltCard(pr));
   });
 
   switchScreen('compare');
   var scroll = document.querySelector('#screen-compare .dip-scroll');
   if (scroll) scroll.scrollTop = 0;
-}
-
-/* ──────────────────────────────────────────────────────────
-   scoreStore(store, listing)
-   Returns 0-100 score for a store+listing pair.
-   Higher = better overall experience for the customer.
-────────────────────────────────────────────────────────── */
-function scoreStore(store, listing) {
-  if (!store || !listing || !listing.inStock) return -1;
-  var score = 0;
-  /* Rating — up to 25 pts (continuous) */
-  if (store.rating) score += (store.rating / 5) * 25;
-  /* Binary service features */
-  if (listing.freeDelivery)   score += 15;
-  if (store.expressDelivery)  score += 12;
-  if (store.returnPolicy)     score += 14;
-  if (store.cashback)         score += 12;
-  if (store.loyaltyPoints)    score += 12;
-  if (store.installments)     score += 10;
-  return score;
 }
 
 function _compareRenderStores(p, sizeFilter) {
@@ -5413,59 +5082,28 @@ function _compareRenderStores(p, sizeFilter) {
     return a.price - b.price;
   });
 
-  /* ── Determine Best Price and Best Choice indices ── */
-  /* Best Price = first in-stock entry (already sorted cheapest first) */
-  var bestPriceIdx  = -1;
-  var bestChoiceIdx = -1;
-  var bestScore     = -1;
-
-  listings.forEach(function(entry, i) {
-    if (!entry.inStock) return;
-    /* Best Price: first in-stock */
-    if (bestPriceIdx === -1) bestPriceIdx = i;
-    /* Best Choice: highest score */
-    var store = STORES.find(function(s){ return s.id === entry.storeId; }) || {};
-    var sc = scoreStore(store, entry);
-    if (sc > bestScore) { bestScore = sc; bestChoiceIdx = i; }
-  });
-
-  /* If same store wins both — elevate to "Best Value" */
-  var bothSame = bestPriceIdx !== -1 && bestPriceIdx === bestChoiceIdx;
-
-  /* Update hero subtitle with store count for the selected size */
-  var heroSubEl = document.getElementById('compare-hero-sub');
-  if (heroSubEl) heroSubEl.textContent = T('compare_available_in') + ' '
-    + listings.length + ' ' + T('compare_stores');
-
-  list.innerHTML = '';
+  list.innerHTML =
+    '<div class="dip-product-info" style="border-bottom:1px solid var(--border);">' +
+      '<div class="dip-product-name" id="compare-product-name">' +
+        P(variant, 'name') + (sizeFilter ? ' (' + sizeFilter + ')' : '') +
+      '</div>' +
+      '<div class="dip-store-count" id="compare-store-count">' +
+        T('compare_available_in') + ' ' + listings.length + ' ' + T('compare_stores') +
+      '</div>' +
+    '</div>';
   list.className = 'dip-alt-list';
-
-  /* SVG icons for badges */
-  var iconPrice  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>';
-  var iconChoice = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
-  var iconValue  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
-
-  var labelBestPrice  = LANG === 'ar' ? 'أفضل سعر'  : 'Best Price';
-  var labelBestChoice = LANG === 'ar' ? 'الخيار الأمثل' : 'Best Choice';
-  var labelBestValue  = LANG === 'ar' ? 'أفضل قيمة' : 'Best Value';
-  var labelOutStock   = LANG === 'ar' ? 'غير متوفر' : 'Out of stock';
 
   listings.forEach(function(entry, idx) {
     var store     = STORES.find(function(s) { return s.id === entry.storeId; }) || {};
     var storeName = S(store, 'name') || entry.storeId;
 
-    /* Build badge */
-    var badgeHtml = '';
-    if (!entry.inStock) {
-      badgeHtml = '<span class="cmp-badge cmp-badge-stock">' + labelOutStock + '</span>';
-    } else if (bothSame && idx === bestPriceIdx) {
-      badgeHtml = '<span class="cmp-badge cmp-badge-value">' + iconValue + labelBestValue + '</span>';
-    } else {
-      var parts = [];
-      if (idx === bestPriceIdx)  parts.push('<span class="cmp-badge cmp-badge-price">'  + iconPrice  + labelBestPrice  + '</span>');
-      if (idx === bestChoiceIdx) parts.push('<span class="cmp-badge cmp-badge-choice">' + iconChoice + labelBestChoice + '</span>');
-      badgeHtml = parts.join('');
-    }
+    var bestBadge = (idx === 0 && entry.inStock)
+      ? '<span style="font-size:10px;font-weight:700;background:var(--green-light);color:var(--green);padding:2px 8px;border-radius:20px;white-space:nowrap;">' + T('compare_best_price') + '</span>'
+      : '';
+    var stockBadge = !entry.inStock
+      ? '<span style="font-size:10px;font-weight:700;background:var(--red-light);color:var(--red);padding:2px 8px;border-radius:20px;white-space:nowrap;">' + (LANG === 'ar' ? 'غير متوفر' : 'Out of stock') + '</span>'
+      : '';
+    var badgeHtml = bestBadge || stockBadge;
 
     var discHtml = entry.discountPercent > 0
       ? '<span style="font-size:10px;font-weight:700;color:var(--red);margin-' + (LANG==='ar'?'right':'left') + ':4px;">↓ ' + entry.discountPercent + '%</span>'
@@ -5482,53 +5120,23 @@ function _compareRenderStores(p, sizeFilter) {
     if (entry.inStock) {
       card.addEventListener('click', (function(vid){ return function(){ openProduct(vid, 'compare'); }; })(variant.id));
     }
-    /* Row 2 meta: rating + delivery */
-    var ratingHtml = store.rating
-      ? '<span class="cmp-rating"><span class="cmp-rating-star">★</span> ' + store.rating + '</span>'
-      : '';
-    var delivText = entry.freeDelivery
-      ? (LANG === 'ar' ? 'شحن مجاني' : 'Free delivery')
-      : entry.deliveryDaysMin + '–' + entry.deliveryDaysMax + (LANG === 'ar' ? ' أيام' : ' days');
-    var delivClass = entry.freeDelivery ? 'cmp-delivery-free' : 'cmp-delivery-paid';
-
-    /* Row 3 feature icons: returns, installments, cashback */
-    function _featIcon(active, svgPath, labelEn, labelAr) {
-      var cls = active ? 'cmp-feat-on' : 'cmp-feat-off';
-      var label = LANG === 'ar' ? labelAr : labelEn;
-      return '<span class="cmp-feat-icon ' + cls + '">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' + svgPath + '</svg>' +
-        '<span>' + label + '</span>' +
-      '</span>';
-    }
-    var feat3Html =
-      _featIcon(!!store.returnPolicy,  '<polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>',   'Returns',      'إرجاع') +
-      _featIcon(!!store.installments,  '<rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>',              'Installments', 'أقساط') +
-      _featIcon(!!store.cashback,      '<path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>',               'Cashback',     'استرداد');
-
     card.innerHTML =
-      '<div class="dip-alt-info" style="min-width:0;flex:1;">' +
-        /* Row 1: store name + badge(s) */
-        '<div class="cmp-card-row1">' +
-          '<span class="cmp-store-name">' + storeName + '</span>' +
-          (badgeHtml ? '<div style="display:flex;gap:4px;flex-wrap:wrap;flex-shrink:0;">' + badgeHtml + '</div>' : '') +
+      '<div class="dip-alt-thumb" style="width:72px;height:72px;">' +
+        '<div class="prod-img-wrap" style="background:' + variant.bg + ';height:100%;">' +
+          '<img loading="lazy" src="' + variant.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">' +
         '</div>' +
-        /* Row 2: rating · delivery  |  price */
-        '<div class="cmp-card-row2">' +
-          '<div class="cmp-card-meta">' +
-            ratingHtml +
-            (ratingHtml ? '<span class="cmp-sep"></span>' : '') +
-            '<span class="cmp-delivery ' + delivClass + '">' + delivText + '</span>' +
-          '</div>' +
-          '<div class="cmp-card-price-wrap">' +
-            '<span class="cmp-price">' + entry.price + '</span>' +
-            '<span class="cmp-currency">' + cur + '</span>' +
-            (entry.discountPercent > 0 ? '<span class="cmp-discount">↓' + entry.discountPercent + '%</span>' : '') +
-          '</div>' +
-        '</div>' +
-        /* Row 3: feature icons */
-        '<div class="cmp-card-row3">' + feat3Html + '</div>' +
       '</div>' +
-      '<div class="dip-alt-right" style="padding-left:8px;">' +
+      '<div class="dip-alt-info" style="min-width:0;flex:1;">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">' +
+          '<div style="font-weight:500;color:#333;font-size:var(--t5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + storeName + '</div>' +
+          (badgeHtml ? '<div>' + badgeHtml + '</div>' : '') +
+        '</div>' +
+        '<div class="dip-alt-sub" style="color:#000;display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:3px;">' +
+          '<div>' + deliveryHtml + '</div>' +
+          '<div style="font-weight:700;font-size:var(--t4);white-space:nowrap;">' + entry.price + ' ' + cur + discHtml + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="dip-alt-right">' +
         '<div class="dip-alt-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>' +
       '</div>';
     list.appendChild(card);

@@ -157,6 +157,9 @@ compare_stores: { en: 'stores', ar: 'متاجر' },
 compare_best_price: { en: 'BEST PRICE', ar: 'أفضل سعر' },
 compare_similar: { en: 'Similar Products You May Like', ar: 'منتجات مشابهة قد تعجبك' },
 filter_all: { en: 'All', ar: 'الكل' },
+compare_best_choice: { en: 'Best Choice', ar: 'الخيار الأمثل' },
+compare_best_value:  { en: 'Best Value',  ar: 'أفضل قيمة' },
+compare_best_price:  { en: 'Best Price',  ar: 'أفضل سعر' },
   
 /* ══════════════════════════════════════════════════════════
     PRODUCT DETAIL PAGE
