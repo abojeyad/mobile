@@ -50,11 +50,14 @@ var PRODUCTS = [
     descEn: 'An extraordinary concentration of Sauvage. This fragrance pushes the limits of freshness and spice with a wild heart of lavender enhanced by rich woods.',
     descAr: 'تركيز استثنائي من سوفاج. يتجاوز هذا العطر حدود الانتعاش والتوابل. قلب بري من اللافندر تبرزه الأخشاب الغنية.',
 
-    accords: [
-      { nameEn: 'Woody',  nameAr: 'خشبي',  percent: 40 },
-      { nameEn: 'Spicy',  nameAr: 'بهاري', percent: 35 },
-      { nameEn: 'Citrus', nameAr: 'حمضي',  percent: 25 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
     notes: {
       topEn:   ['Cinnamon', 'Cardamom', 'Nutmeg'],
       topAr:   ['القرفة', 'الهيل', 'جوزة الطيب'],
@@ -102,11 +105,15 @@ var PRODUCTS = [
     descEn: 'An extraordinary concentration of Sauvage. This fragrance pushes the limits of freshness and spice with a wild heart of lavender enhanced by rich woods.',
     descAr: 'تركيز استثنائي من سوفاج. يتجاوز هذا العطر حدود الانتعاش والتوابل. قلب بري من اللافندر تبرزه الأخشاب الغنية.',
 
-    accords: [
-      { nameEn: 'Woody',  nameAr: 'خشبي',  percent: 40 },
-      { nameEn: 'Spicy',  nameAr: 'بهاري', percent: 35 },
-      { nameEn: 'Citrus', nameAr: 'حمضي',  percent: 25 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
+
     notes: {
       topEn:   ['Cinnamon', 'Cardamom', 'Nutmeg'],
       topAr:   ['القرفة', 'الهيل', 'جوزة الطيب'],
@@ -154,11 +161,15 @@ var PRODUCTS = [
     descEn: 'An extraordinary concentration of Sauvage. This fragrance pushes the limits of freshness and spice with a wild heart of lavender enhanced by rich woods.',
     descAr: 'تركيز استثنائي من سوفاج. يتجاوز هذا العطر حدود الانتعاش والتوابل. قلب بري من اللافندر تبرزه الأخشاب الغنية.',
 
-    accords: [
-      { nameEn: 'Woody',  nameAr: 'خشبي',  percent: 40 },
-      { nameEn: 'Spicy',  nameAr: 'بهاري', percent: 35 },
-      { nameEn: 'Citrus', nameAr: 'حمضي',  percent: 25 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
+
     notes: {
       topEn:   ['Cinnamon', 'Cardamom', 'Nutmeg'],
       topAr:   ['القرفة', 'الهيل', 'جوزة الطيب'],
@@ -210,11 +221,15 @@ var PRODUCTS = [
     descEn: 'A modern masculine icon. Citrus and bergamot open brightly before settling into a deep woody heart of vetiver and cedarwood.',
     descAr: 'أيقونة ذكورية عصرية. تفتتح الرائحة بانتعاش الحمضيات والبرغموت قبل أن تستقر في قلب خشبي عميق من نجيل الهند وخشب الأرز.',
 
-    accords: [
-      { nameEn: 'Woody',  nameAr: 'خشبي',  percent: 45 },
-      { nameEn: 'Fresh',  nameAr: 'منعش',  percent: 30 },
-      { nameEn: 'Citrus', nameAr: 'حمضي',  percent: 25 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
+
     notes: {
       topEn:   ['Citrus', 'Bergamot', 'Pink Pepper', 'Coriander'],
       topAr:   ['الحمضيات', 'البرغموت', 'الفلفل الوردي', 'الكزبرة'],
@@ -262,11 +277,15 @@ var PRODUCTS = [
     descEn: 'A modern masculine icon. Citrus and bergamot open brightly before settling into a deep woody heart of vetiver and cedarwood.',
     descAr: 'أيقونة ذكورية عصرية. تفتتح الرائحة بانتعاش الحمضيات والبرغموت قبل أن تستقر في قلب خشبي عميق من نجيل الهند وخشب الأرز.',
 
-    accords: [
-      { nameEn: 'Woody',  nameAr: 'خشبي',  percent: 45 },
-      { nameEn: 'Fresh',  nameAr: 'منعش',  percent: 30 },
-      { nameEn: 'Citrus', nameAr: 'حمضي',  percent: 25 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
+
     notes: {
       topEn:   ['Citrus', 'Bergamot', 'Pink Pepper', 'Coriander'],
       topAr:   ['الحمضيات', 'البرغموت', 'الفلفل الوردي', 'الكزبرة'],
@@ -314,11 +333,14 @@ var PRODUCTS = [
     descEn: 'A modern masculine icon. Citrus and bergamot open brightly before settling into a deep woody heart of vetiver and cedarwood.',
     descAr: 'أيقونة ذكورية عصرية. تفتتح الرائحة بانتعاش الحمضيات والبرغموت قبل أن تستقر في قلب خشبي عميق من نجيل الهند وخشب الأرز.',
 
-    accords: [
-      { nameEn: 'Woody',  nameAr: 'خشبي',  percent: 45 },
-      { nameEn: 'Fresh',  nameAr: 'منعش',  percent: 30 },
-      { nameEn: 'Citrus', nameAr: 'حمضي',  percent: 25 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
     notes: {
       topEn:   ['Citrus', 'Bergamot', 'Pink Pepper', 'Coriander'],
       topAr:   ['الحمضيات', 'البرغموت', 'الفلفل الوردي', 'الكزبرة'],
@@ -370,11 +392,14 @@ var PRODUCTS = [
     descEn: 'A luxurious and sensual fragrance of rich, dark accords and an alluring potion of black orchids and spice.',
     descAr: 'عطر فاخر وحسي يتكون من نفحات داكنة وغنية ومزيج ساحر من الأوركيد الأسود والتوابل.',
 
-    accords: [
-      { nameEn: 'Floral',  nameAr: 'زهري',  percent: 35 },
-      { nameEn: 'Woody',   nameAr: 'خشبي',  percent: 30 },
-      { nameEn: 'Gourmand',nameAr: 'جورماند', percent: 35 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
     notes: {
       topEn:   ['Truffle', 'Bergamot', 'Black Currant', 'Ylang-Ylang'],
       topAr:   ['الكمأة', 'البرغموت', 'الكشمش الأسود', 'إيلانج إيلانج'],
@@ -422,11 +447,14 @@ var PRODUCTS = [
     descEn: 'A luxurious and sensual fragrance of rich, dark accords and an alluring potion of black orchids and spice.',
     descAr: 'عطر فاخر وحسي يتكون من نفحات داكنة وغنية ومزيج ساحر من الأوركيد الأسود والتوابل.',
 
-    accords: [
-      { nameEn: 'Floral',  nameAr: 'زهري',  percent: 35 },
-      { nameEn: 'Woody',   nameAr: 'خشبي',  percent: 30 },
-      { nameEn: 'Gourmand',nameAr: 'جورماند', percent: 35 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
     notes: {
       topEn:   ['Truffle', 'Bergamot', 'Black Currant', 'Ylang-Ylang'],
       topAr:   ['الكمأة', 'البرغموت', 'الكشمش الأسود', 'إيلانج إيلانج'],
@@ -474,11 +502,14 @@ var PRODUCTS = [
     descEn: 'A luxurious and sensual fragrance of rich, dark accords and an alluring potion of black orchids and spice.',
     descAr: 'عطر فاخر وحسي يتكون من نفحات داكنة وغنية ومزيج ساحر من الأوركيد الأسود والتوابل.',
 
-    accords: [
-      { nameEn: 'Floral',  nameAr: 'زهري',  percent: 35 },
-      { nameEn: 'Woody',   nameAr: 'خشبي',  percent: 30 },
-      { nameEn: 'Gourmand',nameAr: 'جورماند', percent: 35 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
     notes: {
       topEn:   ['Truffle', 'Bergamot', 'Black Currant', 'Ylang-Ylang'],
       topAr:   ['الكمأة', 'البرغموت', 'الكشمش الأسود', 'إيلانج إيلانج'],
@@ -503,10 +534,10 @@ var PRODUCTS = [
 
     nameEn:          'Libre Intense',
     nameAr:          'ليبري إنتنس',
-    brandEn:         'Yves Saint Laurent',
-    brandAr:         'إيف سان لوران',
-    houseEn:         'Yves Saint Laurent',
-    houseAr:         'إيف سان لوران',
+    brandEn:         'Laurent',
+    brandAr:         'لوران',
+    houseEn:         'Laurent',
+    houseAr:         'لوران',
     familyEn:        'Floral Oriental',
     familyAr:        'زهري شرقي',
     genderEn:        'Feminine',
@@ -530,11 +561,14 @@ var PRODUCTS = [
     descEn: 'The intense version of Libre. A bold floral oriental built around lavender absolute and orange blossom with a warm musky base.',
     descAr: 'النسخة المكثفة من ليبري. عطر زهري شرقي جريء مبني حول اللافندر المطلق وزهر البرتقال مع قاعدة دافئة من المسك.',
 
-    accords: [
-      { nameEn: 'Floral', nameAr: 'زهري',   percent: 40 },
-      { nameEn: 'Musky',  nameAr: 'مسكي',   percent: 35 },
-      { nameEn: 'Amber',  nameAr: 'عنبري',  percent: 25 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
     notes: {
       topEn:   ['Mandarin', 'Lavender Absolute'],
       topAr:   ['الماندرين', 'اللافندر المطلق'],
@@ -555,10 +589,10 @@ var PRODUCTS = [
 
     nameEn:          'Libre Intense',
     nameAr:          'ليبري إنتنس',
-    brandEn:         'Yves Saint Laurent',
-    brandAr:         'إيف سان لوران',
-    houseEn:         'Yves Saint Laurent',
-    houseAr:         'إيف سان لوران',
+    brandEn:         'Laurent',
+    brandAr:         'لوران',
+    houseEn:         'Laurent',
+    houseAr:         'لوران',
     familyEn:        'Floral Oriental',
     familyAr:        'زهري شرقي',
     genderEn:        'Feminine',
@@ -582,11 +616,14 @@ var PRODUCTS = [
     descEn: 'The intense version of Libre. A bold floral oriental built around lavender absolute and orange blossom with a warm musky base.',
     descAr: 'النسخة المكثفة من ليبري. عطر زهري شرقي جريء مبني حول اللافندر المطلق وزهر البرتقال مع قاعدة دافئة من المسك.',
 
-    accords: [
-      { nameEn: 'Floral', nameAr: 'زهري',   percent: 40 },
-      { nameEn: 'Musky',  nameAr: 'مسكي',   percent: 35 },
-      { nameEn: 'Amber',  nameAr: 'عنبري',  percent: 25 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
     notes: {
       topEn:   ['Mandarin', 'Lavender Absolute'],
       topAr:   ['الماندرين', 'اللافندر المطلق'],
@@ -607,10 +644,10 @@ var PRODUCTS = [
 
     nameEn:          'Libre Intense',
     nameAr:          'ليبري إنتنس',
-    brandEn:         'Yves Saint Laurent',
-    brandAr:         'إيف سان لوران',
-    houseEn:         'Yves Saint Laurent',
-    houseAr:         'إيف سان لوران',
+    brandEn:         'Laurent',
+    brandAr:         'لوران',
+    houseEn:         'Laurent',
+    houseAr:         'لوران',
     familyEn:        'Floral Oriental',
     familyAr:        'زهري شرقي',
     genderEn:        'Feminine',
@@ -634,11 +671,14 @@ var PRODUCTS = [
     descEn: 'The intense version of Libre. A bold floral oriental built around lavender absolute and orange blossom with a warm musky base.',
     descAr: 'النسخة المكثفة من ليبري. عطر زهري شرقي جريء مبني حول اللافندر المطلق وزهر البرتقال مع قاعدة دافئة من المسك.',
 
-    accords: [
-      { nameEn: 'Floral', nameAr: 'زهري',   percent: 40 },
-      { nameEn: 'Musky',  nameAr: 'مسكي',   percent: 35 },
-      { nameEn: 'Amber',  nameAr: 'عنبري',  percent: 25 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
     notes: {
       topEn:   ['Mandarin', 'Lavender Absolute'],
       topAr:   ['الماندرين', 'اللافندر المطلق'],
@@ -659,10 +699,10 @@ var PRODUCTS = [
 
     nameEn:          'Libre Intense',
     nameAr:          'ليبري إنتنس',
-    brandEn:         'Yves Saint Laurent',
-    brandAr:         'إيف سان لوران',
-    houseEn:         'Yves Saint Laurent',
-    houseAr:         'إيف سان لوران',
+    brandEn:         'Laurent',
+    brandAr:         'لوران',
+    houseEn:         'Laurent',
+    houseAr:         'لوران',
     familyEn:        'Floral Oriental',
     familyAr:        'زهري شرقي',
     genderEn:        'Feminine',
@@ -686,11 +726,14 @@ var PRODUCTS = [
     descEn: 'The intense version of Libre. A bold floral oriental built around lavender absolute and orange blossom with a warm musky base.',
     descAr: 'النسخة المكثفة من ليبري. عطر زهري شرقي جريء مبني حول اللافندر المطلق وزهر البرتقال مع قاعدة دافئة من المسك.',
 
-    accords: [
-      { nameEn: 'Floral', nameAr: 'زهري',   percent: 40 },
-      { nameEn: 'Musky',  nameAr: 'مسكي',   percent: 35 },
-      { nameEn: 'Amber',  nameAr: 'عنبري',  percent: 25 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
     notes: {
       topEn:   ['Mandarin', 'Lavender Absolute'],
       topAr:   ['الماندرين', 'اللافندر المطلق'],
@@ -708,17 +751,17 @@ var PRODUCTS = [
   {
     id:              'mfk-baccarat-rouge-540-35',
     variantGroupId:  'mfk-baccarat-rouge-540',
-    brandId:         'maison-francis-kurkdjian',
+    brandId:         'Pure',
     img:             'jpeg5.jpg',
     bg:              '#FFF5EA',
     initials:        'BR',
 
     nameEn:          'Baccarat Rouge 540',
     nameAr:          'باكارات روج 540',
-    brandEn:         'Maison Francis Kurkdjian',
-    brandAr:         'ميزون فرانسيس كوركجان',
-    houseEn:         'Maison Francis Kurkdjian',
-    houseAr:         'ميزون فرانسيس كوركجان',
+    brandEn:         'Pure',
+    brandAr:         'بيور',
+    houseEn:         'Pure',
+    houseAr:         'بيور',
     familyEn:        'Amber Floral',
     familyAr:        'عنبري زهري',
     genderEn:        'Unisex',
@@ -742,11 +785,14 @@ var PRODUCTS = [
     descEn: 'An iconic fragrance that blends luminous jasmine and saffron over a warm bed of amberwood and fir resin, creating a radiant and unforgettable signature.',
     descAr: 'عطر أيقوني يمزج الياسمين المضيء والزعفران فوق قاعدة دافئة من خشب العنبر وراتنج الشجر، مما يخلق بصمة متألقة لا تُنسى.',
 
-    accords: [
-      { nameEn: 'Amber',  nameAr: 'عنبري', percent: 45 },
-      { nameEn: 'Floral', nameAr: 'زهري',  percent: 30 },
-      { nameEn: 'Musky',  nameAr: 'مسكي',  percent: 25 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
     notes: {
       topEn:   ['Saffron', 'Jasmine'],
       topAr:   ['الزعفران', 'الياسمين'],
@@ -760,17 +806,17 @@ var PRODUCTS = [
   {
     id:              'mfk-baccarat-rouge-540-70',
     variantGroupId:  'mfk-baccarat-rouge-540',
-    brandId:         'maison-francis-kurkdjian',
+    brandId:         'Pure',
     img:             'jpeg5.jpg',
     bg:              '#FFF5EA',
     initials:        'BR',
 
     nameEn:          'Baccarat Rouge 540',
     nameAr:          'باكارات روج 540',
-    brandEn:         'Maison Francis Kurkdjian',
-    brandAr:         'ميزون فرانسيس كوركجان',
-    houseEn:         'Maison Francis Kurkdjian',
-    houseAr:         'ميزون فرانسيس كوركجان',
+    brandEn:         'Pure',
+    brandAr:         'بيور',
+    houseEn:         'Pure',
+    houseAr:         'بيور',
     familyEn:        'Amber Floral',
     familyAr:        'عنبري زهري',
     genderEn:        'Unisex',
@@ -794,11 +840,14 @@ var PRODUCTS = [
     descEn: 'An iconic fragrance that blends luminous jasmine and saffron over a warm bed of amberwood and fir resin, creating a radiant and unforgettable signature.',
     descAr: 'عطر أيقوني يمزج الياسمين المضيء والزعفران فوق قاعدة دافئة من خشب العنبر وراتنج الشجر، مما يخلق بصمة متألقة لا تُنسى.',
 
-    accords: [
-      { nameEn: 'Amber',  nameAr: 'عنبري', percent: 45 },
-      { nameEn: 'Floral', nameAr: 'زهري',  percent: 30 },
-      { nameEn: 'Musky',  nameAr: 'مسكي',  percent: 25 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
     notes: {
       topEn:   ['Saffron', 'Jasmine'],
       topAr:   ['الزعفران', 'الياسمين'],
@@ -812,17 +861,17 @@ var PRODUCTS = [
   {
     id:              'mfk-baccarat-rouge-540-200',
     variantGroupId:  'mfk-baccarat-rouge-540',
-    brandId:         'maison-francis-kurkdjian',
+    brandId:         'Pure',
     img:             'jpeg5.jpg',
     bg:              '#FFF5EA',
     initials:        'BR',
 
     nameEn:          'Baccarat Rouge 540',
     nameAr:          'باكارات روج 540',
-    brandEn:         'Maison Francis Kurkdjian',
-    brandAr:         'ميزون فرانسيس كوركجان',
-    houseEn:         'Maison Francis Kurkdjian',
-    houseAr:         'ميزون فرانسيس كوركجان',
+    brandEn:         'Pure',
+    brandAr:         'بيور',
+    houseEn:         'Pure',
+    houseAr:         'بيور',
     familyEn:        'Amber Floral',
     familyAr:        'عنبري زهري',
     genderEn:        'Unisex',
@@ -846,11 +895,14 @@ var PRODUCTS = [
     descEn: 'An iconic fragrance that blends luminous jasmine and saffron over a warm bed of amberwood and fir resin, creating a radiant and unforgettable signature.',
     descAr: 'عطر أيقوني يمزج الياسمين المضيء والزعفران فوق قاعدة دافئة من خشب العنبر وراتنج الشجر، مما يخلق بصمة متألقة لا تُنسى.',
 
-    accords: [
-      { nameEn: 'Amber',  nameAr: 'عنبري', percent: 45 },
-      { nameEn: 'Floral', nameAr: 'زهري',  percent: 30 },
-      { nameEn: 'Musky',  nameAr: 'مسكي',  percent: 25 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
     notes: {
       topEn:   ['Saffron', 'Jasmine'],
       topAr:   ['الزعفران', 'الياسمين'],
@@ -902,11 +954,14 @@ var PRODUCTS = [
     descEn: 'A legendary masculine fragrance inspired by Napoleon Bonaparte. Smoky birch and fresh pineapple over a mossy, musky base of ambergris and oakmoss.',
     descAr: 'عطر ذكوري أسطوري مستوحى من نابليون بونابرت. خشب البتولا المدخن والأناناس الطازج فوق قاعدة طحلبية مسكية من العنبر الرمادي وطحلب البلوط.',
 
-    accords: [
-      { nameEn: 'Fruity', nameAr: 'فاكهي',  percent: 35 },
-      { nameEn: 'Smoky',  nameAr: 'دخاني',  percent: 30 },
-      { nameEn: 'Musky',  nameAr: 'مسكي',   percent: 35 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
     notes: {
       topEn:   ['Pineapple', 'Bergamot', 'Black Currant', 'Apple'],
       topAr:   ['الأناناس', 'البرغموت', 'الكشمش الأسود', 'التفاح'],
@@ -954,11 +1009,14 @@ var PRODUCTS = [
     descEn: 'A legendary masculine fragrance inspired by Napoleon Bonaparte. Smoky birch and fresh pineapple over a mossy, musky base of ambergris and oakmoss.',
     descAr: 'عطر ذكوري أسطوري مستوحى من نابليون بونابرت. خشب البتولا المدخن والأناناس الطازج فوق قاعدة طحلبية مسكية من العنبر الرمادي وطحلب البلوط.',
 
-    accords: [
-      { nameEn: 'Fruity', nameAr: 'فاكهي',  percent: 35 },
-      { nameEn: 'Smoky',  nameAr: 'دخاني',  percent: 30 },
-      { nameEn: 'Musky',  nameAr: 'مسكي',   percent: 35 }
-    ],
+	accords: [
+		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+		],
     notes: {
       topEn:   ['Pineapple', 'Bergamot', 'Black Currant', 'Apple'],
       topAr:   ['الأناناس', 'البرغموت', 'الكشمش الأسود', 'التفاح'],

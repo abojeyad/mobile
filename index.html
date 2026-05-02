@@ -536,63 +536,73 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 [dir="rtl"] .dip-alt-chevron svg { transform:scaleX(-1); }
 
 /* ── Compare page store card interior ── */
-.cmp-card-row1 {
+.dip-alt-card {
   display: flex; align-items: center;
-  justify-content: space-between; gap: 6px;
+  gap: 12px; padding: 12px 14px 12px 12px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.12s;
+}
+.dip-alt-card:last-child { border-bottom: none; }
+.dip-alt-card:active { background: var(--bg-surface); }
+
+/* Product image — taller to show bottle proportions */
+.cmp-card-img {
+  width: 56px; height: 56px; flex-shrink: 0;
+  border-radius: var(--radius-md); overflow: hidden;
+  border: 1px solid var(--border);
+  align-self: center;
+}
+.cmp-card-img .prod-img-wrap { height: 100%; }
+.cmp-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Center info column */
+.cmp-card-body {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column; justify-content: center; gap: 4px;
 }
 .cmp-store-name {
-  font-size: var(--t5); font-weight: 600; color: var(--ink-1);
+  font-size: var(--t4); font-weight: 700; color: var(--ink-1);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  flex: 1; min-width: 0;
 }
-.cmp-card-row2 {
-  display: flex; align-items: center;
-  justify-content: space-between; gap: 6px;
-  margin-top: 4px;
+/* Product attribute strip — subtle grey meta row */
+.cmp-card-attrs {
+  display: flex; align-items: center; gap: 0;
+  margin-top: 3px; overflow: hidden;
+  font-size: 10px; color: var(--ink-3); line-height: 1.4;
+  white-space: nowrap; text-overflow: ellipsis;
 }
-.cmp-card-meta {
-  display: flex; align-items: center; gap: 6px; min-width: 0;
-  flex-wrap: nowrap; overflow: hidden;
-}
-.cmp-rating {
-  font-size: var(--t6); font-weight: 600; color: var(--ink-2);
-  white-space: nowrap;
-}
-.cmp-rating-star { color: #CA8A04; }
-.cmp-sep {
-  width: 3px; height: 3px; border-radius: 50%;
-  background: var(--ink-3); flex-shrink: 0;
-}
-.cmp-delivery {
-  font-size: var(--t6); white-space: nowrap;
-}
-.cmp-delivery-free { color: var(--green); font-weight: 600; }
-.cmp-delivery-paid { color: var(--ink-3); }
+/* Price + delivery row */
+/* cmp-card-bottom removed */
 .cmp-card-price-wrap {
-  display: flex; align-items: baseline; gap: 4px;
-  flex-shrink: 0;
+  display: flex; align-items: baseline; gap: 3px;
+  flex-wrap: nowrap; justify-content: flex-end;
 }
 .cmp-price {
-  font-size: var(--t3); font-weight: 800; color: var(--ink-1);
-  white-space: nowrap; line-height: 1;
+  font-size: var(--t2); font-weight: 800; color: var(--ink-1);
+  line-height: 1;
 }
-.cmp-currency {
-  font-size: var(--t6); font-weight: 500; color: var(--ink-3);
+.cmp-currency { font-size: var(--t6); font-weight: 500; color: var(--ink-3); }
+.cmp-discount  { font-size: 10px; font-weight: 700; color: var(--red); margin-left: 2px; }
+.cmp-delivery  { font-size: var(--t6); white-space: nowrap; }
+.cmp-delivery-free { color: var(--green); font-weight: 600; }
+.cmp-delivery-paid { color: var(--ink-3); }
+
+/* Right column — badge(s) top, chevron bottom */
+.cmp-card-right {
+  display: flex; flex-direction: column;
+  align-items: flex-end; justify-content: space-between;
+  flex-shrink: 0; gap: 6px; min-width: 0;
 }
-.cmp-discount {
-  font-size: 10px; font-weight: 700; color: var(--red);
-}
-.cmp-card-row3 {
-  display: flex; align-items: center; gap: 8px;
-  margin-top: 6px;
-}
-.cmp-feat-icon {
-  display: flex; align-items: center; gap: 3px;
-  font-size: 10px; font-weight: 500; white-space: nowrap;
-}
-.cmp-feat-icon svg { width: 12px; height: 12px; flex-shrink: 0; }
-.cmp-feat-on  { color: var(--ink-2); }
-.cmp-feat-off { color: var(--border-strong); }
+.cmp-card-badges { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
+.cmp-chevron { color: var(--ink-3); display: flex; align-items: center; }
+.cmp-chevron svg { width: 14px; height: 14px; }
+[dir="rtl"] .cmp-chevron svg { transform: scaleX(-1); }
+[dir="rtl"] .cmp-discount { margin-left: 0; margin-right: 2px; }
+
+/* Keep these for backward compat with similar-products card */
+.cmp-rating { font-size: var(--t6); font-weight: 600; color: var(--ink-2); white-space: nowrap; }
+.cmp-rating-star { color: #CA8A04; }
+.cmp-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-3); flex-shrink: 0; }
 
 /* ══════════════════════════════════════════════════════════
    PRODUCT DETAIL PAGE
@@ -615,7 +625,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .prod-name   { font-family:var(--font-display); font-size:24px; color:var(--ink-1); line-height:1.35; margin-bottom:4px; }
 .prod-brand  { font-size:var(--t4); color:var(--ink-3); margin-bottom:12px; }
 
-.accords-wrap  { margin-top:20px; padding-top:16px; border-top:1px solid var(--border); }
+.accords-wrap  { margin-top:16px; padding-top:0; }
 
 /* ── Accord bar rows ── */
 .accord-row {
@@ -797,9 +807,9 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .user-joined { font-size:var(--t6); color:var(--ink-2); margin-top:3px; }
 
 .stats-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; padding:0 20px; }
-.stat-card { background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:14px 16px; }
-.stat-l { font-size:var(--t6); color:var(--ink-3); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px; }
-.stat-v { font-family:var(--font-display); font-size:var(--t2); color:var(--ink-1); }
+.stat-card { background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:9px 12px; }
+.stat-l { font-size:var(--t6); color:var(--ink-3); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:3px; }
+.stat-v { font-family:var(--font-display); font-size:var(--t3); color:var(--ink-1); }
 
 .pref-chips { display:flex; flex-wrap:wrap; gap:8px; padding:0 20px; }
 .pref-chip { font-size:var(--t5); padding:6px 14px; border-radius:24px; border:1px solid var(--border-strong); background:var(--bg-phone); color:var(--ink-3); cursor:pointer; transition:all 0.1s; }
@@ -865,7 +875,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .lib-mosaic-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 72px);
+  grid-template-rows: repeat(2, 96px);
   gap: 2px;
   background: var(--border);
 }
@@ -1593,7 +1603,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .alerts-mosaic-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 80px);
+  grid-template-rows: repeat(2, 100px);
   gap: 2px;
   background: var(--border);
   pointer-events: none;
@@ -1759,6 +1769,45 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 [dir="rtl"] .result-right { text-align: left; }
 .result-price  { font-size: var(--t3); font-weight: 600; color: var(--ink-1); }
 .result-stores { font-size: var(--t5); color: var(--ink-3); margin-top: 2px; }
+
+/* Search entry state */
+.search-entry-state { padding:8px 0 0; flex:1; overflow-y:auto; }
+.search-entry-section { padding:18px 20px 6px; }
+.search-entry-label { font-size:var(--t6); font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--ink-3); margin-bottom:12px; }
+.search-recent-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+.search-recent-chip { display:flex; align-items:center; gap:6px; font-size:var(--t5); padding:7px 12px; border-radius:20px; border:1px solid var(--border-strong); background:var(--bg-phone); color:var(--ink-2); cursor:pointer; transition:background 0.12s; }
+.search-recent-chip:active { background:var(--bg-input); }
+.search-recent-chip svg { width:13px; height:13px; color:var(--ink-3); flex-shrink:0; }
+.search-accord-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+.search-accord-chip { font-size:var(--t5); padding:7px 14px; border-radius:20px; border:1px solid var(--border); background:var(--bg-surface); color:var(--ink-2); cursor:pointer; transition:all 0.12s; user-select:none; }
+.search-accord-chip:active { background:var(--red); color:#fff; border-color:var(--red); }
+.search-trending-row { display:flex; align-items:center; gap:12px; padding:11px 20px; border-bottom:1px solid var(--border); cursor:pointer; transition:background 0.1s; }
+.search-trending-row:active { background:var(--bg-surface); }
+.search-trending-thumb { width:38px; height:38px; border-radius:var(--radius-sm); overflow:hidden; flex-shrink:0; }
+.search-trending-thumb .prod-img-wrap { height:100%; }
+.search-trending-name  { font-size:var(--t4); font-weight:600; color:var(--ink-1); flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.search-trending-brand { font-size:var(--t6); color:var(--ink-3); margin-top:1px; }
+.search-trending-fire  { font-size:var(--t5); color:var(--red); flex-shrink:0; }
+/* Dropdown */
+.search-dropdown { position:absolute; left:20px; right:20px; top:72px; background:var(--bg-phone); border:1px solid var(--border); border-radius:var(--radius-md); box-shadow:0 8px 32px rgba(0,0,0,0.13); z-index:50; overflow:hidden; display:none; }
+.search-dropdown.visible { display:block; }
+.search-dropdown-item { display:flex; align-items:center; gap:10px; padding:10px 14px; border-bottom:1px solid var(--border); cursor:pointer; transition:background 0.1s; }
+.search-dropdown-item:last-child { border-bottom:none; }
+.search-dropdown-item:active { background:var(--bg-surface); }
+.search-dropdown-thumb { width:36px; height:36px; border-radius:var(--radius-sm); overflow:hidden; flex-shrink:0; }
+.search-dropdown-thumb .prod-img-wrap { height:100%; }
+.search-dropdown-name  { font-size:var(--t4); font-weight:600; color:var(--ink-1); flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.search-dropdown-brand { font-size:var(--t6); color:var(--ink-3); margin-top:1px; }
+.search-dropdown-accord { display:flex; align-items:center; gap:8px; padding:10px 14px; cursor:pointer; background:var(--bg-surface); transition:background 0.1s; font-size:var(--t5); color:var(--red); font-weight:600; }
+.search-dropdown-accord:active { background:var(--bg-input); }
+.search-dropdown-accord svg { width:14px; height:14px; }
+/* Contextual filter bar */
+.search-filter-bar { display:none; align-items:center; justify-content:space-between; padding:8px 20px 6px; flex-shrink:0; }
+.search-filter-bar.visible { display:flex; }
+.search-result-count { font-size:var(--t5); color:var(--ink-3); }
+.search-filter-pill { display:flex; align-items:center; gap:5px; font-size:var(--t5); font-weight:600; color:var(--ink-2); background:var(--bg-surface); border:1px solid var(--border-strong); border-radius:20px; padding:5px 12px; cursor:pointer; transition:all 0.12s; white-space:nowrap; }
+.search-filter-pill svg { width:13px; height:13px; }
+.search-filter-pill.has-filters { background:var(--red-light); border-color:var(--red); color:var(--red); }
 
 /* Empty state */
 .search-empty {
@@ -2536,11 +2585,11 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <span class="sec-label" data-i18n="home_trending">Trending Now</span>
     </div>
     <div class="h-scroll" style="padding-bottom:16px;">
-      <div class="trend-chip"><span class="trend-rank">01</span><span class="trend-name" data-product-id="dior-sauvage-elixir">Sauvage Elixir</span><span class="trend-arr">↑</span></div>
-      <div class="trend-chip"><span class="trend-rank">02</span><span class="trend-name" data-product-id="mfk-baccarat-rouge-540">Baccarat Rouge 540</span><span class="trend-arr">↑</span></div>
-      <div class="trend-chip"><span class="trend-rank">03</span><span class="trend-name" data-product-id="chanel-bleu-edp">Bleu de Chanel EDP</span><span class="trend-arr">→</span></div>
-      <div class="trend-chip"><span class="trend-rank">04</span><span class="trend-name" data-product-id="tomford-black-orchid">Black Orchid</span><span class="trend-arr">↑</span></div>
-      <div class="trend-chip"><span class="trend-rank">05</span><span class="trend-name" data-product-id="ysl-libre-intense">Libre Intense</span><span class="trend-arr">→</span></div>
+      <div class="trend-chip"><span class="trend-rank">01</span><span class="trend-name" data-product-id="dior-sauvage-elixir-100">Sauvage Elixir</span><span class="trend-arr">↑</span></div>
+      <div class="trend-chip"><span class="trend-rank">02</span><span class="trend-name" data-product-id="mfk-baccarat-rouge-540-70">Baccarat Rouge 540</span><span class="trend-arr">↑</span></div>
+      <div class="trend-chip"><span class="trend-rank">03</span><span class="trend-name" data-product-id="chanel-bleu-edp-100">Bleu de Chanel EDP</span><span class="trend-arr">→</span></div>
+      <div class="trend-chip"><span class="trend-rank">04</span><span class="trend-name" data-product-id="tomford-black-orchid-50">Black Orchid</span><span class="trend-arr">↑</span></div>
+      <div class="trend-chip"><span class="trend-rank">05</span><span class="trend-name" data-product-id="ysl-libre-intense-50">Libre Intense</span><span class="trend-arr">→</span></div>
     </div>
 
   </div><!-- /scroll-area -->
@@ -2569,24 +2618,32 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <span class="screen-title" data-i18n="search_title">Search</span>
   </div>
 
-  <!-- Search input + filter -->
-  <div class="search-input-wrap">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input id="search-input" data-i18n="search_placeholder" placeholder="Name, brand, or note (oud, fresh…)" oninput="liveSearch(this.value)" autocomplete="off"/>
-    <div class="search-divider"></div>
-    <button class="filter-btn" id="search-filter-btn" onclick="openFilterSheet()">
+  <!-- Search input (no filter button) -->
+  <div style="position:relative;">
+    <div class="search-input-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="search-input" data-i18n="search_placeholder" placeholder="Name, brand, or note (oud, fresh…)"
+        oninput="searchOnInput(this.value)" onfocus="searchOnFocus()" autocomplete="off"/>
+      <button id="search-clear-btn" style="display:none;background:none;border:none;cursor:pointer;padding:0;color:var(--ink-3);" onclick="searchClear()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:16px;height:16px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="search-dropdown" id="search-dropdown"></div>
+  </div>
+
+  <!-- Contextual filter bar -->
+  <div class="search-filter-bar" id="search-filter-bar">
+    <span class="search-result-count" id="search-count"></span>
+    <button class="search-filter-pill" id="search-filter-btn" onclick="openFilterSheet()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
-      <span data-i18n="search_filter">Filter</span>
+      <span id="search-filter-label" data-i18n="search_filter">Filter</span>
     </button>
   </div>
 
-  <!-- Result count -->
-  <div class="search-count" id="search-count"></div>
-
-  <!-- Scrollable results -->
-  <div class="scroll-area">
-    <div id="search-results"></div>
-    <!-- Empty state -->
+  <!-- Scrollable content -->
+  <div class="scroll-area" id="search-scroll-area">
+    <div class="search-entry-state" id="search-entry-state"></div>
+    <div id="search-results" style="display:none;"></div>
     <div class="search-empty" id="search-empty">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <div class="search-empty-title" data-i18n="search_no_results">No results found</div>
@@ -3282,37 +3339,32 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="dip-header-spacer"></div>
   </div>
 
-  <!-- Unified card: hero + sizes + store cards -->
-  <div class="cmp-unified-card">
-
-    <!-- Section 1: product image, name, availability -->
-    <div class="cmp-product-hero" id="compare-product-hero">
-      <div class="cmp-product-hero-thumb">
-        <div class="prod-img-wrap" id="compare-hero-imgwrap" style="height:100%;">
-          <img id="compare-hero-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;">
-        </div>
-      </div>
-      <div class="cmp-product-hero-info">
-        <div class="cmp-product-hero-name" id="compare-hero-name"></div>
-        <div class="cmp-product-hero-sub"  id="compare-hero-sub"></div>
-      </div>
-    </div>
-
-    <!-- Section 2: available sizes -->
-    <div class="dip-filters-bar" id="compare-filters"></div>
-
-    <!-- Section 3: store cards -->
-    <div class="dip-alt-list" id="compare-stores-list"></div>
-
-  </div><!-- /cmp-unified-card -->
-
+  <!-- Single scroll area containing unified card + similar products -->
   <div class="dip-scroll">
 
-    <!-- spacer so scroll starts below the unified card -->
-    <div style="height:4px;" aria-hidden="true"></div>
+    <!-- Unified card: hero + sizes + store cards -->
+    <div class="cmp-unified-card" style="margin-top:12px;">
 
-    <!-- Store comparison cards placeholder (already above, kept for compat) -->
-    <div style="display:none;" id="compare-stores-list-compat"></div>
+      <!-- Section 1: product image, name, availability -->
+      <div class="cmp-product-hero" id="compare-product-hero">
+        <div class="cmp-product-hero-thumb">
+          <div class="prod-img-wrap" id="compare-hero-imgwrap" style="height:100%;">
+            <img id="compare-hero-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+        </div>
+        <div class="cmp-product-hero-info">
+          <div class="cmp-product-hero-name" id="compare-hero-name"></div>
+          <div class="cmp-product-hero-sub"  id="compare-hero-sub"></div>
+        </div>
+      </div>
+
+      <!-- Section 2: available sizes -->
+      <div class="dip-filters-bar" id="compare-filters"></div>
+
+      <!-- Section 3: store cards -->
+      <div class="dip-alt-list" id="compare-stores-list"></div>
+
+    </div><!-- /cmp-unified-card -->
 
     <!-- Divider -->
     <div class="dip-section-divider" style="margin-top:24px;"></div>
@@ -3338,7 +3390,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
     </button>
     <div style="display:flex;align-items:center;gap:8px;">
-      <div class="icon-btn">
+      <div class="icon-btn" onclick="sharePdp()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
       </div>
       <div class="icon-btn" id="alertBtn" onclick="if(guestGuard())return;toggleAlert()">
@@ -3551,7 +3603,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         <div class="review-head"><span class="review-user">Fahad M.</span><span class="review-date">1 month ago</span></div>
         <div class="review-text" id="product-review2">—</div>
       </div>
-      <div class="reviews-show-more" id="reviews-show-more-btn" style="cursor:pointer;" data-i18n="pdp_show_all_reviews">Show all reviews →</div>
+      <div class="reviews-show-more" id="reviews-show-more-btn" style="cursor:pointer;" onclick="openAllReviews()" data-i18n="pdp_show_all_reviews">Show all reviews →</div>
       <div style="margin-top:20px;"></div>
 
     </div><!-- /padding -->
@@ -3628,6 +3680,26 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   </div>
 
 </div><!-- /screen-product-detail -->
+
+<!-- ═══════════════════════════════════════
+     SCREEN: ALL REVIEWS
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-all-reviews">
+
+  <div class="search-header">
+    <div class="back-btn" onclick="switchScreen('product-detail')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </div>
+    <span class="screen-title" id="all-reviews-title" data-i18n="pdp_reviews">Reviews</span>
+  </div>
+
+  <div class="scroll-area">
+    <div style="padding:16px 20px 32px;">
+      <div id="all-reviews-list"></div>
+    </div>
+  </div>
+
+</div><!-- /screen-all-reviews -->
 
 
 <!-- ═══════════════════════════════════════
@@ -4708,21 +4780,39 @@ function renderProductCards() {
 }
 
 /* ══════════════════════════════════════════════════════════
-   SCREEN SWITCHING
+   SCREEN SWITCHING + BACK-GESTURE INTERCEPTION
 ══════════════════════════════════════════════════════════ */
 var _isGuest = false;
+
+/* Screen navigation stack — tracks history for back gesture */
+var _screenStack = ['home'];
+
+/* Screens that are "root" tabs — back from these goes to home */
+var _rootScreens = { home:1, search:1, stores:1, community:1, activity:1 };
 
 function switchScreen(id) {
   document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
   var target = document.getElementById('screen-' + id);
   if (target) target.classList.add('active');
+
+  /* Push to our internal stack */
+  if (_screenStack[_screenStack.length - 1] !== id) {
+    _screenStack.push(id);
+  }
+
+  /* Push a history entry so the browser back gesture has something to pop
+     instead of exiting the app. We use a single sentinel state. */
+  if (history.state && history.state.yourdis) {
+    history.pushState({ yourdis: true, screen: id }, '');
+  }
+
   /* Auto-focus search input */
   if (id === 'search') {
     setTimeout(function() {
       var inp = document.getElementById('search-input');
-      if (inp) { inp.focus(); inp.select(); }
+      if (inp) inp.focus();
     }, 60);
-    renderSearchResults('');
+    searchShowEntry();
   }
   /* Re-render stores directory on tab open */
   if (id === 'stores') { renderStores(); }
@@ -4735,116 +4825,379 @@ function switchScreen(id) {
   if (id === 'community') { renderCommunityFeed(); }
 }
 
-/* ══════════════════════════════════════════════════════════
-   SEARCH — live filter from PRODUCTS data
-══════════════════════════════════════════════════════════ */
-var _activeFilters = {};
+/* Resolve "go back" — pops internal stack and returns previous screen id */
+function _goBackScreen() {
+  /* Pop current screen off the stack */
+  if (_screenStack.length > 1) _screenStack.pop();
+  var prev = _screenStack[_screenStack.length - 1] || 'home';
 
-function liveSearch(query) {
-  var q = (query || '').toLowerCase().trim();
-  renderSearchResults(q);
+  /* Special cases: product detail and compare have their own back logic */
+  var current = document.querySelector('.screen.active');
+  var currentId = current ? current.id.replace('screen-', '') : '';
+
+  if (currentId === 'product-detail') { goBackFromProduct(); return; }
+  if (currentId === 'compare')        { closeComparePage();  return; }
+
+  /* If we're at a root screen, do nothing (don't exit the app) */
+  if (_rootScreens[currentId]) return;
+
+  /* Otherwise navigate to the previous screen in our stack */
+  switchScreen(prev);
 }
 
-function renderSearchResults(q) {
-  var results  = document.getElementById('search-results');
-  var empty    = document.getElementById('search-empty');
-  var countEl  = document.getElementById('search-count');
+/* Intercept the browser/OS back gesture via popstate */
+window.addEventListener('popstate', function(e) {
+  /* Always push a new history entry so there's always one to pop */
+  history.pushState({ yourdis: true }, '');
+  /* Then handle the back action inside the app */
+  _goBackScreen();
+});
 
-  /* Filter PRODUCTS by query + active filters */
-  var filtered = uniqueProducts().filter(function(p) {
-    /* Query match: name, brand, notes */
-    var matchQ = !q ||
-      P(p,'name').toLowerCase().includes(q)  ||
-      P(p,'brand').toLowerCase().includes(q) ||
-      p.nameEn.toLowerCase().includes(q)     ||
-      p.brandEn.toLowerCase().includes(q)    ||
-      (p.notes.topEn.join(' ') + p.notes.heartEn.join(' ') + p.notes.baseEn.join(' ')).toLowerCase().includes(q);
+/* Seed the initial history entry on load so the first gesture is caught */
+/* ══════════════════════════════════════════════════════════
+   ALL REVIEWS SCREEN
+   ══════════════════════════════════════════════════════════ */
+var _allReviewsData = [
+  { user: 'Khalid A.',     date: '2 weeks ago',  text: null, key: 'r1' },
+  { user: 'Fahad M.',      date: '1 month ago',  text: null, key: 'r2' },
+  { user: 'Omar S.',       date: '3 weeks ago',  textEn: 'Absolutely stunning fragrance. The longevity is incredible — still going strong after 12 hours. The bottle design is also a work of art.',  textAr: 'عطر رائع تماماً. الثبات مذهل يدوم أكثر من 12 ساعة.' },
+  { user: 'Abdullah R.',   date: '2 months ago', textEn: 'Best fragrance I have ever owned. Gets compliments every time I wear it. Worth every riyal.', textAr: 'أفضل عطر امتلكته على الإطلاق. يحصل على مجامل في كل مرة أرتديه.' },
+  { user: 'Turki N.',      date: '2 months ago', textEn: 'The projection is excellent in the first 3 hours. After that it becomes a skin scent but still detectable. Very elegant choice.', textAr: 'الإشعاع ممتاز في الساعات الثلاث الأولى. ثم يصبح أقرب للجلد لكنه لا يزال محسوساً.' },
+  { user: 'Meshal F.',     date: '3 months ago', textEn: 'Powerful opening that softens beautifully over time. Not for everyone but if it works with your skin chemistry it is magnificent.', textAr: 'افتتاح قوي يتلطف بشكل جميل مع الوقت. ليس للجميع ولكن إذا ناسب كيمياء جلدك فهو رائع.' },
+  { user: 'Saleh W.',      date: '4 months ago', textEn: 'A perfect winter signature scent. Warm, rich, sophisticated. The leather and spice notes are beautifully balanced.', textAr: 'عطر شتوي مثالي. دافئ وغني وراقي. توازن جميل بين نوتات الجلد والتوابل.' },
+  { user: 'Faisal J.',     date: '5 months ago', textEn: 'Received it as a gift and have been wearing it daily ever since. The compliments are non-stop. Highly recommend.', textAr: 'تلقيته كهدية وأرتديه يومياً منذ ذلك. المجامل لا تنتهي. أنصح به بشدة.' }
+];
 
-    /* Filter match */
-    var matchF = true;
-    if (_activeFilters.concentration && _activeFilters.concentration.length) {
-      matchF = matchF && _activeFilters.concentration.some(function(c) {
-        return p.concentrationEn.toLowerCase().includes(c.toLowerCase());
-      });
-    }
-    if (_activeFilters.size && _activeFilters.size.length) {
-      matchF = matchF && _activeFilters.size.indexOf(p.size) !== -1;
-    }
-    if (_activeFilters.brand && _activeFilters.brand.length) {
-      matchF = matchF && _activeFilters.brand.some(function(b) {
-        return p.brandEn.toLowerCase() === b.toLowerCase();
-      });
-    }
-    return matchQ && matchF;
+function openAllReviews() {
+  var productId = window._pdpProductId;
+  var p = productId ? PRODUCTS.find(function(pr){ return pr.id === productId; }) : null;
+
+  /* Title: "287 Reviews" */
+  var titleEl = document.getElementById('all-reviews-title');
+  if (titleEl) {
+    var count = p ? (window._pdpCurrentData && window._pdpCurrentData.reviews ? window._pdpCurrentData.reviews : '287') : '—';
+    titleEl.textContent = count + ' ' + T('pdp_reviews');
+  }
+
+  /* Build the review list using the same review-card layout */
+  var list = document.getElementById('all-reviews-list');
+  if (!list) return;
+  list.innerHTML = '';
+
+  /* First two use the product-specific r1/r2 from _pdpCurrentData */
+  var pdpData = window._pdpCurrentData || {};
+  var reviews = _allReviewsData.map(function(r) {
+    if (r.key === 'r1') return { user: r.user, date: r.date, text: pdpData.r1 || r.textEn || '—' };
+    if (r.key === 'r2') return { user: r.user, date: r.date, text: pdpData.r2 || r.textEn || '—' };
+    return { user: r.user, date: r.date, text: LANG === 'ar' ? (r.textAr || r.textEn) : r.textEn };
   });
 
-  /* Empty state */
-  if (filtered.length === 0 && q) {
-    results.innerHTML = '';
-    empty.style.display = 'flex';
-    countEl.textContent = '';
+  reviews.forEach(function(r) {
+    var card = document.createElement('div');
+    card.className = 'review-card';
+    card.innerHTML =
+      '<div class="review-head">' +
+        '<span class="review-user">' + r.user + '</span>' +
+        '<span class="review-date">'  + r.date  + '</span>' +
+      '</div>' +
+      '<div class="review-text">' + (r.text || '—') + '</div>';
+    list.appendChild(card);
+  });
+
+  switchScreen('all-reviews');
+  var scroll = document.querySelector('#screen-all-reviews .scroll-area');
+  if (scroll) scroll.scrollTop = 0;
+}
+
+function sharePdp() {
+  var p = window._pdpCurrentData;
+  if (!p) return;
+  var productId = window._pdpProductId;
+  var prod = productId ? PRODUCTS.find(function(pr){ return pr.id === productId; }) : null;
+  var name  = prod ? P(prod, 'name') : (p.name || 'fragrance');
+  var brand = prod ? P(prod, 'brand') : (p.brand || '');
+  var lo    = prod ? getLowestPrice(prod.id) : null;
+  var cur   = prod ? (LANG === 'ar' ? prod.currencyAr : prod.currencyEn) : 'SAR';
+  var priceStr = lo !== null ? lo + ' ' + cur : '';
+  var titleStr = brand ? brand + ' – ' + name : name;
+  var textStr  = priceStr
+    ? (LANG === 'ar'
+        ? 'اعثر على أفضل سعر لـ ' + titleStr + ' عبر Yourdis — يبدأ من ' + priceStr
+        : 'Find the best price for ' + titleStr + ' on Yourdis — from ' + priceStr)
+    : (LANG === 'ar'
+        ? 'اكتشف ' + titleStr + ' وقارن الأسعار عبر Yourdis'
+        : 'Discover ' + titleStr + ' and compare prices on Yourdis');
+  var urlStr = window.location.href;
+
+  if (navigator.share) {
+    navigator.share({ title: titleStr, text: textStr, url: urlStr })
+      .catch(function() {}); /* user cancelled — ignore */
+  } else {
+    /* Fallback: copy a share text to clipboard */
+    var shareText = textStr + '\n' + urlStr;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareText).then(function() {
+        _showPdpToast(LANG === 'ar' ? 'تم نسخ الرابط' : 'Link copied to clipboard');
+      });
+    } else {
+      /* Last resort: execCommand */
+      var ta = document.createElement('textarea');
+      ta.value = shareText;
+      ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      _showPdpToast(LANG === 'ar' ? 'تم نسخ الرابط' : 'Link copied to clipboard');
+    }
+  }
+}
+
+function _showPdpToast(msg) {
+  var toast = document.getElementById('pdp-toast');
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.style.display = 'block'; toast.style.opacity = '1';
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(function() {
+    toast.style.opacity = '0';
+    setTimeout(function(){ toast.style.display = 'none'; }, 300);
+  }, 2200);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  history.replaceState({ yourdis: true, screen: 'home' }, '');
+  history.pushState({ yourdis: true, screen: 'home' }, '');
+});
+
+/* ════════════════════════════════════════════════════════
+   SEARCH — orchestration, entry state, dropdown, results
+   ════════════════════════════════════════════════════════ */
+var _activeFilters={},_searchHistory=[],_searchQuery='',_searchResultsRef=[];
+var _accordTags=[
+  {en:'Woody',ar:'خشبي'},{en:'Oud',ar:'عود'},{en:'Fresh',ar:'منعش'},
+  {en:'Floral',ar:'زهري'},{en:'Amber',ar:'عنبري'},{en:'Citrus',ar:'حمضي'},
+  {en:'Musky',ar:'مسكي'},{en:'Spicy',ar:'توابل'},{en:'Sweet',ar:'حلو'},
+  {en:'Gourmand',ar:'جورماند'}
+];
+
+function renderSearchEntryState(){
+  var el=document.getElementById('search-entry-state');
+  if(!el)return;
+  el.innerHTML='';
+  if(_searchHistory.length>0){
+    var sec=document.createElement('div');
+    sec.className='search-entry-section';
+    sec.innerHTML='<div class="search-entry-label">'+T('search_recent')+'</div>';
+    var chips=document.createElement('div');
+    chips.className='search-recent-chips';
+    _searchHistory.slice(0,5).forEach(function(term){
+      var chip=document.createElement('div');
+      chip.className='search-recent-chip';
+      chip.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>'+term+'</span>';
+      chip.addEventListener('click',function(){searchCommit(term);});
+      chips.appendChild(chip);
+    });
+    sec.appendChild(chips);
+    el.appendChild(sec);
+  }
+  var trending=uniqueProducts().slice(0,5);
+  if(trending.length>0){
+    var tsec=document.createElement('div');
+    tsec.className='search-entry-section';
+    tsec.innerHTML='<div class="search-entry-label">'+T('search_trending')+'</div>';
+    trending.forEach(function(p){
+      var row=document.createElement('div');
+      row.className='search-trending-row';
+      row.innerHTML=
+        '<div class="search-trending-thumb"><div class="prod-img-wrap" style="background:'+p.bg+';height:100%;"><img loading="lazy" src="'+p.img+'" alt="" style="width:100%;height:100%;object-fit:cover;"></div></div>'+
+        '<div style="flex:1;min-width:0;"><div class="search-trending-name">'+P(p,'name')+'</div><div class="search-trending-brand">'+P(p,'brand')+'</div></div>'+
+        '<span class="search-trending-fire">🔥</span>';
+      row.addEventListener('click',(function(pid){return function(){openComparePage(pid,'search');};})(p.id));
+      tsec.appendChild(row);
+    });
+    el.appendChild(tsec);
+  }
+  var asec=document.createElement('div');
+  asec.className='search-entry-section';
+  asec.style.paddingBottom='24px';
+  asec.innerHTML='<div class="search-entry-label">'+T('search_by_accord')+'</div>';
+  var achips=document.createElement('div');
+  achips.className='search-accord-chips';
+  _accordTags.forEach(function(tag){
+    var chip=document.createElement('div');
+    chip.className='search-accord-chip';
+    chip.textContent=LANG==='ar'?tag.ar:tag.en;
+    chip.addEventListener('click',function(){searchCommit(tag.en);});
+    achips.appendChild(chip);
+  });
+  asec.appendChild(achips);
+  el.appendChild(asec);
+}
+
+function searchOnInput(val){
+  var q=(val||'').trim();
+  var cb=document.getElementById('search-clear-btn');
+  if(cb)cb.style.display=q?'':'none';
+  if(!q){_searchQuery='';_searchResultsRef=[];searchShowEntry();return;}
+  renderSearchDropdown(q);
+}
+
+function searchOnFocus(){
+  var inp=document.getElementById('search-input');
+  if(inp&&!inp.value.trim())searchShowEntry();
+}
+
+function searchShowEntry(){
+  document.getElementById('search-entry-state').style.display='';
+  document.getElementById('search-results').style.display='none';
+  document.getElementById('search-empty').style.display='none';
+  document.getElementById('search-filter-bar').classList.remove('visible');
+  document.getElementById('search-dropdown').classList.remove('visible');
+  renderSearchEntryState();
+}
+
+function renderSearchDropdown(q){
+  var dropdown=document.getElementById('search-dropdown');
+  if(!dropdown)return;
+  dropdown.innerHTML='';
+  var ql=q.toLowerCase();
+  var matches=uniqueProducts().filter(function(p){
+    return P(p,'name').toLowerCase().includes(ql)||P(p,'brand').toLowerCase().includes(ql)||
+           p.nameEn.toLowerCase().includes(ql)||p.brandEn.toLowerCase().includes(ql);
+  }).slice(0,5);
+  matches.forEach(function(p){
+    var item=document.createElement('div');
+    item.className='search-dropdown-item';
+    item.innerHTML=
+      '<div class="search-dropdown-thumb"><div class="prod-img-wrap" style="background:'+p.bg+';height:100%;"><img loading="lazy" src="'+p.img+'" alt="" style="width:100%;height:100%;object-fit:cover;"></div></div>'+
+      '<div style="flex:1;min-width:0;"><div class="search-dropdown-name">'+P(p,'name')+'</div><div class="search-dropdown-brand">'+P(p,'brand')+'</div></div>';
+    item.addEventListener('click',(function(pid){return function(){searchAddHistory(q);searchHideDropdown();openComparePage(pid,'search');};})(p.id));
+    dropdown.appendChild(item);
+  });
+  var am=_accordTags.find(function(t){return t.en.toLowerCase().includes(ql)||t.ar.includes(q);});
+  if(am){
+    var arow=document.createElement('div');
+    arow.className='search-dropdown-accord';
+    arow.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'+(LANG==='ar'?'بحث بتوافق: ':'Search by accord: ')+'<strong>'+(LANG==='ar'?am.ar:am.en)+'</strong>';
+    arow.addEventListener('click',function(){searchCommit(am.en);});
+    dropdown.appendChild(arow);
+  }
+  if(matches.length>0){
+    var sa=document.createElement('div');
+    sa.className='search-dropdown-accord';
+    sa.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'+(LANG==='ar'?'عرض جميع النتائج':'See all results for ')+'<strong>&ldquo;'+q+'&rdquo;</strong>';
+    sa.addEventListener('click',function(){searchCommit(q);});
+    dropdown.appendChild(sa);
+  }
+  dropdown.classList.toggle('visible',matches.length>0||!!am);
+  document.getElementById('search-entry-state').style.display='none';
+}
+
+function searchHideDropdown(){var d=document.getElementById('search-dropdown');if(d)d.classList.remove('visible');}
+
+function searchCommit(query){
+  var inp=document.getElementById('search-input');
+  if(inp)inp.value=query;
+  var cb=document.getElementById('search-clear-btn');if(cb)cb.style.display='';
+  searchAddHistory(query);searchHideDropdown();
+  _searchQuery=query.toLowerCase().trim();
+  _activeFilters={};_updateFilterBtn();
+  renderSearchResults(_searchQuery);
+}
+
+function searchAddHistory(term){
+  if(!term)return;
+  _searchHistory=_searchHistory.filter(function(t){return t!==term;});
+  _searchHistory.unshift(term);
+  if(_searchHistory.length>8)_searchHistory.pop();
+}
+
+function searchClear(){
+  var inp=document.getElementById('search-input');
+  if(inp){inp.value='';inp.focus();}
+  var cb=document.getElementById('search-clear-btn');if(cb)cb.style.display='none';
+  _searchQuery='';_activeFilters={};_updateFilterBtn();searchShowEntry();
+}
+
+function liveSearch(query){searchCommit(query);}
+
+function renderSearchResults(q){
+  var results=document.getElementById('search-results');
+  var empty=document.getElementById('search-empty');
+  var filterBar=document.getElementById('search-filter-bar');
+  var countEl=document.getElementById('search-count');
+  document.getElementById('search-entry-state').style.display='none';
+  var filtered=uniqueProducts().filter(function(p){
+    var matchQ=!q||P(p,'name').toLowerCase().includes(q)||P(p,'brand').toLowerCase().includes(q)||
+      p.nameEn.toLowerCase().includes(q)||p.brandEn.toLowerCase().includes(q)||
+      (p.notes.topEn.join(' ')+p.notes.heartEn.join(' ')+p.notes.baseEn.join(' ')).toLowerCase().includes(q);
+    var matchF=true;
+    if(_activeFilters.concentration&&_activeFilters.concentration.length)
+      matchF=matchF&&_activeFilters.concentration.some(function(c){return p.concentrationEn.toLowerCase().includes(c.toLowerCase());});
+    if(_activeFilters.size&&_activeFilters.size.length)
+      matchF=matchF&&_activeFilters.size.indexOf(p.size)!==-1;
+    if(_activeFilters.brand&&_activeFilters.brand.length)
+      matchF=matchF&&_activeFilters.brand.some(function(b){return p.brandEn.toLowerCase()===b.toLowerCase();});
+    if(_activeFilters.gender&&_activeFilters.gender.length)
+      matchF=matchF&&_activeFilters.gender.some(function(g){return p.genderEn.toLowerCase().includes(g.toLowerCase());});
+    if(_activeFilters.accord&&_activeFilters.accord.length)
+      matchF=matchF&&_activeFilters.accord.some(function(a){return((p.notes.topEn.join(' ')+' '+p.notes.heartEn.join(' ')+' '+p.notes.baseEn.join(' ')).toLowerCase()).includes(a.toLowerCase())||(p.familyEn||'').toLowerCase().includes(a.toLowerCase());});
+    return matchQ&&matchF;
+  });
+  _searchResultsRef=filtered;
+  if(filtered.length===0){
+    results.innerHTML='';results.style.display='none';
+    empty.style.display='flex';filterBar.classList.remove('visible');countEl.textContent='';
     return;
   }
-  empty.style.display = 'none';
-
-  /* Count label */
-  if (filtered.length > 0) {
-    countEl.textContent = filtered.length + ' ' + T('search_results') + ' — ' + T('search_tap_compare');
-  } else {
-    countEl.textContent = '';
-  }
-
-  /* Render rows */
-  results.innerHTML = '';
-  filtered.forEach(function(p) {
-    var row = document.createElement('div');
-    row.className = 'result-row';
-    row.setAttribute('data-product-id', p.id);
-    row.innerHTML =
-      '<div class="result-thumb">' +
-        '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
-          '<img loading="lazy" src="' + p.img + '" alt="" onerror="this.style.display=\'none\'">' +
-        '</div>' +
-      '</div>' +
-      '<div class="result-info">' +
-        '<div class="result-name">'  + P(p,'name')  + '</div>' +
-        '<div class="result-brand">' + P(p,'brand') + ' · ' + p.size + ' · ' + P(p,'concentration') + '</div>' +
-      '</div>' +
-      '<div class="result-right">' +
-        '<div class="result-price">'  + (getLowestPrice(p.id) !== null ? getLowestPrice(p.id) + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn) : '--')  + '</div>' +
-        '<div class="result-stores">' + storesLabel(p) + '</div>' +
-      '</div>';
+  empty.style.display='none';results.style.display='';filterBar.classList.add('visible');
+  countEl.textContent=filtered.length+' '+T('search_results');
+  results.innerHTML='';
+  filtered.forEach(function(p){
+    var row=document.createElement('div');
+    row.className='result-row';
+    row.innerHTML=
+      '<div class="result-thumb"><div class="prod-img-wrap" style="background:'+p.bg+';height:100%;"><img loading="lazy" src="'+p.img+'" alt="" style="width:100%;height:100%;object-fit:cover;"></div></div>'+
+      '<div class="result-info"><div class="result-name">'+P(p,'name')+'</div><div class="result-brand">'+P(p,'brand')+' · '+P(p,'concentration')+'</div></div>'+
+      '<div class="result-right"><div class="result-price">'+(getLowestPrice(p.id)!==null?getLowestPrice(p.id)+' '+(LANG==='ar'?p.currencyAr:p.currencyEn):'--')+'</div><div class="result-stores">'+storesLabel(p)+'</div></div>';
+    row.addEventListener('click',(function(pid){return function(){openComparePage(pid,'search');};})(p.id));
     results.appendChild(row);
+  });
+  _buildContextualFilterSheet(filtered);
+}
+
+function _buildContextualFilterSheet(products){
+  var fc=document.getElementById('fc-brand');
+  if(!fc)return;
+  fc.innerHTML='';
+  var seen={};
+  products.forEach(function(p){
+    if(!seen[p.brandEn]){
+      seen[p.brandEn]=true;
+      var chip=document.createElement('span');
+      chip.className='filter-chip'+((_activeFilters.brand||[]).indexOf(p.brandEn)!==-1?' active':'');
+      chip.setAttribute('data-group','brand');chip.setAttribute('data-val-en',p.brandEn);
+      chip.textContent=P(p,'brand');
+      chip.onclick=function(){toggleFilterChip(this);};
+      fc.appendChild(chip);
+    }
   });
 }
 
-/* ══════════════════════════════════════════════════════════
-   FILTER SHEET
-══════════════════════════════════════════════════════════ */
-function openFilterSheet() {
-  /* Populate brand chips from PRODUCTS on first open */
-  var fc = document.getElementById('fc-brand');
-  if (fc && fc.children.length === 0) {
-    var seen = {};
-    PRODUCTS.forEach(function(p) {
-      if (!seen[p.brandEn]) {
-        seen[p.brandEn] = true;
-        var chip = document.createElement('span');
-        chip.className = 'filter-chip';
-        chip.setAttribute('data-group', 'brand');
-        chip.setAttribute('data-val-en', p.brandEn);
-        chip.textContent = P(p, 'brand');
-        chip.onclick = function() { toggleFilterChip(this); };
-        fc.appendChild(chip);
-      }
-    });
-  }
-  document.getElementById('filter-overlay').classList.add('visible');
+function _updateFilterBtn(){
+  var btn=document.getElementById('search-filter-btn');
+  var label=document.getElementById('search-filter-label');
+  var total=Object.values(_activeFilters).reduce(function(s,a){return s+a.length;},0);
+  if(btn)btn.classList.toggle('has-filters',total>0);
+  if(label)label.textContent=total>0?T('search_filter')+' · '+total:T('search_filter');
 }
 
-function closeFilterSheet() {
-  document.getElementById('filter-overlay').classList.remove('visible');
-}
+/* ════════════════════════════════════════════════════════
+   FILTER SHEET
+   ════════════════════════════════════════════════════════ */
+function openFilterSheet(){document.getElementById('filter-overlay').classList.add('visible');}
+function closeFilterSheet(){document.getElementById('filter-overlay').classList.remove('visible');}
 
 function toggleFilterChip(chip) {
   chip.classList.toggle('active');
@@ -4866,22 +5219,16 @@ function toggleFilterChip(chip) {
   }
 }
 
-function resetFilters() {
-  _activeFilters = {};
-  document.querySelectorAll('#filter-overlay .filter-chip').forEach(function(c) {
-    c.classList.remove('active');
-  });
-  var btn = document.getElementById('search-filter-btn');
-  if (btn) {
-    btn.classList.remove('has-filters');
-    btn.querySelector('span').textContent = T('search_filter');
-  }
+function resetFilters(){
+  _activeFilters={};
+  document.querySelectorAll('#filter-overlay .filter-chip').forEach(function(c){c.classList.remove('active');});
+  _updateFilterBtn();
 }
 
-function applyFilters() {
+function applyFilters(){
   closeFilterSheet();
-  var inp = document.getElementById('search-input');
-  renderSearchResults(inp ? inp.value.toLowerCase().trim() : '');
+  _updateFilterBtn();
+  renderSearchResults(_searchQuery||'');
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -5138,7 +5485,8 @@ function openProduct(productId, origin) {
   var bannerTitle = document.getElementById('pdp-compare-banner-title');
   if (bannerTitle) {
     bannerTitle.setAttribute('data-i18n-store-count', storeCount);
-    var tpl = T('pdp_compare_banner_title');
+    window._pdpCurrentData = p; /* expose for all-reviews screen */
+  var tpl = T('pdp_compare_banner_title');
     bannerTitle.textContent = tpl ? tpl.replace('{n}', storeCount) : storeCount + ' exact matching products are available for this item from different stores.';
   }
   var bannerImgWrap = document.getElementById('pdp-compare-banner-imgwrap');
@@ -5146,12 +5494,14 @@ function openProduct(productId, origin) {
   if (bannerImgWrap) bannerImgWrap.style.background = p.bg || '';
   if (bannerPhoto)   { bannerPhoto.src = p.img || ''; bannerPhoto.style.display = ''; }
 
-  /* Rec strips — similar feel only */
+  /* Rec strips — deduplicated, excludes current fragrance group */
   var similarList = document.getElementById('pdp-similar-feel-list');
   similarList.innerHTML = '';
-  PRODUCTS.filter(function(pr){ return pr.id !== productId; }).slice(1,4).forEach(function(pr){
-    similarList.appendChild(_pdpBuildRecCard(pr));
-  });
+  var _curGid = (PRODUCTS.find(function(pr){ return pr.id === productId; }) || {}).variantGroupId || productId;
+  uniqueProducts()
+    .filter(function(pr){ return (pr.variantGroupId || pr.id) !== _curGid; })
+    .slice(0, 6)
+    .forEach(function(pr){ similarList.appendChild(_pdpBuildRecCard(pr)); });
   document.getElementById('pdp-similar-feel-section').style.display = '';
 
   /* Reset bookmark + alert icons */
@@ -5182,8 +5532,8 @@ function _pdpBuildRecCard(p) {
       '<div class="pc-name">'    + P(p,'name')       + '</div>' +
       '<div class="pc-avail">'   + storesLabel(p)    + '</div>' +
       '<span class="pc-lowest">' + T('card_lowest')  + ' ' + (getLowestPrice(p.id) !== null ? getLowestPrice(p.id) + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn) : '--') + '</span>' +
-      '<div class="pc-highest">' + T('card_highest') + ' ' + price(p.highestPrice, p) + '</div>' +
-      '<div class="pc-savings">' + T('card_savings') + ' ' + price(p.savings, p)      + '</div>' +
+      '<div class="pc-highest">' + T('card_highest') + ' ' + (getHighestPrice(p.id) !== null ? getHighestPrice(p.id) + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn) : '--') + '</div>' +
+      '<div class="pc-savings">' + T('card_savings') + ' ' + (getSavings(p.id) > 0 ? getSavings(p.id) + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn) : '--') + '</div>' +
     '</div>';
   return card;
 }
@@ -5482,54 +5832,38 @@ function _compareRenderStores(p, sizeFilter) {
     if (entry.inStock) {
       card.addEventListener('click', (function(vid){ return function(){ openProduct(vid, 'compare'); }; })(variant.id));
     }
-    /* Row 2 meta: rating + delivery */
-    var ratingHtml = store.rating
-      ? '<span class="cmp-rating"><span class="cmp-rating-star">★</span> ' + store.rating + '</span>'
-      : '';
-    var delivText = entry.freeDelivery
-      ? (LANG === 'ar' ? 'شحن مجاني' : 'Free delivery')
-      : entry.deliveryDaysMin + '–' + entry.deliveryDaysMax + (LANG === 'ar' ? ' أيام' : ' days');
-    var delivClass = entry.freeDelivery ? 'cmp-delivery-free' : 'cmp-delivery-paid';
+    /* Product attribute pills — 4 most useful for comparison */
+    var attrSep = '<span style="margin:0 4px;opacity:0.4;">·</span>';
+    var attrHtml =
+      P(variant,'brand') +
+      attrSep + P(variant,'family') +
+      attrSep + P(variant,'gender') +
+      (variant.rating ? attrSep + '★ ' + variant.rating : '');
 
-    /* Row 3 feature icons: returns, installments, cashback */
-    function _featIcon(active, svgPath, labelEn, labelAr) {
-      var cls = active ? 'cmp-feat-on' : 'cmp-feat-off';
-      var label = LANG === 'ar' ? labelAr : labelEn;
-      return '<span class="cmp-feat-icon ' + cls + '">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' + svgPath + '</svg>' +
-        '<span>' + label + '</span>' +
-      '</span>';
-    }
-    var feat3Html =
-      _featIcon(!!store.returnPolicy,  '<polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>',   'Returns',      'إرجاع') +
-      _featIcon(!!store.installments,  '<rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>',              'Installments', 'أقساط') +
-      _featIcon(!!store.cashback,      '<path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>',               'Cashback',     'استرداد');
+
 
     card.innerHTML =
-      '<div class="dip-alt-info" style="min-width:0;flex:1;">' +
-        /* Row 1: store name + badge(s) */
-        '<div class="cmp-card-row1">' +
-          '<span class="cmp-store-name">' + storeName + '</span>' +
-          (badgeHtml ? '<div style="display:flex;gap:4px;flex-wrap:wrap;flex-shrink:0;">' + badgeHtml + '</div>' : '') +
+      /* Product image */
+      '<div class="cmp-card-img">' +
+        '<div class="prod-img-wrap" style="background:' + variant.bg + ';height:100%;">' +
+          '<img loading="lazy" src="' + variant.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">' +
         '</div>' +
-        /* Row 2: rating · delivery  |  price */
-        '<div class="cmp-card-row2">' +
-          '<div class="cmp-card-meta">' +
-            ratingHtml +
-            (ratingHtml ? '<span class="cmp-sep"></span>' : '') +
-            '<span class="cmp-delivery ' + delivClass + '">' + delivText + '</span>' +
-          '</div>' +
-          '<div class="cmp-card-price-wrap">' +
-            '<span class="cmp-price">' + entry.price + '</span>' +
-            '<span class="cmp-currency">' + cur + '</span>' +
-            (entry.discountPercent > 0 ? '<span class="cmp-discount">↓' + entry.discountPercent + '%</span>' : '') +
-          '</div>' +
-        '</div>' +
-        /* Row 3: feature icons */
-        '<div class="cmp-card-row3">' + feat3Html + '</div>' +
       '</div>' +
-      '<div class="dip-alt-right" style="padding-left:8px;">' +
-        '<div class="dip-alt-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>' +
+
+      /* Center body — store name + attributes only */
+      '<div class="cmp-card-body">' +
+        '<div class="cmp-store-name">' + storeName + '</div>' +
+        '<div class="cmp-card-attrs">' + attrHtml + '</div>' +
+      '</div>' +
+
+      /* Right column — badge(s) top, discount + price below */
+      '<div class="cmp-card-right">' +
+        '<div class="cmp-card-badges">' + (badgeHtml || '') + '</div>' +
+        '<div class="cmp-card-price-wrap">' +
+          (entry.discountPercent > 0 ? '<span class="cmp-discount">↓' + entry.discountPercent + '%</span>' : '') +
+          '<span class="cmp-price">' + entry.price + '</span>' +
+          '<span class="cmp-currency">' + cur + '</span>' +
+        '</div>' +
       '</div>';
     list.appendChild(card);
   });
@@ -5569,6 +5903,7 @@ function closeComparePage() {
   if (dest === 'brand-page')   { switchScreen('brand-page');   return; }
   if (dest === 'all-brands')   { switchScreen('all-brands');   return; }
   if (dest === 'fragrance-library') { switchScreen('fragrance-library'); return; }
+  if (dest === 'ai-chat') { switchScreen('ai-chat'); return; }
   switchScreen(dest === 'search' ? 'search' : dest === 'stores' ? 'stores' : dest === 'activity' ? 'activity' : 'home');
 }
 
@@ -5578,7 +5913,7 @@ function closeComparePage() {
 var _alertStates = {};
 
 function _initAlertStates() {
-  PRODUCTS.slice(0, 3).forEach(function(p) {
+  uniqueProducts().slice(0, 3).forEach(function(p) {
     if (_alertStates[p.id] === undefined) _alertStates[p.id] = true;
   });
 }
@@ -5687,7 +6022,7 @@ function renderStores(query) {
       '<div class="store-dir-logo" style="background:' + store.bg + ';">' + store.initials + '</div>' +
       '<div class="store-dir-info">' +
         '<div class="store-dir-name">' + S(store,'name') + '</div>' +
-        '<div class="store-dir-sub">'  + store.productCount + ' ' + T('stores_products') +
+        '<div class="store-dir-sub">'  + (function(){var ids={};LISTINGS.filter(function(l){return l.storeId===store.id;}).forEach(function(l){ids[l.productId]=1;});return Object.keys(ids).length;})() + ' ' + T('stores_products') +
           (store.verified ? ' · <span class="store-dir-badge sdb-verified" style="margin-top:0;vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:9px;height:9px;"><polyline points="20 6 9 17 4 12"/></svg>' + T('stores_verified_badge') + '</span>' : '') +
         '</div>' +
       '</div>' +
@@ -5712,7 +6047,18 @@ function openStorePage(storeId) {
   document.getElementById('store-page-logo').setAttribute('data-store-id', store.id);
   document.getElementById('store-page-name').textContent          = S(store,'name');
   document.getElementById('store-page-url').textContent           = store.url;
-  document.getElementById('store-followers-count').textContent    = store.followersCount + ' ' + T('stores_followers');
+  /* Product count — unique fragrances carried by this store */
+  var _storeListingIds = {};
+  LISTINGS.filter(function(l){ return l.storeId === storeId; })
+    .forEach(function(l){ _storeListingIds[l.productId] = 1; });
+  var _storeProductCount = Object.keys(_storeListingIds).length;
+
+  /* Followers — mocked until backend is ready */
+  var _followers = store.reviewCount || 0;
+  document.getElementById('store-followers-count').textContent =
+    _followers + ' ' + T('stores_followers') +
+    '  ·  ' + _storeProductCount + ' ' + T('stores_products') +
+    (store.rating ? '  ·  ★ ' + store.rating : '');
 
   /* Reset follow button */
   var fb = document.getElementById('store-follow-btn');
@@ -5813,8 +6159,8 @@ function renderLibraryMosaic() {
   var grid      = document.getElementById('lib-mosaic-grid');
   var countEl   = document.getElementById('lib-mosaic-count');
   if (!grid) return;
-  /* Use first 8 products as "owned" for preview */
-  var preview = PRODUCTS.slice(0, 8);
+  /* Deduplicated — one per fragrance group */
+  var preview = uniqueProducts().slice(0, 8);
   grid.innerHTML = '';
   preview.forEach(function(p) {
     var cell = document.createElement('div');
@@ -5825,7 +6171,7 @@ function renderLibraryMosaic() {
       '</div>';
     grid.appendChild(cell);
   });
-  var total = PRODUCTS.length;
+  var total = uniqueProducts().length;
   if (countEl) countEl.textContent = total + (LANG === 'ar' ? ' عطر' : (total === 1 ? ' fragrance' : ' fragrances'));
 }
 
@@ -5837,8 +6183,8 @@ function renderActivityAlerts() {
   var savingsEl = document.getElementById('alerts-mosaic-savings');
   if (!grid) return;
 
-  var active = PRODUCTS.filter(function(p) { return _alertStates[p.id]; });
-  var totalSavings = active.reduce(function(s, p) { return s + (p.savings || 0); }, 0);
+  var active = uniqueProducts().filter(function(p) { return _alertStates[p.id]; });
+  var totalSavings = active.reduce(function(s, p) { return s + (getSavings(p.id) || 0); }, 0);
 
   /* Summary footer */
   if (countEl) {
@@ -5867,7 +6213,7 @@ function renderActivityAlerts() {
           '<img loading="lazy" src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">' +
         '</div>' +
         '<div class="alerts-mosaic-price">' +
-          '<span class="alerts-mosaic-price-badge">' + price(p.lowestPrice, p) + '</span>' +
+          '<span class="alerts-mosaic-price-badge">' + (getLowestPrice(p.id) !== null ? getLowestPrice(p.id) + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn) : '--') + '</span>' +
           '<span class="alerts-mosaic-trend ' + (isDown ? 'alerts-mosaic-trend-down' : 'alerts-mosaic-trend-up') + '">' +
             (isDown ? '↓' : '↑') + ' ' + Math.abs(p.discountPercent) + '%' +
           '</span>' +
@@ -5899,10 +6245,11 @@ var _flibData = {
 };
 
 function _initFlibData() {
-  /* Sample products: Owned = first 3, Liked = next 2, Want = next 2 */
-  _flibData.owned = PRODUCTS.slice(0, 3);
-  _flibData.liked = PRODUCTS.slice(3, 5);
-  _flibData.want  = PRODUCTS.slice(5, 7);
+  /* Sample products — deduplicated, one per fragrance group */
+  var _uq = uniqueProducts();
+  _flibData.owned = _uq.slice(0, 3);
+  _flibData.liked = _uq.slice(3, 5);
+  _flibData.want  = _uq.slice(5, 7);
 }
 
 function openFragranceLibrary() {
@@ -6043,7 +6390,7 @@ function renderRecentlyViewed() {
   var strip = document.getElementById('rv-thumb-strip');
   if (!strip) return;
   strip.innerHTML = '';
-  PRODUCTS.slice(0, 5).forEach(function(p) {
+  uniqueProducts().slice(0, 5).forEach(function(p) {
     var item = document.createElement('div');
     item.className = 'rv-thumb-item';
     item.innerHTML =
@@ -6058,7 +6405,7 @@ function openRecentlyViewedPage() {
   var grid = document.getElementById('rv-full-grid');
   if (grid) {
     grid.innerHTML = '';
-    PRODUCTS.forEach(function(p) {
+    uniqueProducts().forEach(function(p) {
       var item = document.createElement('div');
       item.className = 'rv-grid-item';
       item.innerHTML =
@@ -6381,11 +6728,12 @@ function _aiAppendBubble(role, text, productIds) {
     var cardsRow = document.createElement('div');
     cardsRow.className = 'ai-cards-row';
     productIds.forEach(function(pid) {
-      var p = PRODUCTS.find(function(pr) { return pr.id === pid; });
+      var p = PRODUCTS.find(function(pr) { return pr.id === pid; }) ||
+              PRODUCTS.find(function(pr) { return (pr.variantGroupId || pr.id) === pid; });
       if (p) {
         var card = _compareAltCard(p);
         card.onclick = null;
-        card.addEventListener('click', (function(pid){ return function(){ openComparePage(pid, 'home'); }; })(p.id));
+        card.addEventListener('click', (function(resolvedId){ return function(){ openComparePage(resolvedId, 'ai-chat'); }; })(p.id));
         cardsRow.appendChild(card);
       }
     });
@@ -6950,13 +7298,16 @@ function openBrandPage(brandId, origin) {
   var backBtn = document.getElementById('brand-page-back-btn');
   backBtn.onclick = function() { switchScreen(_brandPageOrigin); };
 
-  /* Banner background */
+  /* Banner background — derive from first product of this brand */
+  var _brandFirstProduct = PRODUCTS.find(function(p){ return p.brandEn === brand.nameEn; });
+  var _brandBg = _brandFirstProduct ? _brandFirstProduct.bg : 'var(--bg-surface)';
   var banner = document.getElementById('brand-page-banner');
-  banner.style.background = brand.bg;
+  banner.style.background = _brandBg;
 
-  /* Monogram */
+  /* Monogram — derive initials from brand name */
+  var _brandInitials = brand.nameEn.split(' ').map(function(w){ return w[0]; }).join('').slice(0,2).toUpperCase();
   var avatar = document.getElementById('brand-page-avatar');
-  avatar.textContent = brand.initials;
+  avatar.textContent = _brandInitials;
 
   /* Title */
   document.getElementById('brand-page-name').textContent = LANG === 'ar' ? brand.nameAr : brand.nameEn;

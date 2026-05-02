@@ -78,6 +78,9 @@ filter_brand: { en: 'Brand', ar: 'الدور العطرية' },
 filter_men: { en: 'Men', ar: 'رجال' },
 filter_women: { en: 'Women', ar: 'نساء' },
 filter_unisex: { en: 'Unisex', ar: 'للجنسين' },
+search_recent:    { en: 'Recent Searches',   ar: 'عمليات البحث الأخيرة' },
+search_trending:  { en: 'Popular Now',       ar: 'الأكثر بحثاً' },
+search_by_accord: { en: 'Browse by Accord',  ar: 'تصفح حسب التوافق' },
 
 /* ══════════════════════════════════════════════════════════
    Stores page
@@ -421,7 +424,7 @@ comm_sale_ph: { en: 'Describe the fragrance, condition, and any details…', ar:
 comm_price_label: { en: 'Price (optional)', ar: 'السعر (اختياري)' },
 comm_price_ph: { en: 'e.g. 250 SAR', ar: 'مثال: 250 ريال' },
 comm_media_label: { en: 'Media (optional)', ar: 'وسائط (اختياري)' },
-comm_pick_product: { en: 'Pick Product', ar: 'اختر منتجاً' },
+comm_pick_product: { en: 'Pick Product', ar: 'إدراج منتج موجود' },
 comm_gallery: { en: 'Gallery', ar: 'المعرض' },
 comm_camera: { en: 'Camera', ar: 'الكاميرا' },
 comm_badge_inquiry: { en: 'Inquiry', ar: 'استفسار' },

@@ -42,10 +42,10 @@ var BRANDS = [
 
   {
     id:        'ysl',
-    nameEn:    'Yves Saint Laurent',
-    nameAr:    'إيف سان لوران',
-    houseEn:   'Yves Saint Laurent',
-    houseAr:   'إيف سان لوران',
+    nameEn:    'Laurent',
+    nameAr:    'لوران',
+    houseEn:   'Laurent',
+    houseAr:   'لوران',
     countryEn: 'France',
     countryAr: 'فرنسا',
     founded:   1961,
@@ -53,11 +53,11 @@ var BRANDS = [
   },
 
   {
-    id:        'maison-francis-kurkdjian',
-    nameEn:    'Maison Francis Kurkdjian',
-    nameAr:    'ميزون فرانسيس كوركجان',
-    houseEn:   'Maison Francis Kurkdjian',
-    houseAr:   'ميزون فرانسيس كوركجان',
+    id:        'Pure',
+    nameEn:    'Pure',
+    nameAr:    'بيور',
+    houseEn:   'Pure',
+    houseAr:   'بيور',
     countryEn: 'France',
     countryAr: 'فرنسا',
     founded:   2009,
