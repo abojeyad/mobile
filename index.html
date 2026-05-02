@@ -666,6 +666,34 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   transition: box-shadow 0.18s;
 }
 .lib-mosaic-entry:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.10); }
+.lib-mosaic-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 14px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-surface);
+  pointer-events: none;
+}
+.lib-mosaic-header-icon {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  background: var(--gold-light);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold);
+}
+.lib-mosaic-header-icon svg { width: 14px; height: 14px; }
+.lib-mosaic-header-text { flex: 1; min-width: 0; }
+.lib-mosaic-header-title {
+  font-size: var(--t5); font-weight: 700; color: var(--ink-1); line-height: 1.2;
+}
+.lib-mosaic-header-sub {
+  font-size: var(--t6); color: var(--ink-3); margin-top: 2px; line-height: 1.4;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.lib-mosaic-header-chevron {
+  width: 15px; height: 15px; color: var(--ink-3); flex-shrink: 0;
+}
+[dir="rtl"] .lib-mosaic-header-chevron { transform: scaleX(-1); }
+[dir="rtl"] .lib-mosaic-header-title,
+[dir="rtl"] .lib-mosaic-header-sub { font-family: var(--font-ar) !important; }
 .lib-mosaic-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -871,6 +899,86 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .logout-btn { margin:20px 20px 40px; padding:15px; border-radius:var(--radius-md); background:var(--red-light); color:var(--red); font-size:var(--t3); font-weight:600; width:calc(100% - 40px); display:flex; align-items:center; justify-content:center; gap:10px; cursor:pointer; border:1px solid rgba(121,0,47,0.15); transition:opacity 0.15s; font-family:inherit; }
 .logout-btn:hover { opacity:0.85; }
 .logout-btn svg { width:18px; height:18px; }
+
+/* ════════════════════════════════════════════════════════
+   RECENTLY VIEWED — external entry + internal screen
+   ════════════════════════════════════════════════════════ */
+/* ── External entry card ── */
+.rv-entry {
+  margin: 0 20px 24px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-phone);
+  cursor: pointer;
+  transition: box-shadow 0.18s;
+}
+.rv-entry:hover  { box-shadow: 0 6px 24px rgba(0,0,0,0.09); }
+.rv-entry:active { opacity: 0.92; }
+.rv-entry-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 14px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-surface);
+  pointer-events: none;
+}
+.rv-entry-icon {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  background: var(--b-blue);
+  display: flex; align-items: center; justify-content: center;
+  color: #2563EB;
+}
+.rv-entry-icon svg { width: 14px; height: 14px; }
+.rv-entry-text { flex: 1; min-width: 0; }
+.rv-entry-title {
+  font-size: var(--t5); font-weight: 700; color: var(--ink-1); line-height: 1.2;
+}
+.rv-entry-sub {
+  font-size: var(--t6); color: var(--ink-3); margin-top: 2px; line-height: 1.4;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.rv-entry-chevron { width: 15px; height: 15px; color: var(--ink-3); flex-shrink: 0; }
+[dir="rtl"] .rv-entry-chevron { transform: scaleX(-1); }
+[dir="rtl"] .rv-entry-title,
+[dir="rtl"] .rv-entry-sub { font-family: var(--font-ar) !important; }
+.rv-thumb-strip {
+  display: flex; gap: 0;
+  pointer-events: none;
+}
+.rv-thumb-item {
+  flex: 1; height: 90px; overflow: hidden; position: relative;
+}
+.rv-thumb-item + .rv-thumb-item { border-left: 2px solid var(--bg-phone); }
+[dir="rtl"] .rv-thumb-item + .rv-thumb-item { border-left: none; border-right: 2px solid var(--bg-phone); }
+.rv-thumb-item-bg {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+.rv-thumb-item-bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* ── Internal full-page grid ── */
+.rv-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px; padding: 3px;
+}
+.rv-grid-item {
+  aspect-ratio: 1 / 1; overflow: hidden;
+  position: relative; cursor: pointer; border-radius: 4px;
+}
+.rv-grid-item:active { opacity: 0.88; }
+.rv-grid-item-bg {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+.rv-grid-item-bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rv-grid-item-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(14,14,14,0.68) 0%, transparent 100%);
+  padding: 14px 6px 5px;
+  font-size: 9px; font-weight: 600; color: #fff;
+  line-height: 1.3; text-align: center;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
 
 /* ══════════════════════════════════════════════════════════
    ALERT CARDS
@@ -1131,6 +1239,249 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .comm-empty svg { color: var(--ink-3); opacity: 0.35; }
 .comm-empty-title { font-size: var(--t3); font-weight: 600; color: var(--ink-1); }
 .comm-empty-sub   { font-size: var(--t4); color: var(--ink-3); line-height: 1.6; }
+
+/* ══════════════════════════════════════════════════════════
+   COMMUNITY POST DETAIL SCREEN
+   ══════════════════════════════════════════════════════════ */
+.comm-post-header {
+  display: flex; align-items: center; padding: 10px 14px;
+  border-bottom: 1px solid var(--border); flex-shrink: 0; gap: 0;
+}
+.comm-post-header-center {
+  flex: 1; text-align: center; font-size: var(--t4); font-weight: 600; color: var(--ink-1);
+}
+.comm-post-body {
+  padding: 18px 20px 16px;
+  border-bottom: 3px solid var(--bg-surface); flex-shrink: 0;
+}
+.comm-post-user-row {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
+}
+.comm-post-user { display: flex; align-items: center; gap: 10px; }
+.comm-post-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--red) 0%, #a0003d 100%);
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; flex-shrink: 0;
+}
+.comm-post-uname { font-size: var(--t4); font-weight: 600; color: var(--ink-1); }
+.comm-post-time  { font-size: var(--t6); color: var(--ink-3); margin-top: 1px; }
+.comm-post-text  { font-size: var(--t4); color: var(--ink-1); line-height: 1.6; margin-bottom: 14px; }
+.comm-post-product-pill {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--bg-surface); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md); padding: 10px 12px;
+  cursor: pointer; transition: background 0.12s; margin-bottom: 14px;
+}
+.comm-post-product-pill:active { background: var(--bg-input); }
+.comm-post-product-thumb {
+  width: 46px; height: 46px; border-radius: var(--radius-sm);
+  overflow: hidden; flex-shrink: 0; border: 1px solid var(--border);
+}
+.comm-post-product-info { flex: 1; min-width: 0; }
+.comm-post-product-name { font-size: var(--t5); font-weight: 600; color: var(--ink-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.comm-post-product-sub  { font-size: var(--t6); color: var(--ink-3); margin-top: 2px; }
+.comm-post-product-arrow { flex-shrink: 0; color: var(--ink-3); }
+.comm-post-product-arrow svg { width: 14px; height: 14px; }
+.comm-post-meta-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.comm-replies-divider {
+  padding: 10px 20px 8px; flex-shrink: 0; display: flex; align-items: center; gap: 10px;
+}
+.comm-replies-count-label {
+  font-size: var(--t6); font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--ink-3); white-space: nowrap;
+}
+.comm-replies-divider-line { flex: 1; height: 1px; background: var(--border); }
+.comm-reply-item { padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; gap: 10px; }
+.comm-reply-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--bg-input); border: 1px solid var(--border);
+  color: var(--ink-2); display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+}
+.comm-reply-body { flex: 1; min-width: 0; }
+.comm-reply-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
+.comm-reply-name { font-size: var(--t5); font-weight: 600; color: var(--ink-1); }
+.comm-reply-time { font-size: var(--t6); color: var(--ink-3); }
+.comm-reply-text { font-size: var(--t4); color: var(--ink-1); line-height: 1.55; }
+.comm-reply-product {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 7px 10px;
+  margin-top: 8px; cursor: pointer; transition: background 0.1s;
+}
+.comm-reply-product:active { background: var(--bg-input); }
+.comm-reply-product-thumb { width: 32px; height: 32px; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
+.comm-reply-product-name { font-size: var(--t6); font-weight: 600; color: var(--ink-1); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.comm-reply-product-sub  { font-size: var(--t6); color: var(--ink-3); }
+.comm-reply-product svg  { width: 11px; height: 11px; color: var(--ink-3); flex-shrink: 0; }
+.comm-reply-bar {
+  flex-shrink: 0; background: var(--bg-phone);
+  border-top: 1px solid var(--border); padding: 10px 14px 20px;
+}
+.comm-reply-input-row { display: flex; align-items: flex-end; gap: 10px; }
+.comm-reply-input-wrap {
+  flex: 1; background: var(--bg-input); border: 1.5px solid var(--border);
+  border-radius: 22px; padding: 9px 14px;
+  display: flex; flex-direction: column; gap: 6px; transition: border-color 0.15s;
+}
+.comm-reply-input-wrap:focus-within { border-color: var(--red); }
+.comm-reply-textarea {
+  width: 100%; border: none; background: transparent;
+  font-family: inherit; font-size: var(--t4); color: var(--ink-1);
+  outline: none; resize: none; line-height: 1.45; max-height: 96px;
+  overflow-y: auto; min-height: 22px;
+}
+.comm-reply-textarea::placeholder { color: var(--ink-3); }
+.comm-reply-attachments { display: none; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+.comm-reply-attachments.has-item { display: flex; }
+.comm-reply-attach-chip {
+  display: flex; align-items: center; gap: 5px;
+  background: var(--bg-phone); border: 1px solid var(--border-strong);
+  border-radius: 20px; padding: 3px 8px 3px 4px;
+  font-size: var(--t6); font-weight: 500; color: var(--ink-2);
+}
+.comm-reply-attach-chip-thumb { width: 18px; height: 18px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+.comm-reply-attach-chip-remove {
+  width: 14px; height: 14px; border-radius: 50%; background: var(--ink-3); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 8px; cursor: pointer; flex-shrink: 0; margin-left: 2px;
+}
+.comm-reply-actions { display: flex; align-items: center; gap: 0; padding: 4px 0 0; }
+.comm-reply-action-btn {
+  width: 36px; height: 36px; border-radius: 50%; background: transparent; border: none;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink-3); cursor: pointer; transition: background 0.12s, color 0.12s; font-family: inherit;
+}
+.comm-reply-action-btn:active { background: var(--bg-surface); color: var(--ink-1); }
+.comm-reply-action-btn svg { width: 18px; height: 18px; }
+.comm-reply-send {
+  width: 40px; height: 40px; border-radius: 50%; background: var(--red); border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0; transition: opacity 0.15s, transform 0.1s; color: #fff;
+}
+.comm-reply-send:active { transform: scale(0.9); opacity: 0.85; }
+.comm-reply-send:disabled { opacity: 0.35; cursor: default; }
+.comm-reply-send svg { width: 17px; height: 17px; }
+.comm-reply-picker-overlay {
+  position: absolute; inset: 0; z-index: 310;
+  background: rgba(0,0,0,0.4); display: none; align-items: flex-end;
+}
+.comm-reply-picker-overlay.visible { display: flex; }
+.comm-post-price-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--gold-light); color: var(--amber);
+  font-size: var(--t5); font-weight: 700; padding: 4px 12px;
+  border-radius: 20px; white-space: nowrap;
+}
+[dir="rtl"] .comm-post-product-arrow svg { transform: scaleX(-1); }
+[dir="rtl"] .comm-reply-product svg { transform: scaleX(-1); }
+[dir="rtl"] .comm-post-header .dip-back-btn svg { transform: scaleX(-1); }
+[dir="rtl"] .comm-post-uname,
+[dir="rtl"] .comm-reply-name { font-weight: 600; }
+[dir="rtl"] .comm-post-text,
+[dir="rtl"] .comm-reply-text { line-height: 1.85; }
+
+/* ══════════════════════════════════════════════════════════
+   ALERTS MOSAIC ENTRY (activity screen)
+   ══════════════════════════════════════════════════════════ */
+.alerts-mosaic-entry {
+  margin: 0 20px 20px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--bg-phone);
+  transition: box-shadow 0.18s;
+}
+.alerts-mosaic-entry:hover  { box-shadow: 0 6px 24px rgba(0,0,0,0.09); }
+.alerts-mosaic-entry:active { opacity: 0.92; }
+
+.alerts-mosaic-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 14px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-surface);
+  pointer-events: none;
+}
+.alerts-mosaic-header-icon {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  background: var(--red-light);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--red);
+}
+.alerts-mosaic-header-icon svg { width: 15px; height: 15px; }
+.alerts-mosaic-header-text { flex: 1; min-width: 0; }
+.alerts-mosaic-title {
+  font-size: var(--t5); font-weight: 700; color: var(--ink-1); line-height: 1.2;
+}
+.alerts-mosaic-sub {
+  font-size: var(--t6); color: var(--ink-3); margin-top: 2px; line-height: 1.4;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.alerts-mosaic-chevron { width: 15px; height: 15px; color: var(--ink-3); flex-shrink: 0; }
+[dir="rtl"] .alerts-mosaic-chevron { transform: scaleX(-1); }
+
+.alerts-mosaic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 80px);
+  gap: 2px;
+  background: var(--border);
+  pointer-events: none;
+}
+.alerts-mosaic-cell {
+  overflow: hidden;
+  position: relative;
+}
+.alerts-mosaic-cell-bg {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+.alerts-mosaic-cell-bg img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.alerts-mosaic-price {
+  position: absolute; bottom: 5px; left: 6px; right: 6px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.alerts-mosaic-price-badge {
+  background: var(--gold); color: #fff;
+  font-size: 9px; font-weight: 700;
+  padding: 2px 6px; border-radius: 10px;
+  white-space: nowrap; line-height: 1.4;
+}
+.alerts-mosaic-trend {
+  font-size: 9px; font-weight: 700;
+  padding: 2px 6px; border-radius: 10px;
+  white-space: nowrap; line-height: 1.4;
+}
+.alerts-mosaic-trend-down { background: var(--green-light); color: var(--green); }
+.alerts-mosaic-trend-up   { background: var(--red-light);   color: var(--red); }
+
+.alerts-mosaic-empty-cell {
+  background: var(--bg-surface);
+  display: flex; align-items: center; justify-content: center;
+}
+.alerts-mosaic-empty-cell svg { opacity: 0.2; width: 20px; height: 20px; }
+
+.alerts-mosaic-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-surface);
+  pointer-events: none;
+}
+.alerts-mosaic-count-badge {
+  font-size: var(--t6); font-weight: 700;
+  color: var(--red); background: var(--red-light);
+  padding: 3px 10px; border-radius: 20px; white-space: nowrap;
+}
+.alerts-mosaic-savings { font-size: var(--t6); color: var(--ink-3); }
+.alerts-mosaic-savings strong { color: var(--green); font-weight: 700; }
+
+[dir="rtl"] .alerts-mosaic-title,
+[dir="rtl"] .alerts-mosaic-sub { font-family: var(--font-ar) !important; }
 
 /* ══════════════════════════════════════════════════════════
    STORES SCREEN
@@ -1981,7 +2332,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <!-- TOP DEALS NOW -->
     <div class="sec-head">
       <span class="sec-label" data-i18n="home_top_deals">Top Deals Now</span>
-      <span class="sec-link" data-i18n="home_see_all">See all</span>
+      <span class="sec-link" data-i18n="home_see_all" onclick="openProductsAllPage('top-deals')" style="cursor:pointer;">See all</span>
     </div>
     <div class="h-scroll" id="strip-top-deals" style="margin-bottom:4px;"></div>
 
@@ -1999,7 +2350,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <!-- PERSONALIZED FOR YOU -->
     <div class="sec-head">
       <span class="sec-label" data-i18n="home_personalized">Personalized for You</span>
-      <span class="sec-link" data-i18n="home_view_all">View all</span>
+      <span class="sec-link" data-i18n="home_view_all" onclick="openProductsAllPage('personalized')" style="cursor:pointer;">View all</span>
     </div>
     <div class="h-scroll" id="strip-personalized" style="margin-bottom:4px;"></div>
 
@@ -2008,7 +2359,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <!-- RECENT PRICE DROPS — static, no bilingual product names needed -->
     <div class="sec-head">
       <span class="sec-label" data-i18n="home_price_drops">Recent Price Drops</span>
-      <span class="sec-link" data-i18n="home_view_all">View all</span>
+      <span class="sec-link" data-i18n="home_view_all" onclick="openProductsAllPage('price-drops')" style="cursor:pointer;">View all</span>
     </div>
     <div id="strip-price-drops"></div>
 
@@ -2148,6 +2499,116 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 </div><!-- /screen-search -->
 
 <!-- ═══════════════════════════════════════
+     SCREEN: TOP DEALS (View All)
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-products-all">
+
+  <!-- Header -->
+  <div class="search-header">
+    <div class="back-btn" onclick="switchScreen('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </div>
+    <span class="screen-title" id="products-all-title">Top Deals Now</span>
+  </div>
+
+  <!-- Search bar + filter button -->
+  <div class="search-input-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="td-search-input" data-i18n="search_placeholder" placeholder="Name, brand, or note (oud, fresh…)"
+      oninput="tdLiveSearch(this.value)" autocomplete="off"/>
+    <div class="search-divider"></div>
+    <button class="filter-btn" id="td-filter-btn" onclick="tdOpenFilterSheet()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+      <span data-i18n="search_filter">Filter</span>
+    </button>
+  </div>
+
+  <!-- Result count -->
+  <div class="search-count" id="td-count"></div>
+
+  <!-- Scrollable 2-col grid -->
+  <div class="scroll-area">
+    <div class="product-grid" id="td-results" style="padding-top:4px;padding-bottom:24px;"></div>
+    <div class="search-empty" id="td-empty" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <div class="search-empty-title" data-i18n="search_no_results">No results found</div>
+      <div class="search-empty-sub" data-i18n="search_no_results_sub">Try a different name, brand, or note</div>
+    </div>
+  </div>
+
+  <!-- Filter sheet — scoped to this screen -->
+  <div class="filter-overlay" id="td-filter-overlay" onclick="if(event.target===this)tdCloseFilterSheet()">
+    <div class="filter-sheet">
+      <div class="filter-handle"></div>
+      <div class="filter-header">
+        <span class="filter-header-action" onclick="tdResetFilters()" data-i18n="filter_reset">Reset</span>
+        <span class="filter-header-title" data-i18n="filter_title">Filter</span>
+        <span class="filter-header-action apply" onclick="tdApplyFilters()" data-i18n="filter_apply">Apply</span>
+      </div>
+      <div class="filter-body">
+        <!-- Gender -->
+        <div class="filter-section">
+          <div class="filter-section-label" data-i18n="filter_gender">Gender</div>
+          <div class="filter-chips-wrap">
+            <span class="filter-chip" data-group="gender" data-val-en="Men"    data-val-ar="رجال"    onclick="tdToggleFilterChip(this)" data-i18n="filter_men">Men</span>
+            <span class="filter-chip" data-group="gender" data-val-en="Women"  data-val-ar="نساء"   onclick="tdToggleFilterChip(this)" data-i18n="filter_women">Women</span>
+            <span class="filter-chip" data-group="gender" data-val-en="Unisex" data-val-ar="للجنسين" onclick="tdToggleFilterChip(this)" data-i18n="filter_unisex">Unisex</span>
+          </div>
+        </div>
+        <!-- Concentration -->
+        <div class="filter-section">
+          <div class="filter-section-label" data-i18n="filter_concentration">Concentration</div>
+          <div class="filter-chips-wrap">
+            <span class="filter-chip" data-group="concentration" data-val-en="EDC"     data-val-ar="ماء كولونيا"      onclick="tdToggleFilterChip(this)">EDC</span>
+            <span class="filter-chip" data-group="concentration" data-val-en="EDT"     data-val-ar="ماء عطر"           onclick="tdToggleFilterChip(this)">EDT</span>
+            <span class="filter-chip" data-group="concentration" data-val-en="EDP"     data-val-ar="عطر"               onclick="tdToggleFilterChip(this)">EDP</span>
+            <span class="filter-chip" data-group="concentration" data-val-en="Parfum"  data-val-ar="عطر مركز"          onclick="tdToggleFilterChip(this)">Parfum</span>
+            <span class="filter-chip" data-group="concentration" data-val-en="Elixir"  data-val-ar="إكسير"             onclick="tdToggleFilterChip(this)">Elixir</span>
+            <span class="filter-chip" data-group="concentration" data-val-en="Extrait" data-val-ar="ماء عطري خفيف"     onclick="tdToggleFilterChip(this)">Extrait</span>
+          </div>
+        </div>
+        <!-- Size -->
+        <div class="filter-section">
+          <div class="filter-section-label" data-i18n="filter_size">Size</div>
+          <div class="filter-chips-wrap">
+            <span class="filter-chip" data-group="size" data-val-en="50ml"  onclick="tdToggleFilterChip(this)">50ml</span>
+            <span class="filter-chip" data-group="size" data-val-en="60ml"  onclick="tdToggleFilterChip(this)">60ml</span>
+            <span class="filter-chip" data-group="size" data-val-en="70ml"  onclick="tdToggleFilterChip(this)">70ml</span>
+            <span class="filter-chip" data-group="size" data-val-en="90ml"  onclick="tdToggleFilterChip(this)">90ml</span>
+            <span class="filter-chip" data-group="size" data-val-en="100ml" onclick="tdToggleFilterChip(this)">100ml</span>
+            <span class="filter-chip" data-group="size" data-val-en="150ml" onclick="tdToggleFilterChip(this)">150ml</span>
+            <span class="filter-chip" data-group="size" data-val-en="200ml" onclick="tdToggleFilterChip(this)">200ml</span>
+          </div>
+        </div>
+        <!-- Accords -->
+        <div class="filter-section">
+          <div class="filter-section-label" data-i18n="filter_accords">Accords</div>
+          <div class="filter-chips-wrap">
+            <span class="filter-chip" data-group="accord" data-val-en="Sweet"    data-val-ar="حلو"     onclick="tdToggleFilterChip(this)">Sweet</span>
+            <span class="filter-chip" data-group="accord" data-val-en="Gourmand" data-val-ar="جورماند" onclick="tdToggleFilterChip(this)">Gourmand</span>
+            <span class="filter-chip" data-group="accord" data-val-en="Fresh"    data-val-ar="منعش"    onclick="tdToggleFilterChip(this)">Fresh</span>
+            <span class="filter-chip" data-group="accord" data-val-en="Woody"    data-val-ar="خشبي"    onclick="tdToggleFilterChip(this)">Woody</span>
+            <span class="filter-chip" data-group="accord" data-val-en="Musky"    data-val-ar="مسكي"    onclick="tdToggleFilterChip(this)">Musky</span>
+            <span class="filter-chip" data-group="accord" data-val-en="Amber"    data-val-ar="عنبري"   onclick="tdToggleFilterChip(this)">Amber</span>
+            <span class="filter-chip" data-group="accord" data-val-en="Spicy"    data-val-ar="حار"     onclick="tdToggleFilterChip(this)">Spicy</span>
+            <span class="filter-chip" data-group="accord" data-val-en="Citrus"   data-val-ar="حمضي"    onclick="tdToggleFilterChip(this)">Citrus</span>
+          </div>
+        </div>
+        <!-- Brand — populated by JS -->
+        <div class="filter-section">
+          <div class="filter-section-label" data-i18n="filter_brand">Brand</div>
+          <div class="filter-chips-wrap" id="td-fc-brand"></div>
+        </div>
+      </div>
+      <div class="filter-apply-bar">
+        <button class="filter-apply-btn" onclick="tdApplyFilters()" data-i18n="filter_apply">Apply</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /screen-products-all -->
+
+<!-- ═══════════════════════════════════════
      SCREEN: ACTIVITY (main — has bottom nav)
 ═══════════════════════════════════════ -->
 <div class="screen" id="screen-activity">
@@ -2196,11 +2657,21 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="divider" style="margin:0 0 20px;"></div>
 
     <!-- My Fragrance Library entry -->
-    <div class="sec-head" style="margin-bottom:12px;">
-      <span class="sec-label" data-i18n="activity_library">My Fragrance Library</span>
-      <span class="sec-link" data-i18n="activity_open_library" onclick="openFragranceLibrary()" style="cursor:pointer;" data-i18n="activity_open_library">Open</span>
-    </div>
     <div class="lib-mosaic-entry" id="lib-mosaic-entry" onclick="openFragranceLibrary()">
+
+      <!-- Header strip (same pattern as alerts section) -->
+      <div class="lib-mosaic-header">
+        <div class="lib-mosaic-header-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+        <div class="lib-mosaic-header-text">
+          <div class="lib-mosaic-header-title" data-i18n="lib_entry_title">My Fragrance Library</div>
+          <div class="lib-mosaic-header-sub" data-i18n="lib_entry_sub">Your personal fragrance collection that reflects your taste and preferences</div>
+        </div>
+        <svg class="lib-mosaic-header-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+
+      <!-- Mosaic grid — unchanged -->
       <div class="lib-mosaic-grid" id="lib-mosaic-grid">
         <!-- populated by JS -->
       </div>
@@ -2213,20 +2684,52 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="divider" style="margin:0 0 20px;"></div>
 
     <!-- Price Alerts section -->
-    <div class="sec-head">
-      <span class="sec-label" data-i18n="nav_alerts">Price Alerts</span>
-      <span class="sec-link" data-i18n="activity_see_all" onclick="if(guestGuard())return;switchScreen('alerts')" style="cursor:pointer;">See all</span>
+    <div class="alerts-mosaic-entry" id="alerts-mosaic-entry" onclick="if(guestGuard())return;switchScreen('alerts')">
+
+      <!-- Header strip -->
+      <div class="alerts-mosaic-header">
+        <div class="alerts-mosaic-header-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </div>
+        <div class="alerts-mosaic-header-text">
+          <div class="alerts-mosaic-title" data-i18n="alerts_mosaic_title">Price Alerts</div>
+          <div class="alerts-mosaic-sub" data-i18n="alerts_mosaic_sub">Fragrances you are tracking for price drops</div>
+        </div>
+        <svg class="alerts-mosaic-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+
+      <!-- 2x2 product image grid -->
+      <div class="alerts-mosaic-grid" id="alerts-mosaic-grid"></div>
+
+      <!-- Footer summary bar -->
+      <div class="alerts-mosaic-footer">
+        <span class="alerts-mosaic-count-badge" id="alerts-mosaic-count"></span>
+        <span class="alerts-mosaic-savings" id="alerts-mosaic-savings"></span>
+      </div>
+
     </div>
-    <div class="recent-scroll" id="activity-alerts" style="padding-bottom:20px;"></div>
 
     <div class="divider" style="margin:0 0 20px;"></div>
 
     <!-- Recently Viewed -->
-    <div class="sec-head">
-      <span class="sec-label" data-i18n="activity_recently">Recently Viewed</span>
-      <span class="sec-link" data-i18n="activity_see_all">See all</span>
+    <div class="rv-entry" onclick="openRecentlyViewedPage()">
+
+      <!-- Header strip -->
+      <div class="rv-entry-header">
+        <div class="rv-entry-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="rv-entry-text">
+          <div class="rv-entry-title" data-i18n="rv_entry_title">Recently Viewed</div>
+          <div class="rv-entry-sub" data-i18n="rv_entry_sub">Products you explored and may want to revisit</div>
+        </div>
+        <svg class="rv-entry-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+
+      <!-- Horizontal thumbnail strip -->
+      <div class="rv-thumb-strip" id="rv-thumb-strip"></div>
+
     </div>
-    <div class="recent-scroll" id="activity-recently" style="padding-bottom:24px;"></div>
 
     <div class="divider" style="margin:0;"></div>
 
@@ -3601,7 +4104,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
         <!-- Step 2a: Inquiry form -->
         <div id="comm-form-inquiry" style="display:none;">
-          <label class="comm-form-label" data-i18n="comm_message_label">Message <span style="color:var(--red);">*</span></label>
+          <label class="comm-form-label" data-i18n="comm_message_label">Message</label>
           <textarea id="comm-inquiry-msg" class="comm-textarea" rows="4" data-i18n="comm_inquiry_ph" placeholder="Write your question about a fragrance…"></textarea>
 
           <label class="comm-form-label" data-i18n="comm_media_label">Media (optional)</label>
@@ -3628,7 +4131,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
         <!-- Step 2b: For Sale form -->
         <div id="comm-form-sale" style="display:none;">
-          <label class="comm-form-label" data-i18n="comm_message_label">Message <span style="color:var(--red);">*</span></label>
+          <label class="comm-form-label" data-i18n="comm_message_label">Message</label>
           <textarea id="comm-sale-msg" class="comm-textarea" rows="4" data-i18n="comm_sale_ph" placeholder="Describe the fragrance, condition, and any details…"></textarea>
 
           <label class="comm-form-label" data-i18n="comm_price_label">Price (optional)</label>
@@ -3677,6 +4180,103 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   </div>
 
 </div><!-- /screen-community -->
+
+<!-- ═══════════════════════════════════════
+     SCREEN: RECENTLY VIEWED
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-recently-viewed">
+
+  <div class="search-header">
+    <div class="back-btn" onclick="switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </div>
+    <span class="screen-title" data-i18n="rv_entry_title">Recently Viewed</span>
+  </div>
+
+  <div class="scroll-area">
+    <div class="rv-grid" id="rv-full-grid"></div>
+    <div style="height:24px;" aria-hidden="true"></div>
+  </div>
+
+</div><!-- /screen-recently-viewed -->
+
+<!-- ═══════════════════════════════════════
+     SCREEN: COMMUNITY POST DETAIL
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-comm-post-detail">
+
+  <div class="comm-post-header">
+    <button class="dip-back-btn" onclick="closeCommPostDetail()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <div class="comm-post-header-center" data-i18n="comm_post_detail_title">Post</div>
+    <div style="width:36px;"></div>
+  </div>
+
+  <div class="scroll-area" id="comm-post-detail-scroll">
+    <div class="comm-post-body" id="comm-post-detail-body"></div>
+
+    <div class="comm-replies-divider">
+      <span class="comm-replies-count-label" id="comm-replies-label">Replies</span>
+      <div class="comm-replies-divider-line"></div>
+    </div>
+
+    <div id="comm-replies-list"></div>
+
+    <div id="comm-replies-empty" style="display:none; padding:36px 20px; text-align:center;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="width:40px;height:40px;color:var(--ink-3);opacity:0.3;margin:0 auto 10px;display:block;"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      <div style="font-size:var(--t4);font-weight:600;color:var(--ink-2);margin-bottom:4px;" data-i18n="comm_no_replies_yet">No replies yet</div>
+      <div style="font-size:var(--t5);color:var(--ink-3);line-height:1.6;" data-i18n="comm_be_first_reply">Be the first to reply to this post.</div>
+    </div>
+    <div style="height:16px;" aria-hidden="true"></div>
+  </div>
+
+  <div class="comm-reply-bar">
+    <div class="comm-reply-attachments" id="comm-reply-attachments"></div>
+    <div class="comm-reply-input-row">
+      <div class="comm-reply-input-wrap">
+        <textarea class="comm-reply-textarea" id="comm-reply-textarea" rows="1"
+          placeholder="Write a reply…" data-i18n="comm_reply_ph"
+          oninput="commReplyAutoResize(this); commReplyCheckSend();"></textarea>
+      </div>
+      <button class="comm-reply-send" id="comm-reply-send-btn" onclick="submitCommReply()" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+    <div class="comm-reply-actions">
+      <button class="comm-reply-action-btn" onclick="commReplyPickProduct()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+      </button>
+      <button class="comm-reply-action-btn" onclick="commReplyPickGallery()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      </button>
+      <button class="comm-reply-action-btn" onclick="commReplyPickCamera()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="comm-reply-picker-overlay" id="comm-reply-picker-overlay" onclick="if(event.target===this)closeCommReplyPicker()">
+    <div class="comm-picker-sheet">
+      <div class="comm-modal-handle"></div>
+      <div class="comm-picker-header">
+        <span class="comm-picker-title" data-i18n="comm_pick_product">Pick a Product</span>
+        <button class="comm-modal-close" onclick="closeCommReplyPicker()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="comm-picker-search">
+        <div class="comm-picker-search-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="comm-reply-picker-search" data-i18n="comm_picker_search_ph"
+            placeholder="Search by name or brand…" oninput="filterCommReplyPicker(this.value)">
+        </div>
+      </div>
+      <div class="comm-picker-list" id="comm-reply-picker-list"></div>
+    </div>
+  </div>
+
+</div><!-- /screen-comm-post-detail -->
 
 </div><!-- /phone-frame -->
 </div><!-- /app-root -->
@@ -4856,6 +5456,9 @@ function goBackFromProduct() {
   else if (_pdpOrigin === 'activity')       switchScreen('activity');
   else if (_pdpOrigin === 'notifications')  switchScreen('notifications');
   else if (_pdpOrigin === 'product-detail') switchScreen('compare');
+  else if (_pdpOrigin === 'comm-post-detail') switchScreen('comm-post-detail');
+  else if (_pdpOrigin === 'products-all') switchScreen('products-all');
+  else if (_pdpOrigin === 'recently-viewed') switchScreen('recently-viewed');
   else                                      switchScreen('home');
 }
 
@@ -5357,38 +5960,59 @@ function renderLibraryMosaic() {
   if (countEl) countEl.textContent = total + (LANG === 'ar' ? ' عطر' : (total === 1 ? ' fragrance' : ' fragrances'));
 }
 
-/* ── Alerts preview (activity screen) ── */
+/* ── Alerts mosaic preview (activity screen) ── */
 function renderActivityAlerts() {
   _initAlertStates();
-  var container = document.getElementById('activity-alerts');
-  if (!container) return;
-  container.innerHTML = '';
-  
-  var active = PRODUCTS.filter(function(p) { return _alertStates[p.id]; }).slice(0, 4);
-  
-  if (active.length === 0) {
-    container.innerHTML = '<div style="font-size:var(--t5);color:var(--ink-3);padding:0 20px;">' + T('alerts_empty_title') + '</div>';
-    return;
+  var grid      = document.getElementById('alerts-mosaic-grid');
+  var countEl   = document.getElementById('alerts-mosaic-count');
+  var savingsEl = document.getElementById('alerts-mosaic-savings');
+  if (!grid) return;
+
+  var active = PRODUCTS.filter(function(p) { return _alertStates[p.id]; });
+  var totalSavings = active.reduce(function(s, p) { return s + (p.savings || 0); }, 0);
+
+  /* Summary footer */
+  if (countEl) {
+    var n = active.length;
+    countEl.textContent = n + ' ' + (LANG === 'ar'
+      ? (n === 1 ? 'عطر متابع' : 'عطور متابعة')
+      : (n === 1 ? 'fragrance tracked' : 'fragrances tracked'));
+  }
+  if (savingsEl) {
+    savingsEl.innerHTML = totalSavings > 0
+      ? (LANG === 'ar' ? 'وفر حتى ' : 'Save up to ') + '<strong>' + totalSavings + ' SAR</strong>'
+      : '';
   }
 
-  active.forEach(function(p) {
-    var chip = document.createElement('div');
-    chip.className = 'recent-chip';
-    chip.style.cursor = 'pointer';
-    chip.onclick = function() { openComparePage(p.id, 'activity'); };
-    chip.innerHTML =
-      '<div class="recent-thumb">' +
-        '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
-          '<img loading="lazy" src="' + p.img + '" alt="" onerror="this.style.display=\'none\'">' +
+  /* Grid: always 4 cells, fill unused slots with placeholder */
+  grid.innerHTML = '';
+  var trends = [true, false, true, true];  /* isDown per slot */
+  for (var i = 0; i < 4; i++) {
+    var cell = document.createElement('div');
+    cell.className = 'alerts-mosaic-cell';
+    if (i < active.length) {
+      var p = active[i];
+      var isDown = trends[i];
+      cell.innerHTML =
+        '<div class="alerts-mosaic-cell-bg" style="background:' + p.bg + ';">' +
+          '<img loading="lazy" src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">' +
         '</div>' +
-      '</div>' +
-      '<div class="recent-info">' +
-        '<div class="rn">' + P(p,'name') + '</div>' +
-        '<div class="rp">' + price(p.lowestPrice, p) + '</div>' +
-      '</div>' +
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px;color:var(--ink-3);flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>';
-    container.appendChild(chip);
-  });
+        '<div class="alerts-mosaic-price">' +
+          '<span class="alerts-mosaic-price-badge">' + price(p.lowestPrice, p) + '</span>' +
+          '<span class="alerts-mosaic-trend ' + (isDown ? 'alerts-mosaic-trend-down' : 'alerts-mosaic-trend-up') + '">' +
+            (isDown ? '↓' : '↑') + ' ' + Math.abs(p.discountPercent) + '%' +
+          '</span>' +
+        '</div>';
+    } else {
+      cell.classList.add('alerts-mosaic-empty-cell');
+      cell.innerHTML =
+        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.5">' +
+          '<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>' +
+          '<path d="M13.73 21a2 2 0 0 1-3.46 0"/>' +
+        '</svg>';
+    }
+    grid.appendChild(cell);
+  }
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -5547,28 +6171,41 @@ function flibRenderPersona() {
 }
 
 function renderRecentlyViewed() {
-  var container = document.getElementById('activity-recently');
-  if (!container) return;
-  container.innerHTML = '';
-  PRODUCTS.slice(0, 4).forEach(function(p) {
-    var chip = document.createElement('div');
-    chip.className = 'recent-chip';
-    chip.setAttribute('data-product-id', p.id);
-    chip.style.cursor = 'pointer';
-    chip.onclick = function() { openProduct(p.id, 'activity'); };
-    chip.innerHTML =
-      '<div class="recent-thumb">' +
-        '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
-          '<img loading="lazy" src="' + p.img + '" alt="" onerror="this.style.display=\'none\'">' +
-        '</div>' +
-      '</div>' +
-      '<div class="recent-info">' +
-        '<div class="rn">' + P(p,'name')                 + '</div>' +
-        '<div class="rp">' + price(p.lowestPrice, p)     + '</div>' +
-      '</div>' +
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px;color:var(--ink-3);flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>';
-    container.appendChild(chip);
+  var strip = document.getElementById('rv-thumb-strip');
+  if (!strip) return;
+  strip.innerHTML = '';
+  PRODUCTS.slice(0, 5).forEach(function(p) {
+    var item = document.createElement('div');
+    item.className = 'rv-thumb-item';
+    item.innerHTML =
+      '<div class="rv-thumb-item-bg" style="background:' + p.bg + ';">' +
+        '<img loading="lazy" src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">' +
+      '</div>';
+    strip.appendChild(item);
   });
+}
+
+function openRecentlyViewedPage() {
+  var grid = document.getElementById('rv-full-grid');
+  if (grid) {
+    grid.innerHTML = '';
+    PRODUCTS.forEach(function(p) {
+      var item = document.createElement('div');
+      item.className = 'rv-grid-item';
+      item.innerHTML =
+        '<div class="rv-grid-item-bg" style="background:' + p.bg + ';">' +
+          '<img loading="lazy" src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">' +
+        '</div>' +
+        '<div class="rv-grid-item-label">' + P(p, 'name') + '</div>';
+      item.addEventListener('click', (function(pid) {
+        return function() { openProduct(pid, 'recently-viewed'); };
+      })(p.id));
+      grid.appendChild(item);
+    });
+  }
+  switchScreen('recently-viewed');
+  var scroll = document.querySelector('#screen-recently-viewed .scroll-area');
+  if (scroll) scroll.scrollTop = 0;
 }
 
 function confirmLogout() {
@@ -5591,7 +6228,7 @@ function doLogout() {
 ══════════════════════════════════════════════════════════ */
 function onLangChange(lang) {
   /* Input placeholders */
-  document.querySelectorAll('input[data-i18n]').forEach(function(el) {
+  document.querySelectorAll('input[data-i18n], textarea[data-i18n]').forEach(function(el) {
     el.placeholder = T(el.getAttribute('data-i18n'));
   });
   /* Re-render all dynamic screens */
@@ -6585,6 +7222,8 @@ function renderCommunityFeed() {
   _commPosts.forEach(function(post) {
     var card = document.createElement('div');
     card.className = 'comm-card';
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', (function(pid){ return function(){ openCommPostDetail(pid); }; })(post.id));
 
     var isInquiry = post.type === 'inquiry';
     var badgeClass = isInquiry ? 'comm-badge-inquiry' : 'comm-badge-sale';
@@ -6780,9 +7419,548 @@ function submitCommPost() {
   renderCommunityFeed();
 }
 
+/* ══════════════════════════════════════════════════════════
+   COMMUNITY POST DETAIL
+   ══════════════════════════════════════════════════════════ */
+var _commCurrentPostId      = null;
+var _commReplies            = {};
+var _replyAttachedProductId = null;
+var _replyHasImage          = false;
+
+function openCommPostDetail(postId) {
+  _commCurrentPostId = postId;
+  var post = _commPosts.find(function(p){ return p.id === postId; });
+  if (!post) return;
+  var ta = document.getElementById('comm-reply-textarea');
+  if (ta) { ta.value = ''; ta.style.height = ''; }
+  _replyAttachedProductId = null;
+  _replyHasImage = false;
+  _renderReplyAttachments();
+  var sendBtn = document.getElementById('comm-reply-send-btn');
+  if (sendBtn) sendBtn.disabled = true;
+  _renderPostDetail(post);
+  _renderReplies(postId);
+  switchScreen('comm-post-detail');
+  var scroll = document.getElementById('comm-post-detail-scroll');
+  if (scroll) scroll.scrollTop = 0;
+}
+
+function closeCommPostDetail() { switchScreen('community'); }
+
+function _renderPostDetail(post) {
+  var body = document.getElementById('comm-post-detail-body');
+  if (!body) return;
+  var isInquiry  = post.type === 'inquiry';
+  var badgeClass = isInquiry ? 'comm-badge-inquiry' : 'comm-badge-sale';
+  var badgeLabel = isInquiry ? T('comm_badge_inquiry') : T('comm_badge_sale');
+  var msg        = LANG === 'ar' ? post.msgAr : post.msgEn;
+  var username   = 'User_' + post.id.slice(-3);
+  var initial    = username.charAt(0).toUpperCase();
+
+  var product = post.productId ? PRODUCTS.find(function(p){ return p.id === post.productId; }) : null;
+  var productHtml = '';
+  if (product) {
+    var pname  = LANG === 'ar' ? product.nameAr  : product.nameEn;
+    var pbrand = LANG === 'ar' ? product.brandAr : product.brandEn;
+    productHtml = [
+      '<div class="comm-post-product-pill" onclick="openComparePage(\'' + product.id + '\',\'comm-post-detail\')">',
+        '<div class="comm-post-product-thumb">',
+          '<div class="prod-img-wrap" style="background:' + product.bg + ';height:100%;">',
+            '<img src="' + product.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">',
+          '</div>',
+        '</div>',
+        '<div class="comm-post-product-info">',
+          '<div class="comm-post-product-name">' + pname + '</div>',
+          '<div class="comm-post-product-sub">' + pbrand + ' · ' + product.size + '</div>',
+        '</div>',
+        '<div class="comm-post-product-arrow">',
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>',
+        '</div>',
+      '</div>'
+    ].join('');
+  }
+
+  var priceHtml = (!isInquiry && post.price)
+    ? '<span class="comm-post-price-badge">◈ ' + post.price + ' SAR</span>'
+    : '';
+
+  body.innerHTML = [
+    '<div class="comm-post-user-row">',
+      '<div class="comm-post-user">',
+        '<div class="comm-post-avatar">' + initial + '</div>',
+        '<div>',
+          '<div class="comm-post-uname">' + username + '</div>',
+          '<div class="comm-post-time">' + post.time + '</div>',
+        '</div>',
+      '</div>',
+      '<div class="comm-post-meta-row">',
+        priceHtml,
+        '<span class="badge ' + badgeClass + '">' + badgeLabel + '</span>',
+      '</div>',
+    '</div>',
+    '<div class="comm-post-text">' + msg + '</div>',
+    productHtml
+  ].join('');
+}
+
+function _renderReplies(postId) {
+  var list  = document.getElementById('comm-replies-list');
+  var empty = document.getElementById('comm-replies-empty');
+  var label = document.getElementById('comm-replies-label');
+  if (!list) return;
+  var replies = _commReplies[postId] || [];
+  var count   = replies.length;
+  if (label) {
+    label.textContent = count > 0
+      ? count + ' ' + T('comm_replies')
+      : 'Replies';
+  }
+  list.innerHTML = '';
+  if (count === 0) { if (empty) empty.style.display = ''; return; }
+  if (empty) empty.style.display = 'none';
+
+  replies.forEach(function(reply) {
+    var item = document.createElement('div');
+    item.className = 'comm-reply-item';
+    var initial = reply.username.charAt(0).toUpperCase();
+
+    var replyProductHtml = '';
+    if (reply.productId) {
+      var rp = PRODUCTS.find(function(p){ return p.id === reply.productId; });
+      if (rp) {
+        var rpname  = LANG === 'ar' ? rp.nameAr  : rp.nameEn;
+        var rpbrand = LANG === 'ar' ? rp.brandAr : rp.brandEn;
+        replyProductHtml = [
+          '<div class="comm-reply-product" onclick="openComparePage(\'' + rp.id + '\',\'comm-post-detail\')">',
+            '<div class="comm-reply-product-thumb">',
+              '<div class="prod-img-wrap" style="background:' + rp.bg + ';height:100%;">',
+                '<img src="' + rp.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">',
+              '</div>',
+            '</div>',
+            '<div style="flex:1;min-width:0;">',
+              '<div class="comm-reply-product-name">' + rpname + '</div>',
+              '<div class="comm-reply-product-sub">' + rpbrand + ' · ' + rp.size + '</div>',
+            '</div>',
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>',
+          '</div>'
+        ].join('');
+      }
+    }
+
+    var imageHtml = '';
+    if (reply.hasImage) {
+      imageHtml = [
+        '<div style="margin-top:8px;display:inline-flex;align-items:center;gap:5px;',
+        'background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:5px 10px;">',
+          '<svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.8" style="width:13px;height:13px;flex-shrink:0;">',
+            '<rect x="3" y="3" width="18" height="18" rx="2"/>',
+            '<circle cx="8.5" cy="8.5" r="1.5"/>',
+            '<polyline points="21 15 16 10 5 21"/>',
+          '</svg>',
+          '<span style="font-size:var(--t6);color:var(--ink-3);">Photo attached</span>',
+        '</div>'
+      ].join('');
+    }
+
+    item.innerHTML = [
+      '<div class="comm-reply-avatar">' + initial + '</div>',
+      '<div class="comm-reply-body">',
+        '<div class="comm-reply-header">',
+          '<span class="comm-reply-name">' + reply.username + '</span>',
+          '<span class="comm-reply-time">'  + reply.time    + '</span>',
+        '</div>',
+        '<div class="comm-reply-text">' + reply.text + '</div>',
+        replyProductHtml,
+        imageHtml,
+      '</div>'
+    ].join('');
+
+    list.appendChild(item);
+  });
+}
+
+function commReplyAutoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 96) + 'px';
+}
+
+function commReplyCheckSend() {
+  var ta      = document.getElementById('comm-reply-textarea');
+  var sendBtn = document.getElementById('comm-reply-send-btn');
+  if (!sendBtn) return;
+  sendBtn.disabled = !(ta && ta.value.trim().length > 0) && !_replyAttachedProductId && !_replyHasImage;
+}
+
+function submitCommReply() {
+  if (!_commCurrentPostId) return;
+  var ta  = document.getElementById('comm-reply-textarea');
+  var msg = (ta ? ta.value : '').trim();
+  if (!msg && !_replyAttachedProductId && !_replyHasImage) return;
+  var reply = {
+    id: 'r' + Date.now(),
+    username: 'You',
+    time: LANG === 'ar' ? 'الآن' : 'now',
+    text: msg,
+    productId: _replyAttachedProductId || null,
+    hasImage: _replyHasImage
+  };
+  if (!_commReplies[_commCurrentPostId]) _commReplies[_commCurrentPostId] = [];
+  _commReplies[_commCurrentPostId].push(reply);
+  var post = _commPosts.find(function(p){ return p.id === _commCurrentPostId; });
+  if (post) post.replies = _commReplies[_commCurrentPostId].length;
+  if (ta) { ta.value = ''; ta.style.height = ''; }
+  _replyAttachedProductId = null;
+  _replyHasImage = false;
+  _renderReplyAttachments();
+  var sendBtn = document.getElementById('comm-reply-send-btn');
+  if (sendBtn) sendBtn.disabled = true;
+  _renderReplies(_commCurrentPostId);
+  setTimeout(function() {
+    var scroll = document.getElementById('comm-post-detail-scroll');
+    if (scroll) scroll.scrollTop = scroll.scrollHeight;
+  }, 50);
+}
+
+function _renderReplyAttachments() {
+  var strip = document.getElementById('comm-reply-attachments');
+  if (!strip) return;
+  strip.innerHTML = '';
+  var hasAny = false;
+  if (_replyAttachedProductId) {
+    var p = PRODUCTS.find(function(pr){ return pr.id === _replyAttachedProductId; });
+    if (p) {
+      hasAny = true;
+      var pname = LANG === 'ar' ? p.nameAr : p.nameEn;
+      var chip = document.createElement('div');
+      chip.className = 'comm-reply-attach-chip';
+      chip.innerHTML = [
+        '<div class="comm-reply-attach-chip-thumb">',
+          '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">',
+            '<img src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">',
+          '</div>',
+        '</div>',
+        '<span style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + pname + '</span>',
+        '<span class="comm-reply-attach-chip-remove" onclick="commReplyRemoveProduct()">✕</span>'
+      ].join('');
+      strip.appendChild(chip);
+    }
+  }
+  if (_replyHasImage) {
+    hasAny = true;
+    var imgChip = document.createElement('div');
+    imgChip.className = 'comm-reply-attach-chip';
+    imgChip.innerHTML = [
+      '<svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="2" style="width:14px;height:14px;">',
+        '<rect x="3" y="3" width="18" height="18" rx="2"/>',
+        '<circle cx="8.5" cy="8.5" r="1.5"/>',
+        '<polyline points="21 15 16 10 5 21"/>',
+      '</svg>',
+      '<span>Photo</span>',
+      '<span class="comm-reply-attach-chip-remove" onclick="commReplyRemoveImage()">✕</span>'
+    ].join('');
+    strip.appendChild(imgChip);
+  }
+  strip.classList.toggle('has-item', hasAny);
+  commReplyCheckSend();
+}
+
+function commReplyRemoveProduct() { _replyAttachedProductId = null; _renderReplyAttachments(); }
+function commReplyRemoveImage()   { _replyHasImage = false;         _renderReplyAttachments(); }
+
+function commReplyPickProduct() {
+  var s = document.getElementById('comm-reply-picker-search');
+  if (s) s.value = '';
+  renderCommReplyPickerList('');
+  document.getElementById('comm-reply-picker-overlay').classList.add('visible');
+}
+
+function filterCommReplyPicker(val) { renderCommReplyPickerList(val); }
+
+function renderCommReplyPickerList(query) {
+  var list = document.getElementById('comm-reply-picker-list');
+  if (!list) return;
+  list.innerHTML = '';
+  var q = (query || '').toLowerCase().trim();
+  PRODUCTS.filter(function(p) {
+    return !q || P(p,'name').toLowerCase().includes(q) || P(p,'brand').toLowerCase().includes(q);
+  }).forEach(function(p) {
+    var row = document.createElement('div');
+    row.className = 'comm-picker-row' + (_replyAttachedProductId === p.id ? ' selected' : '');
+    row.innerHTML = [
+      '<div class="comm-picker-thumb">',
+        '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">',
+          '<img loading="lazy" src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">',
+        '</div>',
+      '</div>',
+      '<div class="comm-picker-info">',
+        '<div class="comm-picker-name">' + P(p,'name') + '</div>',
+        '<div class="comm-picker-sub">' + P(p,'brand') + ' · ' + p.size + '</div>',
+      '</div>',
+      '<div class="comm-picker-check"></div>'
+    ].join('');
+    row.addEventListener('click', function() {
+      _replyAttachedProductId = p.id;
+      _renderReplyAttachments();
+      closeCommReplyPicker();
+    });
+    list.appendChild(row);
+  });
+}
+
+function closeCommReplyPicker() {
+  document.getElementById('comm-reply-picker-overlay').classList.remove('visible');
+}
+
+function commReplyPickGallery() {
+  var input = document.createElement('input');
+  input.type = 'file'; input.accept = 'image/*';
+  input.onchange = function() {
+    if (input.files && input.files[0]) { _replyHasImage = true; _renderReplyAttachments(); }
+  };
+  input.click();
+}
+
+function commReplyPickCamera() {
+  var input = document.createElement('input');
+  input.type = 'file'; input.accept = 'image/*'; input.capture = 'environment';
+  input.onchange = function() {
+    if (input.files && input.files[0]) { _replyHasImage = true; _renderReplyAttachments(); }
+  };
+  input.click();
+}
+
+function _seedDemoReplies() {
+  if (!_commPosts.length) return;
+  var fid = _commPosts[0].id;
+  if (_commReplies[fid]) return;
+  var isAr = LANG === 'ar';
+  _commReplies[fid] = [
+    {
+      id: 'dr1', username: 'Khalid_F',
+      time: isAr ? 'منذ 5 دقائق' : '5 min ago',
+      text: isAr
+        ? 'جربت هذا العطر وهو رائع جداً!'
+        : 'I tried this one and it is amazing! Great pick.',
+      productId: null, hasImage: false
+    },
+    {
+      id: 'dr2', username: 'Turki92',
+      time: isAr ? 'منذ ساعة' : '1 hour ago',
+      text: isAr
+        ? 'متاح عند متجر عبق بسعر ممتاز.'
+        : 'Available at Abaq store for a great price.',
+      productId: PRODUCTS[1] ? PRODUCTS[1].id : null, hasImage: false
+    },
+    {
+      id: 'dr3', username: 'Abdullah_H',
+      time: isAr ? 'منذ ساعتين' : '2 hours ago',
+      text: isAr
+        ? 'جرب هذا الخيار كذلك، مزاجه قريب جداً.'
+        : 'Check this one out too, very similar vibe.',
+      productId: PRODUCTS[2] ? PRODUCTS[2].id : null, hasImage: false
+    }
+  ];
+  _commPosts[0].replies = _commReplies[fid].length;
+}
+
+/* ======================================================
+   TOP DEALS PAGE — search + filter (scoped, no overlap
+   with main search screen state)
+   ====================================================== */
+/* ======================================================
+   SHARED PRODUCTS-ALL PAGE (Top Deals / Personalized /
+   Price Drops) — single screen, dynamic title & dataset
+   ====================================================== */
+var _tdFilters  = {};
+var _tdSection  = 'top-deals';   /* which section opened the page */
+
+/* Section config: title keys and dataset builder */
+var _tdSections = {
+  'top-deals': {
+    titleEn: 'Top Deals Now',
+    titleAr: 'أفضل العروض',
+    getProducts: function() { return PRODUCTS.slice(); }
+  },
+  'personalized': {
+    titleEn: 'Personalized for You',
+    titleAr: 'مخصص لك',
+    getProducts: function() { return PRODUCTS.slice(); }
+  },
+  'price-drops': {
+    titleEn: 'Recent Price Drops',
+    titleAr: 'أحدث انخفاضات الأسعار',
+    getProducts: function() {
+      /* Sort by discount percentage descending */
+      return PRODUCTS.slice().sort(function(a, b) {
+        return (b.discountPercent || 0) - (a.discountPercent || 0);
+      });
+    }
+  }
+};
+
+function openProductsAllPage(section) {
+  _tdSection = section || 'top-deals';
+
+  /* Update header title */
+  var cfg = _tdSections[_tdSection] || _tdSections['top-deals'];
+  var titleEl = document.getElementById('products-all-title');
+  if (titleEl) titleEl.textContent = LANG === 'ar' ? cfg.titleAr : cfg.titleEn;
+
+  /* Reset search + filters */
+  _tdFilters = {};
+  var inp = document.getElementById('td-search-input');
+  if (inp) inp.value = '';
+  document.querySelectorAll('#td-filter-overlay .filter-chip').forEach(function(c) {
+    c.classList.remove('active');
+  });
+  var btn = document.getElementById('td-filter-btn');
+  if (btn) {
+    btn.classList.remove('has-filters');
+    btn.querySelector('span').textContent = T('search_filter');
+  }
+
+  switchScreen('products-all');
+  tdRenderResults('');
+}
+
+function tdLiveSearch(query) {
+  tdRenderResults((query || '').toLowerCase().trim());
+}
+
+function tdRenderResults(q) {
+  var grid    = document.getElementById('td-results');
+  var empty   = document.getElementById('td-empty');
+  var countEl = document.getElementById('td-count');
+  if (!grid) return;
+
+  var cfg      = _tdSections[_tdSection] || _tdSections['top-deals'];
+  var products = cfg.getProducts();
+
+  var filtered = products.filter(function(p) {
+    var matchQ = !q ||
+      P(p,'name').toLowerCase().includes(q)  ||
+      P(p,'brand').toLowerCase().includes(q) ||
+      p.nameEn.toLowerCase().includes(q)     ||
+      p.brandEn.toLowerCase().includes(q)    ||
+      (p.notes.topEn.join(' ') + p.notes.heartEn.join(' ') + p.notes.baseEn.join(' ')).toLowerCase().includes(q);
+
+    var matchF = true;
+    if (_tdFilters.concentration && _tdFilters.concentration.length) {
+      matchF = matchF && _tdFilters.concentration.some(function(c) {
+        return p.concentrationEn.toLowerCase().includes(c.toLowerCase());
+      });
+    }
+    if (_tdFilters.size && _tdFilters.size.length) {
+      matchF = matchF && _tdFilters.size.indexOf(p.size) !== -1;
+    }
+    if (_tdFilters.brand && _tdFilters.brand.length) {
+      matchF = matchF && _tdFilters.brand.some(function(b) {
+        return p.brandEn.toLowerCase() === b.toLowerCase();
+      });
+    }
+    if (_tdFilters.gender && _tdFilters.gender.length) {
+      matchF = matchF && _tdFilters.gender.some(function(g) {
+        return p.genderEn.toLowerCase().includes(g.toLowerCase());
+      });
+    }
+    if (_tdFilters.accord && _tdFilters.accord.length) {
+      matchF = matchF && _tdFilters.accord.some(function(a) {
+        var allNotes = (p.notes.topEn.join(' ') + ' ' + p.notes.heartEn.join(' ') + ' ' + p.notes.baseEn.join(' ')).toLowerCase();
+        return allNotes.includes(a.toLowerCase()) || p.familyEn.toLowerCase().includes(a.toLowerCase());
+      });
+    }
+    return matchQ && matchF;
+  });
+
+  if (filtered.length === 0 && (q || Object.values(_tdFilters).some(function(a){ return a.length; }))) {
+    grid.innerHTML = '';
+    empty.style.display = 'flex';
+    if (countEl) countEl.textContent = '';
+    return;
+  }
+  empty.style.display = 'none';
+
+  if (countEl) {
+    countEl.textContent = filtered.length > 0
+      ? filtered.length + ' ' + T('search_results')
+      : '';
+  }
+
+  grid.innerHTML = '';
+  filtered.forEach(function(p) {
+    var discountBadge = p.discountPercent
+      ? '<span class="badge badge-fire">↓ ' + (LANG === 'ar' ? p.discountLabelAr : p.discountLabelEn) + '</span>'
+      : null;
+    var card = buildProductCard(p, discountBadge);
+    card.addEventListener('click', (function(pid){ return function(){ openComparePage(pid, 'products-all'); }; })(p.id));
+    grid.appendChild(card);
+  });
+}
+
+function tdOpenFilterSheet() {
+  var fc = document.getElementById('td-fc-brand');
+  if (fc && fc.children.length === 0) {
+    var seen = {};
+    PRODUCTS.forEach(function(p) {
+      if (!seen[p.brandEn]) {
+        seen[p.brandEn] = true;
+        var chip = document.createElement('span');
+        chip.className = 'filter-chip';
+        chip.setAttribute('data-group', 'brand');
+        chip.setAttribute('data-val-en', p.brandEn);
+        chip.textContent = P(p, 'brand');
+        chip.onclick = function() { tdToggleFilterChip(this); };
+        fc.appendChild(chip);
+      }
+    });
+  }
+  document.getElementById('td-filter-overlay').classList.add('visible');
+}
+
+function tdCloseFilterSheet() {
+  document.getElementById('td-filter-overlay').classList.remove('visible');
+}
+
+function tdToggleFilterChip(chip) {
+  chip.classList.toggle('active');
+  var group = chip.getAttribute('data-group');
+  var val   = chip.getAttribute('data-val-en') || chip.textContent.trim();
+  if (!_tdFilters[group]) _tdFilters[group] = [];
+  var idx = _tdFilters[group].indexOf(val);
+  if (idx === -1) { _tdFilters[group].push(val); }
+  else            { _tdFilters[group].splice(idx, 1); }
+  var total = Object.values(_tdFilters).reduce(function(s,a){ return s + a.length; }, 0);
+  var btn   = document.getElementById('td-filter-btn');
+  if (btn) {
+    btn.classList.toggle('has-filters', total > 0);
+    btn.querySelector('span').textContent = total > 0
+      ? T('search_filter') + ' (' + total + ')'
+      : T('search_filter');
+  }
+}
+
+function tdResetFilters() {
+  _tdFilters = {};
+  document.querySelectorAll('#td-filter-overlay .filter-chip').forEach(function(c) {
+    c.classList.remove('active');
+  });
+  var btn = document.getElementById('td-filter-btn');
+  if (btn) {
+    btn.classList.remove('has-filters');
+    btn.querySelector('span').textContent = T('search_filter');
+  }
+}
+
+function tdApplyFilters() {
+  tdCloseFilterSheet();
+  var inp = document.getElementById('td-search-input');
+  tdRenderResults(inp ? inp.value.toLowerCase().trim() : '');
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   setLang('en'); /* triggers renderProductCards + onLangChange → renderStores + renderAlerts */
   renderInterestsGrid();
+  setTimeout(_seedDemoReplies, 200);
 });
 </script>
 
