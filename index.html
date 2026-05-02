@@ -320,13 +320,14 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .pc-highest { font-size: var(--t5); color: var(--ink-2); }
 .pc-savings { font-size: var(--t5); color: var(--ink-2); }
 
-/* ── Grid variant: 2-column, cards fill column width ── */
+/* ── Grid variant: auto-fill columns, min 160px each ── */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 12px; padding: 0 20px;
 }
 .product-grid .product-card { width: 100%; flex-shrink: unset; }
+.product-grid .product-card .pc-img { height: auto; aspect-ratio: 1/1; }
 
 /* Image wrap helper */
 .prod-img-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
@@ -1704,8 +1705,9 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .store-follow-btn.following     { background:var(--green-light); color:var(--green); }
 .store-followers { font-size:var(--t6); color:var(--ink-3); white-space:nowrap; }
 .store-deals-label { font-size:var(--t6); font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--ink-3); padding:14px 20px 10px; flex-shrink:0; }
-.store-product-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; padding:0 20px; }
+.store-product-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; padding:0 20px; }
 .store-product-grid .product-card { width:100%; flex-shrink:unset; }
+.store-product-grid .product-card .pc-img { height:auto; aspect-ratio:1/1; }
 
 /* ══════════════════════════════════════════════════════════
    SEARCH SCREEN
@@ -5903,7 +5905,6 @@ function closeComparePage() {
   if (dest === 'brand-page')   { switchScreen('brand-page');   return; }
   if (dest === 'all-brands')   { switchScreen('all-brands');   return; }
   if (dest === 'fragrance-library') { switchScreen('fragrance-library'); return; }
-  if (dest === 'ai-chat') { switchScreen('ai-chat'); return; }
   switchScreen(dest === 'search' ? 'search' : dest === 'stores' ? 'stores' : dest === 'activity' ? 'activity' : 'home');
 }
 
@@ -6728,12 +6729,11 @@ function _aiAppendBubble(role, text, productIds) {
     var cardsRow = document.createElement('div');
     cardsRow.className = 'ai-cards-row';
     productIds.forEach(function(pid) {
-      var p = PRODUCTS.find(function(pr) { return pr.id === pid; }) ||
-              PRODUCTS.find(function(pr) { return (pr.variantGroupId || pr.id) === pid; });
+      var p = PRODUCTS.find(function(pr) { return pr.id === pid; });
       if (p) {
         var card = _compareAltCard(p);
         card.onclick = null;
-        card.addEventListener('click', (function(resolvedId){ return function(){ openComparePage(resolvedId, 'ai-chat'); }; })(p.id));
+        card.addEventListener('click', (function(pid){ return function(){ openComparePage(pid, 'home'); }; })(p.id));
         cardsRow.appendChild(card);
       }
     });
