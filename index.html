@@ -3306,7 +3306,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="store-page-logo" id="store-page-logo"></div>
     <div class="store-page-meta">
       <div class="store-page-name" id="store-page-name"></div>
-      <div class="store-page-url"  id="store-page-url"></div>
+      <div class="store-page-url"  id="store-page-url" style="display:none;"></div>
       <div class="store-page-verified">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:9px;height:9px;"><polyline points="20 6 9 17 4 12"/></svg>
         <span data-i18n="stores_verified_badge">Verified</span>
@@ -3352,13 +3352,8 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <!-- Unified card: hero + sizes + store cards -->
     <div class="cmp-unified-card" style="margin-top:12px;">
 
-      <!-- Section 1: product image, name, availability -->
+      <!-- Section 1: product name with size -->
       <div class="cmp-product-hero" id="compare-product-hero">
-        <div class="cmp-product-hero-thumb">
-          <div class="prod-img-wrap" id="compare-hero-imgwrap" style="height:100%;">
-            <img id="compare-hero-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;">
-          </div>
-        </div>
         <div class="cmp-product-hero-info">
           <div class="cmp-product-hero-name" id="compare-hero-name"></div>
           <div class="cmp-product-hero-sub"  id="compare-hero-sub"></div>
@@ -3429,18 +3424,17 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         </div>
       </button>
-      <!-- Best-price store row — sits directly below the CTA button -->
-      <div id="product-store-section" onclick="if(window._pdpStoreKey)openStorePage(window._pdpStoreKey)" style="display:flex;align-items:center;gap:8px;margin-top:10px;padding:0 2px;cursor:pointer;">
+    </div>
+
+    <div class="prod-info">
+      <div class="prod-name" id="product-name">—</div>
+      <!-- Best-price store row — below product name -->
+      <div id="product-store-section" onclick="if(window._pdpStoreKey)openStorePage(window._pdpStoreKey)" style="display:flex;align-items:center;gap:8px;margin-top:6px;padding:0 2px;cursor:pointer;">
         <div id="product-store-icon" style="width:22px;height:22px;border-radius:50%;background:var(--b-blue);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--ink-2);flex-shrink:0;">GS</div>
         <span style="font-size:var(--t5);color:var(--ink-3);" data-i18n="pdp_best_price_at">Best price at</span>
         <span id="product-store-name-link" style="font-size:var(--t5);font-weight:600;color:#2563EB;">—</span>
         <div id="product-store-pill" style="display:none;"></div><!-- kept for JS compat -->
       </div>
-    </div>
-
-    <div class="prod-info">
-      <div class="prod-name" id="product-name">—</div>
-      <div class="prod-brand" id="product-brand">—</div>
 
       <div class="prod-desc-container" style="margin-bottom:16px;font-size:14px;color:var(--ink-2);line-height:1.65;">
         <p id="product-desc" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin:0;padding:0;"></p>
@@ -3585,13 +3579,6 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         </div>
       </div>
 
-      <!-- Similar Feel -->
-      <div class="pdp-rec-section" id="pdp-similar-feel-section">
-        <div class="pdp-rec-title" data-i18n="pdp_similar_feel">Similar Feel</div>
-        <div class="pdp-rec-subtitle" data-i18n="pdp_similar_feel_sub">Same vibe, different brand or style</div>
-        <div class="h-scroll pdp-rec-scroll" id="pdp-similar-feel-list" style="padding:0 0 4px;"></div>
-      </div>
-
       <!-- Reviews -->
       <div style="font-size:var(--t5);letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-3);font-weight:500;margin-bottom:10px;" data-i18n="pdp_reviews">Reviews</div>
       <div style="margin-top:12px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px;">
@@ -3612,6 +3599,13 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       </div>
       <div class="reviews-show-more" id="reviews-show-more-btn" style="cursor:pointer;" onclick="openAllReviews()" data-i18n="pdp_show_all_reviews">Show all reviews →</div>
       <div style="margin-top:20px;"></div>
+
+      <!-- Similar Feel -->
+      <div class="pdp-rec-section" id="pdp-similar-feel-section">
+        <div class="pdp-rec-title" data-i18n="pdp_similar_feel">Similar Feel</div>
+        <div class="pdp-rec-subtitle" data-i18n="pdp_similar_feel_sub">Same vibe, different brand or style</div>
+        <div class="h-scroll pdp-rec-scroll" id="pdp-similar-feel-list" style="padding:0 0 4px;"></div>
+      </div>
 
     </div><!-- /padding -->
   </div><!-- /scroll-area -->
@@ -5033,21 +5027,6 @@ function renderSearchEntryState(){
     });
     el.appendChild(tsec);
   }
-  var asec=document.createElement('div');
-  asec.className='search-entry-section';
-  asec.style.paddingBottom='24px';
-  asec.innerHTML='<div class="search-entry-label">'+T('search_by_accord')+'</div>';
-  var achips=document.createElement('div');
-  achips.className='search-accord-chips';
-  _accordTags.forEach(function(tag){
-    var chip=document.createElement('div');
-    chip.className='search-accord-chip';
-    chip.textContent=LANG==='ar'?tag.ar:tag.en;
-    chip.addEventListener('click',function(){searchCommit(tag.en);});
-    achips.appendChild(chip);
-  });
-  asec.appendChild(achips);
-  el.appendChild(asec);
 }
 
 var _searchDebounceTimer=null;
@@ -5097,20 +5076,12 @@ function renderSearchDropdown(q){
     item.addEventListener('click',(function(pid){return function(){searchAddHistory(q);searchHideDropdown();openComparePage(pid,'search');};})(p.id));
     dropdown.appendChild(item);
   });
-  var am=_accordTags.find(function(t){return t.en.toLowerCase().includes(ql)||t.ar.includes(q);});
-  if(am){
-    var arow=document.createElement('div');
-    arow.className='search-dropdown-accord';
-    arow.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'+(LANG==='ar'?'بحث بتوافق: ':'Search by accord: ')+'<strong>'+(LANG==='ar'?am.ar:am.en)+'</strong>';
-    arow.addEventListener('click',function(){searchCommit(am.en);});
-    dropdown.appendChild(arow);
-  }
   var sa=document.createElement('div');
   sa.className='search-dropdown-accord';
   sa.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>'+(LANG==='ar'?'عرض جميع النتائج لـ ':'See all results for ')+'<strong>&ldquo;'+q+'&rdquo;</strong>';
   sa.addEventListener('click',function(){searchCommit(q);});
   dropdown.appendChild(sa);
-  dropdown.classList.toggle('visible',matches.length>0||!!am||true);
+  dropdown.classList.toggle('visible',matches.length>0||true);
   document.getElementById('search-entry-state').style.display='none';
 }
 
@@ -5375,7 +5346,7 @@ function _pdpAdapt(p) {
 
   return {
     name:     P(p,'name'),
-    brand:    P(p,'brand') + ' · ' + p.size + ' · ' + P(p,'concentration'),
+    brand:    P(p,'brand'),
     house:    P(p,'house'),
     family:   P(p,'family'),
     gender:   P(p,'gender'),
@@ -5417,8 +5388,7 @@ function openProduct(productId, origin) {
   document.getElementById('product-hero-initials').style.display = 'none';
 
   /* Name / brand */
-  document.getElementById('product-name').textContent  = p.name;
-  document.getElementById('product-brand').textContent = p.brand;
+  document.getElementById('product-name').textContent  = p.name + ' (' + src.size + ')';
 
   /* Description */
   var descEl = document.getElementById('product-desc');
@@ -5819,13 +5789,9 @@ function openComparePage(productId, origin) {
   });
 
   /* Populate the product hero strip */
-  var heroImgWrap = document.getElementById('compare-hero-imgwrap');
-  var heroImg     = document.getElementById('compare-hero-img');
   var heroName    = document.getElementById('compare-hero-name');
   var heroSub     = document.getElementById('compare-hero-sub');
-  if (heroImgWrap) heroImgWrap.style.background = p.bg;
-  if (heroImg)     { heroImg.src = p.img; }
-  if (heroName)    heroName.textContent = P(p, 'name');
+  if (heroName)    heroName.textContent = P(p, 'name') + ' (' + p.size + ')';
   if (heroSub)     heroSub.textContent  = T('compare_available_in') + ' '
     + getStoresCount(p.id) + ' ' + T('compare_stores');
 
@@ -6011,7 +5977,11 @@ function compareFilterSize(btn, size) {
   document.querySelectorAll('#compare-filters .dip-chip').forEach(function(c) { c.classList.remove('dip-active'); });
   btn.classList.add('dip-active');
   var p = PRODUCTS.find(function(pr) { return pr.id === _compareProductId; });
-  if (p) _compareRenderStores(p, size);
+  if (p) {
+    var heroName = document.getElementById('compare-hero-name');
+    if (heroName) heroName.textContent = P(p, 'name') + ' (' + size + ')';
+    _compareRenderStores(p, size);
+  }
 }
 
 function closeComparePage() {
@@ -6139,7 +6109,7 @@ function renderStores(query) {
       '<div class="store-dir-logo" style="background:' + store.bg + ';">' + store.initials + '</div>' +
       '<div class="store-dir-info">' +
         '<div class="store-dir-name">' + S(store,'name') + '</div>' +
-        '<div class="store-dir-sub">'  + (function(){var ids={};LISTINGS.filter(function(l){return l.storeId===store.id;}).forEach(function(l){ids[l.productId]=1;});return Object.keys(ids).length;})() + ' ' + T('stores_products') +
+        '<div class="store-dir-sub">'  + (function(){var gids={};LISTINGS.filter(function(l){return l.storeId===store.id;}).forEach(function(l){var pr=PRODUCTS.find(function(p){return p.id===l.productId;});var gid=pr?(pr.variantGroupId||pr.id):l.productId;gids[gid]=1;});return Object.keys(gids).length;})() + ' ' + T('stores_products') +
           (store.verified ? ' · <span class="store-dir-badge sdb-verified" style="margin-top:0;vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:9px;height:9px;"><polyline points="20 6 9 17 4 12"/></svg>' + T('stores_verified_badge') + '</span>' : '') +
         '</div>' +
       '</div>' +
