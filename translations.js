@@ -31,6 +31,7 @@ home_ai_name: { en: 'Ask Sina AI', ar: 'اسأل سينا' },
 home_ai_sub: { en: 'Ready to help', ar: 'جاهز للمساعدة' },
 home_search_ph: { en: 'Name, brand, or scent note', ar: 'الاسم أو البراند أو النوتة العطرية' },
 home_top_deals: { en: 'Best priced', ar: 'الأفضل سعرا' },
+filter_title: { en: 'Filter Results', ar: 'تصفية البيانات' },
 home_see_all: { en: 'View all', ar: 'الكل' },
 home_brands: { en: 'Browse by Brand', ar: 'الدور العطرية' },
 home_all_brands: { en: 'All brands', ar: 'الكل' },
@@ -67,7 +68,10 @@ search_tap_compare: { en: 'tap to compare', ar: 'اضغط للمقارنة' },
 search_no_results: { en: 'No results found', ar: 'لا توجد نتائج' },
 search_no_results_sub: { en: 'Try a different name, brand, or note', ar: 'جرّب اسماً أو علامة أو رائحة مختلفة' },
 search_similar: { en: 'Similar products you may like', ar: 'منتجات مشابهة قد تعجبك' },
-filter_title: { en: 'Advanced Search', ar: 'بحث متقدم' },
+search_recent:    { en: 'Recent Searches',   ar: 'عمليات البحث الأخيرة' },
+search_trending:  { en: 'Popular Now',       ar: 'الأكثر بحثاً' },
+search_by_accord: { en: 'Browse by Accord',  ar: 'تصفح حسب التوافق' },
+
 filter_reset: { en: 'Reset', ar: 'إعادة' },
 filter_apply: { en: 'Apply', ar: 'تطبيق' },
 filter_gender: { en: 'Gender', ar: 'الجنس' },
@@ -78,9 +82,17 @@ filter_brand: { en: 'Brand', ar: 'الدور العطرية' },
 filter_men: { en: 'Men', ar: 'رجال' },
 filter_women: { en: 'Women', ar: 'نساء' },
 filter_unisex: { en: 'Unisex', ar: 'للجنسين' },
-search_recent:    { en: 'Recent Searches',   ar: 'عمليات البحث الأخيرة' },
-search_trending:  { en: 'Popular Now',       ar: 'الأكثر بحثاً' },
-search_by_accord: { en: 'Browse by Accord',  ar: 'تصفح حسب التوافق' },
+
+adv_search_btn:   { en: 'Advanced Search', ar: 'البحث المتقدم' },
+adv_search_title: { en: 'Advanced Search', ar: 'البحث المتقدم' },
+adv_search_apply: { en: 'Search',          ar: 'بحث'           },
+filter_family:   { en: 'Family',   ar: 'العائلة العطرية' },
+filter_season:   { en: 'Season',   ar: 'الموسم'          },
+filter_time:     { en: 'Time',     ar: 'الوقت'            },
+filter_perfumer: { en: 'Perfumer', ar: 'العطار'           },
+filter_country:  { en: 'Country',  ar: 'البلد'            },
+filter_year:     { en: 'Year',     ar: 'السنة'            },
+filter_rating:   { en: 'Rating',   ar: 'التقييم'          },
 
 /* ══════════════════════════════════════════════════════════
    Stores page
@@ -402,6 +414,7 @@ interests_sub: { en: "Select the accords you enjoy most. We'll use these to pers
 brands_search_ph: { en: 'Search brands…', ar: 'ابحث عن ماركة…' },
 brands_no_results: { en: 'No brands found', ar: 'لا توجد ماركات' },
 brand_founded_label: { en: 'Est.', ar: 'تأسست' },
+brand_page_search_ph:{ en: 'Search products…', ar: 'ابحث عن منتج…' },
 
 /* ══════════════════════════════════════════════════════════
     Community PAGE
