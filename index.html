@@ -2618,7 +2618,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
   <!-- Bottom nav — ONLY inside main screens -->
   <div class="bottom-nav">
-    <div class="bn-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-i18n="nav_home">Home</span></div>
+    <div class="bn-item active" onclick="homeRefresh()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-i18n="nav_home">Home</span></div>
     <div class="bn-item" onclick="switchScreen('stores')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7"/><path d="M9 22V12h6v10"/><path d="M3 9v13h18V9"/><path d="M3 9h18"/></svg><span data-i18n="nav_stores">Stores</span></div>
     <div class="bn-item" onclick="if(guestGuard())return;switchScreen('community')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span data-i18n="nav_community">Community</span></div>
     <div class="bn-item" onclick="if(guestGuard())return;switchScreen('activity')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span data-i18n="nav_activity">Activity</span></div>
@@ -4662,6 +4662,122 @@ function uniqueProducts(list) {
   });
   return result;
 }
+
+
+/* ══════════════════════════════════════════════════════════
+   HOME REFRESH — shuffle + subtle sound
+══════════════════════════════════════════════════════════ */
+
+function _shuffleProducts() {
+  for (var i = PRODUCTS.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = PRODUCTS[i]; PRODUCTS[i] = PRODUCTS[j]; PRODUCTS[j] = tmp;
+  }
+}
+
+function _playRefreshSound() {
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(520, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(680, ctx.currentTime + 0.12);
+    gain.gain.setValueAtTime(0.0, ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 0.03);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.22);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.22);
+    setTimeout(function() { ctx.close(); }, 400);
+  } catch(e) {}
+}
+
+function homeRefresh() {
+  _shuffleProducts();
+  renderProductCards();
+  _playRefreshSound();
+  /* Scroll home area back to top */
+  var sa = document.querySelector('#screen-home .scroll-area');
+  if (sa) sa.scrollTop = 0;
+}
+
+/* ── Pull-to-refresh on home screen ── */
+(function() {
+  var _ptrActive   = false;
+  var _ptrStartY   = 0;
+  var _ptrDist     = 0;
+  var _ptrThresh   = 72;   /* px pull needed to trigger */
+  var _ptrTriggered = false;
+
+  /* Indicator element */
+  var _ind = document.createElement('div');
+  _ind.id  = 'home-ptr-indicator';
+  _ind.style.cssText = [
+    'position:absolute;top:0;left:0;right:0;',
+    'display:flex;align-items:center;justify-content:center;',
+    'height:0;overflow:hidden;',
+    'transition:height 0.18s ease;',
+    'z-index:20;pointer-events:none;'
+  ].join('');
+  _ind.innerHTML =
+    '<svg id="home-ptr-icon" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="2" ' +
+    'style="width:20px;height:20px;transition:transform 0.2s,opacity 0.2s;opacity:0;">' +
+      '<polyline points="1 4 1 10 7 10"/>' +
+      '<path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>' +
+    '</svg>';
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var homeScreen = document.getElementById('screen-home');
+    if (homeScreen) homeScreen.style.position = 'relative';
+
+    var sa = document.querySelector('#screen-home .scroll-area');
+    if (!sa) return;
+
+    /* Insert indicator inside the home screen, above scroll area */
+    if (homeScreen) homeScreen.insertBefore(_ind, sa);
+
+    sa.addEventListener('touchstart', function(e) {
+      if (sa.scrollTop === 0) {
+        _ptrActive    = true;
+        _ptrStartY    = e.touches[0].clientY;
+        _ptrDist      = 0;
+        _ptrTriggered = false;
+      }
+    }, { passive: true });
+
+    sa.addEventListener('touchmove', function(e) {
+      if (!_ptrActive) return;
+      _ptrDist = Math.max(0, e.touches[0].clientY - _ptrStartY);
+      var progress = Math.min(_ptrDist / _ptrThresh, 1);
+      var h = Math.min(_ptrDist * 0.45, 48);
+      _ind.style.height = h + 'px';
+      var icon = document.getElementById('home-ptr-icon');
+      if (icon) {
+        icon.style.opacity  = progress;
+        icon.style.transform = 'rotate(' + (progress * 270) + 'deg)';
+      }
+      if (_ptrDist >= _ptrThresh && !_ptrTriggered) {
+        _ptrTriggered = true;
+        /* Haptic if available */
+        if (navigator.vibrate) navigator.vibrate(18);
+      }
+    }, { passive: true });
+
+    sa.addEventListener('touchend', function() {
+      if (!_ptrActive) return;
+      _ptrActive = false;
+      _ind.style.height = '0';
+      var icon = document.getElementById('home-ptr-icon');
+      if (icon) { icon.style.opacity = '0'; icon.style.transform = 'rotate(0deg)'; }
+      if (_ptrTriggered) { homeRefresh(); }
+      _ptrDist      = 0;
+      _ptrTriggered = false;
+    }, { passive: true });
+  });
+})();
+
 
 function renderProductCards() {
   /* Brands — one circle per brand from BRANDS catalogue, clickable */
@@ -8261,6 +8377,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var systemLang = (navigator.language || navigator.userLanguage || 'en').startsWith('ar') ? 'ar' : 'en';
   var initLang = (savedLang === 'ar' || savedLang === 'en') ? savedLang : systemLang;
 
+  _shuffleProducts(); /* randomise order on every load */
   setLang(initLang); /* triggers renderProductCards + onLangChange → renderStores + renderAlerts */
   renderInterestsGrid();
   setTimeout(_seedDemoReplies, 200);
