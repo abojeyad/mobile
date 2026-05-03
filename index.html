@@ -7446,7 +7446,7 @@ var _commPosts = [
     msgEn: 'Looking for a fragrance similar to Baccarat Rouge 540 but at a more affordable price point. Any recommendations from the community?',
     msgAr: 'أبحث عن عطر مشابه لباكارات روج 540 ولكن بسعر أقل. هل لديكم توصيات؟',
     time: '5m', replies: 4,
-    productId: null
+    productId: null, image: null
   },
   {
     id: 'c2', type: 'sale',
@@ -7454,14 +7454,14 @@ var _commPosts = [
     msgAr: 'سوفاج إكسير 60 مل - استخدام 15% تقريباً. بحالة ممتازة، أبيعه لأنه لا يناسب جلدي.',
     time: '23m', replies: 2,
     price: 480,
-    productId: 'dior-sauvage-elixir'
+    productId: null, image: 'jpeg1.jpg'
   },
   {
     id: 'c3', type: 'inquiry',
     msgEn: 'Does anyone know if Black Orchid performs better in cold or warm weather? Planning to buy it as a winter scent.',
     msgAr: 'هل بلاك أوركيد أداؤه أفضل في الطقس البارد أم الحار؟ أفكر في شرائه كعطر شتوي.',
     time: '1h', replies: 7,
-    productId: null
+    productId: null, image: null
   },
   {
     id: 'c4', type: 'sale',
@@ -7469,21 +7469,21 @@ var _commPosts = [
     msgAr: 'ليبر إنتنس 90 مل – استخدام 30%. مع العلبة الأصلية.',
     time: '3h', replies: 1,
     price: 320,
-    productId: 'ysl-libre-intense'
+    productId: null, image: 'jpeg2.jpg'
   },
   {
     id: 'c5', type: 'inquiry',
     msgEn: 'What is the longevity like on Bleu de Chanel EDP? I\'ve heard mixed reviews about sillage.',
     msgAr: 'كم تدوم رائحة بلو دو شانيل أو دو بارفيوم؟ سمعت آراء متباينة عن الأثر.',
     time: '6h', replies: 12,
-    productId: 'chanel-bleu-edp'
+    productId: 'chanel-bleu-edp', image: null
   },
   {
     id: 'c6', type: 'inquiry',
     msgEn: 'What is the best fresh summer fragrance for 2026? Looking for something that lasts all day in the heat.',
     msgAr: 'ما هو أفضل عطر صيفي منعش لعام 2026؟ أبحث عن شيء يدوم طوال اليوم في الحر.',
     time: '8h', replies: 15,
-    productId: null
+    productId: null, image: null
   },
   {
     id: 'c7', type: 'sale',
@@ -7491,7 +7491,7 @@ var _commPosts = [
     msgAr: 'كريد أفينتوس 100 مل - جديد تماماً، مازال مغلفاً. هدية غير مرغوب فيها. الأصالة مضمونة.',
     time: '12h', replies: 0,
     price: 1100,
-    productId: 'creed-aventus'
+    productId: null, image: 'jpeg3.jpg'
   }
 ];
 
@@ -7525,7 +7525,7 @@ function renderCommunityFeed() {
       priceTag = '<span class="comm-price-tag">◈ ' + post.price + ' SAR</span>';
     }
 
-    var product = post.productId ? PRODUCTS.find(function(p){ return p.id === post.productId; }) : null;
+    var product = (isInquiry && post.productId) ? PRODUCTS.find(function(p){ return p.id === post.productId || p.variantGroupId === post.productId; }) : null;
     var thumbHtml = '';
     if (product) {
       thumbHtml =
@@ -7533,6 +7533,11 @@ function renderCommunityFeed() {
           '<div class="prod-img-wrap" style="background:' + product.bg + ';height:100%;">' +
             '<img loading="lazy" src="' + product.img + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
           '</div>' +
+        '</div>';
+    } else if (!isInquiry && post.image) {
+      thumbHtml =
+        '<div class="comm-card-thumb">' +
+          '<img loading="lazy" src="' + post.image + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
         '</div>';
     }
 
@@ -7747,7 +7752,7 @@ function _renderPostDetail(post) {
   var username   = 'User_' + post.id.slice(-3);
   var initial    = username.charAt(0).toUpperCase();
 
-  var product = post.productId ? PRODUCTS.find(function(p){ return p.id === post.productId; }) : null;
+  var product = (isInquiry && post.productId) ? PRODUCTS.find(function(p){ return p.id === post.productId || p.variantGroupId === post.productId; }) : null;
   var productHtml = '';
   if (product) {
     var pname  = LANG === 'ar' ? product.nameAr  : product.nameEn;
@@ -7768,6 +7773,11 @@ function _renderPostDetail(post) {
         '</div>',
       '</div>'
     ].join('');
+  } else if (!isInquiry && post.image) {
+    productHtml =
+      '<div style="margin-top:12px;border-radius:var(--radius-md);overflow:hidden;max-height:220px;">' +
+        '<img src="' + post.image + '" alt="" style="width:100%;object-fit:cover;display:block;" onerror="this.parentElement.style.display=\'none\'">' +
+      '</div>';
   }
 
   var priceHtml = (!isInquiry && post.price)
@@ -7816,7 +7826,7 @@ function _renderReplies(postId) {
 
     var replyProductHtml = '';
     if (reply.productId) {
-      var rp = PRODUCTS.find(function(p){ return p.id === reply.productId; });
+      var rp = PRODUCTS.find(function(p){ return p.id === reply.productId || p.variantGroupId === reply.productId; });
       if (rp) {
         var rpname  = LANG === 'ar' ? rp.nameAr  : rp.nameEn;
         var rpbrand = LANG === 'ar' ? rp.brandAr : rp.brandEn;
