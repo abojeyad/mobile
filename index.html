@@ -4589,38 +4589,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 /* ══════════════════════════════════════════════════════════
    BRAND DESCRIPTIONS & METADATA
 ══════════════════════════════════════════════════════════ */
-var BRAND_DATA = {
-  'chanel': {
-    countryEn: 'France', countryAr: 'فرنسا',
-    founded: '1910',
-    descEn: 'Chanel is a legendary French luxury house founded in 1910 by Coco Chanel. Renowned worldwide, it creates timeless, iconic fragrances that define the history of modern perfumery.',
-    descAr: 'شانيل دار أزياء وعطور فرنسية عريقة تأسست عام 1910 على يد كوكو شانيل. تشتهر عالمياً بتقديم عطور أيقونية خالدة تركت بصمة فريدة في تاريخ العطور.'
-  },
-  'dior': {
-    countryEn: 'France', countryAr: 'فرنسا',
-    founded: '1946',
-    descEn: 'Christian Dior is a Parisian luxury house founded in 1946. It is celebrated for its elegant, bold, and masterfully composed fragrances that embody French sophistication.',
-    descAr: 'ديور دار فرنسية فاخرة تأسست في باريس عام 1946. وتشتهر بعطورها الأنيقة والجريئة التي تجمع بين الابتكار والتركيبات المتقنة.'
-  },
-  'tom-ford': {
-    countryEn: 'USA', countryAr: 'أمريكا',
-    founded: '2005',
-    descEn: 'Tom Ford Beauty is an American luxury brand founded in 2005. It is highly regarded for its sensual, bold aesthetic and its exclusive Private Blend collection of niche perfumes.',
-    descAr: 'توم فورد علامة أمريكية فاخرة تأسست عام 2005. وتشتهر بطابعها الجريء والفاخر، وبشكل خاص مجموعة "برايفت بلند" التي أثرت عالم عطور النيش.'
-  },
-  'laurent': {
-    countryEn: 'France', countryAr: 'فرنسا',
-    founded: '1961',
-    descEn: 'Yves Saint Laurent is a French luxury house founded in 1961. It translates a daring and provocative spirit into iconic fragrances that celebrate freedom and modern elegance.',
-    descAr: 'إيف سان لوران دار فرنسية فاخرة تأسست عام 1961. تعكس عطورها الروح الجريئة والمبتكرة للدار، وتجمع بين الأناقة والجاذبية العصرية.'
-  },
-  'kurkdjian': {
-    countryEn: 'France', countryAr: 'فرنسا',
-    founded: '2009',
-    descEn: 'Maison Francis Kurkdjian is a French niche house founded in 2009. It is celebrated for artistic perfumes that perfectly balance high-quality raw materials with poetic precision.',
-    descAr: 'فرانسيس كوردجيان دار عطور نيشية فرنسية تأسست عام 2009. تشتهر بتقديم عطور فنية فاخرة تعتمد على أجود المواد الخام بتوازن ودقة متناهية.'
-  }
-};
+
 
 /* ══════════════════════════════════════════════════════════
    STORES DATA
@@ -5568,7 +5537,7 @@ function openProduct(productId, origin) {
   document.getElementById('product-review1').textContent = p.r1;
   document.getElementById('product-review2').textContent = p.r2;
   var showMore = document.getElementById('reviews-show-more-btn');
-  if (showMore) showMore.textContent = 'Show all ' + p.reviews + ' reviews →';
+  if (showMore) showMore.textContent = T('pdp_show_all_reviews_prefix') + p.reviews + T('pdp_show_all_reviews_suffix');
 
   /* Compare banner — store count + product image for this product */
   var storeCount = getStoresCount(src.id) || 1;
@@ -6109,7 +6078,7 @@ function renderStores(query) {
       '<div class="store-dir-logo" style="background:' + store.bg + ';">' + store.initials + '</div>' +
       '<div class="store-dir-info">' +
         '<div class="store-dir-name">' + S(store,'name') + '</div>' +
-        '<div class="store-dir-sub">'  + (function(){var gids={};LISTINGS.filter(function(l){return l.storeId===store.id;}).forEach(function(l){var pr=PRODUCTS.find(function(p){return p.id===l.productId;});var gid=pr?(pr.variantGroupId||pr.id):l.productId;gids[gid]=1;});return Object.keys(gids).length;})() + ' ' + T('stores_products') +
+        '<div class="store-dir-sub">'  + (function(){var ids=LISTINGS.filter(function(l){return l.storeId===store.id;}).map(function(l){return l.productId;});var prods=PRODUCTS.filter(function(p){return ids.indexOf(p.id)!==-1;});var c=uniqueProducts(prods).length;return c + ' ' + (c!==1?T('stores_products_plural'):T('stores_products_single'));})() +
           (store.verified ? ' · <span class="store-dir-badge sdb-verified" style="margin-top:0;vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:9px;height:9px;"><polyline points="20 6 9 17 4 12"/></svg>' + T('stores_verified_badge') + '</span>' : '') +
         '</div>' +
       '</div>' +
@@ -6257,7 +6226,7 @@ function renderLibraryMosaic() {
     grid.appendChild(cell);
   });
   var total = uniqueProducts().length;
-  if (countEl) countEl.textContent = total + (LANG === 'ar' ? ' عطر' : (total === 1 ? ' fragrance' : ' fragrances'));
+  if (countEl) countEl.textContent = total + ' ' + (total === 1 ? T('activity_library_count_single') : T('activity_library_count_plural'));
 }
 
 /* ── Alerts mosaic preview (activity screen) ── */
@@ -6274,13 +6243,11 @@ function renderActivityAlerts() {
   /* Summary footer */
   if (countEl) {
     var n = active.length;
-    countEl.textContent = n + ' ' + (LANG === 'ar'
-      ? (n === 1 ? 'عطر متابع' : 'عطور متابعة')
-      : (n === 1 ? 'fragrance tracked' : 'fragrances tracked'));
+    countEl.textContent = n + ' ' + (n === 1 ? T('activity_alerts_tracked_single') : T('activity_alerts_tracked_plural'));
   }
   if (savingsEl) {
     savingsEl.innerHTML = totalSavings > 0
-      ? (LANG === 'ar' ? 'وفر حتى ' : 'Save up to ') + '<strong>' + totalSavings + ' SAR</strong>'
+      ? T('activity_alerts_save_up_to') + ' <strong>' + totalSavings + ' SAR</strong>'
       : '';
   }
 
@@ -6375,14 +6342,14 @@ function flibUpdatePrivacyUI() {
     pill.style.border     = '1px solid rgba(255,255,255,0.25)';
     pill.innerHTML =
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>' +
-      '<span>' + (LANG === 'ar' ? 'عامة' : 'Public') + '</span>';
+      '<span>' + T('library_public') + '</span>';
   } else {
     pill.style.background = 'rgba(121,0,47,0.55)';
     pill.style.color      = 'rgba(255,255,255,0.92)';
     pill.style.border     = '1px solid rgba(255,255,255,0.18)';
     pill.innerHTML =
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>' +
-      '<span>' + (LANG === 'ar' ? 'خاصة' : 'Private') + '</span>';
+      '<span>' + T('library_private') + '</span>';
   }
 }
 
@@ -6391,13 +6358,13 @@ function flibTogglePrivacy() {
   flibUpdatePrivacyUI();
   /* Toast feedback */
   var msg = _flibIsPublic
-    ? (LANG === 'ar' ? 'المكتبة أصبحت عامة' : 'Library is now Public')
-    : (LANG === 'ar' ? 'المكتبة أصبحت خاصة' : 'Library is now Private');
+    ? T('library_now_public')
+    : T('library_now_private');
   flibShowToast(msg);
 }
 
 function flibShare() {
-  flibShowToast(LANG === 'ar' ? 'تم نسخ رابط المكتبة ✓' : 'Library link copied ✓');
+  flibShowToast(T('library_link_copied'));
 }
 
 function flibShowToast(msg) {
@@ -6614,18 +6581,7 @@ function T(key) {
   if (!entry) { console.warn('Missing key: ' + key); return key; }
   return entry[LANG] || entry['en'] || key;
 }
-TRANSLATIONS['compare_best_price']  = { en: 'Best Price',  ar: 'أفضل سعر' };
-TRANSLATIONS['compare_best_choice'] = { en: 'Best Option', ar: 'الخيار الأمثل' };
-TRANSLATIONS['adv_search_btn']      = { en: 'Advanced Search', ar: 'البحث المتقدم' };
-TRANSLATIONS['adv_search_title']    = { en: 'Advanced Search', ar: 'البحث المتقدم' };
-TRANSLATIONS['adv_search_apply']    = { en: 'Search', ar: 'بحث' };
-TRANSLATIONS['filter_family']       = { en: 'Family',   ar: 'العائلة العطرية' };
-TRANSLATIONS['filter_season']       = { en: 'Season',   ar: 'الموسم' };
-TRANSLATIONS['filter_time']         = { en: 'Time',     ar: 'الوقت' };
-TRANSLATIONS['filter_perfumer']     = { en: 'Perfumer', ar: 'العطار' };
-TRANSLATIONS['filter_country']      = { en: 'Country',  ar: 'البلد' };
-TRANSLATIONS['filter_year']         = { en: 'Year',     ar: 'السنة' };
-TRANSLATIONS['filter_rating']       = { en: 'Rating',   ar: 'التقييم' };
+
 
 /* Product field in active language
    Usage: P(product, 'name') → 'Bleu de Chanel EDP' or 'بلو دو شانيل'
@@ -7346,10 +7302,10 @@ function _renderBrandsGrid(query) {
   empty.style.display = result.length === 0 ? 'flex' : 'none';
 
   result.forEach(function(b) {
-    var count     = PRODUCTS.filter(function(p) { return p.brandEn === b.nameEn; }).length;
-    var bd        = BRAND_DATA[b.id] || {};
+    var count     = uniqueProducts(PRODUCTS.filter(function(p) { return p.brandEn === b.nameEn; })).length;
+    var bd        = BRANDS.find(function(br) { return br.id === b.id; }) || {};
     var origin    = bd.countryEn ? (LANG === 'ar' ? bd.countryAr : bd.countryEn) : '';
-    var countLbl  = count + (LANG === 'ar' ? ' منتج' : (count !== 1 ? ' products' : ' product'));
+    var countLbl  = count + ' ' + (count !== 1 ? T('brand_product_count_plural') : T('brand_product_count_single'));
     var subParts  = [countLbl];
     if (origin) subParts.push(origin);
     var row = document.createElement('div');
@@ -7385,7 +7341,7 @@ function openBrandPage(brandId, origin) {
 
   var brand    = _getBrands().find(function(b) { return b.id === brandId; });
   if (!brand) return;
-  var bd       = BRAND_DATA[brandId] || {};
+  var bd       = BRANDS.find(function(br) { return br.id === brandId; }) || {};
   /* All variants for this brand, then deduplicated to one per fragrance */
   var allVariants  = PRODUCTS.filter(function(p) { return p.brandEn === brand.nameEn; });
   var products     = uniqueProducts(allVariants);
@@ -7413,9 +7369,9 @@ function openBrandPage(brandId, origin) {
   var tagsEl = document.getElementById('brand-page-tags');
   tagsEl.innerHTML = '';
   var tags = [];
-  if (bd.founded)   tags.push(T('brand_founded_label') ? T('brand_founded_label') + ' ' + bd.founded : 'Est. ' + bd.founded);
+  if (bd.founded)   tags.push((T('brand_founded_label') || 'Est.') + ' ' + bd.founded);
   if (bd.countryEn) tags.push(LANG === 'ar' ? bd.countryAr : bd.countryEn);
-  tags.push(count + (LANG === 'ar' ? ' منتج' : (count !== 1 ? ' products' : ' product')));
+  tags.push(count + ' ' + (count !== 1 ? T('brand_product_count_plural') : T('brand_product_count_single')));
   tags.forEach(function(t) {
     var span = document.createElement('span');
     span.className = 'brand-page-tag';
@@ -7431,15 +7387,15 @@ function openBrandPage(brandId, origin) {
   /* Section label */
   var secLabel = document.getElementById('brand-sec-label');
   secLabel.textContent = LANG === 'ar'
-    ? 'جميع المنتجات (' + count + ')'
-    : 'All Products (' + count + ')';
+    ? T('brand_sec_label_all') + ' (' + count + ')'
+    : T('brand_sec_label_all') + ' (' + count + ')';
 
   /* Product rows */
   var list = document.getElementById('brand-product-list');
   list.innerHTML = '';
   products.forEach(function(p) {
     var cur = LANG === 'ar' ? p.currencyAr : p.currencyEn;
-    var fromLabel = LANG === 'ar' ? 'يبدأ من' : 'from';
+    var fromLabel = T('brand_from_label');
     var row = document.createElement('div');
     row.className = 'brand-product-row';
     row.onclick = function() { openComparePage(p.id, 'brand-page'); };
@@ -7844,7 +7800,7 @@ function _renderReplies(postId) {
   if (label) {
     label.textContent = count > 0
       ? count + ' ' + T('comm_replies')
-      : 'Replies';
+      : T('comm_replies_label_fallback');
   }
   list.innerHTML = '';
   if (count === 0) { if (empty) empty.style.display = ''; return; }
