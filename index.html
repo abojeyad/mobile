@@ -1608,8 +1608,8 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
 .alerts-mosaic-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 100px);
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 70px);
   gap: 2px;
   background: var(--border);
   pointer-events: none;
@@ -6253,10 +6253,10 @@ function renderActivityAlerts() {
       : '';
   }
 
-  /* Grid: always 4 cells, fill unused slots with placeholder */
+  /* Grid: always 8 cells, fill unused slots with placeholder */
   grid.innerHTML = '';
-  var trends = [true, false, true, true];  /* isDown per slot */
-  for (var i = 0; i < 4; i++) {
+  var trends = [true, false, true, true, false, true, false, true];  /* isDown per slot */
+  for (var i = 0; i < 8; i++) {
     var cell = document.createElement('div');
     cell.className = 'alerts-mosaic-cell';
     if (i < active.length) {
@@ -6268,9 +6268,6 @@ function renderActivityAlerts() {
         '</div>' +
         '<div class="alerts-mosaic-price">' +
           '<span class="alerts-mosaic-price-badge">' + (getLowestPrice(p.id) !== null ? getLowestPrice(p.id) + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn) : '--') + '</span>' +
-          '<span class="alerts-mosaic-trend ' + (isDown ? 'alerts-mosaic-trend-down' : 'alerts-mosaic-trend-up') + '">' +
-            (isDown ? '↓' : '↑') + ' ' + Math.abs(p.discountPercent) + '%' +
-          '</span>' +
         '</div>';
     } else {
       cell.classList.add('alerts-mosaic-empty-cell');
@@ -7121,6 +7118,7 @@ function subLangSelect(code) {
 
 function subLangSave() {
   setLang(_subSelectedLang);
+  try { localStorage.setItem('yourdis_lang', _subSelectedLang); } catch(e) {}
   /* Update the selected state to match current LANG after setLang */
   _subSelectedLang = LANG;
   document.getElementById('sub-lang-en').classList.toggle('selected', LANG === 'en');
@@ -8254,7 +8252,16 @@ function tdApplyFilters() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  setLang('en'); /* triggers renderProductCards + onLangChange → renderStores + renderAlerts */
+  /* Language priority:
+     1. User's saved preference (localStorage)
+     2. Device / browser system language
+     3. Default: English                        */
+  var savedLang = null;
+  try { savedLang = localStorage.getItem('yourdis_lang'); } catch(e) {}
+  var systemLang = (navigator.language || navigator.userLanguage || 'en').startsWith('ar') ? 'ar' : 'en';
+  var initLang = (savedLang === 'ar' || savedLang === 'en') ? savedLang : systemLang;
+
+  setLang(initLang); /* triggers renderProductCards + onLangChange → renderStores + renderAlerts */
   renderInterestsGrid();
   setTimeout(_seedDemoReplies, 200);
 });
