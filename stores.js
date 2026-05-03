@@ -59,40 +59,6 @@ var STORES = [
   },
 
   {
-    id:             'loja',
-    nameEn:         'Loja',
-    nameAr:         'لوجا',
-    initials:       'LJ',
-    bg:             'var(--b-pink)',
-    url:            'loja.sa',
-    rating:         4.3,
-    reviewCount:    510,
-    verified:       true,
-    loyaltyPoints:  false,
-    returnPolicy:   false,
-    installments:   false,
-    cashback:       false,
-    expressDelivery: false
-  },
-
-  {
-    id:             'yvain',
-    nameEn:         'Yvain',
-    nameAr:         'يفاين',
-    initials:       'YV',
-    bg:             'var(--b-teal)',
-    url:            'yvain.sa',
-    rating:         4.4,
-    reviewCount:    430,
-    verified:       true,
-    loyaltyPoints:  true,
-    returnPolicy:   true,
-    installments:   false,
-    cashback:       false,
-    expressDelivery: true
-  },
-
-  {
     id:             'abaq',
     nameEn:         'Abaq',
     nameAr:         'عبق',
@@ -127,23 +93,6 @@ var STORES = [
   },
 
   {
-    id:             'al-sultan-perfumes',
-    nameEn:         'Al Sultan Perfumes',
-    nameAr:         'السلطان للعطور',
-    initials:       'AS',
-    bg:             'var(--b-gold)',
-    url:            'alsultan-perfumes.com',
-    rating:         4.5,
-    reviewCount:    1700,
-    verified:       true,
-    loyaltyPoints:  false,
-    returnPolicy:   true,
-    installments:   false,
-    cashback:       false,
-    expressDelivery: false
-  },
-
-  {
     id:             'faces',
     nameEn:         'Faces',
     nameAr:         'وجوه',
@@ -158,23 +107,6 @@ var STORES = [
     installments:   true,
     cashback:       true,
     expressDelivery: true
-  },
-
-  {
-    id:             'perfume-expert',
-    nameEn:         'Perfume Expert',
-    nameAr:         'خبير العطور',
-    initials:       'PE',
-    bg:             'var(--b-brown)',
-    url:            'perfume-expert.net',
-    rating:         4.4,
-    reviewCount:    920,
-    verified:       true,
-    loyaltyPoints:  false,
-    returnPolicy:   true,
-    installments:   false,
-    cashback:       false,
-    expressDelivery: false
   },
 
   {
