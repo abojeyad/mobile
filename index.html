@@ -12,6 +12,10 @@
 <meta name="apple-mobile-web-app-title" content="Yourdis"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="translations.js"></script>
+<script src="brands.js"></script>
+<script src="stores.js"></script>
+<script src="products.js"></script>
+<script src="listings.js"></script>
 <style>
 
 /* ══════════════════════════════════════════════════════════
@@ -632,27 +636,27 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 /* ── Accord bar rows ── */
 .accord-row {
   display: flex; align-items: center; gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 9px;
 }
 .accord-row:last-child { margin-bottom: 0; }
 .accord-label {
-  font-size: var(--t5); font-weight: 600; color: var(--ink-1);
+  font-size: var(--t5); font-weight: 500; color: var(--ink-2);
   width: 90px; flex-shrink: 0; white-space: nowrap;
   overflow: hidden; text-overflow: ellipsis;
 }
 [dir="rtl"] .accord-label { text-align: right; }
 .accord-bar-bg {
-  flex: 1; height: 11px; background: var(--bg-input);
-  border-radius: 6px; overflow: hidden;
+  flex: 1; height: 7px; background: var(--bg-input);
+  border-radius: 4px; overflow: hidden;
 }
 .accord-bar-fill {
-  height: 100%; border-radius: 6px;
+  height: 100%; border-radius: 4px;
   transition: width 0.65s cubic-bezier(0.4,0,0.2,1);
-  /* color set per-bar by JS via --accord-color custom property */
-  background: var(--accord-color, var(--red));
+  background: var(--accord-color, var(--ink-3));
+  opacity: 0.75;
 }
 .accord-pct {
-  font-size: var(--t6); font-weight: 700; color: var(--ink-3);
+  font-size: var(--t6); font-weight: 600; color: var(--ink-3);
   width: 32px; text-align: right; flex-shrink: 0;
 }
 [dir="rtl"] .accord-pct { text-align: left; }
@@ -4569,10 +4573,6 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 </div><!-- /phone-frame -->
 </div><!-- /app-root -->
 
-<script src="brands.js"></script>
-<script src="stores.js"></script>
-<script src="products.js"></script>
-<script src="listings.js"></script>
 
 <script>
 /* ══════════════════════════════════════════════════════════
@@ -4664,21 +4664,23 @@ function uniqueProducts(list) {
 }
 
 function renderProductCards() {
-  /* Brands — one circle per unique brand, clickable */
+  /* Brands — one circle per brand from BRANDS catalogue, clickable */
   var brands = document.getElementById('strip-brands');
   if (brands) {
     brands.innerHTML = '';
-    var seenBrands = {};
-    PRODUCTS.forEach(function(p) {
-      if (seenBrands[p.brandEn]) return;
-      seenBrands[p.brandEn] = true;
-      var brandId = p.brandEn.toLowerCase().replace(/\s+/g, '-');
+    BRANDS.forEach(function(b) {
+      var sample = PRODUCTS.find(function(p) {
+        return p.brandEn.toLowerCase().replace(/\s+/g, '-') === b.id;
+      }) || {};
+      var initials = sample.initials || b.nameEn.slice(0, 2).toUpperCase();
+      var bg       = sample.bg || 'var(--bg-surface)';
+      var label    = LANG === 'ar' ? b.nameAr : b.nameEn;
       var item = document.createElement('div');
       item.className = 'brand-circle-item';
-      item.setAttribute('onclick', 'openBrandPage("' + brandId + '","home")');
+      item.setAttribute('onclick', 'openBrandPage("' + b.id + '","home")');
       item.innerHTML =
-        '<div class="brand-circle" style="background:' + p.bg + ';">' + p.initials + '</div>' +
-        '<div class="brand-label">' + P(p, 'brand') + '</div>';
+        '<div class="brand-circle" style="background:' + bg + ';">' + initials + '</div>' +
+        '<div class="brand-label">' + label + '</div>';
       brands.appendChild(item);
     });
   }
@@ -5418,13 +5420,13 @@ function openProduct(productId, origin) {
     accordsWrap.innerHTML = '<div class="accord-title" data-i18n="pdp_accords">' + T('pdp_accords') + '</div>';
     /* Color palette — cycles if more than 7 accords */
     var accordColors = [
-      '#79002F',  /* burgundy   */
-      '#2563EB',  /* blue       */
-      '#059669',  /* green      */
-      '#D97706',  /* amber      */
-      '#7C3AED',  /* violet     */
-      '#0891B2',  /* cyan       */
-      '#DB2777'   /* pink       */
+      '#9E7A8A',  /* muted rose    */
+      '#7A8FA6',  /* muted blue    */
+      '#7A9E8E',  /* muted sage    */
+      '#A69060',  /* muted amber   */
+      '#8A7AA6',  /* muted violet  */
+      '#6A96A0',  /* muted teal    */
+      '#A07A8A'   /* muted mauve   */
     ];
     accords.forEach(function(acc, i) {
       var label = LANG === 'ar' ? acc.nameAr : acc.nameEn;
@@ -7272,20 +7274,21 @@ function interestsSave() {
 ══════════════════════════════════════════════════════════ */
 
 function _getBrands() {
-  var seen = {};
-  return PRODUCTS.reduce(function(acc, p) {
-    if (!seen[p.brandEn]) {
-      seen[p.brandEn] = true;
-      acc.push({
-        id:      p.brandEn.toLowerCase().replace(/\s+/g, '-'),
-        nameEn:  p.brandEn,
-        nameAr:  p.brandAr,
-        initials: p.initials,
-        bg:      p.bg
-      });
-    }
-    return acc;
-  }, []).sort(function(a, b) { return a.nameEn.localeCompare(b.nameEn); });
+  return BRANDS.slice().sort(function(a, b) {
+    return a.nameEn.localeCompare(b.nameEn);
+  }).map(function(b) {
+    /* Pull initials and bg colour from the first matching product */
+    var sample = PRODUCTS.find(function(p) {
+      return p.brandEn.toLowerCase().replace(/\s+/g, '-') === b.id;
+    }) || {};
+    return {
+      id:       b.id,
+      nameEn:   b.nameEn,
+      nameAr:   b.nameAr,
+      initials: sample.initials || b.nameEn.slice(0, 2).toUpperCase(),
+      bg:       sample.bg || 'var(--bg-surface)'
+    };
+  });
 }
 
 function _renderBrandsGrid(query) {
