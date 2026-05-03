@@ -4732,7 +4732,7 @@ function renderProductCards() {
         '</div>' +
         '<div class="drop-info">' +
           '<div class="drop-name">' + P(p,'name') + '</div>' +
-          '<div class="drop-sub">'  + P(p,'brand') + '</div>' +
+          '<div class="drop-sub">'  + P(p,'brand') + ' · ' + p.size + ' · ' + P(p,'gender') + '</div>' +
           discountHtml +
         '</div>' +
         '<div class="drop-right">' +
@@ -5345,7 +5345,7 @@ function _pdpAdapt(p) {
 }
 
 function openProduct(productId, origin) {
-  var src = PRODUCTS.find(function(pr){ return pr.id === productId; });
+  var src = PRODUCTS.find(function(pr){ return pr.id === productId || pr.variantGroupId === productId; });
   if (!src) return;
   _pdpOrigin    = origin || 'compare';
   _pdpProductId = productId;
