@@ -151,6 +151,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
 [dir="rtl"] .comm-badge-inquiry,
 [dir="rtl"] .comm-badge-sale,
+[dir="rtl"] .comm-badge-article,
 [dir="rtl"] .comm-card-meta { font-weight: 400; }
 
 [dir="rtl"] .comm-form-label { text-transform: none; letter-spacing: 0; }
@@ -256,14 +257,83 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 }
 .bn-item {
   flex: 1; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 4px;
-  cursor: pointer; transition: transform 0.15s;
+  align-items: center; justify-content: center; gap: 3px;
+  cursor: pointer; transition: transform 0.15s; position: relative;
 }
 .bn-item:active { transform: scale(0.88); }
-.bn-item svg  { width: 22px; height: 22px; color: var(--ink-3); transition: color 0.18s; }
-.bn-item span { font-size: var(--t6); font-weight: 500; color: var(--ink-3); transition: color 0.18s; }
+.bn-item svg  { width: 20px; height: 20px; color: var(--ink-3); transition: color 0.18s; }
+.bn-item span { font-size: 10px; font-weight: 500; color: var(--ink-3); transition: color 0.18s; }
 .bn-item.active svg  { color: var(--red); }
 .bn-item.active span { color: var(--red); }
+
+/* Messages unread badge on nav item */
+.bn-badge {
+  position: absolute; top: 6px; right: calc(50% - 14px);
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--red); border: 1.5px solid var(--bg-phone);
+  display: none;
+}
+.bn-badge.visible { display: block; }
+
+/* ── Messages inbox ── */
+.msg-conv-list { display: flex; flex-direction: column; }
+.msg-conv-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.1s;
+}
+.msg-conv-row:active { background: var(--bg-surface); }
+.msg-conv-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--border); color: var(--ink-2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; font-weight: 700; flex-shrink: 0;
+}
+.msg-conv-info { flex: 1; min-width: 0; }
+.msg-conv-name { font-size: var(--t4); font-weight: 600; color: var(--ink-1); }
+.msg-conv-preview { font-size: var(--t5); color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+.msg-conv-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
+.msg-conv-time { font-size: var(--t6); color: var(--ink-3); }
+.msg-conv-unread {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--red);
+}
+.msg-conv-name-row { display: flex; align-items: center; gap: 5px; }
+
+/* ── Chat conversation ── */
+.chat-messages { flex: 1; overflow-y: auto; padding: 16px 16px 8px; display: flex; flex-direction: column; gap: 10px; scrollbar-width: none; }
+.chat-messages::-webkit-scrollbar { display: none; }
+.chat-bubble-wrap { display: flex; align-items: flex-end; gap: 8px; }
+.chat-bubble-wrap.mine { flex-direction: row-reverse; }
+.chat-bubble-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--border); color: var(--ink-2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0;
+}
+.chat-bubble {
+  max-width: 72%; padding: 10px 13px; border-radius: 18px;
+  font-size: var(--t4); line-height: 1.5; word-break: break-word;
+}
+.chat-bubble.theirs { background: var(--bg-surface); color: var(--ink-1); border-radius: 4px 18px 18px 18px; }
+.chat-bubble.mine   { background: var(--red); color: #fff; border-radius: 18px 4px 18px 18px; }
+.chat-bubble-time { font-size: var(--t6); color: var(--ink-3); margin: 0 4px 2px; align-self: flex-end; }
+.chat-input-bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px 14px; border-top: 1px solid var(--border);
+  background: var(--bg-phone); flex-shrink: 0;
+}
+.chat-input {
+  flex: 1; padding: 10px 14px; border-radius: 22px;
+  background: var(--bg-surface); border: 1px solid var(--border);
+  font-size: var(--t4); color: var(--ink-1); outline: none;
+  font-family: inherit;
+}
+.chat-send-btn {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--red); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
 
 /* ══════════════════════════════════════════════════════════
    COMMON COMPONENTS
@@ -1188,10 +1258,12 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 ══════════════════════════════════════════════════════════ */
 .comm-header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 20px 12px; flex-shrink: 0;
+  padding: 12px 20px 10px; flex-shrink: 0;
   border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.05);
 }
-.comm-header-title { font-size: var(--t2); font-weight: 700; color: var(--ink-1); }
+.comm-header-title { font-size: var(--t3); font-weight: 700; color: var(--ink-1); line-height: 1.2; }
+.comm-header-sub   { font-size: var(--t6); color: var(--ink-3); margin-top: 2px; }
 
 .comm-feed { display: flex; flex-direction: column; gap: 0; }
 
@@ -1208,11 +1280,28 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .comm-user-avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--border); color: var(--ink-2); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
 .comm-username { font-size: var(--t5); font-weight: 600; color: var(--ink-2); }
 
-.comm-badge-inquiry, .comm-badge-sale { 
+.comm-badge-inquiry, .comm-badge-sale, .comm-badge-article {
   font-size: 10px; padding: 2px 8px; border-radius: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em;
 }
-.comm-badge-inquiry { background: var(--b-blue); color: #2563EB; }
-.comm-badge-sale    { background: var(--green-light); color: var(--green); }
+.comm-badge-inquiry { background: var(--b-blue);       color: #2563EB; }
+.comm-badge-sale    { background: var(--green-light);   color: var(--green); }
+.comm-badge-article { background: var(--amber-light);   color: #B45309; }
+
+/* ── Community filter chips ── */
+.comm-filter-bar {
+  display: flex; gap: 8px; padding: 10px 20px 6px;
+  overflow-x: auto; flex-shrink: 0; scrollbar-width: none;
+}
+.comm-filter-bar::-webkit-scrollbar { display: none; }
+.comm-filter-chip {
+  flex-shrink: 0; padding: 5px 14px; border-radius: 20px;
+  font-size: var(--t5); font-weight: 600; cursor: pointer;
+  border: 1.5px solid var(--border); background: var(--bg-base); color: var(--ink-3);
+  transition: all 0.15s;
+}
+.comm-filter-chip.active {
+  background: var(--red); border-color: var(--red); color: #fff;
+}
 
 .comm-card-text {
   font-size: var(--t4); color: var(--ink-1); line-height: 1.5;
@@ -1292,13 +1381,15 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
 /* Type selector step */
 .comm-type-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 8px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;
 }
 .comm-type-card {
   border: 2px solid var(--border); border-radius: var(--radius-lg);
-  padding: 20px 16px; cursor: pointer; transition: all 0.15s;
+  padding: 18px 14px; cursor: pointer; transition: all 0.15s;
   display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;
 }
+.comm-type-card.full-width { grid-column: 1 / -1; flex-direction: row; justify-content: center; gap: 14px; padding: 14px 20px; }
+.comm-type-card.full-width .comm-type-sub { text-align: start; }
 .comm-type-card:active { transform: scale(0.97); }
 .comm-type-card.selected { border-color: var(--red); background: var(--red-light); }
 .comm-type-icon {
@@ -2508,54 +2599,22 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
   <div class="home-header">
     <div style="display:flex;align-items:center;justify-content:space-between;">
-      <!-- Sina AI -->
-      <div style="display:flex;align-items:center;gap:9px;cursor:pointer;" onclick="if(guestGuard())return;switchScreen('ai-chat')">
-        <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.08));border-radius:50%;outline:1px solid rgba(0,0,0,0.09);">
-          <defs>
-            <radialGradient id="nn-bg" cx="38%" cy="35%" r="65%"><stop offset="0%" stop-color="#F4F4F4"/><stop offset="55%" stop-color="#EDEDED"/><stop offset="100%" stop-color="#E6E6E6"/></radialGradient>
-            <linearGradient id="nn-flow-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#EAA005" stop-opacity="0"/><stop offset="45%" stop-color="#EAA005" stop-opacity="1"/><stop offset="100%" stop-color="#ffcf4d" stop-opacity="0"/><animateTransform attributeName="gradientTransform" type="translate" from="-1 -1" to="1 1" dur="1.8s" repeatCount="indefinite"/></linearGradient>
-          </defs>
-          <circle cx="18" cy="18" r="18" fill="url(#nn-bg)"/>
-          <circle cx="18" cy="18" r="15.5" fill="none" stroke="#EAA005" stroke-width="0.5" stroke-opacity="0.22" style="animation:nn-ring-breathe 1.8s ease-in-out infinite;"/>
-          <line x1="9" y1="12" x2="15" y2="10" stroke="#b5476a" stroke-width="0.9" stroke-linecap="round"/>
-          <line x1="9" y1="18" x2="15" y2="14" stroke="#b5476a" stroke-width="0.9" stroke-linecap="round"/>
-          <line x1="9" y1="18" x2="15" y2="22" stroke="#b5476a" stroke-width="0.9" stroke-linecap="round"/>
-          <line x1="9" y1="24" x2="15" y2="22" stroke="#b5476a" stroke-width="0.9" stroke-linecap="round"/>
-          <line x1="15" y1="10" x2="21" y2="13" stroke="#b5476a" stroke-width="0.9" stroke-linecap="round"/>
-          <line x1="15" y1="14" x2="21" y2="13" stroke="#b5476a" stroke-width="0.9" stroke-linecap="round"/>
-          <line x1="15" y1="14" x2="21" y2="19" stroke="#b5476a" stroke-width="0.9" stroke-linecap="round"/>
-          <line x1="15" y1="22" x2="21" y2="19" stroke="#b5476a" stroke-width="0.9" stroke-linecap="round"/>
-          <line x1="15" y1="22" x2="21" y2="25" stroke="#b5476a" stroke-width="0.9" stroke-linecap="round"/>
-          <line x1="21" y1="13" x2="27" y2="18" stroke="#b5476a" stroke-width="0.9" stroke-linecap="round"/>
-          <line x1="21" y1="19" x2="27" y2="18" stroke="#b5476a" stroke-width="0.9" stroke-linecap="round"/>
-          <line x1="21" y1="25" x2="27" y2="18" stroke="#b5476a" stroke-width="0.9" stroke-linecap="round"/>
-          <line x1="9" y1="18" x2="15" y2="14" stroke="#EAA005" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="8 28" stroke-dashoffset="28" style="animation:nn-flow-1 1.1s ease-in-out infinite;"/>
-          <line x1="15" y1="14" x2="21" y2="19" stroke="#EAA005" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="9 22" stroke-dashoffset="22" style="animation:nn-flow-2 1.1s ease-in-out infinite 0.22s;"/>
-          <line x1="21" y1="19" x2="27" y2="18" stroke="#EAA005" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="7 18" stroke-dashoffset="18" style="animation:nn-flow-3 1.1s ease-in-out infinite 0.44s;"/>
-          <line x1="9" y1="24" x2="15" y2="22" stroke="#EAA005" stroke-width="1.1" stroke-linecap="round" stroke-dasharray="7 22" stroke-dashoffset="22" style="animation:nn-flow-2 1.5s ease-in-out infinite 0.65s;"/>
-          <line x1="15" y1="22" x2="21" y2="25" stroke="#EAA005" stroke-width="1.1" stroke-linecap="round" stroke-dasharray="7 18" stroke-dashoffset="18" style="animation:nn-flow-3 1.5s ease-in-out infinite 0.85s;"/>
-          <line x1="21" y1="25" x2="27" y2="18" stroke="#EAA005" stroke-width="1.1" stroke-linecap="round" stroke-dasharray="8 18" stroke-dashoffset="18" style="animation:nn-flow-1 1.5s ease-in-out infinite 1.05s;"/>
-          <circle cx="9" cy="12" r="2" fill="#79002F" stroke="#EAA005" stroke-width="0.8" stroke-opacity="0.6"/>
-          <circle cx="9" cy="18" r="2.2" fill="#EAA005" stroke="#ffcf4d" stroke-width="0.7" style="animation:nn-node-pulse 1.6s ease-in-out infinite;"/>
-          <circle cx="9" cy="24" r="2" fill="#79002F" stroke="#EAA005" stroke-width="0.8" stroke-opacity="0.5"/>
-          <circle cx="15" cy="10" r="1.8" fill="#79002F" stroke="#EAA005" stroke-width="0.7" stroke-opacity="0.55"/>
-          <circle cx="15" cy="14" r="2.2" fill="#EAA005" stroke="#ffcf4d" stroke-width="0.7" style="animation:nn-node-pulse-fast 1.6s ease-in-out infinite 0.3s;"/>
-          <circle cx="15" cy="22" r="2" fill="#79002F" stroke="#EAA005" stroke-width="0.7" stroke-opacity="0.5"/>
-          <circle cx="21" cy="13" r="1.8" fill="#79002F" stroke="#EAA005" stroke-width="0.7" stroke-opacity="0.5"/>
-          <circle cx="21" cy="19" r="2.2" fill="#EAA005" stroke="#ffcf4d" stroke-width="0.7" style="animation:nn-node-pulse 1.6s ease-in-out infinite 0.6s;"/>
-          <circle cx="21" cy="25" r="1.8" fill="#79002F" stroke="#EAA005" stroke-width="0.7" stroke-opacity="0.45"/>
-          <circle cx="27" cy="18" r="2.6" fill="#EAA005" stroke="#ffcf4d" stroke-width="0.9" style="animation:nn-node-spark 1.4s ease-in-out infinite 0.8s;"/>
-          <circle cx="27" cy="18" r="4.2" fill="none" stroke="#EAA005" stroke-width="0.5" stroke-opacity="0.22" style="animation:nn-ring-spark 1.4s ease-in-out infinite 0.8s;"/>
-        </svg>
-        <div>
-          <div style="font-size:var(--t4);font-weight:600;color:var(--ink-1);letter-spacing:-0.01em;line-height:1.1;" data-i18n="home_ai_name">Ask Sina AI</div>
-          <div style="font-size:var(--t5);color:var(--ink-3);margin-top:1px;" data-i18n="home_ai_sub">Ready to help</div>
+      <!-- Logo + app name (language-aware) -->
+        <div style="display:flex;align-items:center;gap:8px;">
+          <img src="logo.png" alt="Yourdis" style="width:30px;height:30px;object-fit:contain;" onerror="this.style.display='none'"/>
+          <span id="home-app-name" style="font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--ink-1);letter-spacing:0.04em;">YOURDIS</span>
         </div>
-      </div>
-      <!-- Notification bell -->
-      <div class="icon-btn" style="position:relative;cursor:pointer;" onclick="if(guestGuard())return;switchScreen('notifications')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
-        <span id="notif-badge" style="position:absolute;top:6px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--red);border:1.5px solid #fff;"></span>
+      <!-- Right icons: Messages + Notification -->
+      <div style="display:flex;align-items:center;gap:4px;">
+        <div class="icon-btn" style="position:relative;cursor:pointer;" onclick="if(guestGuard())return;openMessages()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <span id="msg-header-badge" style="position:absolute;top:6px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--red);border:1.5px solid #fff;display:none;"></span>
+        </div>
+        <!-- Notification bell -->
+        <div class="icon-btn" style="position:relative;cursor:pointer;" onclick="if(guestGuard())return;switchScreen('notifications')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          <span id="notif-badge" style="position:absolute;top:6px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--red);border:1.5px solid #fff;"></span>
+        </div>
       </div>
     </div>
   </div>
@@ -2621,6 +2680,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="bn-item active" onclick="homeRefresh()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-i18n="nav_home">Home</span></div>
     <div class="bn-item" onclick="switchScreen('stores')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7"/><path d="M9 22V12h6v10"/><path d="M3 9v13h18V9"/><path d="M3 9h18"/></svg><span data-i18n="nav_stores">Stores</span></div>
     <div class="bn-item" onclick="if(guestGuard())return;switchScreen('community')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span data-i18n="nav_community">Community</span></div>
+    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('ai-chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span data-i18n="nav_ai">Sina AI</span></div>
     <div class="bn-item" onclick="if(guestGuard())return;switchScreen('activity')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span data-i18n="nav_activity">Activity</span></div>
   </div>
 
@@ -3003,6 +3063,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
       <span data-i18n="nav_community">Community</span>
     </div>
+    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('ai-chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span data-i18n="nav_ai">Sina AI</span></div>
     <div class="bn-item active">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       <span data-i18n="nav_activity">Activity</span>
@@ -3017,11 +3078,11 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 <div class="screen" id="screen-alerts">
 
   <!-- Header -->
-  <div class="back-bar">
+  <div class="sub-header">
     <button class="dip-back-btn" onclick="switchScreen('activity')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
     </button>
-    <span class="notif-header-title" data-i18n="alerts_title">Price Alerts</span>
+    <span class="sub-header-title" data-i18n="alerts_title">Price Alerts</span>
   </div>
 
   <div class="scroll-area">
@@ -3284,6 +3345,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
       <span data-i18n="nav_community">Community</span>
     </div>
+    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('ai-chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span data-i18n="nav_ai">Sina AI</span></div>
     <div class="bn-item" onclick="if(guestGuard())return;switchScreen('activity')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       <span data-i18n="nav_activity">Activity</span>
@@ -4323,11 +4385,27 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
   <!-- Header -->
   <div class="comm-header">
-    <span class="comm-header-title" data-i18n="comm_page_title">Community</span>
+    <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="openCommInfo()">
+      <div style="width:36px;height:36px;border-radius:50%;background:var(--red-light);border:1.5px solid rgba(var(--red-rgb,180,0,0),0.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8" style="width:18px;height:18px;"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <div>
+        <span class="comm-header-title" data-i18n="comm_page_title">Community</span>
+        <div class="comm-header-sub" data-i18n="comm_header_guidelines_hint">View community guidelines</div>
+      </div>
+    </div>
     <button class="comm-fab-header" onclick="openCommModal()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
       <span data-i18n="comm_post_btn">Post</span>
     </button>
+  </div>
+
+  <!-- Filter chips -->
+  <div class="comm-filter-bar" id="comm-filter-bar">
+    <div class="comm-filter-chip active" data-filter="all"     onclick="setCommFilter('all')"     data-i18n="comm_filter_all">All</div>
+    <div class="comm-filter-chip"        data-filter="inquiry" onclick="setCommFilter('inquiry')" data-i18n="comm_type_inquiry">Inquiry</div>
+    <div class="comm-filter-chip"        data-filter="sale"    onclick="setCommFilter('sale')"    data-i18n="comm_type_sale">For Sale</div>
+    <div class="comm-filter-chip"        data-filter="article" onclick="setCommFilter('article')" data-i18n="comm_type_article">Article</div>
   </div>
 
   <!-- Feed -->
@@ -4355,6 +4433,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
       <span data-i18n="nav_community">Community</span>
     </div>
+    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('ai-chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span data-i18n="nav_ai">Sina AI</span></div>
     <div class="bn-item" onclick="if(guestGuard())return;switchScreen('activity')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       <span data-i18n="nav_activity">Activity</span>
@@ -4391,7 +4470,17 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
               <div class="comm-type-label" data-i18n="comm_type_sale">For Sale</div>
               <div class="comm-type-sub" data-i18n="comm_type_sale_sub">List a used fragrance for sale</div>
             </div>
+            <div class="comm-type-card full-width" id="comm-type-article" onclick="selectCommType('article')">
+              <div class="comm-type-icon" style="background:var(--amber-light);color:#B45309;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
+              <div>
+                <div class="comm-type-label" data-i18n="comm_type_article">Article</div>
+                <div class="comm-type-sub" data-i18n="comm_type_article_sub">Share knowledge or an opinion</div>
+              </div>
+            </div>
           </div>
+          <div style="height:8px;" aria-hidden="true"></div>
         </div>
 
         <!-- Step 2a: Inquiry form -->
@@ -4442,6 +4531,33 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
           </div>
         </div>
 
+        <!-- Step 2c: Article form -->
+        <div id="comm-form-article" style="display:none;">
+          <label class="comm-form-label" data-i18n="comm_message_label">Message</label>
+          <textarea id="comm-article-msg" class="comm-textarea" rows="4" data-i18n="comm_article_ph" placeholder="Write your article or opinion…"></textarea>
+
+          <label class="comm-form-label" data-i18n="comm_media_label">Media (optional)</label>
+          <div class="comm-media-row">
+            <button class="comm-media-btn" onclick="commPickProduct()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              <span data-i18n="comm_pick_product">Pick Product</span>
+            </button>
+            <button class="comm-media-btn" onclick="commPickGallery()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <span data-i18n="comm_gallery">Gallery</span>
+            </button>
+            <button class="comm-media-btn" onclick="commPickCamera()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              <span data-i18n="comm_camera">Camera</span>
+            </button>
+          </div>
+          <div id="comm-article-product-preview" style="display:none;" class="comm-selected-product">
+            <div class="comm-selected-thumb" id="comm-article-thumb"></div>
+            <span class="comm-selected-name" id="comm-article-product-name"></span>
+            <span class="comm-selected-remove" onclick="commRemoveProduct('article')">✕</span>
+          </div>
+        </div>
+
       </div>
       <div class="comm-modal-footer" id="comm-modal-footer" style="display:none;">
         <button class="comm-submit-btn" id="comm-submit-btn" onclick="submitCommPost()">
@@ -4472,6 +4588,171 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   </div>
 
 </div><!-- /screen-community -->
+
+<!-- ═══════════════════════════════════════
+     SCREEN: COMMUNITY INFO (sub-screen)
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-comm-info">
+
+  <div class="sub-header">
+    <button class="dip-back-btn" onclick="closeCommInfo()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" data-i18n="comm_info_title">Community</span>
+  </div>
+
+  <div class="scroll-area">
+
+    <!-- Banner -->
+    <div style="margin:16px 20px 0;padding:20px;background:linear-gradient(135deg,var(--red-light) 0%,var(--b-blue) 100%);border-radius:var(--radius-lg);text-align:center;">
+      <div style="width:56px;height:56px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8" style="width:28px;height:28px;"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <div style="font-family:var(--font-display);font-size:var(--t2);font-weight:700;color:var(--ink-1);margin-bottom:4px;" data-i18n="comm_info_title">Community</div>
+      <div style="font-size:var(--t5);color:var(--ink-2);line-height:1.6;" data-i18n="comm_info_tagline">A space for fragrance lovers to ask, share, and connect.</div>
+    </div>
+
+    <!-- About -->
+    <div style="margin:20px 20px 0;">
+      <div style="font-size:var(--t6);font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;" data-i18n="comm_info_about_label">About</div>
+      <div style="font-size:var(--t4);color:var(--ink-2);line-height:1.7;" data-i18n="comm_info_about_body">This community is a place for fragrance enthusiasts to exchange knowledge, ask questions, discover new scents, and connect with others who share the same passion.</div>
+    </div>
+
+    <!-- Guidelines -->
+    <div style="margin:20px 20px 0;">
+      <div style="font-size:var(--t6);font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;" data-i18n="comm_info_rules_label">Community Guidelines</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:#FFF8F0;border-radius:var(--radius-md);border:1px solid #F5C28A;">
+          <div style="width:28px;height:28px;border-radius:50%;background:#FEE8CC;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#E07A00" stroke-width="2.2" style="width:14px;height:14px;"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div><div style="font-size:var(--t4);font-weight:600;color:#92400E;margin-bottom:2px;" data-i18n="comm_rule0_title">No financial liability</div><div style="font-size:var(--t5);color:#92400E;line-height:1.5;opacity:0.85;" data-i18n="comm_rule0_body">Yourdis is not responsible for any financial transactions, disputes, or losses arising from trades between community members. All transactions are solely between the buyer and seller.</div></div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg-surface);border-radius:var(--radius-md);border:1px solid var(--border);">
+          <div style="width:28px;height:28px;border-radius:50%;background:#FEE8CC;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" style="width:14px;height:14px;flex-shrink:0;"><path fill="#EAA005" d="M12 2l1.8 2.1 2.6-.8 1 2.5 2.7.2.1 2.7 2.4 1.2-.9 2.5 1.6 2.2-1.9 1.8.6 2.6-2.6.6-.8 2.6-2.5-.9-2.1 1.7-2.1-1.7-2.5.9-.8-2.6-2.6-.6.6-2.6-1.9-1.8 1.6-2.2-.9-2.5 2.4-1.2.1-2.7 2.7-.2 1-2.5 2.6.8z"/><path stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7.5 12.5l3 3 5-6"/></svg>
+          </div>
+          <div>
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
+              <div style="font-size:var(--t4);font-weight:600;color:var(--ink-1);" data-i18n="comm_rule5_title">Trusted Seller badge</div>
+              <svg viewBox="0 0 24 24" fill="none" style="width:13px;height:13px;flex-shrink:0;"><path fill="#EAA005" d="M12 2l1.8 2.1 2.6-.8 1 2.5 2.7.2.1 2.7 2.4 1.2-.9 2.5 1.6 2.2-1.9 1.8.6 2.6-2.6.6-.8 2.6-2.5-.9-2.1 1.7-2.1-1.7-2.5.9-.8-2.6-2.6-.6.6-2.6-1.9-1.8 1.6-2.2-.9-2.5 2.4-1.2.1-2.7 2.7-.2 1-2.5 2.6.8z"/><path stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7.5 12.5l3 3 5-6"/></svg>
+            </div>
+            <div style="font-size:var(--t5);color:var(--ink-3);line-height:1.5;" data-i18n="comm_rule5_body">Users with this badge are verified trusted sellers, confirmed by the Yourdis team. You can buy from them with greater confidence.</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg-surface);border-radius:var(--radius-md);border:1px solid var(--border);">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--b-blue);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:700;color:#2563EB;">1</div>
+          <div><div style="font-size:var(--t4);font-weight:600;color:var(--ink-1);margin-bottom:2px;" data-i18n="comm_rule1_title">Be respectful</div><div style="font-size:var(--t5);color:var(--ink-3);line-height:1.5;" data-i18n="comm_rule1_body">Treat all members with kindness. Offensive language or personal attacks will not be tolerated.</div></div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg-surface);border-radius:var(--radius-md);border:1px solid var(--border);">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--green-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:700;color:var(--green);">2</div>
+          <div><div style="font-size:var(--t4);font-weight:600;color:var(--ink-1);margin-bottom:2px;" data-i18n="comm_rule2_title">Stay on topic</div><div style="font-size:var(--t5);color:var(--ink-3);line-height:1.5;" data-i18n="comm_rule2_body">Keep posts related to fragrances. Off-topic content or spam may be removed.</div></div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg-surface);border-radius:var(--radius-md);border:1px solid var(--border);">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--amber-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:700;color:#B45309;">3</div>
+          <div><div style="font-size:var(--t4);font-weight:600;color:var(--ink-1);margin-bottom:2px;" data-i18n="comm_rule3_title">Honest listings</div><div style="font-size:var(--t5);color:var(--ink-3);line-height:1.5;" data-i18n="comm_rule3_body">When selling, be accurate about the condition, usage, and authenticity of your fragrance.</div></div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg-surface);border-radius:var(--radius-md);border:1px solid var(--border);">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--b-pink);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:700;color:#8C3066;">4</div>
+          <div><div style="font-size:var(--t4);font-weight:600;color:var(--ink-1);margin-bottom:2px;" data-i18n="comm_rule4_title">No advertising</div><div style="font-size:var(--t5);color:var(--ink-3);line-height:1.5;" data-i18n="comm_rule4_body">Promotional content or store advertising is not allowed. This community is for members, not brands.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Moderators -->
+    <div style="margin:20px 20px 0;">
+      <div style="font-size:var(--t6);font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;" data-i18n="comm_info_mods_label">Moderators</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg-surface);border-radius:var(--radius-md);border:1px solid var(--border);">
+          <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#E0C9A6,#C8A97A);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#7C5C2E;flex-shrink:0;">A</div>
+          <div style="flex:1;"><div style="font-size:var(--t4);font-weight:600;color:var(--ink-1);">Abdullah</div><div style="font-size:var(--t5);color:var(--ink-3);" data-i18n="comm_mod_role">Community Moderator</div></div>
+          <div style="font-size:10px;padding:3px 8px;border-radius:12px;background:var(--red-light);color:var(--red);font-weight:700;" data-i18n="comm_mod_badge">MOD</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg-surface);border-radius:var(--radius-md);border:1px solid var(--border);">
+          <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#A8C9E0,#7AA3C8);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#2E5C7C;flex-shrink:0;">S</div>
+          <div style="flex:1;"><div style="font-size:var(--t4);font-weight:600;color:var(--ink-1);">Sara</div><div style="font-size:var(--t5);color:var(--ink-3);" data-i18n="comm_mod_role">Community Moderator</div></div>
+          <div style="font-size:10px;padding:3px 8px;border-radius:12px;background:var(--red-light);color:var(--red);font-weight:700;" data-i18n="comm_mod_badge">MOD</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg-surface);border-radius:var(--radius-md);border:1px solid var(--border);">
+          <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#C9E0A8,#A3C87A);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#3A6B2A;flex-shrink:0;">K</div>
+          <div style="flex:1;"><div style="font-size:var(--t4);font-weight:600;color:var(--ink-1);">Khalid</div><div style="font-size:var(--t5);color:var(--ink-3);" data-i18n="comm_mod_role">Community Moderator</div></div>
+          <div style="font-size:10px;padding:3px 8px;border-radius:12px;background:var(--red-light);color:var(--red);font-weight:700;" data-i18n="comm_mod_badge">MOD</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:32px;" aria-hidden="true"></div>
+  </div>
+
+</div><!-- /screen-comm-info -->
+
+<!-- ═══════════════════════════════════════
+     SCREEN: USER LIBRARY (read-only, from community)
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-user-library">
+
+  <div class="sub-header">
+    <button class="dip-back-btn" id="user-lib-back-btn" onclick="closeUserLibrary()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" id="user-lib-header-title" style="flex:1;"></span>
+    <button id="user-lib-msg-btn" class="icon-btn" style="width:36px;height:36px;flex-shrink:0;" onclick="openChatFromLibrary()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    </button>
+  </div>
+
+  <div class="scroll-area">
+
+    <!-- Hero — reuses flib-hero CSS -->
+    <div class="flib-hero">
+      <div class="flib-avatar-ring">
+        <div class="flib-avatar-inner">
+          <div class="flib-avatar-fallback" id="user-lib-avatar-initials">?</div>
+        </div>
+      </div>
+      <div class="flib-name" id="user-lib-name"></div>
+      <div class="flib-meta-row" id="user-lib-meta-row">
+        <div class="flib-meta-item">
+          <div class="flib-meta-v" id="user-lib-stat-owned">0</div>
+          <div class="flib-meta-l" data-i18n="library_owned">Owned</div>
+        </div>
+        <div class="flib-meta-sep"></div>
+        <div class="flib-meta-item">
+          <div class="flib-meta-v" id="user-lib-stat-liked">0</div>
+          <div class="flib-meta-l" data-i18n="library_liked">Liked</div>
+        </div>
+        <div class="flib-meta-sep"></div>
+        <div class="flib-meta-item">
+          <div class="flib-meta-v" id="user-lib-stat-want">0</div>
+          <div class="flib-meta-l" data-i18n="library_want">Want to Try</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Private state -->
+    <div id="user-lib-private-msg" style="display:none;padding:48px 32px;text-align:center;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:48px;height:48px;color:var(--ink-3);opacity:0.4;margin:0 auto 16px;display:block;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      <div style="font-size:var(--t3);font-weight:600;color:var(--ink-1);margin-bottom:8px;" data-i18n="user_lib_private_title">This library is private</div>
+      <div style="font-size:var(--t4);color:var(--ink-3);line-height:1.6;" data-i18n="user_lib_private_sub">This user has chosen to keep their fragrance collection private.</div>
+    </div>
+
+    <!-- Public content -->
+    <div id="user-lib-public-content" style="display:none;">
+      <!-- Tabs -->
+      <div class="flib-tabs" style="margin-top:16px;">
+        <div class="flib-tab active" id="user-lib-tab-owned" onclick="userLibSwitchTab('owned')" data-i18n="library_owned">Owned</div>
+        <div class="flib-tab" id="user-lib-tab-liked" onclick="userLibSwitchTab('liked')" data-i18n="library_liked">Liked</div>
+        <div class="flib-tab" id="user-lib-tab-want"  onclick="userLibSwitchTab('want')"  data-i18n="library_want">Want to Try</div>
+      </div>
+      <div id="user-lib-grid-owned" class="flib-grid"></div>
+      <div id="user-lib-grid-liked" class="flib-grid" style="display:none;"></div>
+      <div id="user-lib-grid-want"  class="flib-grid" style="display:none;"></div>
+    </div>
+
+    <div style="height:24px;" aria-hidden="true"></div>
+  </div>
+
+</div><!-- /screen-user-library -->
 
 <!-- ═══════════════════════════════════════
      SCREEN: RECENTLY VIEWED
@@ -4569,6 +4850,75 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   </div>
 
 </div><!-- /screen-comm-post-detail -->
+
+<!-- ═══════════════════════════════════════
+     SCREEN: MESSAGES (inbox)
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-messages">
+
+  <div class="sub-header">
+    <button class="dip-back-btn" onclick="switchScreen('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" data-i18n="nav_messages">Messages</span>
+  </div>
+
+  <div class="scroll-area">
+    <div class="msg-conv-list" id="msg-conv-list"></div>
+    <div id="msg-empty" style="display:none;padding:64px 32px;text-align:center;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:48px;height:48px;color:var(--ink-3);opacity:0.4;margin:0 auto 16px;display:block;"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      <div style="font-size:var(--t3);font-weight:600;color:var(--ink-1);margin-bottom:8px;" data-i18n="msg_empty_title">No messages yet</div>
+      <div style="font-size:var(--t4);color:var(--ink-3);line-height:1.6;" data-i18n="msg_empty_sub">Start a conversation by visiting a user's library.</div>
+    </div>
+    <div style="height:16px;" aria-hidden="true"></div>
+  </div>
+
+</div><!-- /screen-messages -->
+
+<!-- ═══════════════════════════════════════
+     SCREEN: CHAT (conversation)
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-chat">
+
+  <!-- Header: back arrow on left, user info centered, spacer on right -->
+  <div class="ai-chat-bar">
+    <button class="dip-back-btn" onclick="closeChatScreen()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <div style="display:flex;flex-direction:column;align-items:center;flex:1;">
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span id="chat-header-name" style="font-size:var(--t4);font-weight:600;color:var(--ink-1);"></span>
+        <span style="font-size:var(--t6);color:var(--green);" data-i18n="chat_online">● Online</span>
+      </div>
+    </div>
+    <div style="width:36px;"></div>
+  </div>
+
+  <div class="chat-messages" id="chat-messages"></div>
+
+  <!-- Input bar — matches AI chat pattern -->
+  <div class="ai-input-bar">
+    <button class="ai-mic-btn" id="chat-mic-btn" onclick="chatToggleMic()" aria-label="Voice message">
+      <svg id="chat-mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+    </button>
+    <div class="ai-input-wrap" id="chat-input-wrap">
+      <input class="ai-input" id="chat-input" type="text"
+        data-i18n="chat_placeholder"
+        placeholder="Write a message…"
+        onkeydown="if(event.key==='Enter')chatSend()"/>
+    </div>
+    <div class="ai-recording-wrap" id="chat-recording-wrap" style="display:none;">
+      <div class="ai-waveform">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <span class="ai-rec-time" id="chat-rec-time">0:00</span>
+    </div>
+    <button class="ai-send-btn" id="chat-send-btn" onclick="chatSend()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+
+</div><!-- /screen-chat -->
 
 </div><!-- /phone-frame -->
 </div><!-- /app-root -->
@@ -6101,8 +6451,8 @@ function renderAlerts() {
   var summary = document.getElementById('alerts-summary');
   if (!list) return;
 
-  var active = PRODUCTS.filter(function(p) { return _alertStates[p.id]; });
-  var totalSavings = active.reduce(function(s,p) { return s + p.savings; }, 0);
+  var active = uniqueProducts(PRODUCTS.filter(function(p) { return _alertStates[p.id]; }));
+  var totalSavings = active.reduce(function(s,p) { return s + (getSavings(p.id) || 0); }, 0);
 
   if (active.length > 0) {
     summary.style.display = 'flex';
@@ -6119,6 +6469,10 @@ function renderAlerts() {
 
   list.innerHTML = '';
   active.forEach(function(p, i) {
+    var lo         = getLowestPrice(p.id);
+    var sv         = getSavings(p.id) || 0;
+    var storeCount = getStoresCount(p.id) || 0;
+    var cur        = LANG === 'ar' ? p.currencyAr : p.currencyEn;
     var isDown = (i % 2 === 0);
     var movHtml = isDown
       ? '<span class="alert-v3-movement movement-down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/><line x1="12" y1="9" x2="12" y2="20"/></svg>' + T('alerts_decreased') + '</span>'
@@ -6141,9 +6495,9 @@ function renderAlerts() {
         '<div class="toggle" onclick="event.stopPropagation();requestAlertDisable(\'' + p.id + '\')"><div class="toggle-thumb"></div></div>' +
       '</div>' +
       '<div class="alert-v3-prices">' +
-        '<span class="alert-v3-lowest-badge">' + T('card_lowest') + ' ' + price(p.lowestPrice, p) + '</span>' +
+        '<span class="alert-v3-lowest-badge">' + T('card_lowest') + ' ' + (lo !== null ? lo + ' ' + cur : '--') + '</span>' +
         movHtml +
-        '<span class="alert-v3-stores">' + T('alerts_in_stores') + ' ' + p.storesCount + ' ' + T('alerts_stores') + '</span>' +
+        '<span class="alert-v3-stores">' + T('alerts_in_stores') + ' ' + storeCount + ' ' + T('alerts_stores') + '</span>' +
       '</div>';
 
     list.appendChild(card);
@@ -6610,6 +6964,9 @@ function doLogout() {
    Called by setLang() in translations.js after DOM update
 ══════════════════════════════════════════════════════════ */
 function onLangChange(lang) {
+  /* App name in home header */
+  var appName = document.getElementById('home-app-name');
+  if (appName) appName.textContent = lang === 'ar' ? 'يوردس' : 'YOURDIS';
   /* Input placeholders */
   document.querySelectorAll('input[data-i18n], textarea[data-i18n]').forEach(function(el) {
     el.placeholder = T(el.getAttribute('data-i18n'));
@@ -7551,95 +7908,273 @@ function filterBrandPageSearch(query) {
 }
 
 /* ══════════════════════════════════════════════════════════
+   USER LIBRARY — read-only view (from community)
+══════════════════════════════════════════════════════════ */
+
+var _userLibraries = {
+  'Turki_Oud': {
+    isPublic: true,
+    owned:    ['dior-sauvage-elixir', 'creed-aventus', 'tomford-black-orchid'],
+    liked:    ['chanel-bleu-edp', 'ysl-libre-intense'],
+    want:     ['mfk-baccarat-rouge-540']
+  },
+  'Nora_Scents': {
+    isPublic: true,
+    owned:    ['ysl-libre-intense', 'chanel-bleu-edp'],
+    liked:    ['tomford-black-orchid'],
+    want:     ['dior-sauvage-elixir', 'mfk-baccarat-rouge-540']
+  },
+  'Faisal_99': {
+    isPublic: false,
+    owned:    [],
+    liked:    [],
+    want:     []
+  },
+  'AbdulR_KSA': {
+    isPublic: false,
+    owned:    [],
+    liked:    [],
+    want:     []
+  },
+  'Khalil_Frags': {
+    isPublic: true,
+    owned:    ['chanel-bleu-edp'],
+    liked:    ['dior-sauvage-elixir', 'creed-aventus'],
+    want:     ['mfk-baccarat-rouge-540', 'ysl-libre-intense']
+  },
+  'Layla_Notes': {
+    isPublic: true,
+    owned:    ['ysl-libre-intense', 'tomford-black-orchid'],
+    liked:    ['mfk-baccarat-rouge-540'],
+    want:     ['creed-aventus']
+  }
+};
+
+var _userLibOrigin = 'community';
+
+function openUserLibrary(username, origin) {
+  _userLibOrigin = origin || 'community';
+  var data = _userLibraries[username] || { isPublic: false, owned: [], liked: [], want: [] };
+
+  var headerTitle = document.getElementById('user-lib-header-title');
+  if (headerTitle) headerTitle.textContent = username;
+
+  var initials = document.getElementById('user-lib-avatar-initials');
+  if (initials) initials.textContent = username.charAt(0).toUpperCase();
+
+  var nameEl = document.getElementById('user-lib-name');
+  if (nameEl) nameEl.textContent = username;
+
+  var privatMsg     = document.getElementById('user-lib-private-msg');
+  var publicContent = document.getElementById('user-lib-public-content');
+  var metaRow       = document.getElementById('user-lib-meta-row');
+
+  if (!data.isPublic) {
+    if (metaRow)       metaRow.style.display       = 'none';
+    if (privatMsg)     privatMsg.style.display     = 'block';
+    if (publicContent) publicContent.style.display = 'none';
+  } else {
+    if (metaRow)       metaRow.style.display       = 'flex';
+    if (privatMsg)     privatMsg.style.display     = 'none';
+    if (publicContent) publicContent.style.display = 'block';
+
+    function resolveProducts(ids) {
+      return ids.map(function(id) {
+        return PRODUCTS.find(function(p) { return p.id === id || p.variantGroupId === id; });
+      }).filter(Boolean);
+    }
+
+    var owned = resolveProducts(data.owned);
+    var liked = resolveProducts(data.liked);
+    var want  = resolveProducts(data.want);
+
+    document.getElementById('user-lib-stat-owned').textContent = owned.length;
+    document.getElementById('user-lib-stat-liked').textContent = liked.length;
+    document.getElementById('user-lib-stat-want').textContent  = want.length;
+
+    _userLibRenderGrid('owned', owned);
+    _userLibRenderGrid('liked', liked);
+    _userLibRenderGrid('want',  want);
+    userLibSwitchTab('owned');
+  }
+
+  switchScreen('user-library');
+  var scroll = document.querySelector('#screen-user-library .scroll-area');
+  if (scroll) scroll.scrollTop = 0;
+}
+
+function closeUserLibrary() {
+  switchScreen(_userLibOrigin);
+}
+
+function userLibSwitchTab(tab) {
+  ['owned', 'liked', 'want'].forEach(function(t) {
+    var tabEl  = document.getElementById('user-lib-tab-' + t);
+    var gridEl = document.getElementById('user-lib-grid-' + t);
+    if (tabEl)  tabEl.classList.toggle('active', t === tab);
+    if (gridEl) gridEl.style.display = (t === tab) ? 'grid' : 'none';
+  });
+}
+
+function _userLibRenderGrid(tab, items) {
+  var container = document.getElementById('user-lib-grid-' + tab);
+  if (!container) return;
+  container.innerHTML = '';
+  if (!items || items.length === 0) {
+    var emptyDiv = document.createElement('div');
+    emptyDiv.className = 'flib-empty';
+    emptyDiv.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:48px;height:48px;">' +
+        '<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>' +
+      '</svg>' +
+      '<div class="flib-empty-title">' + (LANG === 'ar' ? 'لا توجد عطور هنا' : 'Nothing here yet') + '</div>';
+    container.appendChild(emptyDiv);
+    return;
+  }
+  items.forEach(function(p) {
+    var item = document.createElement('div');
+    item.className = 'flib-grid-item';
+    item.onclick = function() { openComparePage(p.id, 'user-library'); };
+    item.innerHTML =
+      '<div class="flib-item-bg" style="background:' + p.bg + ';">' +
+        '<img loading="lazy" class="flib-item-img" src="' + p.img + '" alt="" onerror="this.parentElement.innerHTML=\'<div class=flib-item-initials>' + (p.initials || '◈') + '</div>\'">' +
+      '</div>' +
+      '<div class="flib-item-overlay">' +
+        '<span class="flib-item-overlay-name">' + P(p, 'name') + '</span>' +
+      '</div>';
+    container.appendChild(item);
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
    COMMUNITY SCREEN
 ══════════════════════════════════════════════════════════ */
 
 var _commPosts = [
   {
     id: 'c1', type: 'inquiry',
+    username: 'Faisal_99',
     msgEn: 'Looking for a fragrance similar to Baccarat Rouge 540 but at a more affordable price point. Any recommendations from the community?',
     msgAr: 'أبحث عن عطر مشابه لباكارات روج 540 ولكن بسعر أقل. هل لديكم توصيات؟',
     time: '5m', replies: 4,
-    productId: null, image: null
+    productId: null, image: null, verified: false
   },
   {
     id: 'c2', type: 'sale',
+    username: 'Turki_Oud',
     msgEn: 'Sauvage Elixir 60ml – used about 15%. Bought recently, selling because it doesn\'t suit my skin. Excellent condition.',
     msgAr: 'سوفاج إكسير 60 مل - استخدام 15% تقريباً. بحالة ممتازة، أبيعه لأنه لا يناسب جلدي.',
     time: '23m', replies: 2,
     price: 480,
-    productId: null, image: 'jpeg1.jpg'
+    productId: null, image: 'jpeg1.jpg', verified: true
   },
   {
     id: 'c3', type: 'inquiry',
+    username: 'Nora_Scents',
     msgEn: 'Does anyone know if Black Orchid performs better in cold or warm weather? Planning to buy it as a winter scent.',
     msgAr: 'هل بلاك أوركيد أداؤه أفضل في الطقس البارد أم الحار؟ أفكر في شرائه كعطر شتوي.',
     time: '1h', replies: 7,
-    productId: null, image: null
+    productId: null, image: null, verified: false
   },
   {
     id: 'c4', type: 'sale',
+    username: 'AbdulR_KSA',
     msgEn: 'Libre Intense 90ml – 30% used. My wife bought it but prefers something lighter. Original box included.',
     msgAr: 'ليبر إنتنس 90 مل – استخدام 30%. مع العلبة الأصلية.',
     time: '3h', replies: 1,
     price: 320,
-    productId: null, image: 'jpeg2.jpg'
+    productId: null, image: 'jpeg2.jpg', verified: false
   },
   {
     id: 'c5', type: 'inquiry',
+    username: 'Khalil_Frags',
     msgEn: 'What is the longevity like on Bleu de Chanel EDP? I\'ve heard mixed reviews about sillage.',
     msgAr: 'كم تدوم رائحة بلو دو شانيل أو دو بارفيوم؟ سمعت آراء متباينة عن الأثر.',
     time: '6h', replies: 12,
-    productId: 'chanel-bleu-edp', image: null
+    productId: 'chanel-bleu-edp', image: null, verified: false
   },
   {
     id: 'c6', type: 'inquiry',
+    username: 'Layla_Notes',
     msgEn: 'What is the best fresh summer fragrance for 2026? Looking for something that lasts all day in the heat.',
     msgAr: 'ما هو أفضل عطر صيفي منعش لعام 2026؟ أبحث عن شيء يدوم طوال اليوم في الحر.',
     time: '8h', replies: 15,
-    productId: null, image: null
+    productId: null, image: null, verified: false
   },
   {
     id: 'c7', type: 'sale',
+    username: 'Turki_Oud',
     msgEn: 'Creed Aventus 100ml - Brand new, still in plastic. Unwanted gift. Authenticity guaranteed.',
     msgAr: 'كريد أفينتوس 100 مل - جديد تماماً، مازال مغلفاً. هدية غير مرغوب فيها. الأصالة مضمونة.',
     time: '12h', replies: 0,
     price: 1100,
-    productId: null, image: 'jpeg3.jpg'
+    productId: null, image: 'jpeg3.jpg', verified: true
+  },
+  {
+    id: 'c8', type: 'article',
+    username: 'Faisal_99',
+    msgEn: 'Why does the same fragrance smell different on different people? It all comes down to skin chemistry — pH levels, moisture, and natural oils all interact with the top notes and change how a scent develops on you. This is why testing on your own skin is the only true way to judge a fragrance.',
+    msgAr: 'لماذا يبدو نفس العطر مختلفاً على أشخاص مختلفين؟ السبب هو كيمياء الجلد — مستوى الحموضة والرطوبة والزيوت الطبيعية تتفاعل مع النوتات الأولى وتغير طريقة تطور العطر على بشرتك. لهذا السبب، الاختبار على جلدك هو الطريقة الوحيدة الحقيقية للحكم على أي عطر.',
+    time: '1d', replies: 9,
+    productId: null, image: null, verified: false
+  },
+  {
+    id: 'c9', type: 'article',
+    username: 'Nora_Scents',
+    msgEn: 'A beginner\'s guide to fragrance concentration: EdP vs EdT vs Parfum. Parfum (Extrait) has the highest concentration (20–40%) and lasts all day. Eau de Parfum (15–20%) is the sweet spot for most people — great longevity without being overwhelming. Eau de Toilette (5–15%) is lighter and better for daily or warm-weather wear.',
+    msgAr: 'دليل المبتدئين لتركيزات العطور: أو دو بارفيوم مقابل أو دو تواليت مقابل بارفيوم. البارفيوم (إكسترا) يحتوي على أعلى تركيز (20–40%) ويدوم طوال اليوم. أو دو بارفيوم (15–20%) هو الخيار الأمثل لمعظم الناس — ثبات ممتاز دون إفراط. أو دو تواليت (5–15%) أخف وأنسب للاستخدام اليومي أو في الطقس الحار.',
+    time: '2d', replies: 14,
+    productId: null, image: null, verified: false
   }
 ];
 
 var _commSelectedType = null;
 var _commSelectedProductId = null;
+var _commFilter = 'all';
+
+function setCommFilter(filter) {
+  _commFilter = filter;
+  var chips = document.querySelectorAll('.comm-filter-chip');
+  chips.forEach(function(c) {
+    c.classList.toggle('active', c.getAttribute('data-filter') === filter);
+  });
+  renderCommunityFeed();
+}
 
 function renderCommunityFeed() {
   var feed  = document.getElementById('comm-feed');
   var empty = document.getElementById('comm-empty');
   if (!feed) return;
   feed.innerHTML = '';
-  if (_commPosts.length === 0) {
+
+  var posts = _commFilter === 'all'
+    ? _commPosts
+    : _commPosts.filter(function(p) { return p.type === _commFilter; });
+
+  if (posts.length === 0) {
     if (empty) empty.style.display = 'flex';
     return;
   }
   if (empty) empty.style.display = 'none';
 
-  _commPosts.forEach(function(post) {
+  posts.forEach(function(post) {
     var card = document.createElement('div');
     card.className = 'comm-card';
     card.style.cursor = 'pointer';
     card.addEventListener('click', (function(pid){ return function(){ openCommPostDetail(pid); }; })(post.id));
 
     var isInquiry = post.type === 'inquiry';
-    var badgeClass = isInquiry ? 'comm-badge-inquiry' : 'comm-badge-sale';
-    var badgeLabel = isInquiry ? T('comm_badge_inquiry') : T('comm_badge_sale');
+    var isArticle = post.type === 'article';
+    var badgeClass = isInquiry ? 'comm-badge-inquiry' : (isArticle ? 'comm-badge-article' : 'comm-badge-sale');
+    var badgeLabel = isInquiry ? T('comm_badge_inquiry') : (isArticle ? T('comm_badge_article') : T('comm_badge_sale'));
     var msg = LANG === 'ar' ? post.msgAr : post.msgEn;
 
     var priceTag = '';
-    if (!isInquiry && post.price) {
+    if (!isInquiry && !isArticle && post.price) {
       priceTag = '<span class="comm-price-tag">◈ ' + post.price + ' SAR</span>';
     }
 
-    var product = (isInquiry && post.productId) ? PRODUCTS.find(function(p){ return p.id === post.productId || p.variantGroupId === post.productId; }) : null;
+    var product = ((isInquiry || isArticle) && post.productId) ? PRODUCTS.find(function(p){ return p.id === post.productId || p.variantGroupId === post.productId; }) : null;
     var thumbHtml = '';
     if (product) {
       thumbHtml =
@@ -7648,7 +8183,7 @@ function renderCommunityFeed() {
             '<img loading="lazy" src="' + product.img + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
           '</div>' +
         '</div>';
-    } else if (!isInquiry && post.image) {
+    } else if (!isInquiry && !isArticle && post.image) {
       thumbHtml =
         '<div class="comm-card-thumb">' +
           '<img loading="lazy" src="' + post.image + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
@@ -7657,16 +8192,19 @@ function renderCommunityFeed() {
 
     var replyLabel = T('comm_replies');
 
-    /* Random user for demo */
-    var username = 'User_' + post.id.slice(-3);
+    /* Username and verified badge */
+    var username = post.username || ('User_' + post.id.slice(-3));
     var initials = username.charAt(0).toUpperCase();
+    var verifiedBadge = post.verified
+      ? '<svg viewBox="0 0 24 24" fill="none" style="width:13px;height:13px;flex-shrink:0;margin-left:3px;"><path fill="#EAA005" d="M12 2l1.8 2.1 2.6-.8 1 2.5 2.7.2.1 2.7 2.4 1.2-.9 2.5 1.6 2.2-1.9 1.8.6 2.6-2.6.6-.8 2.6-2.5-.9-2.1 1.7-2.1-1.7-2.5.9-.8-2.6-2.6-.6.6-2.6-1.9-1.8 1.6-2.2-.9-2.5 2.4-1.2.1-2.7 2.7-.2 1-2.5 2.6.8z"/><path stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7.5 12.5l3 3 5-6"/></svg>'
+      : '';
 
     card.innerHTML =
       '<div class="comm-card-body">' +
         '<div class="comm-card-top">' +
           '<div class="comm-user">' +
             '<div class="comm-user-avatar">' + initials + '</div>' +
-            '<span class="comm-username">' + username + '</span>' +
+            '<span class="comm-username" style="display:flex;align-items:center;gap:0;cursor:pointer;" onclick="event.stopPropagation();openUserLibrary(\'' + username + '\',\'community\')">' + username + verifiedBadge + '</span>' +
           '</div>' +
           '<div style="display:flex;align-items:center;gap:8px;">' +
             priceTag +
@@ -7685,22 +8223,35 @@ function renderCommunityFeed() {
   });
 }
 
+function openCommInfo() {
+  switchScreen('comm-info');
+}
+
+function closeCommInfo() {
+  switchScreen('community');
+}
+
 function openCommModal() {
   _commSelectedType = null;
   _commSelectedProductId = null;
   document.getElementById('comm-step-type').style.display = '';
   document.getElementById('comm-form-inquiry').style.display = 'none';
   document.getElementById('comm-form-sale').style.display = 'none';
+  document.getElementById('comm-form-article').style.display = 'none';
   document.getElementById('comm-modal-footer').style.display = 'none';
   document.getElementById('comm-type-inquiry').classList.remove('selected');
   document.getElementById('comm-type-sale').classList.remove('selected');
-  var inquiryMsg = document.getElementById('comm-inquiry-msg');
-  var saleMsg    = document.getElementById('comm-sale-msg');
-  var salePrice  = document.getElementById('comm-sale-price');
-  if (inquiryMsg) inquiryMsg.value = '';
-  if (saleMsg)    saleMsg.value    = '';
-  if (salePrice)  salePrice.value  = '';
+  document.getElementById('comm-type-article').classList.remove('selected');
+  var inquiryMsg  = document.getElementById('comm-inquiry-msg');
+  var saleMsg     = document.getElementById('comm-sale-msg');
+  var salePrice   = document.getElementById('comm-sale-price');
+  var articleMsg  = document.getElementById('comm-article-msg');
+  if (inquiryMsg)  inquiryMsg.value  = '';
+  if (saleMsg)     saleMsg.value     = '';
+  if (salePrice)   salePrice.value   = '';
+  if (articleMsg)  articleMsg.value  = '';
   commRemoveProduct('inquiry');
+  commRemoveProduct('article');
   document.getElementById('comm-modal-overlay').classList.add('visible');
 }
 
@@ -7712,8 +8263,10 @@ function selectCommType(type) {
   _commSelectedType = type;
   document.getElementById('comm-type-inquiry').classList.toggle('selected', type === 'inquiry');
   document.getElementById('comm-type-sale').classList.toggle('selected', type === 'sale');
+  document.getElementById('comm-type-article').classList.toggle('selected', type === 'article');
   document.getElementById('comm-form-inquiry').style.display = type === 'inquiry' ? '' : 'none';
   document.getElementById('comm-form-sale').style.display    = type === 'sale'    ? '' : 'none';
+  document.getElementById('comm-form-article').style.display = type === 'article' ? '' : 'none';
   document.getElementById('comm-modal-footer').style.display = '';
   document.getElementById('comm-step-type').style.display = 'none';
 }
@@ -7782,8 +8335,10 @@ function commSetProductPreview(p) {
 
 function commRemoveProduct(formType) {
   _commSelectedProductId = null;
-  var preview = document.getElementById('comm-inquiry-product-preview');
-  if (preview) preview.style.display = 'none';
+  var inquiryPreview = document.getElementById('comm-inquiry-product-preview');
+  var articlePreview = document.getElementById('comm-article-product-preview');
+  if (inquiryPreview) inquiryPreview.style.display = 'none';
+  if (articlePreview) articlePreview.style.display = 'none';
 }
 
 function commPickGallery() {
@@ -7806,6 +8361,8 @@ function submitCommPost() {
     msg = (document.getElementById('comm-inquiry-msg').value || '').trim();
   } else if (_commSelectedType === 'sale') {
     msg = (document.getElementById('comm-sale-msg').value || '').trim();
+  } else if (_commSelectedType === 'article') {
+    msg = (document.getElementById('comm-article-msg').value || '').trim();
   }
   if (!msg) return;
 
@@ -7820,7 +8377,8 @@ function submitCommPost() {
     time: LANG === 'ar' ? 'الآن' : 'now',
     replies: 0,
     price: priceVal,
-    productId: _commSelectedProductId || null
+    productId: _commSelectedProductId || null,
+    image: null
   };
 
   _commPosts.unshift(newPost);
@@ -7860,13 +8418,17 @@ function _renderPostDetail(post) {
   var body = document.getElementById('comm-post-detail-body');
   if (!body) return;
   var isInquiry  = post.type === 'inquiry';
-  var badgeClass = isInquiry ? 'comm-badge-inquiry' : 'comm-badge-sale';
-  var badgeLabel = isInquiry ? T('comm_badge_inquiry') : T('comm_badge_sale');
+  var isArticle  = post.type === 'article';
+  var badgeClass = isInquiry ? 'comm-badge-inquiry' : (isArticle ? 'comm-badge-article' : 'comm-badge-sale');
+  var badgeLabel = isInquiry ? T('comm_badge_inquiry') : (isArticle ? T('comm_badge_article') : T('comm_badge_sale'));
   var msg        = LANG === 'ar' ? post.msgAr : post.msgEn;
-  var username   = 'User_' + post.id.slice(-3);
+  var username   = post.username || ('User_' + post.id.slice(-3));
   var initial    = username.charAt(0).toUpperCase();
+  var verifiedBadge = post.verified
+    ? '<svg viewBox="0 0 24 24" fill="none" style="width:13px;height:13px;flex-shrink:0;margin-left:3px;vertical-align:middle;"><path fill="#EAA005" d="M12 2l1.8 2.1 2.6-.8 1 2.5 2.7.2.1 2.7 2.4 1.2-.9 2.5 1.6 2.2-1.9 1.8.6 2.6-2.6.6-.8 2.6-2.5-.9-2.1 1.7-2.1-1.7-2.5.9-.8-2.6-2.6-.6.6-2.6-1.9-1.8 1.6-2.2-.9-2.5 2.4-1.2.1-2.7 2.7-.2 1-2.5 2.6.8z"/><path stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7.5 12.5l3 3 5-6"/></svg>'
+    : '';
 
-  var product = (isInquiry && post.productId) ? PRODUCTS.find(function(p){ return p.id === post.productId || p.variantGroupId === post.productId; }) : null;
+  var product = ((isInquiry || isArticle) && post.productId) ? PRODUCTS.find(function(p){ return p.id === post.productId || p.variantGroupId === post.productId; }) : null;
   var productHtml = '';
   if (product) {
     var pname  = LANG === 'ar' ? product.nameAr  : product.nameEn;
@@ -7903,7 +8465,7 @@ function _renderPostDetail(post) {
       '<div class="comm-post-user">',
         '<div class="comm-post-avatar">' + initial + '</div>',
         '<div>',
-          '<div class="comm-post-uname">' + username + '</div>',
+          '<div class="comm-post-uname" style="display:flex;align-items:center;gap:0;cursor:pointer;" onclick="openUserLibrary(\'' + username + '\',\'comm-post-detail\')">' + username + verifiedBadge + '</div>',
           '<div class="comm-post-time">' + post.time + '</div>',
         '</div>',
       '</div>',
@@ -8381,7 +8943,193 @@ document.addEventListener('DOMContentLoaded', function() {
   setLang(initLang); /* triggers renderProductCards + onLangChange → renderStores + renderAlerts */
   renderInterestsGrid();
   setTimeout(_seedDemoReplies, 200);
+  setTimeout(renderMessagesList, 300);
 });
+</script>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   PRIVATE MESSAGING
+══════════════════════════════════════════════════════════ */
+
+/* Demo conversations data */
+var _conversations = {
+  'Turki_Oud': {
+    messages: [
+      { from: 'them', text: 'Hi! Is the Sauvage Elixir still available?', time: '10:14 AM' },
+      { from: 'me',   text: 'Yes, still available! Barely used, great condition.', time: '10:17 AM' },
+      { from: 'them', text: 'What\'s your best price? Can you do 450?', time: '10:19 AM' },
+      { from: 'me',   text: 'I can do 460, final offer.', time: '10:22 AM' },
+      { from: 'them', text: 'Deal. How do we arrange pickup?', time: '10:24 AM' }
+    ],
+    unread: true
+  },
+  'Nora_Scents': {
+    messages: [
+      { from: 'me',   text: 'Hey! Loved your article on skin chemistry.', time: 'Yesterday' },
+      { from: 'them', text: 'Thank you so much! Glad it was helpful 😊', time: 'Yesterday' }
+    ],
+    unread: false
+  }
+};
+
+var _activeChatUser = null;
+var _chatOrigin     = 'messages';
+
+function openMessages() {
+  renderMessagesList();
+  switchScreen('messages');
+}
+
+function renderMessagesList() {
+  var list  = document.getElementById('msg-conv-list');
+  var empty = document.getElementById('msg-empty');
+  if (!list) return;
+  list.innerHTML = '';
+
+  var users = Object.keys(_conversations);
+  if (users.length === 0) {
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+
+  var hasUnread = false;
+  users.forEach(function(username) {
+    var conv     = _conversations[username];
+    var last     = conv.messages[conv.messages.length - 1];
+    var initials = username.charAt(0).toUpperCase();
+    var preview  = (last.from === 'me' ? (LANG === 'ar' ? 'أنت: ' : 'You: ') : '') + last.text;
+    if (conv.unread) hasUnread = true;
+
+    var verified = _userLibraries[username] ? false : false;
+    /* Check if this user is a verified seller */
+    var isVerified = Object.values(_commPosts || []).some(function(p) {
+      return p.username === username && p.verified;
+    });
+    var verifiedBadge = isVerified
+      ? '<svg viewBox="0 0 24 24" fill="none" style="width:13px;height:13px;flex-shrink:0;margin-left:2px;"><path fill="#EAA005" d="M12 2l1.8 2.1 2.6-.8 1 2.5 2.7.2.1 2.7 2.4 1.2-.9 2.5 1.6 2.2-1.9 1.8.6 2.6-2.6.6-.8 2.6-2.5-.9-2.1 1.7-2.1-1.7-2.5.9-.8-2.6-2.6-.6.6-2.6-1.9-1.8 1.6-2.2-.9-2.5 2.4-1.2.1-2.7 2.7-.2 1-2.5 2.6.8z"/><path stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7.5 12.5l3 3 5-6"/></svg>'
+      : '';
+
+    var row = document.createElement('div');
+    row.className = 'msg-conv-row';
+    row.onclick = function() { openChat(username, 'messages'); };
+    row.innerHTML =
+      '<div class="msg-conv-avatar">' + initials + '</div>' +
+      '<div class="msg-conv-info">' +
+        '<div class="msg-conv-name-row">' +
+          '<span class="msg-conv-name">' + username + '</span>' +
+          verifiedBadge +
+        '</div>' +
+        '<div class="msg-conv-preview">' + preview + '</div>' +
+      '</div>' +
+      '<div class="msg-conv-meta">' +
+        '<span class="msg-conv-time">' + last.time + '</span>' +
+        (conv.unread ? '<div class="msg-conv-unread"></div>' : '') +
+      '</div>';
+    list.appendChild(row);
+  });
+
+  /* Update header badge */
+  updateMsgBadge();
+}
+
+function updateMsgBadge() {
+  var hasUnread = Object.values(_conversations).some(function(c) { return c.unread; });
+  var badge = document.getElementById('msg-header-badge');
+  if (badge) badge.style.display = hasUnread ? 'block' : 'none';
+}
+
+function openChat(username, origin) {
+  _activeChatUser = username;
+  _chatOrigin     = origin || 'messages';
+
+  /* Mark as read */
+  if (_conversations[username]) {
+    _conversations[username].unread = false;
+  } else {
+    _conversations[username] = { messages: [], unread: false };
+  }
+  updateMsgBadge();
+
+  /* Header */
+  var name   = document.getElementById('chat-header-name');
+  if (name)   name.textContent   = username;
+
+  renderChatMessages();
+  switchScreen('chat');
+
+  /* Scroll to bottom */
+  setTimeout(function() {
+    var msgs = document.getElementById('chat-messages');
+    if (msgs) msgs.scrollTop = msgs.scrollHeight;
+  }, 50);
+}
+
+function closeChatScreen() {
+  switchScreen(_chatOrigin);
+  if (_chatOrigin === 'messages') renderMessagesList();
+}
+
+function openChatFromLibrary() {
+  var username = document.getElementById('user-lib-header-title').textContent;
+  if (!username) return;
+  openChat(username, 'user-library');
+}
+
+function renderChatMessages() {
+  var container = document.getElementById('chat-messages');
+  if (!container || !_activeChatUser) return;
+  var conv = _conversations[_activeChatUser];
+  if (!conv) return;
+  container.innerHTML = '';
+
+  conv.messages.forEach(function(msg) {
+    var isMine   = msg.from === 'me';
+    var initials = isMine ? 'Me' : _activeChatUser.charAt(0).toUpperCase();
+    var wrap = document.createElement('div');
+    wrap.className = 'chat-bubble-wrap' + (isMine ? ' mine' : '');
+    wrap.innerHTML =
+      (!isMine ? '<div class="chat-bubble-avatar">' + initials + '</div>' : '') +
+      '<div class="chat-bubble ' + (isMine ? 'mine' : 'theirs') + '">' + msg.text + '</div>' +
+      '<span class="chat-bubble-time">' + msg.time + '</span>' +
+      (isMine ? '<div class="chat-bubble-avatar" style="background:var(--red-light);color:var(--red);">Me</div>' : '');
+    container.appendChild(wrap);
+  });
+}
+
+function chatToggleMic() {
+  /* Reuse the same mic logic pattern as AI chat — no-op in prototype */
+  var wrap = document.getElementById('chat-input-wrap');
+  var rec  = document.getElementById('chat-recording-wrap');
+  var btn  = document.getElementById('chat-mic-btn');
+  if (!wrap || !rec) return;
+  var isRec = rec.style.display !== 'none';
+  wrap.style.display = isRec ? '' : 'none';
+  rec.style.display  = isRec ? 'none' : 'flex';
+  if (btn) btn.style.color = isRec ? '' : 'var(--red)';
+}
+
+function chatSend() {
+  var input = document.getElementById('chat-input');
+  if (!input || !_activeChatUser) return;
+  var text = input.value.trim();
+  if (!text) return;
+
+  var now = new Date();
+  var time = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0') +
+             (now.getHours() < 12 ? ' AM' : ' PM');
+
+  if (!_conversations[_activeChatUser]) {
+    _conversations[_activeChatUser] = { messages: [], unread: false };
+  }
+  _conversations[_activeChatUser].messages.push({ from: 'me', text: text, time: time });
+  input.value = '';
+  renderChatMessages();
+  /* Scroll to bottom */
+  var msgs = document.getElementById('chat-messages');
+  if (msgs) msgs.scrollTop = msgs.scrollHeight;
+}
 </script>
 
 <script>
