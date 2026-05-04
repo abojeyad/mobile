@@ -672,6 +672,37 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .cmp-discount  { font-size: 10px; font-weight: 700; color: var(--red); margin-left: 2px; }
 [dir="rtl"] .cmp-discount { margin-left: 0; margin-right: 2px; }
 
+/* ── Compare page: similar products section ── */
+.cmp-similar-divider {
+  height: 8px; background: var(--bg-surface);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  margin-top: 0;
+}
+.cmp-similar-header {
+  padding: 16px 16px 10px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.cmp-similar-label {
+  font-size: var(--t4); font-weight: 700; color: var(--ink-1);
+}
+.cmp-similar-sub {
+  font-size: var(--t5); color: var(--ink-3);
+}
+.cmp-similar-list {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+}
+.cmp-similar-list .dip-alt-card {
+  border-bottom: none;
+  border-top: 1px solid var(--border);
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.cmp-similar-list .dip-alt-card:first-child {
+  border-top: none;
+}
+
 /* Keep these for backward compat with similar-products card */
 .cmp-rating { font-size: var(--t6); font-weight: 600; color: var(--ink-2); white-space: nowrap; }
 .cmp-rating-star { color: #CA8A04; }
@@ -695,7 +726,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .buy-cta-go-btn svg { width:18px; height:18px; flex-shrink:0; }
 
 .prod-info   { padding:16px 20px 0; }
-.prod-name   { font-family:var(--font-display); font-size:24px; color:var(--ink-1); line-height:1.35; margin-bottom:4px; }
+.prod-name   { font-family:var(--font-display); font-size:20px; color:var(--ink-1); line-height:1.35; margin-bottom:4px; }
 .prod-brand  { font-size:var(--t4); color:var(--ink-3); margin-bottom:12px; }
 
 .accords-wrap  { margin-top:16px; padding-top:0; }
@@ -1110,6 +1141,48 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   line-height: 1.3; text-shadow: 0 1px 3px rgba(0,0,0,0.6);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%;
 }
+.flib-confirm-overlay {
+  position: absolute; inset: 0; z-index: 400;
+  background: rgba(0,0,0,0.45);
+  display: none; align-items: flex-end;
+}
+.flib-confirm-overlay.visible { display: flex; }
+.flib-confirm-sheet {
+  background: var(--bg-phone);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  width: 100%; padding-bottom: 28px;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.14);
+  animation: sheetUp 0.25s cubic-bezier(0.32,0.72,0,1);
+}
+.flib-confirm-handle {
+  width: 36px; height: 4px; border-radius: 2px;
+  background: var(--border-strong); margin: 12px auto 16px;
+}
+.flib-confirm-thumb {
+  width: 72px; height: 72px; border-radius: var(--radius-md);
+  overflow: hidden; margin: 0 auto 12px; border: 1px solid var(--border);
+}
+.flib-confirm-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.flib-confirm-name {
+  font-size: var(--t4); font-weight: 700; color: var(--ink-1);
+  text-align: center; padding: 0 20px; margin-bottom: 4px;
+}
+.flib-confirm-sub {
+  font-size: var(--t5); color: var(--ink-3);
+  text-align: center; padding: 0 20px; margin-bottom: 20px;
+}
+.flib-confirm-btn-remove {
+  display: block; width: calc(100% - 40px); margin: 0 20px 10px;
+  height: 48px; border-radius: var(--radius-md);
+  background: #DC2626; color: #fff; font-size: var(--t4); font-weight: 600;
+  border: none; cursor: pointer; font-family: inherit;
+}
+.flib-confirm-btn-cancel {
+  display: block; width: calc(100% - 40px); margin: 0 20px;
+  height: 48px; border-radius: var(--radius-md);
+  background: var(--bg-surface); color: var(--ink-2); font-size: var(--t4); font-weight: 500;
+  border: 1px solid var(--border-strong); cursor: pointer; font-family: inherit;
+}
 .flib-empty {
   display: flex; flex-direction: column; align-items: center;
   padding: 52px 32px; gap: 10px; text-align: center;
@@ -1259,21 +1332,21 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   border-bottom: 1px solid var(--border);
   box-shadow: 0 1px 6px rgba(0,0,0,0.05);
 }
-.comm-header-title { font-size: var(--t3); font-weight: 700; color: var(--ink-1); line-height: 1.2; }
+.comm-header-title { font-size: var(--t4); font-weight: 700; color: var(--ink-1); line-height: 1.2; }
 .comm-header-sub   { font-size: var(--t6); color: var(--ink-3); margin-top: 2px; }
 
 .comm-feed { display: flex; flex-direction: column; gap: 0; }
 
 .comm-card {
-  display: flex; align-items: flex-start; gap: 12px;
+  display: flex; flex-direction: column;
   padding: 14px 20px; border-bottom: 1px solid var(--border);
   cursor: pointer; transition: background 0.1s; background: var(--bg-phone);
 }
 .comm-card:active { background: var(--bg-surface); }
 
 .comm-card-body { flex: 1; min-width: 0; }
-.comm-card-top { display: flex; align-items: center; justify-content: flex-start; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
-.comm-user { display: flex; align-items: center; gap: 8px; }
+.comm-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; gap: 6px; }
+.comm-user { display: flex; align-items: center; gap: 8px; min-width: 0; overflow: hidden; flex-shrink: 1; }
 .comm-user-avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--border); color: var(--ink-2); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
 .comm-username { font-size: var(--t5); font-weight: 600; color: var(--ink-2); }
 
@@ -1285,6 +1358,96 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .comm-badge-article { background: var(--amber-light);   color: #B45309; }
 
 /* ── Community filter chips ── */
+/* ── Community header tweaks ── */
+.comm-header-sub-link {
+  font-size: var(--t6); color: var(--red); margin-top: 2px;
+  display: inline-flex; align-items: center; gap: 3px;
+  text-decoration: underline; text-underline-offset: 2px;
+  cursor: pointer;
+}
+.comm-header-sub-link svg { width: 10px; height: 10px; flex-shrink: 0; }
+
+/* ── Online users pill ── */
+.comm-online-bar {
+  padding: 6px 16px 0;
+  display: flex; align-items: center; gap: 6px;
+}
+.comm-online-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #22C55E; flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(34,197,94,0.22);
+  animation: onlinePulse 2.4s ease-in-out infinite;
+}
+@keyframes onlinePulse {
+  0%,100% { box-shadow: 0 0 0 2px rgba(34,197,94,0.22); }
+  50%      { box-shadow: 0 0 0 4px rgba(34,197,94,0.10); }
+}
+.comm-online-label {
+  font-size: var(--t6); color: var(--ink-3);
+}
+.comm-online-count { font-weight: 700; color: var(--ink-2); }
+
+/* ── Three-dot action button on cards ── */
+.comm-card-actions-btn {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink-3); flex-shrink: 0;
+  transition: background 0.12s; margin-left: auto;
+}
+[dir="rtl"] .comm-card-actions-btn { margin-left: 0; margin-right: auto; }
+.comm-card-actions-btn:active { background: var(--bg-surface); }
+.comm-card-actions-btn svg { width: 16px; height: 16px; pointer-events: none; }
+
+/* Three-dot on reply row */
+.comm-reply-actions-btn {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink-3); flex-shrink: 0;
+  transition: background 0.12s;
+}
+.comm-reply-actions-btn:active { background: var(--bg-surface); }
+.comm-reply-actions-btn svg { width: 14px; height: 14px; pointer-events: none; }
+
+/* ── Community action sheet ── */
+.comm-action-overlay {
+  position: absolute; inset: 0; z-index: 600;
+  background: rgba(0,0,0,0.40);
+  display: none; align-items: flex-end;
+}
+.comm-action-overlay.visible { display: flex; }
+.comm-action-sheet {
+  background: var(--bg-phone);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  width: 100%; padding-bottom: 28px;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
+  animation: sheetUp 0.25s cubic-bezier(0.32,0.72,0,1);
+}
+.comm-action-handle {
+  width: 36px; height: 4px; border-radius: 2px;
+  background: var(--border-strong); margin: 12px auto 8px;
+}
+.comm-action-title {
+  font-size: var(--t6); font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--ink-3);
+  padding: 4px 20px 10px; border-bottom: 1px solid var(--border);
+}
+.comm-action-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 15px 20px; cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+.comm-action-item:last-child { border-bottom: none; }
+.comm-action-item:active { background: var(--bg-surface); }
+.comm-action-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+.comm-action-item-label {
+  font-size: var(--t4); font-weight: 500; color: var(--ink-1);
+}
+.comm-action-item.danger .comm-action-item-label { color: #DC2626; }
+.comm-action-item.danger svg { color: #DC2626; }
+
 .comm-filter-bar {
   display: flex; gap: 8px; padding: 10px 20px 6px;
   overflow-x: auto; flex-shrink: 0; scrollbar-width: none;
@@ -1306,12 +1469,20 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   overflow: hidden; text-overflow: ellipsis; margin-bottom: 8px;
 }
 .comm-card-meta {
+  margin-top: 8px;
   display: flex; align-items: center; gap: 12px;
   font-size: var(--t6); color: var(--ink-3);
 }
 .comm-card-meta-item { display: flex; align-items: center; gap: 4px; }
 .comm-card-meta-item svg { width: 11px; height: 11px; flex-shrink: 0; }
 
+.comm-card-thumb-bottom {
+  margin-top: 10px; border-radius: var(--radius-md);
+  overflow: hidden; height: 160px; width: 100%;
+  border: 1px solid var(--border);
+}
+.comm-card-thumb-bottom img,
+.comm-card-thumb-bottom .prod-img-wrap { width: 100%; height: 100%; object-fit: cover; }
 .comm-card-thumb {
   width: 56px; height: 56px; border-radius: var(--radius-md);
   overflow: hidden; flex-shrink: 0; border: 1px solid var(--border);
@@ -1966,10 +2137,12 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .filter-apply-bar { padding: 16px 20px 24px; flex-shrink: 0; }
 .filter-apply-btn {
   width: 100%; height: 48px; border-radius: var(--radius-md);
-  background: var(--gold); color: #fff; font-size: var(--t3); font-weight: 600;
+  background: #79002F; color: #fff; font-size: var(--t3); font-weight: 600;
   border: none; cursor: pointer; font-family: inherit; transition: opacity 0.15s;
 }
 .filter-apply-btn:hover { opacity: 0.88; }
+/* Top Deals filter sheet keeps gold */
+#td-filter-overlay .filter-apply-btn { background: var(--gold); }
 
 /* ══════════════════════════════════════════════════════════
    PICKER TRIGGER ROW  (Brand / Perfumer / Country in filter sheet)
@@ -2070,7 +2243,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 }
 .picker-apply-btn {
   width: 100%; height: 48px; border-radius: var(--radius-md);
-  background: var(--gold); color: #fff; font-size: var(--t3); font-weight: 600;
+  background: #79002F; color: #fff; font-size: var(--t3); font-weight: 600;
   border: none; cursor: pointer; font-family: inherit; transition: opacity 0.15s;
 }
 .picker-apply-btn:hover { opacity: 0.88; }
@@ -2885,10 +3058,15 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
           <div class="filter-chips-wrap" id="fc-family"></div>
         </div>
 
-        <!-- Accords — chips, sorted by frequency -->
-        <div class="filter-section">
-          <div class="filter-section-label" data-i18n="filter_accords">Accords</div>
-          <div class="filter-chips-wrap" id="fc-accord"></div>
+        <!-- Accords — picker trigger (opens full-screen searchable modal) -->
+        <div class="filter-section" id="fs-accord">
+          <div class="filter-picker-trigger" id="fc-accord-trigger" onclick="openPickerModal('accord')">
+            <div class="filter-picker-trigger-left">
+              <span class="filter-picker-trigger-label" data-i18n="filter_accords">Accords</span>
+              <span class="filter-picker-trigger-value" id="fc-accord-value" data-i18n="picker_any">Any</span>
+            </div>
+            <svg class="filter-picker-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
         </div>
 
         <!-- Season — chips (fixed set) -->
@@ -3118,22 +3296,6 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <div class="stat-card"><div class="stat-l" data-i18n="activity_savings">Potential Savings</div><div class="stat-v">320 SAR</div></div>
     </div>
 
-    <!-- My Interests -->
-    <div class="sec-head" style="margin-bottom:4px;">
-      <span class="sec-label" data-i18n="activity_interests">My Interests</span>
-      <span class="sec-link" data-i18n="activity_edit" onclick="switchScreen('sub-interests')" style="cursor:pointer;">Edit</span>
-    </div>
-    <div style="font-size:var(--t5);color:var(--ink-3);padding:0 20px;margin-bottom:14px;" data-i18n="activity_interests_sub">We've selected default interests for you. Tap Edit to customize them.</div>
-    <div class="pref-chips" style="margin-bottom:20px;">
-      <span class="pref-chip on">Woody / Oud</span>
-      <span class="pref-chip on">Oriental</span>
-      <span class="pref-chip">Niche</span>
-      <span class="pref-chip on">Fresh / Aqua</span>
-      <span class="pref-chip">Floral</span>
-    </div>
-
-    <div class="divider" style="margin:0 0 20px;"></div>
-
     <!-- My Fragrance Library entry -->
     <div class="lib-mosaic-entry" id="lib-mosaic-entry" onclick="openFragranceLibrary()">
 
@@ -3208,6 +3370,23 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <div class="rv-thumb-strip" id="rv-thumb-strip"></div>
 
     </div>
+
+
+    <!-- My Interests -->
+    <div class="sec-head" style="margin-bottom:4px;">
+      <span class="sec-label" data-i18n="activity_interests">My Interests</span>
+      <span class="sec-link" data-i18n="activity_edit" onclick="switchScreen('sub-interests')" style="cursor:pointer;">Edit</span>
+    </div>
+    <div style="font-size:var(--t5);color:var(--ink-3);padding:0 20px;margin-bottom:14px;" data-i18n="activity_interests_sub">We've selected default interests for you. Tap Edit to customize them.</div>
+    <div class="pref-chips" style="margin-bottom:20px;">
+      <span class="pref-chip on">Woody / Oud</span>
+      <span class="pref-chip on">Oriental</span>
+      <span class="pref-chip">Niche</span>
+      <span class="pref-chip on">Fresh / Aqua</span>
+      <span class="pref-chip">Floral</span>
+    </div>
+
+    <div class="divider" style="margin:0 0 20px;"></div>
 
     <div class="divider" style="margin:0;"></div>
 
@@ -3594,7 +3773,17 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
     </div><!-- /cmp-unified-card -->
 
-    <div style="height:20px;" aria-hidden="true"></div>
+    <!-- Divider + similar products -->
+    <div id="compare-similar-wrap" style="display:none;">
+      <div class="cmp-similar-divider"></div>
+      <div class="cmp-similar-header">
+        <span class="cmp-similar-label" data-i18n="compare_similar_title">Similar Products</span>
+        <span class="cmp-similar-sub" data-i18n="compare_similar_sub">Same vibe, different brand</span>
+      </div>
+      <div class="dip-alt-list cmp-similar-list" id="compare-similar-list"></div>
+    </div>
+
+    <div style="height:28px;" aria-hidden="true"></div>
   </div>
 
 </div><!-- /screen-compare -->
@@ -3633,7 +3822,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="buy-cta-bar">
       <button class="buy-cta-go-btn" id="product-cta-go-btn" style="display:flex;justify-content:space-between;align-items:center;padding:0 20px;height:46px;">
         <div style="display:flex;align-items:center;gap:8px;">
-          <span id="product-cta-btn-price" style="font-size:var(--t2);font-weight:700;font-family:var(--font-body);letter-spacing:-0.01em;"></span>
+          <span id="product-cta-btn-price" style="font-size:var(--t2);font-weight:300;font-family:var(--font-body);letter-spacing:-0.01em;"></span>
           <span id="product-cta-btn-badge" style="font-size:var(--t5);background:rgba(255,255,255,0.22);border-radius:20px;padding:2px 8px;"></span>
         </div>
         <div style="display:flex;align-items:center;gap:6px;">
@@ -3998,6 +4187,15 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     </button>
     <!-- Maybe later -->
     <button onclick="closeGuestModal()" style="background:none;border:none;font-size:var(--t5);color:var(--ink-3);cursor:pointer;padding:4px 0;" data-i18n="guest_modal_later">Maybe later</button>
+  </div>
+</div>
+
+<!-- Community action sheet — phone-frame level, visible across all community screens -->
+<div class="comm-action-overlay" id="comm-action-overlay" onclick="if(event.target===this)closeCommActionSheet()">
+  <div class="comm-action-sheet">
+    <div class="comm-action-handle"></div>
+    <div class="comm-action-title" id="comm-action-title"></div>
+    <div id="comm-action-items"></div>
   </div>
 </div>
 
@@ -4406,11 +4604,6 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         </div>
         <div class="flib-meta-sep"></div>
         <div class="flib-meta-item">
-          <div class="flib-meta-v" id="flib-stat-liked">5</div>
-          <div class="flib-meta-l" data-i18n="library_liked">Liked</div>
-        </div>
-        <div class="flib-meta-sep"></div>
-        <div class="flib-meta-item">
           <div class="flib-meta-v" id="flib-stat-want">4</div>
           <div class="flib-meta-l" data-i18n="library_want">Want to Try</div>
         </div>
@@ -4433,16 +4626,28 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <!-- Tabs -->
     <div class="flib-tabs" style="margin-top:16px;">
       <div class="flib-tab active" id="flib-tab-owned" onclick="flibSwitchTab('owned')" data-i18n="library_owned">Owned</div>
-      <div class="flib-tab" id="flib-tab-liked" onclick="flibSwitchTab('liked')" data-i18n="library_liked">Liked</div>
       <div class="flib-tab" id="flib-tab-want" onclick="flibSwitchTab('want')" data-i18n="library_want">Want to Try</div>
     </div>
 
     <!-- Grid containers -->
     <div id="flib-grid-owned" class="flib-grid"></div>
-    <div id="flib-grid-liked" class="flib-grid" style="display:none;"></div>
     <div id="flib-grid-want"  class="flib-grid" style="display:none;"></div>
 
     <div style="height:24px;" aria-hidden="true"></div>
+  </div>
+
+  <!-- Remove confirmation sheet -->
+  <div class="flib-confirm-overlay" id="flib-confirm-overlay" onclick="if(event.target===this)flibCancelRemove()">
+    <div class="flib-confirm-sheet">
+      <div class="flib-confirm-handle"></div>
+      <div class="flib-confirm-thumb" id="flib-confirm-thumb">
+        <img id="flib-confirm-img" src="" alt="">
+      </div>
+      <div class="flib-confirm-name" id="flib-confirm-name"></div>
+      <div class="flib-confirm-sub" data-i18n="flib_confirm_sub">Remove this fragrance from your library?</div>
+      <button class="flib-confirm-btn-remove" onclick="flibDoRemove()" data-i18n="flib_confirm_remove">Remove from Library</button>
+      <button class="flib-confirm-btn-cancel" onclick="flibCancelRemove()" data-i18n="flib_confirm_cancel">Cancel</button>
+    </div>
   </div>
 
   <!-- Toast -->
@@ -4541,8 +4746,8 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         <svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8" style="width:18px;height:18px;"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
       </div>
       <div>
-        <span class="comm-header-title" data-i18n="comm_page_title">Community</span>
-        <div class="comm-header-sub" data-i18n="comm_header_guidelines_hint">View community guidelines</div>
+        <div class="comm-header-title" data-i18n="comm_page_title">Community</div>
+        <div class="comm-header-sub" data-i18n="comm_header_sub">View community guidelines</div>
       </div>
     </div>
     <button class="comm-fab-header" onclick="openCommModal()">
@@ -4557,6 +4762,12 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="comm-filter-chip"        data-filter="inquiry" onclick="setCommFilter('inquiry')" data-i18n="comm_type_inquiry">Inquiry</div>
     <div class="comm-filter-chip"        data-filter="sale"    onclick="setCommFilter('sale')"    data-i18n="comm_type_sale">For Sale</div>
     <div class="comm-filter-chip"        data-filter="article" onclick="setCommFilter('article')" data-i18n="comm_type_article">Article</div>
+  </div>
+
+  <!-- Online users -->
+  <div class="comm-online-bar" id="comm-online-bar">
+    <div class="comm-online-dot"></div>
+    <span class="comm-online-label"><span class="comm-online-count" id="comm-online-count">247</span> <span data-i18n="comm_online_now">online now</span></span>
   </div>
 
   <!-- Feed -->
@@ -4733,6 +4944,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <div class="comm-picker-list" id="comm-picker-list"></div>
     </div>
   </div>
+
 
 </div><!-- /screen-community -->
 
@@ -5916,32 +6128,8 @@ function _buildContextualFilterSheet(products) {
     });
   }
 
-  /* ─── Accords — from p.accords[], sorted by frequency desc ─── */
-  var faEl = document.getElementById('fc-accord');
-  if (faEl) {
-    faEl.innerHTML = '';
-    var accordCount = {};
-    products.forEach(function(p) {
-      if (!p.accords) return;
-      p.accords.forEach(function(acc) {
-        if (!acc.nameEn) return;
-        if (!accordCount[acc.nameEn]) accordCount[acc.nameEn] = { nameAr: acc.nameAr || acc.nameEn, count: 0 };
-        accordCount[acc.nameEn].count++;
-      });
-    });
-    Object.keys(accordCount).sort(function(a, b) {
-      return accordCount[b].count - accordCount[a].count;
-    }).forEach(function(nameEn) {
-      var chip = document.createElement('span');
-      chip.className = 'filter-chip' + ((_activeFilters.accord || []).indexOf(nameEn) !== -1 ? ' active' : '');
-      chip.setAttribute('data-group', 'accord');
-      chip.setAttribute('data-val-en', nameEn);
-      chip.setAttribute('data-val-ar', accordCount[nameEn].nameAr);
-      chip.textContent = LANG === 'ar' ? accordCount[nameEn].nameAr : nameEn;
-      chip.onclick = function() { toggleFilterChip(this); };
-      faEl.appendChild(chip);
-    });
-  }
+  /* ─── Accords — picker trigger ─── */
+  _updatePickerTrigger('accord');
 }
 
 /* Toggle year section between collapsed and expanded */
@@ -6009,6 +6197,25 @@ var _PICKER_CONFIG = {
         items.push({ en: en, ar: bd.countryAr || p.countryAr || en });
       });
       return items;
+    }
+  },
+  accord: {
+    titleEn: 'Accords',        titleAr: 'الإتفاقات الرئيسية',
+    searchEn: 'Search accords…', searchAr: 'ابحث عن وتر…',
+    getItems: function(products) {
+      /* Count frequency so picker sorts by most common first */
+      var freq = {}, meta = {};
+      products.forEach(function(p) {
+        if (!p.accords) return;
+        p.accords.forEach(function(acc) {
+          if (!acc.nameEn) return;
+          freq[acc.nameEn] = (freq[acc.nameEn] || 0) + 1;
+          if (!meta[acc.nameEn]) meta[acc.nameEn] = acc.nameAr || acc.nameEn;
+        });
+      });
+      return Object.keys(freq)
+        .sort(function(a, b) { return freq[b] - freq[a]; })
+        .map(function(en) { return { en: en, ar: meta[en] }; });
     }
   }
 };
@@ -6207,7 +6414,7 @@ function resetFilters(){
   _yearExpanded = false;
   document.querySelectorAll('#filter-overlay .filter-chip').forEach(function(c){c.classList.remove('active');});
   /* Reset picker trigger summaries */
-  ['brand','perfumer','country'].forEach(function(g){
+  ['brand','perfumer','country','accord'].forEach(function(g){
     var el = document.getElementById('fc-' + g + '-value');
     if (el) { el.textContent = T('picker_any'); el.classList.remove('has-selection'); }
   });
@@ -6872,6 +7079,9 @@ function _compareRenderStores(p, sizeFilter) {
       '</div>';
     list.appendChild(card);
   });
+
+  /* Render similar products below */
+  _compareRenderSimilar(variant);
 }
 
 
@@ -6893,6 +7103,96 @@ function _compareAltCard(p) {
       '<div class="dip-alt-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>' +
     '</div>';
   return card;
+}
+
+/* ──────────────────────────────────────────────────────────
+   _compareRenderSimilar(sourceProduct)
+   Renders similar products below the store comparison section.
+   Uses the same .dip-alt-card design as store cards but without
+   any Best Price / Best Choice badges.
+   Excludes the current fragrance group and the same brand.
+────────────────────────────────────────────────────────── */
+function _compareRenderSimilar(sourceProduct) {
+  var wrap = document.getElementById('compare-similar-wrap');
+  var list = document.getElementById('compare-similar-list');
+  if (!wrap || !list) return;
+
+  var srcGid    = sourceProduct.variantGroupId || sourceProduct.id;
+  var srcBrand  = sourceProduct.brandId;
+
+  /* Reuse the cosine similarity scorer if available, else fall back to all */
+  var candidates = uniqueProducts().filter(function(p) {
+    return (p.variantGroupId || p.id) !== srcGid && p.brandId !== srcBrand;
+  });
+
+  if (!candidates.length) { wrap.style.display = 'none'; return; }
+
+  /* Score by accord similarity */
+  function accordVec(p) {
+    var v = {};
+    (p.accords || []).forEach(function(a) { v[a.nameEn] = a.percent; });
+    return v;
+  }
+  function cosineSim(vA, vB) {
+    var dot = 0, mA = 0, mB = 0;
+    Object.keys(vA).forEach(function(k) {
+      if (vB[k]) dot += vA[k] * vB[k];
+      mA += vA[k] * vA[k];
+    });
+    Object.keys(vB).forEach(function(k) { mB += vB[k] * vB[k]; });
+    if (!mA || !mB) return 0;
+    return dot / (Math.sqrt(mA) * Math.sqrt(mB));
+  }
+  var srcVec = accordVec(sourceProduct);
+  candidates = candidates.map(function(p) {
+    return { p: p, score: cosineSim(srcVec, accordVec(p)) };
+  }).sort(function(a, b) { return b.score - a.score; })
+    .slice(0, 6)
+    .map(function(s) { return s.p; });
+
+  list.innerHTML = '';
+  candidates.forEach(function(p) {
+    var lo  = getLowestPrice(p.id);
+    var cur = LANG === 'ar' ? p.currencyAr : p.currencyEn;
+    var bd  = getBrand(p.brandId) || {};
+    var brandName = LANG === 'ar' ? (bd.nameAr || '') : (bd.nameEn || '');
+
+    var card = document.createElement('div');
+    card.className = 'dip-alt-card';
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', (function(pid) {
+      return function() { openComparePage(pid, 'compare'); };
+    })(p.id));
+
+    card.innerHTML =
+      /* Col 1: thumbnail */
+      '<div class="cmp-card-img">' +
+        '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
+          '<img loading="lazy" src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">' +
+        '</div>' +
+      '</div>' +
+      /* Col 2: name + attrs row / price row — same layout as store cards, no badges */
+      '<div class="cmp-card-body">' +
+        '<div class="cmp-card-row1">' +
+          '<div class="cmp-store-name">' + _aiEscape(P(p, 'name')) + '</div>' +
+          /* No badge column */
+        '</div>' +
+        '<div class="cmp-card-row2">' +
+          '<div class="cmp-card-attrs">' +
+            _aiEscape(brandName) +
+            (p.familyEn ? ' · ' + _aiEscape(P(p, 'family')) : '') +
+          '</div>' +
+          '<div class="cmp-card-price-wrap">' +
+            '<span class="cmp-price">' + (lo !== null ? lo : '--') + '</span>' +
+            (lo !== null ? '<span class="cmp-currency">' + cur + '</span>' : '') +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    list.appendChild(card);
+  });
+
+  wrap.style.display = '';
 }
 
 function compareFilterSize(btn, size) {
@@ -7244,22 +7544,18 @@ function _initFlibData() {
   /* Sample products — deduplicated, one per fragrance group */
   var _uq = uniqueProducts();
   _flibData.owned = _uq.slice(0, 3);
-  _flibData.liked = _uq.slice(3, 5);
-  _flibData.want  = _uq.slice(5, 7);
+  _flibData.want  = _uq.slice(3, 5);
 }
 
 function openFragranceLibrary() {
   _initFlibData();
   /* Update stats */
   var ownedStat = document.getElementById('flib-stat-owned');
-  var likedStat = document.getElementById('flib-stat-liked');
   var wantStat  = document.getElementById('flib-stat-want');
   if (ownedStat) ownedStat.textContent = _flibData.owned.length;
-  if (likedStat) likedStat.textContent = _flibData.liked.length;
   if (wantStat)  wantStat.textContent  = _flibData.want.length;
   /* Render grids */
   flibRenderGrid('owned');
-  flibRenderGrid('liked');
   flibRenderGrid('want');
   flibSwitchTab('owned');
   /* Privacy UI */
@@ -7324,13 +7620,52 @@ function flibShowToast(msg) {
 }
 
 function flibSwitchTab(tab) {
-  ['owned', 'liked', 'want'].forEach(function(t) {
+  ['owned', 'want'].forEach(function(t) {
     var tabEl  = document.getElementById('flib-tab-' + t);
     var gridEl = document.getElementById('flib-grid-' + t);
     if (tabEl)  tabEl.classList.toggle('active', t === tab);
     if (gridEl) gridEl.style.display = (t === tab) ? 'grid' : 'none';
   });
 }
+
+var _flibRemovePending = { id: null, tab: null };
+
+function flibConfirmRemove(productId, tab) {
+  var p = PRODUCTS.find(function(pr) { return pr.id === productId; });
+  if (!p) return;
+  _flibRemovePending = { id: productId, tab: tab };
+  var img  = document.getElementById('flib-confirm-img');
+  var name = document.getElementById('flib-confirm-name');
+  var thumb = document.getElementById('flib-confirm-thumb');
+  if (img)   { img.src = p.img; img.style.display = ''; }
+  if (thumb) thumb.style.background = p.bg;
+  if (name)  name.textContent = P(p, 'name');
+  var overlay = document.getElementById('flib-confirm-overlay');
+  if (overlay) overlay.classList.add('visible');
+}
+
+function flibCancelRemove() {
+  _flibRemovePending = { id: null, tab: null };
+  var overlay = document.getElementById('flib-confirm-overlay');
+  if (overlay) overlay.classList.remove('visible');
+}
+
+function flibDoRemove() {
+  var id  = _flibRemovePending.id;
+  var tab = _flibRemovePending.tab;
+  flibCancelRemove();
+  if (!id || !tab) return;
+  _flibData[tab] = _flibData[tab].filter(function(p) { return p.id !== id; });
+  /* Refresh stats */
+  var ownedStat = document.getElementById('flib-stat-owned');
+  var wantStat  = document.getElementById('flib-stat-want');
+  if (ownedStat) ownedStat.textContent = _flibData.owned.length;
+  if (wantStat)  wantStat.textContent  = _flibData.want.length;
+  /* Re-render the affected grid */
+  flibRenderGrid(tab);
+  flibShowToast(LANG === 'ar' ? 'تمت إزالته من مكتبتك' : 'Removed from your library');
+}
+
 
 function flibRenderGrid(tab) {
   var container = document.getElementById('flib-grid-' + tab);
@@ -7352,7 +7687,32 @@ function flibRenderGrid(tab) {
   items.forEach(function(p) {
     var item = document.createElement('div');
     item.className = 'flib-grid-item';
+
+    /* Tap → open compare */
     item.onclick = function() { openComparePage(p.id, 'fragrance-library'); };
+
+    /* Long-press → confirm removal */
+    var _lpTimer = null;
+    var _lpFired = false;
+    item.addEventListener('touchstart', function(e) {
+      _lpFired = false;
+      _lpTimer = setTimeout(function() {
+        _lpFired = true;
+        flibConfirmRemove(p.id, tab);
+      }, 600);
+    }, { passive: true });
+    item.addEventListener('touchend',   function() { clearTimeout(_lpTimer); });
+    item.addEventListener('touchmove',  function() { clearTimeout(_lpTimer); });
+    /* Desktop: right-click or contextmenu */
+    item.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      flibConfirmRemove(p.id, tab);
+    });
+    /* Prevent tap firing after long-press */
+    item.addEventListener('click', function(e) {
+      if (_lpFired) { _lpFired = false; e.stopImmediatePropagation(); return; }
+    });
+
     item.innerHTML =
       '<div class="flib-item-bg" style="background:' + p.bg + ';">' +
         '<img loading="lazy" class="flib-item-img" src="' + p.img + '" alt="" onerror="this.parentElement.innerHTML=\'<div class=flib-item-initials>' + (p.initials || '◈') + '</div>\'">' +
@@ -8501,7 +8861,7 @@ function closeUserLibrary() {
 }
 
 function userLibSwitchTab(tab) {
-  ['owned', 'liked', 'want'].forEach(function(t) {
+  ['owned', 'want'].forEach(function(t) {
     var tabEl  = document.getElementById('user-lib-tab-' + t);
     var gridEl = document.getElementById('user-lib-grid-' + t);
     if (tabEl)  tabEl.classList.toggle('active', t === tab);
@@ -8692,25 +9052,33 @@ function renderCommunityFeed() {
       ? '<svg viewBox="0 0 24 24" fill="none" style="width:13px;height:13px;flex-shrink:0;margin-left:3px;"><path fill="#EAA005" d="M12 2l1.8 2.1 2.6-.8 1 2.5 2.7.2.1 2.7 2.4 1.2-.9 2.5 1.6 2.2-1.9 1.8.6 2.6-2.6.6-.8 2.6-2.5-.9-2.1 1.7-2.1-1.7-2.5.9-.8-2.6-2.6-.6.6-2.6-1.9-1.8 1.6-2.2-.9-2.5 2.4-1.2.1-2.7 2.7-.2 1-2.5 2.6.8z"/><path stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7.5 12.5l3 3 5-6"/></svg>'
       : '';
 
+    /* Count actual replies for this post */
+    var actualReplies = (_commReplies[post.id] || []).length;
+    var replyCount = actualReplies > 0 ? actualReplies : (post.replies || 0);
+
     card.innerHTML =
-      '<div class="comm-card-body">' +
-        '<div class="comm-card-top">' +
-          '<div class="comm-user" style="cursor:pointer;" onclick="event.stopPropagation();openUserLibrary(\'' + username + '\',\'community\')">' +
-            '<div class="comm-user-avatar">' + initials + '</div>' +
-            '<span class="comm-username" style="display:flex;align-items:center;gap:0;">' + username + verifiedBadge + '</span>' +
-          '</div>' +
-          '<div style="display:flex;align-items:center;gap:8px;">' +
-            priceTag +
-            '<span class="badge ' + badgeClass + '">' + badgeLabel + '</span>' +
-          '</div>' +
+      /* ── Row 1: avatar+username (left) | badges+price+dots (right) ── */
+      '<div class="comm-card-top">' +
+        '<div class="comm-user" style="cursor:pointer;" onclick="event.stopPropagation();openUserLibrary(\'' + username + '\',\'community\')">' +
+          '<div class="comm-user-avatar">' + initials + '</div>' +
+          '<span class="comm-username" style="display:flex;align-items:center;gap:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + username + verifiedBadge + '</span>' +
         '</div>' +
-        '<div class="comm-card-text">' + msg + '</div>' +
-        '<div class="comm-card-meta">' +
-          '<span class="comm-card-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + post.time + '</span>' +
-          '<span class="comm-card-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>' + post.replies + ' ' + replyLabel + '</span>' +
+        '<div style="display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:8px;">' +
+          priceTag +
+          '<span class="badge ' + badgeClass + '">' + badgeLabel + '</span>' +
+          '<button class="comm-card-actions-btn" onclick="event.stopPropagation();openCommActionSheet(\'' + post.id + '\',false,\'' + username + '\')" aria-label="More actions"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button>' +
         '</div>' +
       '</div>' +
-      thumbHtml;
+      /* ── Row 2: text (left, flex:1) | thumb (right, fixed) ── */
+      '<div style="display:flex;align-items:flex-start;gap:10px;margin-top:8px;">' +
+        '<div class="comm-card-text" style="flex:1;min-width:0;margin-bottom:0;">' + msg + '</div>' +
+        thumbHtml +
+      '</div>' +
+      /* ── Row 3: time | replies ── */
+      '<div class="comm-card-meta">' +
+        '<span class="comm-card-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + post.time + '</span>' +
+        '<span class="comm-card-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>' + replyCount + ' ' + replyLabel + '</span>' +
+      '</div>';
 
     feed.appendChild(card);
   });
@@ -8907,6 +9275,140 @@ function openCommPostDetail(postId) {
 
 function closeCommPostDetail() { switchScreen('community'); }
 
+/* ──────────────────────────────────────────────────────────
+   COMMUNITY ACTION SHEET
+   openCommActionSheet(id, isReply, ownerUsername)
+   id          — post.id or reply.id
+   isReply     — true when acting on a reply
+   ownerUsername — the username who created the item
+   The current user is identified as 'You' (set at reply submit).
+   Moderator flag can be set via _commIsModerator below.
+────────────────────────────────────────────────────────── */
+var _commIsModerator = false; /* set true for moderator accounts */
+var _commActionTarget = null; /* { id, isReply } */
+
+function openCommActionSheet(id, isReply, ownerUsername) {
+  _commActionTarget = { id: id, isReply: isReply };
+  var overlay = document.getElementById('comm-action-overlay');
+  var title   = document.getElementById('comm-action-title');
+  var items   = document.getElementById('comm-action-items');
+  if (!overlay || !items) return;
+
+  var isOwner = (ownerUsername === 'You') || _commIsModerator;
+
+  title.textContent = isReply ? T('comm_action_title_reply') : T('comm_action_title_post');
+  items.innerHTML = '';
+
+  var actions = [
+    {
+      labelKey: 'comm_action_share', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>',
+      danger: false, fn: function() { _commActionShare(id, isReply); }
+    },
+    {
+      labelKey: 'comm_action_copy', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>',
+      danger: false, fn: function() { _commActionCopy(id, isReply); }
+    },
+    {
+      labelKey: 'comm_action_report', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>',
+      danger: false, fn: function() { _commActionReport(id, isReply); }
+    }
+  ];
+
+  if (isOwner) {
+    actions.push({
+      labelKey: 'comm_action_delete', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>',
+      danger: true, fn: function() { _commActionDelete(id, isReply); }
+    });
+  }
+
+  actions.forEach(function(action) {
+    var el = document.createElement('div');
+    el.className = 'comm-action-item' + (action.danger ? ' danger' : '');
+    el.innerHTML =
+      action.icon +
+      '<span class="comm-action-item-label">' + T(action.labelKey) + '</span>';
+    el.addEventListener('click', function() {
+      closeCommActionSheet();
+      action.fn();
+    });
+    items.appendChild(el);
+  });
+
+  overlay.classList.add('visible');
+}
+
+function closeCommActionSheet() {
+  var overlay = document.getElementById('comm-action-overlay');
+  if (overlay) overlay.classList.remove('visible');
+  _commActionTarget = null;
+}
+
+function _commActionShare(id, isReply) {
+  var text = isReply
+    ? (LANG === 'ar' ? 'مشاركة رد من مجتمع يوردس' : 'Reply from Yourdis Community')
+    : (LANG === 'ar' ? 'مشاركة منشور من مجتمع يوردس' : 'Post from Yourdis Community');
+  if (navigator.share) {
+    navigator.share({ title: 'Yourdis Community', text: text, url: window.location.href }).catch(function(){});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(window.location.href).catch(function(){});
+  }
+}
+
+function _commActionCopy(id, isReply) {
+  var item = isReply
+    ? (Object.values(_commReplies).flat().find(function(r){ return r.id === id; }))
+    : _commPosts.find(function(p){ return p.id === id; });
+  var text = item
+    ? (LANG === 'ar' ? (item.msgAr || item.text || '') : (item.msgEn || item.text || ''))
+    : '';
+  if (!text) return;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).catch(function(){});
+  }
+}
+
+function _commActionReport(id, isReply) {
+  /* Placeholder — wire to backend moderation endpoint */
+  var msg = LANG === 'ar' ? 'تم الإبلاغ عن المحتوى' : 'Content reported. Thank you.';
+  /* Reuse PDP toast if visible, otherwise a simple alert fallback */
+  var toast = document.getElementById('pdp-toast');
+  if (toast) {
+    toast.textContent = msg; toast.style.display = 'block'; toast.style.opacity = '1';
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(function(){ toast.style.opacity = '0'; setTimeout(function(){ toast.style.display = 'none'; }, 300); }, 2400);
+  }
+}
+
+function _commActionDelete(id, isReply) {
+  if (isReply) {
+    /* Remove reply from all posts */
+    Object.keys(_commReplies).forEach(function(pid) {
+      _commReplies[pid] = _commReplies[pid].filter(function(r){ return r.id !== id; });
+      var post = _commPosts.find(function(p){ return p.id === pid; });
+      if (post) post.replies = _commReplies[pid].length;
+    });
+    if (_commCurrentPostId) _renderReplies(_commCurrentPostId);
+  } else {
+    _commPosts = _commPosts.filter(function(p){ return p.id !== id; });
+    renderCommunityFeed();
+    /* If we were viewing this post's detail, go back */
+    if (_commCurrentPostId === id) closeCommPostDetail();
+  }
+}
+
+/* Simulate a changing online count (replace with real WebSocket data) */
+(function _simulateOnline() {
+  var base = 247;
+  function update() {
+    var el = document.getElementById('comm-online-count');
+    if (!el) return;
+    base = Math.max(80, base + Math.floor((Math.random() - 0.48) * 5));
+    el.textContent = base.toLocaleString();
+  }
+  setInterval(update, 8000);
+})();
+
+
 function _renderPostDetail(post) {
   var body = document.getElementById('comm-post-detail-body');
   if (!body) return;
@@ -8965,6 +9467,7 @@ function _renderPostDetail(post) {
       '<div class="comm-post-meta-row">',
         priceHtml,
         '<span class="badge ' + badgeClass + '">' + badgeLabel + '</span>',
+        '<button class="comm-card-actions-btn" onclick="openCommActionSheet(\'' + post.id + '\',false,\'' + username + '\')" aria-label="More actions"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button>',
       '</div>',
     '</div>',
     '<div class="comm-post-text">' + msg + '</div>',
@@ -8988,7 +9491,9 @@ function _renderReplies(postId) {
   if (count === 0) { if (empty) empty.style.display = ''; return; }
   if (empty) empty.style.display = 'none';
 
-  replies.forEach(function(reply) {
+  /* Show newest replies first */
+  var repliesDesc = replies.slice().reverse();
+  repliesDesc.forEach(function(reply) {
     var item = document.createElement('div');
     item.className = 'comm-reply-item';
     var initial = reply.username.charAt(0).toUpperCase();
@@ -9032,11 +9537,18 @@ function _renderReplies(postId) {
     }
 
     item.innerHTML = [
-      '<div class="comm-reply-avatar">' + initial + '</div>',
+      '<div class="comm-reply-avatar" style="cursor:pointer;" onclick="openUserLibrary(\'' + reply.username + '\',\'comm-post-detail\')">',
+        initial,
+      '</div>',
       '<div class="comm-reply-body">',
         '<div class="comm-reply-header">',
-          '<span class="comm-reply-name">' + reply.username + '</span>',
-          '<span class="comm-reply-time">'  + reply.time    + '</span>',
+          '<span class="comm-reply-name" style="cursor:pointer;" onclick="openUserLibrary(\'' + reply.username + '\',\'comm-post-detail\')">',
+            reply.username,
+          '</span>',
+          '<div style="display:flex;align-items:center;gap:6px;">',
+            '<span class="comm-reply-time">' + reply.time + '</span>',
+            '<button class="comm-reply-actions-btn" onclick="openCommActionSheet(\'' + reply.id + '\',true,\'' + reply.username + '\')" aria-label="More actions"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button>',
+          '</div>',
         '</div>',
         '<div class="comm-reply-text">' + _aiEscape(reply.text) + '</div>',
         replyProductHtml,
@@ -9086,7 +9598,7 @@ function submitCommReply() {
   _renderReplies(_commCurrentPostId);
   setTimeout(function() {
     var scroll = document.getElementById('comm-post-detail-scroll');
-    if (scroll) scroll.scrollTop = scroll.scrollHeight;
+    if (scroll) scroll.scrollTop = 0; /* newest reply is at top */
   }, 50);
 }
 
