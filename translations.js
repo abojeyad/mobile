@@ -95,6 +95,16 @@ filter_country:  { en: 'Country',  ar: 'البلد'            },
 filter_year:     { en: 'Year',     ar: 'السنة'            },
 filter_rating:   { en: 'Rating',   ar: 'التقييم'          },
 
+picker_any:          { en: 'Any',          ar: 'الكل'               },
+picker_selected:     { en: 'selected',     ar: 'محدد'               },
+picker_done:         { en: 'Done',         ar: 'تم'                 },
+picker_cancel:       { en: 'Cancel',       ar: 'إلغاء'              },
+picker_no_results:   { en: 'No results',   ar: 'لا توجد نتائج'      },
+picker_product:      { en: 'product',      ar: 'منتج'               },
+picker_products:     { en: 'products',     ar: 'منتجات'             },
+picker_show_more:    { en: 'Show more',    ar: 'عرض المزيد'         },
+picker_show_less:    { en: 'Show less',    ar: 'عرض أقل'            },
+
 /* ══════════════════════════════════════════════════════════
    Stores page
 ══════════════════════════════════════════════════════════ */  
@@ -134,7 +144,7 @@ alerts_decreased: { en: 'Decreased', ar: 'انخفض' },
 alerts_increased: { en: 'Increased', ar: 'ارتفع' },
 alerts_in_stores: { en: 'Available in', ar: 'متوفر في' },
 alerts_stores:    { en: 'stores', ar: 'متجر' },
-card_lowest:      { en: 'Lowest', ar: 'الأقل' },  
+ 
 
 /* ══════════════════════════════════════════════════════════
    Settings
@@ -500,7 +510,7 @@ comm_rule4_body:    { en: 'Promotional content or store advertising is not allow
 comm_info_mods_label: { en: 'Moderators',                                                     ar: 'المشرفون' },
 comm_mod_role:      { en: 'Community Moderator',                                              ar: 'مشرف المجتمع' },
 comm_mod_badge:     { en: 'MOD',                                                              ar: 'مشرف' },
-comm_header_guidelines_hint: { en: 'View community guidelines', ar: 'عرض إرشادات المجتمع' },
+comm_header_guidelines_hint: { en: 'Read the community guidelines', ar: 'إقرأ إرشادات المجتمع' },
 comm_rule0_title: { en: 'No financial liability',   ar: 'لا مسؤولية مالية' },
 comm_rule0_body:  { en: 'Yourdis is not responsible for any financial transactions, disputes, or losses arising from trades between community members. All transactions are solely between the buyer and seller.', ar: 'يوردس غير مسؤول عن أي معاملات مالية أو نزاعات أو خسائر ناجمة عن التداولات بين أعضاء المجتمع. جميع المعاملات تتم بشكل حصري بين المشتري والبائع.' },
 comm_rule5_title: { en: 'Trusted Seller badge',     ar: 'شارة البائع الموثوق' },
