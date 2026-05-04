@@ -1,11 +1,18 @@
 /* ============================================================
    products.js — Product catalogue
-   One entry per size variant. Pricing lives in listings.js.
-   lowestPrice / highestPrice / savings / storesCount are
-   calculated at runtime using the helpers in listings.js.
-
-   variantGroupId groups all sizes of the same fragrance so
-   the product detail page can render a size selector.
+   ─────────────────────────────────────────────────────────
+   RULES FOR DEVELOPERS:
+   • One entry per size variant. Pricing lives in listings.js.
+   • brandId  is the foreign key to BRANDS[].id in brands.js.
+     Do NOT store any brand-level data here (name, house,
+     country, founded, description). Read those from
+     getBrand(brandId) at runtime.
+   • lowestPrice / highestPrice / savings / storesCount are
+     computed at runtime via helpers in listings.js.
+   • variantGroupId groups all sizes of the same fragrance so
+     the compare/detail page can render a size selector.
+   • link  is the affiliate / store deep-link for this product.
+     Replace placeholder values with real URLs before launch.
    ============================================================ */
 var PRODUCTS = [
 
@@ -20,19 +27,14 @@ var PRODUCTS = [
     img:             'jpeg1.jpg',
     bg:              '#E0F4ED',
     initials:        'DS',
+    link:            'https://google.com',
 
     nameEn:          'Sauvage Elixir',
     nameAr:          'سوفاج إكسير',
-    brandEn:         'Dior',
-    brandAr:         'ديور',
-    houseEn:         'Christian Dior',
-    houseAr:         'كريستيان ديور',
     familyEn:        'Aromatic Fougere',
     familyAr:        'أروماتيك فوچير',
     genderEn:        'Masculine',
     genderAr:        'رجالي',
-    countryEn:       'France',
-    countryAr:       'فرنسا',
     perfumerEn:      'Francois Demachy',
     perfumerAr:      'فرانسوا ديماشي',
     year:            '2021',
@@ -50,14 +52,14 @@ var PRODUCTS = [
     descEn: 'An extraordinary concentration of Sauvage. This fragrance pushes the limits of freshness and spice with a wild heart of lavender enhanced by rich woods.',
     descAr: 'تركيز استثنائي من سوفاج. يتجاوز هذا العطر حدود الانتعاش والتوابل. قلب بري من اللافندر تبرزه الأخشاب الغنية.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
+    accords: [
+      { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+      { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+      { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+      { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+      { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+      { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+    ],
     notes: {
       topEn:   ['Cinnamon', 'Cardamom', 'Nutmeg'],
       topAr:   ['القرفة', 'الهيل', 'جوزة الطيب'],
@@ -75,19 +77,14 @@ var PRODUCTS = [
     img:             'jpeg1.jpg',
     bg:              '#E0F4ED',
     initials:        'DS',
+    link:            'https://google.com',
 
     nameEn:          'Sauvage Elixir',
     nameAr:          'سوفاج إكسير',
-    brandEn:         'Dior',
-    brandAr:         'ديور',
-    houseEn:         'Christian Dior',
-    houseAr:         'كريستيان ديور',
     familyEn:        'Aromatic Fougere',
     familyAr:        'أروماتيك فوچير',
     genderEn:        'Masculine',
     genderAr:        'رجالي',
-    countryEn:       'France',
-    countryAr:       'فرنسا',
     perfumerEn:      'Francois Demachy',
     perfumerAr:      'فرانسوا ديماشي',
     year:            '2021',
@@ -105,15 +102,14 @@ var PRODUCTS = [
     descEn: 'An extraordinary concentration of Sauvage. This fragrance pushes the limits of freshness and spice with a wild heart of lavender enhanced by rich woods.',
     descAr: 'تركيز استثنائي من سوفاج. يتجاوز هذا العطر حدود الانتعاش والتوابل. قلب بري من اللافندر تبرزه الأخشاب الغنية.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
-
+    accords: [
+      { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+      { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+      { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+      { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+      { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+      { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+    ],
     notes: {
       topEn:   ['Cinnamon', 'Cardamom', 'Nutmeg'],
       topAr:   ['القرفة', 'الهيل', 'جوزة الطيب'],
@@ -131,19 +127,14 @@ var PRODUCTS = [
     img:             'jpeg1.jpg',
     bg:              '#E0F4ED',
     initials:        'DS',
+    link:            'https://google.com',
 
     nameEn:          'Sauvage Elixir',
     nameAr:          'سوفاج إكسير',
-    brandEn:         'Dior',
-    brandAr:         'ديور',
-    houseEn:         'Christian Dior',
-    houseAr:         'كريستيان ديور',
     familyEn:        'Aromatic Fougere',
     familyAr:        'أروماتيك فوچير',
     genderEn:        'Masculine',
     genderAr:        'رجالي',
-    countryEn:       'France',
-    countryAr:       'فرنسا',
     perfumerEn:      'Francois Demachy',
     perfumerAr:      'فرانسوا ديماشي',
     year:            '2021',
@@ -161,15 +152,14 @@ var PRODUCTS = [
     descEn: 'An extraordinary concentration of Sauvage. This fragrance pushes the limits of freshness and spice with a wild heart of lavender enhanced by rich woods.',
     descAr: 'تركيز استثنائي من سوفاج. يتجاوز هذا العطر حدود الانتعاش والتوابل. قلب بري من اللافندر تبرزه الأخشاب الغنية.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
-
+    accords: [
+      { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
+      { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
+      { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+      { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
+      { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
+      { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
+    ],
     notes: {
       topEn:   ['Cinnamon', 'Cardamom', 'Nutmeg'],
       topAr:   ['القرفة', 'الهيل', 'جوزة الطيب'],
@@ -191,19 +181,14 @@ var PRODUCTS = [
     img:             'jpeg2.jpg',
     bg:              '#EAE9FB',
     initials:        'Cd',
+    link:            'https://google.com',
 
     nameEn:          'Bleu de Chanel EDP',
     nameAr:          'بلو دو شانيل (أو دو بارفيوم)',
-    brandEn:         'Chanel',
-    brandAr:         'شانيل',
-    houseEn:         'Chanel',
-    houseAr:         'شانيل',
     familyEn:        'Woody Aromatic',
     familyAr:        'أروماتيك خشبي',
     genderEn:        'Masculine',
     genderAr:        'رجالي',
-    countryEn:       'France',
-    countryAr:       'فرنسا',
     perfumerEn:      'Jacques Polge',
     perfumerAr:      'جاك بولج',
     year:            '2014',
@@ -221,15 +206,14 @@ var PRODUCTS = [
     descEn: 'A modern masculine icon. Citrus and bergamot open brightly before settling into a deep woody heart of vetiver and cedarwood.',
     descAr: 'أيقونة ذكورية عصرية. تفتتح الرائحة بانتعاش الحمضيات والبرغموت قبل أن تستقر في قلب خشبي عميق من نجيل الهند وخشب الأرز.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
-
+    accords: [
+      { nameEn: 'Woody',   nameAr: 'خشبي',  percent: 90 },
+      { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 82 },
+      { nameEn: 'Citrus',  nameAr: 'حمضي',  percent: 76 },
+      { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 68 },
+      { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 55 },
+      { nameEn: 'Spicy',   nameAr: 'حار',   percent: 44 }
+    ],
     notes: {
       topEn:   ['Citrus', 'Bergamot', 'Pink Pepper', 'Coriander'],
       topAr:   ['الحمضيات', 'البرغموت', 'الفلفل الوردي', 'الكزبرة'],
@@ -247,19 +231,14 @@ var PRODUCTS = [
     img:             'jpeg2.jpg',
     bg:              '#EAE9FB',
     initials:        'Cd',
+    link:            'https://google.com',
 
     nameEn:          'Bleu de Chanel EDP',
     nameAr:          'بلو دو شانيل (أو دو بارفيوم)',
-    brandEn:         'Chanel',
-    brandAr:         'شانيل',
-    houseEn:         'Chanel',
-    houseAr:         'شانيل',
     familyEn:        'Woody Aromatic',
     familyAr:        'أروماتيك خشبي',
     genderEn:        'Masculine',
     genderAr:        'رجالي',
-    countryEn:       'France',
-    countryAr:       'فرنسا',
     perfumerEn:      'Jacques Polge',
     perfumerAr:      'جاك بولج',
     year:            '2014',
@@ -277,15 +256,14 @@ var PRODUCTS = [
     descEn: 'A modern masculine icon. Citrus and bergamot open brightly before settling into a deep woody heart of vetiver and cedarwood.',
     descAr: 'أيقونة ذكورية عصرية. تفتتح الرائحة بانتعاش الحمضيات والبرغموت قبل أن تستقر في قلب خشبي عميق من نجيل الهند وخشب الأرز.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
-
+    accords: [
+      { nameEn: 'Woody',   nameAr: 'خشبي',  percent: 90 },
+      { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 82 },
+      { nameEn: 'Citrus',  nameAr: 'حمضي',  percent: 76 },
+      { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 68 },
+      { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 55 },
+      { nameEn: 'Spicy',   nameAr: 'حار',   percent: 44 }
+    ],
     notes: {
       topEn:   ['Citrus', 'Bergamot', 'Pink Pepper', 'Coriander'],
       topAr:   ['الحمضيات', 'البرغموت', 'الفلفل الوردي', 'الكزبرة'],
@@ -303,19 +281,14 @@ var PRODUCTS = [
     img:             'jpeg2.jpg',
     bg:              '#EAE9FB',
     initials:        'Cd',
+    link:            'https://google.com',
 
     nameEn:          'Bleu de Chanel EDP',
     nameAr:          'بلو دو شانيل (أو دو بارفيوم)',
-    brandEn:         'Chanel',
-    brandAr:         'شانيل',
-    houseEn:         'Chanel',
-    houseAr:         'شانيل',
     familyEn:        'Woody Aromatic',
     familyAr:        'أروماتيك خشبي',
     genderEn:        'Masculine',
     genderAr:        'رجالي',
-    countryEn:       'France',
-    countryAr:       'فرنسا',
     perfumerEn:      'Jacques Polge',
     perfumerAr:      'جاك بولج',
     year:            '2014',
@@ -333,14 +306,14 @@ var PRODUCTS = [
     descEn: 'A modern masculine icon. Citrus and bergamot open brightly before settling into a deep woody heart of vetiver and cedarwood.',
     descAr: 'أيقونة ذكورية عصرية. تفتتح الرائحة بانتعاش الحمضيات والبرغموت قبل أن تستقر في قلب خشبي عميق من نجيل الهند وخشب الأرز.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
+    accords: [
+      { nameEn: 'Woody',   nameAr: 'خشبي',  percent: 90 },
+      { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 82 },
+      { nameEn: 'Citrus',  nameAr: 'حمضي',  percent: 76 },
+      { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 68 },
+      { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 55 },
+      { nameEn: 'Spicy',   nameAr: 'حار',   percent: 44 }
+    ],
     notes: {
       topEn:   ['Citrus', 'Bergamot', 'Pink Pepper', 'Coriander'],
       topAr:   ['الحمضيات', 'البرغموت', 'الفلفل الوردي', 'الكزبرة'],
@@ -362,19 +335,14 @@ var PRODUCTS = [
     img:             'jpeg3.jpg',
     bg:              '#FBF1E0',
     initials:        'Tf',
+    link:            'https://google.com',
 
     nameEn:          'Black Orchid',
     nameAr:          'بلاك أوركيد',
-    brandEn:         'Tom Ford',
-    brandAr:         'توم فورد',
-    houseEn:         'Tom Ford Beauty',
-    houseAr:         'توم فورد بيوتي',
     familyEn:        'Oriental Floral',
     familyAr:        'شرقي زهري',
     genderEn:        'Unisex',
     genderAr:        'للجنسين',
-    countryEn:       'USA',
-    countryAr:       'الولايات المتحدة',
     perfumerEn:      'Givaudan',
     perfumerAr:      'جيفودان',
     year:            '2006',
@@ -392,14 +360,14 @@ var PRODUCTS = [
     descEn: 'A luxurious and sensual fragrance of rich, dark accords and an alluring potion of black orchids and spice.',
     descAr: 'عطر فاخر وحسي يتكون من نفحات داكنة وغنية ومزيج ساحر من الأوركيد الأسود والتوابل.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
+    accords: [
+      { nameEn: 'Floral',   nameAr: 'زهري',    percent: 88 },
+      { nameEn: 'Musky',    nameAr: 'مسكي',    percent: 80 },
+      { nameEn: 'Gourmand', nameAr: 'جورماند', percent: 72 },
+      { nameEn: 'Woody',    nameAr: 'خشبي',    percent: 64 },
+      { nameEn: 'Spicy',    nameAr: 'حار',     percent: 55 },
+      { nameEn: 'Amber',    nameAr: 'عنبر',    percent: 46 }
+    ],
     notes: {
       topEn:   ['Truffle', 'Bergamot', 'Black Currant', 'Ylang-Ylang'],
       topAr:   ['الكمأة', 'البرغموت', 'الكشمش الأسود', 'إيلانج إيلانج'],
@@ -417,19 +385,14 @@ var PRODUCTS = [
     img:             'jpeg3.jpg',
     bg:              '#FBF1E0',
     initials:        'Tf',
+    link:            'https://google.com',
 
     nameEn:          'Black Orchid',
     nameAr:          'بلاك أوركيد',
-    brandEn:         'Tom Ford',
-    brandAr:         'توم فورد',
-    houseEn:         'Tom Ford Beauty',
-    houseAr:         'توم فورد بيوتي',
     familyEn:        'Oriental Floral',
     familyAr:        'شرقي زهري',
     genderEn:        'Unisex',
     genderAr:        'للجنسين',
-    countryEn:       'USA',
-    countryAr:       'الولايات المتحدة',
     perfumerEn:      'Givaudan',
     perfumerAr:      'جيفودان',
     year:            '2006',
@@ -447,14 +410,14 @@ var PRODUCTS = [
     descEn: 'A luxurious and sensual fragrance of rich, dark accords and an alluring potion of black orchids and spice.',
     descAr: 'عطر فاخر وحسي يتكون من نفحات داكنة وغنية ومزيج ساحر من الأوركيد الأسود والتوابل.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
+    accords: [
+      { nameEn: 'Floral',   nameAr: 'زهري',    percent: 88 },
+      { nameEn: 'Musky',    nameAr: 'مسكي',    percent: 80 },
+      { nameEn: 'Gourmand', nameAr: 'جورماند', percent: 72 },
+      { nameEn: 'Woody',    nameAr: 'خشبي',    percent: 64 },
+      { nameEn: 'Spicy',    nameAr: 'حار',     percent: 55 },
+      { nameEn: 'Amber',    nameAr: 'عنبر',    percent: 46 }
+    ],
     notes: {
       topEn:   ['Truffle', 'Bergamot', 'Black Currant', 'Ylang-Ylang'],
       topAr:   ['الكمأة', 'البرغموت', 'الكشمش الأسود', 'إيلانج إيلانج'],
@@ -472,19 +435,14 @@ var PRODUCTS = [
     img:             'jpeg3.jpg',
     bg:              '#FBF1E0',
     initials:        'Tf',
+    link:            'https://google.com',
 
     nameEn:          'Black Orchid',
     nameAr:          'بلاك أوركيد',
-    brandEn:         'Tom Ford',
-    brandAr:         'توم فورد',
-    houseEn:         'Tom Ford Beauty',
-    houseAr:         'توم فورد بيوتي',
     familyEn:        'Oriental Floral',
     familyAr:        'شرقي زهري',
     genderEn:        'Unisex',
     genderAr:        'للجنسين',
-    countryEn:       'USA',
-    countryAr:       'الولايات المتحدة',
     perfumerEn:      'Givaudan',
     perfumerAr:      'جيفودان',
     year:            '2006',
@@ -502,14 +460,14 @@ var PRODUCTS = [
     descEn: 'A luxurious and sensual fragrance of rich, dark accords and an alluring potion of black orchids and spice.',
     descAr: 'عطر فاخر وحسي يتكون من نفحات داكنة وغنية ومزيج ساحر من الأوركيد الأسود والتوابل.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
+    accords: [
+      { nameEn: 'Floral',   nameAr: 'زهري',    percent: 88 },
+      { nameEn: 'Musky',    nameAr: 'مسكي',    percent: 80 },
+      { nameEn: 'Gourmand', nameAr: 'جورماند', percent: 72 },
+      { nameEn: 'Woody',    nameAr: 'خشبي',    percent: 64 },
+      { nameEn: 'Spicy',    nameAr: 'حار',     percent: 55 },
+      { nameEn: 'Amber',    nameAr: 'عنبر',    percent: 46 }
+    ],
     notes: {
       topEn:   ['Truffle', 'Bergamot', 'Black Currant', 'Ylang-Ylang'],
       topAr:   ['الكمأة', 'البرغموت', 'الكشمش الأسود', 'إيلانج إيلانج'],
@@ -531,19 +489,14 @@ var PRODUCTS = [
     img:             'jpeg4.jpg',
     bg:              '#FDEEF0',
     initials:        'YL',
+    link:            'https://google.com',
 
     nameEn:          'Libre Intense',
     nameAr:          'ليبري إنتنس',
-    brandEn:         'Laurent',
-    brandAr:         'لوران',
-    houseEn:         'Laurent',
-    houseAr:         'لوران',
     familyEn:        'Floral Oriental',
     familyAr:        'زهري شرقي',
     genderEn:        'Feminine',
     genderAr:        'نسائي',
-    countryEn:       'France',
-    countryAr:       'فرنسا',
     perfumerEn:      'Dominique Ropion',
     perfumerAr:      'دومينيك روبيون',
     year:            '2021',
@@ -561,14 +514,14 @@ var PRODUCTS = [
     descEn: 'The intense version of Libre. A bold floral oriental built around lavender absolute and orange blossom with a warm musky base.',
     descAr: 'النسخة المكثفة من ليبري. عطر زهري شرقي جريء مبني حول اللافندر المطلق وزهر البرتقال مع قاعدة دافئة من المسك.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
+    accords: [
+      { nameEn: 'Floral',  nameAr: 'زهري',  percent: 92 },
+      { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+      { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 72 },
+      { nameEn: 'Sweet',   nameAr: 'حلو',   percent: 60 },
+      { nameEn: 'Powdery', nameAr: 'بودري', percent: 50 },
+      { nameEn: 'Woody',   nameAr: 'خشبي',  percent: 40 }
+    ],
     notes: {
       topEn:   ['Mandarin', 'Lavender Absolute'],
       topAr:   ['الماندرين', 'اللافندر المطلق'],
@@ -586,19 +539,14 @@ var PRODUCTS = [
     img:             'jpeg4.jpg',
     bg:              '#FDEEF0',
     initials:        'YL',
+    link:            'https://google.com',
 
     nameEn:          'Libre Intense',
     nameAr:          'ليبري إنتنس',
-    brandEn:         'Laurent',
-    brandAr:         'لوران',
-    houseEn:         'Laurent',
-    houseAr:         'لوران',
     familyEn:        'Floral Oriental',
     familyAr:        'زهري شرقي',
     genderEn:        'Feminine',
     genderAr:        'نسائي',
-    countryEn:       'France',
-    countryAr:       'فرنسا',
     perfumerEn:      'Dominique Ropion',
     perfumerAr:      'دومينيك روبيون',
     year:            '2021',
@@ -616,14 +564,14 @@ var PRODUCTS = [
     descEn: 'The intense version of Libre. A bold floral oriental built around lavender absolute and orange blossom with a warm musky base.',
     descAr: 'النسخة المكثفة من ليبري. عطر زهري شرقي جريء مبني حول اللافندر المطلق وزهر البرتقال مع قاعدة دافئة من المسك.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
+    accords: [
+      { nameEn: 'Floral',  nameAr: 'زهري',  percent: 92 },
+      { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+      { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 72 },
+      { nameEn: 'Sweet',   nameAr: 'حلو',   percent: 60 },
+      { nameEn: 'Powdery', nameAr: 'بودري', percent: 50 },
+      { nameEn: 'Woody',   nameAr: 'خشبي',  percent: 40 }
+    ],
     notes: {
       topEn:   ['Mandarin', 'Lavender Absolute'],
       topAr:   ['الماندرين', 'اللافندر المطلق'],
@@ -641,19 +589,14 @@ var PRODUCTS = [
     img:             'jpeg4.jpg',
     bg:              '#FDEEF0',
     initials:        'YL',
+    link:            'https://google.com',
 
     nameEn:          'Libre Intense',
     nameAr:          'ليبري إنتنس',
-    brandEn:         'Laurent',
-    brandAr:         'لوران',
-    houseEn:         'Laurent',
-    houseAr:         'لوران',
     familyEn:        'Floral Oriental',
     familyAr:        'زهري شرقي',
     genderEn:        'Feminine',
     genderAr:        'نسائي',
-    countryEn:       'France',
-    countryAr:       'فرنسا',
     perfumerEn:      'Dominique Ropion',
     perfumerAr:      'دومينيك روبيون',
     year:            '2021',
@@ -671,14 +614,14 @@ var PRODUCTS = [
     descEn: 'The intense version of Libre. A bold floral oriental built around lavender absolute and orange blossom with a warm musky base.',
     descAr: 'النسخة المكثفة من ليبري. عطر زهري شرقي جريء مبني حول اللافندر المطلق وزهر البرتقال مع قاعدة دافئة من المسك.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
+    accords: [
+      { nameEn: 'Floral',  nameAr: 'زهري',  percent: 92 },
+      { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+      { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 72 },
+      { nameEn: 'Sweet',   nameAr: 'حلو',   percent: 60 },
+      { nameEn: 'Powdery', nameAr: 'بودري', percent: 50 },
+      { nameEn: 'Woody',   nameAr: 'خشبي',  percent: 40 }
+    ],
     notes: {
       topEn:   ['Mandarin', 'Lavender Absolute'],
       topAr:   ['الماندرين', 'اللافندر المطلق'],
@@ -696,19 +639,14 @@ var PRODUCTS = [
     img:             'jpeg4.jpg',
     bg:              '#FDEEF0',
     initials:        'YL',
+    link:            'https://google.com',
 
     nameEn:          'Libre Intense',
     nameAr:          'ليبري إنتنس',
-    brandEn:         'Laurent',
-    brandAr:         'لوران',
-    houseEn:         'Laurent',
-    houseAr:         'لوران',
     familyEn:        'Floral Oriental',
     familyAr:        'زهري شرقي',
     genderEn:        'Feminine',
     genderAr:        'نسائي',
-    countryEn:       'France',
-    countryAr:       'فرنسا',
     perfumerEn:      'Dominique Ropion',
     perfumerAr:      'دومينيك روبيون',
     year:            '2021',
@@ -726,14 +664,14 @@ var PRODUCTS = [
     descEn: 'The intense version of Libre. A bold floral oriental built around lavender absolute and orange blossom with a warm musky base.',
     descAr: 'النسخة المكثفة من ليبري. عطر زهري شرقي جريء مبني حول اللافندر المطلق وزهر البرتقال مع قاعدة دافئة من المسك.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
+    accords: [
+      { nameEn: 'Floral',  nameAr: 'زهري',  percent: 92 },
+      { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
+      { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 72 },
+      { nameEn: 'Sweet',   nameAr: 'حلو',   percent: 60 },
+      { nameEn: 'Powdery', nameAr: 'بودري', percent: 50 },
+      { nameEn: 'Woody',   nameAr: 'خشبي',  percent: 40 }
+    ],
     notes: {
       topEn:   ['Mandarin', 'Lavender Absolute'],
       topAr:   ['الماندرين', 'اللافندر المطلق'],
@@ -751,23 +689,18 @@ var PRODUCTS = [
   {
     id:              'mfk-baccarat-rouge-540-35',
     variantGroupId:  'mfk-baccarat-rouge-540',
-    brandId:         'Pure',
+    brandId:         'mfk',
     img:             'jpeg5.jpg',
     bg:              '#FFF5EA',
     initials:        'BR',
+    link:            'https://google.com',
 
     nameEn:          'Baccarat Rouge 540',
     nameAr:          'باكارات روج 540',
-    brandEn:         'Pure',
-    brandAr:         'بيور',
-    houseEn:         'Pure',
-    houseAr:         'بيور',
     familyEn:        'Amber Floral',
     familyAr:        'عنبري زهري',
     genderEn:        'Unisex',
     genderAr:        'للجنسين',
-    countryEn:       'France',
-    countryAr:       'فرنسا',
     perfumerEn:      'Francis Kurkdjian',
     perfumerAr:      'فرانسيس كوركجان',
     year:            '2015',
@@ -785,14 +718,14 @@ var PRODUCTS = [
     descEn: 'An iconic fragrance that blends luminous jasmine and saffron over a warm bed of amberwood and fir resin, creating a radiant and unforgettable signature.',
     descAr: 'عطر أيقوني يمزج الياسمين المضيء والزعفران فوق قاعدة دافئة من خشب العنبر وراتنج الشجر، مما يخلق بصمة متألقة لا تُنسى.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
+    accords: [
+      { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 95 },
+      { nameEn: 'Floral',  nameAr: 'زهري',  percent: 82 },
+      { nameEn: 'Sweet',   nameAr: 'حلو',   percent: 74 },
+      { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 65 },
+      { nameEn: 'Woody',   nameAr: 'خشبي',  percent: 55 },
+      { nameEn: 'Powdery', nameAr: 'بودري', percent: 44 }
+    ],
     notes: {
       topEn:   ['Saffron', 'Jasmine'],
       topAr:   ['الزعفران', 'الياسمين'],
@@ -806,23 +739,18 @@ var PRODUCTS = [
   {
     id:              'mfk-baccarat-rouge-540-70',
     variantGroupId:  'mfk-baccarat-rouge-540',
-    brandId:         'Pure',
+    brandId:         'mfk',
     img:             'jpeg5.jpg',
     bg:              '#FFF5EA',
     initials:        'BR',
+    link:            'https://google.com',
 
     nameEn:          'Baccarat Rouge 540',
     nameAr:          'باكارات روج 540',
-    brandEn:         'Pure',
-    brandAr:         'بيور',
-    houseEn:         'Pure',
-    houseAr:         'بيور',
     familyEn:        'Amber Floral',
     familyAr:        'عنبري زهري',
     genderEn:        'Unisex',
     genderAr:        'للجنسين',
-    countryEn:       'France',
-    countryAr:       'فرنسا',
     perfumerEn:      'Francis Kurkdjian',
     perfumerAr:      'فرانسيس كوركجان',
     year:            '2015',
@@ -840,14 +768,14 @@ var PRODUCTS = [
     descEn: 'An iconic fragrance that blends luminous jasmine and saffron over a warm bed of amberwood and fir resin, creating a radiant and unforgettable signature.',
     descAr: 'عطر أيقوني يمزج الياسمين المضيء والزعفران فوق قاعدة دافئة من خشب العنبر وراتنج الشجر، مما يخلق بصمة متألقة لا تُنسى.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
+    accords: [
+      { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 95 },
+      { nameEn: 'Floral',  nameAr: 'زهري',  percent: 82 },
+      { nameEn: 'Sweet',   nameAr: 'حلو',   percent: 74 },
+      { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 65 },
+      { nameEn: 'Woody',   nameAr: 'خشبي',  percent: 55 },
+      { nameEn: 'Powdery', nameAr: 'بودري', percent: 44 }
+    ],
     notes: {
       topEn:   ['Saffron', 'Jasmine'],
       topAr:   ['الزعفران', 'الياسمين'],
@@ -861,23 +789,18 @@ var PRODUCTS = [
   {
     id:              'mfk-baccarat-rouge-540-200',
     variantGroupId:  'mfk-baccarat-rouge-540',
-    brandId:         'Pure',
+    brandId:         'mfk',
     img:             'jpeg5.jpg',
     bg:              '#FFF5EA',
     initials:        'BR',
+    link:            'https://google.com',
 
     nameEn:          'Baccarat Rouge 540',
     nameAr:          'باكارات روج 540',
-    brandEn:         'Pure',
-    brandAr:         'بيور',
-    houseEn:         'Pure',
-    houseAr:         'بيور',
     familyEn:        'Amber Floral',
     familyAr:        'عنبري زهري',
     genderEn:        'Unisex',
     genderAr:        'للجنسين',
-    countryEn:       'France',
-    countryAr:       'فرنسا',
     perfumerEn:      'Francis Kurkdjian',
     perfumerAr:      'فرانسيس كوركجان',
     year:            '2015',
@@ -895,14 +818,14 @@ var PRODUCTS = [
     descEn: 'An iconic fragrance that blends luminous jasmine and saffron over a warm bed of amberwood and fir resin, creating a radiant and unforgettable signature.',
     descAr: 'عطر أيقوني يمزج الياسمين المضيء والزعفران فوق قاعدة دافئة من خشب العنبر وراتنج الشجر، مما يخلق بصمة متألقة لا تُنسى.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
+    accords: [
+      { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 95 },
+      { nameEn: 'Floral',  nameAr: 'زهري',  percent: 82 },
+      { nameEn: 'Sweet',   nameAr: 'حلو',   percent: 74 },
+      { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 65 },
+      { nameEn: 'Woody',   nameAr: 'خشبي',  percent: 55 },
+      { nameEn: 'Powdery', nameAr: 'بودري', percent: 44 }
+    ],
     notes: {
       topEn:   ['Saffron', 'Jasmine'],
       topAr:   ['الزعفران', 'الياسمين'],
@@ -924,19 +847,14 @@ var PRODUCTS = [
     img:             'jpeg6.jpg',
     bg:              '#E8F4F8',
     initials:        'CA',
+    link:            'https://google.com',
 
     nameEn:          'Aventus',
     nameAr:          'أفينتوس',
-    brandEn:         'Creed',
-    brandAr:         'كريد',
-    houseEn:         'House of Creed',
-    houseAr:         'هاوس أوف كريد',
     familyEn:        'Fruity Chypre',
     familyAr:        'فاكهي شيبر',
     genderEn:        'Masculine',
     genderAr:        'رجالي',
-    countryEn:       'UK',
-    countryAr:       'المملكة المتحدة',
     perfumerEn:      'Olivier Creed',
     perfumerAr:      'أوليفييه كريد',
     year:            '2010',
@@ -954,14 +872,14 @@ var PRODUCTS = [
     descEn: 'A legendary masculine fragrance inspired by Napoleon Bonaparte. Smoky birch and fresh pineapple over a mossy, musky base of ambergris and oakmoss.',
     descAr: 'عطر ذكوري أسطوري مستوحى من نابليون بونابرت. خشب البتولا المدخن والأناناس الطازج فوق قاعدة طحلبية مسكية من العنبر الرمادي وطحلب البلوط.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
+    accords: [
+      { nameEn: 'Fruity',  nameAr: 'فاكهي',  percent: 90 },
+      { nameEn: 'Fresh',   nameAr: 'منعش',   percent: 80 },
+      { nameEn: 'Musky',   nameAr: 'مسكي',   percent: 68 },
+      { nameEn: 'Woody',   nameAr: 'خشبي',   percent: 62 },
+      { nameEn: 'Citrus',  nameAr: 'حمضي',   percent: 55 },
+      { nameEn: 'Smoky',   nameAr: 'دخاني',  percent: 44 }
+    ],
     notes: {
       topEn:   ['Pineapple', 'Bergamot', 'Black Currant', 'Apple'],
       topAr:   ['الأناناس', 'البرغموت', 'الكشمش الأسود', 'التفاح'],
@@ -979,19 +897,14 @@ var PRODUCTS = [
     img:             'jpeg6.jpg',
     bg:              '#E8F4F8',
     initials:        'CA',
+    link:            'https://google.com',
 
     nameEn:          'Aventus',
     nameAr:          'أفينتوس',
-    brandEn:         'Creed',
-    brandAr:         'كريد',
-    houseEn:         'House of Creed',
-    houseAr:         'هاوس أوف كريد',
     familyEn:        'Fruity Chypre',
     familyAr:        'فاكهي شيبر',
     genderEn:        'Masculine',
     genderAr:        'رجالي',
-    countryEn:       'UK',
-    countryAr:       'المملكة المتحدة',
     perfumerEn:      'Olivier Creed',
     perfumerAr:      'أوليفييه كريد',
     year:            '2010',
@@ -1009,14 +922,14 @@ var PRODUCTS = [
     descEn: 'A legendary masculine fragrance inspired by Napoleon Bonaparte. Smoky birch and fresh pineapple over a mossy, musky base of ambergris and oakmoss.',
     descAr: 'عطر ذكوري أسطوري مستوحى من نابليون بونابرت. خشب البتولا المدخن والأناناس الطازج فوق قاعدة طحلبية مسكية من العنبر الرمادي وطحلب البلوط.',
 
-	accords: [
-		  { nameEn: 'Floral',  nameAr: 'زهري',  percent: 95 },
-		  { nameEn: 'Amber',   nameAr: 'عنبر',  percent: 88 },
-		  { nameEn: 'Musky',   nameAr: 'مسكي',  percent: 80 },
-		  { nameEn: 'Fresh',   nameAr: 'منعش',  percent: 72 },
-		  { nameEn: 'Fruity',  nameAr: 'فاكهي', percent: 65 },
-		  { nameEn: 'Leather', nameAr: 'جلدي',  percent: 55 }
-		],
+    accords: [
+      { nameEn: 'Fruity',  nameAr: 'فاكهي',  percent: 90 },
+      { nameEn: 'Fresh',   nameAr: 'منعش',   percent: 80 },
+      { nameEn: 'Musky',   nameAr: 'مسكي',   percent: 68 },
+      { nameEn: 'Woody',   nameAr: 'خشبي',   percent: 62 },
+      { nameEn: 'Citrus',  nameAr: 'حمضي',   percent: 55 },
+      { nameEn: 'Smoky',   nameAr: 'دخاني',  percent: 44 }
+    ],
     notes: {
       topEn:   ['Pineapple', 'Bergamot', 'Black Currant', 'Apple'],
       topAr:   ['الأناناس', 'البرغموت', 'الكشمش الأسود', 'التفاح'],

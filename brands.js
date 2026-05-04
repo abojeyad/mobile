@@ -1,7 +1,16 @@
 /* ============================================================
-   brands.js — Brand catalogue
-   Each brand is referenced by products via brandId.
-   IDs must match the pattern: brandEn.toLowerCase().replace(/\s+/g, '-')
+   brands.js — Brand catalogue  (single source of truth)
+   ─────────────────────────────────────────────────────────
+   RULES FOR DEVELOPERS:
+   • id  must exactly match the brandId on every product entry
+     in products.js. This is the join key between the two
+     tables in the future backend.
+   • All brand-level display data (name, house, country,
+     founded, description, logo) lives here and ONLY here.
+   • products.js must NOT duplicate brand data fields — it
+     references brands only via brandId.
+   • The UI resolves brand display data via getBrand(brandId).
+     Never read brand data from product fields.
    ============================================================ */
 var BRANDS = [
 
@@ -48,9 +57,9 @@ var BRANDS = [
   },
 
   {
-    id:        'laurent',
-    nameEn:    'Laurent',
-    nameAr:    'لوران',
+    id:        'ysl',
+    nameEn:    'Yves Saint Laurent',
+    nameAr:    'إيف سان لوران',
     houseEn:   'Yves Saint Laurent',
     houseAr:   'إيف سان لوران',
     countryEn: 'France',
@@ -62,17 +71,17 @@ var BRANDS = [
   },
 
   {
-    id:        'pure',
-    nameEn:    'Pure',
-    nameAr:    'بيور',
-    houseEn:   'Pure',
-    houseAr:   'بيور',
+    id:        'mfk',
+    nameEn:    'Maison Francis Kurkdjian',
+    nameAr:    'ميزون فرانسيس كوركجان',
+    houseEn:   'Maison Francis Kurkdjian',
+    houseAr:   'ميزون فرانسيس كوركجان',
     countryEn: 'France',
     countryAr: 'فرنسا',
     founded:   2009,
     logo:      'brand-mfk.png',
     descEn:    'Maison Francis Kurkdjian is a French niche house founded in 2009. It is celebrated for artistic perfumes that perfectly balance high-quality raw materials with poetic precision.',
-    descAr:    'فرانسيس كوردجيان دار عطور نيشية فرنسية تأسست عام 2009. تشتهر بتقديم عطور فنية فاخرة تعتمد على أجود المواد الخام بتوازن ودقة متناهية.'
+    descAr:    'ميزون فرانسيس كوركجان دار عطور نيشية فرنسية تأسست عام 2009. تشتهر بتقديم عطور فنية فاخرة تعتمد على أجود المواد الخام بتوازن ودقة متناهية.'
   },
 
   {
@@ -90,3 +99,12 @@ var BRANDS = [
   }
 
 ];
+
+/* ============================================================
+   Runtime helper — resolve a brand object by brandId.
+   Use getBrand() everywhere in the UI instead of reading
+   brand-level fields (nameEn, houseEn, etc.) off a product.
+   ============================================================ */
+function getBrand(brandId) {
+  return BRANDS.find(function(b) { return b.id === brandId; }) || null;
+}
