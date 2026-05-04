@@ -580,9 +580,9 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .dip-section-label { font-size:var(--t6); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-3); padding:0 16px 10px; display:block; }
 
 .cmp-unified-card {
-  margin: 12px 16px 0;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  margin: 0;
+  border: none;
+  border-radius: 0;
   overflow: hidden;
   background: var(--bg-phone);
   flex-shrink: 0;
@@ -621,7 +621,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .dip-alt-card:last-child { border-bottom: none; }
 .dip-alt-card:active { background: var(--bg-surface); }
 
-/* Product image — taller to show bottle proportions */
+/* Col 1: image */
 .cmp-card-img {
   width: 56px; height: 56px; flex-shrink: 0;
   border-radius: var(--radius-md); overflow: hidden;
@@ -631,27 +631,36 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .cmp-card-img .prod-img-wrap { height: 100%; }
 .cmp-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* Center info column */
+/* Col 2: two rows */
 .cmp-card-body {
   flex: 1; min-width: 0;
-  display: flex; flex-direction: column; justify-content: center; gap: 4px;
+  display: flex; flex-direction: column; gap: 5px;
+}
+/* Row 1: store name (grows) + badges (shrink) */
+.cmp-card-row1 {
+  display: flex; align-items: center; gap: 6px; min-width: 0;
 }
 .cmp-store-name {
   font-size: var(--t4); font-weight: 700; color: var(--ink-1);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  flex: 1; min-width: 0;
 }
-/* Product attribute strip — subtle grey meta row */
+.cmp-card-badges {
+  display: flex; flex-direction: row; flex-wrap: nowrap;
+  gap: 4px; align-items: center; flex-shrink: 0;
+}
+/* Row 2: features (grows) + price (shrink) */
+.cmp-card-row2 {
+  display: flex; align-items: baseline; gap: 6px; min-width: 0;
+}
 .cmp-card-attrs {
-  display: flex; align-items: center; gap: 0;
-  margin-top: 3px; overflow: hidden;
+  flex: 1; min-width: 0;
   font-size: 10px; color: var(--ink-3); line-height: 1.4;
-  white-space: nowrap; text-overflow: ellipsis;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-/* Price + delivery row */
-/* cmp-card-bottom removed */
 .cmp-card-price-wrap {
   display: flex; align-items: baseline; gap: 3px;
-  flex-wrap: nowrap; justify-content: flex-end;
+  flex-shrink: 0; flex-wrap: nowrap;
 }
 .cmp-price {
   font-size: var(--t2); font-weight: 800; color: var(--ink-1);
@@ -659,20 +668,6 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 }
 .cmp-currency { font-size: var(--t6); font-weight: 500; color: var(--ink-3); }
 .cmp-discount  { font-size: 10px; font-weight: 700; color: var(--red); margin-left: 2px; }
-.cmp-delivery  { font-size: var(--t6); white-space: nowrap; }
-.cmp-delivery-free { color: var(--green); font-weight: 600; }
-.cmp-delivery-paid { color: var(--ink-3); }
-
-/* Right column — badge(s) top, chevron bottom */
-.cmp-card-right {
-  display: flex; flex-direction: column;
-  align-items: flex-end; justify-content: space-between;
-  flex-shrink: 0; gap: 6px; min-width: 0;
-}
-.cmp-card-badges { display: flex; flex-direction: row; flex-wrap: wrap; gap: 4px; align-items: center; justify-content: flex-end; }
-.cmp-chevron { color: var(--ink-3); display: flex; align-items: center; }
-.cmp-chevron svg { width: 14px; height: 14px; }
-[dir="rtl"] .cmp-chevron svg { transform: scaleX(-1); }
 [dir="rtl"] .cmp-discount { margin-left: 0; margin-right: 2px; }
 
 /* Keep these for backward compat with similar-products card */
@@ -2637,12 +2632,12 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
     <div class="divider"></div>
 
-    <!-- BROWSE BY BRAND -->
+    <!-- STORES -->
     <div class="sec-head">
-      <span class="sec-label" data-i18n="home_brands">Browse by Brand</span>
-      <span class="sec-link" data-i18n="home_all_brands" onclick="openAllBrandsPage()" style="cursor:pointer;">All brands</span>
+      <span class="sec-label" data-i18n="nav_stores">Stores</span>
+      <span class="sec-link" data-i18n="home_see_all" onclick="switchScreen('stores')" style="cursor:pointer;">See all</span>
     </div>
-    <div class="h-scroll" id="strip-brands" style="margin-bottom:4px;"></div>
+    <div class="h-scroll" id="strip-home-stores" style="margin-bottom:4px;"></div>
 
     <div class="divider"></div>
 
@@ -2655,12 +2650,12 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
     <div class="divider"></div>
 
-    <!-- STORES -->
+    <!-- BROWSE BY BRAND -->
     <div class="sec-head">
-      <span class="sec-label" data-i18n="nav_stores">Stores</span>
-      <span class="sec-link" data-i18n="home_see_all" onclick="switchScreen('stores')" style="cursor:pointer;">See all</span>
+      <span class="sec-label" data-i18n="home_brands">Browse by Brand</span>
+      <span class="sec-link" data-i18n="home_all_brands" onclick="openAllBrandsPage()" style="cursor:pointer;">All brands</span>
     </div>
-    <div class="h-scroll" id="strip-home-stores" style="margin-bottom:4px;"></div>
+    <div class="h-scroll" id="strip-brands" style="margin-bottom:4px;"></div>
 
     <div class="divider"></div>
 
@@ -3399,13 +3394,16 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="dip-header-spacer"></div>
   </div>
 
-  <!-- Single scroll area containing unified card + similar products -->
+  <!-- Single scroll area -->
   <div class="dip-scroll">
 
-    <!-- Unified card: hero + sizes + store cards -->
-    <div class="cmp-unified-card" style="margin-top:12px;">
+    <!-- Unified card: sizes → product name → store cards -->
+    <div class="cmp-unified-card">
 
-      <!-- Section 1: product name with size -->
+      <!-- Section 1: available sizes -->
+      <div class="dip-filters-bar" id="compare-filters"></div>
+
+      <!-- Section 2: product name with size -->
       <div class="cmp-product-hero" id="compare-product-hero">
         <div class="cmp-product-hero-info">
           <div class="cmp-product-hero-name" id="compare-hero-name"></div>
@@ -3413,22 +3411,10 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         </div>
       </div>
 
-      <!-- Section 2: available sizes -->
-      <div class="dip-filters-bar" id="compare-filters"></div>
-
       <!-- Section 3: store cards -->
       <div class="dip-alt-list" id="compare-stores-list"></div>
 
     </div><!-- /cmp-unified-card -->
-
-    <!-- Divider -->
-    <div class="dip-section-divider" style="margin-top:24px;"></div>
-
-    <!-- Similar products -->
-    <div class="dip-section-wrap">
-      <span class="dip-section-label" data-i18n="compare_similar">Similar Products You May Like</span>
-      <div class="dip-alt-list" id="compare-similar-list"></div>
-    </div>
 
     <div style="height:20px;" aria-hidden="true"></div>
   </div>
@@ -6228,22 +6214,21 @@ function openComparePage(productId, origin) {
   /* Populate the product hero strip */
   var heroName    = document.getElementById('compare-hero-name');
   var heroSub     = document.getElementById('compare-hero-sub');
-  if (heroName)    heroName.textContent = P(p, 'name') + ' (' + p.size + ')';
-  if (heroSub)     heroSub.textContent  = T('compare_available_in') + ' '
-    + getStoresCount(p.id) + ' ' + T('compare_stores');
+  if (heroName) heroName.textContent = P(p, 'name') + ' (' + p.size + ')';
+  /* Product meta + store count */
+  var sep = ' · ';
+  var metaParts = [P(p,'brand'), P(p,'family'), P(p,'gender')];
+  if (p.rating) metaParts.push('★ ' + p.rating);
+  if (heroSub) heroSub.innerHTML =
+    metaParts.join(sep) +
+    '<br><span style="color:var(--ink-3);font-size:var(--t6);">' +
+      T('compare_available_in') + ' ' + getStoresCount(p.id) + ' ' + T('compare_stores') +
+    '</span>';
 
   /* Render stores for the clicked product's size */
   _compareRenderStores(p, p.size);
 
-  /* Similar products — one per unique fragrance group, excluding current group */
-  var simList = document.getElementById('compare-similar-list');
-  simList.innerHTML = '';
-  uniqueProducts().filter(function(pr) {
-    return (pr.variantGroupId || pr.id) !== gid;
-  }).forEach(function(pr) {
-    simList.appendChild(_compareAltCard(pr));
-  });
-
+  /* Similar products removed from UI — skip rendering */
   switchScreen('compare');
   var scroll = document.querySelector('#screen-compare .dip-scroll');
   if (scroll) scroll.scrollTop = 0;
@@ -6305,10 +6290,18 @@ function _compareRenderStores(p, sizeFilter) {
   /* If same store wins both — elevate to "Best Value" */
   var bothSame = bestPriceIdx !== -1 && bestPriceIdx === bestChoiceIdx;
 
-  /* Update hero subtitle with store count for the selected size */
+  /* Update hero subtitle with product meta + store count for the selected size */
   var heroSubEl = document.getElementById('compare-hero-sub');
-  if (heroSubEl) heroSubEl.textContent = T('compare_available_in') + ' '
-    + listings.length + ' ' + T('compare_stores');
+  if (heroSubEl) {
+    var sep = ' · ';
+    var metaParts = [P(variant,'brand'), P(variant,'family'), P(variant,'gender')];
+    if (variant.rating) metaParts.push('★ ' + variant.rating);
+    heroSubEl.innerHTML =
+      metaParts.join(sep) +
+      '<br><span style="color:var(--ink-3);font-size:var(--t6);">' +
+        T('compare_available_in') + ' ' + listings.length + ' ' + T('compare_stores') +
+      '</span>';
+  }
 
   list.innerHTML = '';
   list.className = 'dip-alt-list';
@@ -6352,37 +6345,36 @@ function _compareRenderStores(p, sizeFilter) {
     if (entry.inStock) {
       card.addEventListener('click', (function(vid){ return function(){ openProduct(vid, 'compare'); }; })(variant.id));
     }
-    /* Product attribute pills — 4 most useful for comparison */
-    var attrSep = '<span style="margin:0 4px;opacity:0.4;">·</span>';
-    var attrHtml =
-      P(variant,'brand') +
-      attrSep + P(variant,'family') +
-      attrSep + P(variant,'gender') +
-      (variant.rating ? attrSep + '★ ' + variant.rating : '');
-
-
+    /* Store-specific attributes — priority order, comma separated */
+    var storeAttrs = [];
+    if (store.expressDelivery) storeAttrs.push(LANG === 'ar' ? 'توصيل سريع'   : 'Fast Delivery');
+    if (entry.freeDelivery)    storeAttrs.push(LANG === 'ar' ? 'شحن مجاني'    : 'Free Shipping');
+    if (store.returnPolicy)    storeAttrs.push(LANG === 'ar' ? 'إرجاع مقبول'  : 'Return Policy');
+    if (store.installments)    storeAttrs.push(LANG === 'ar' ? 'أقساط'        : 'Installments');
+    if (store.cashback)        storeAttrs.push(LANG === 'ar' ? 'استرداد نقدي' : 'Cashback');
+    if (store.loyaltyPoints)   storeAttrs.push(LANG === 'ar' ? 'نقاط ولاء'    : 'Loyalty Points');
+    var attrHtml = storeAttrs.join(', ');
 
     card.innerHTML =
-      /* Product image */
       '<div class="cmp-card-img">' +
         '<div class="prod-img-wrap" style="background:' + variant.bg + ';height:100%;">' +
           '<img loading="lazy" src="' + variant.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">' +
         '</div>' +
       '</div>' +
-
-      /* Center body — store name + attributes only */
       '<div class="cmp-card-body">' +
-        '<div class="cmp-store-name">' + storeName + '</div>' +
-        '<div class="cmp-card-attrs">' + attrHtml + '</div>' +
-      '</div>' +
-
-      /* Right column — badge(s) top, discount + price below */
-      '<div class="cmp-card-right">' +
-        '<div class="cmp-card-badges">' + (badgeHtml || '') + '</div>' +
-        '<div class="cmp-card-price-wrap">' +
-          (entry.discountPercent > 0 ? '<span class="cmp-discount">↓' + entry.discountPercent + '%</span>' : '') +
-          '<span class="cmp-price">' + entry.price + '</span>' +
-          '<span class="cmp-currency">' + cur + '</span>' +
+        /* Row 1: store name + badges */
+        '<div class="cmp-card-row1">' +
+          '<div class="cmp-store-name">' + storeName + '</div>' +
+          '<div class="cmp-card-badges">' + (badgeHtml || '') + '</div>' +
+        '</div>' +
+        /* Row 2: features + price */
+        '<div class="cmp-card-row2">' +
+          (attrHtml ? '<div class="cmp-card-attrs">' + attrHtml + '</div>' : '<div class="cmp-card-attrs"></div>') +
+          '<div class="cmp-card-price-wrap">' +
+            (entry.discountPercent > 0 ? '<span class="cmp-discount">↓' + entry.discountPercent + '%</span>' : '') +
+            '<span class="cmp-price">' + entry.price + '</span>' +
+            '<span class="cmp-currency">' + cur + '</span>' +
+          '</div>' +
         '</div>' +
       '</div>';
     list.appendChild(card);
@@ -6634,17 +6626,7 @@ setLang = function(lang) {
       var activeChip = document.querySelector('#compare-filters .dip-chip.dip-active');
       var activeSize = activeChip ? activeChip.textContent : null;
       _compareRenderStores(cp, activeSize);
-      /* Re-render similar list with new language */
-      var simList = document.getElementById('compare-similar-list');
-      if (simList) {
-        simList.innerHTML = '';
-        var _simGid = (PRODUCTS.find(function(pr) { return pr.id === _compareProductId; }) || {}).variantGroupId || _compareProductId;
-        uniqueProducts().filter(function(pr) {
-          return (pr.variantGroupId || pr.id) !== _simGid;
-        }).forEach(function(pr) {
-          simList.appendChild(_compareAltCard(pr));
-        });
-      }
+      /* Similar products removed from UI — nothing to re-render */
     }
   }
   if (document.getElementById('screen-store-page').classList.contains('active')) {
@@ -8208,9 +8190,9 @@ function renderCommunityFeed() {
     card.innerHTML =
       '<div class="comm-card-body">' +
         '<div class="comm-card-top">' +
-          '<div class="comm-user">' +
+          '<div class="comm-user" style="cursor:pointer;" onclick="event.stopPropagation();openUserLibrary(\'' + username + '\',\'community\')">' +
             '<div class="comm-user-avatar">' + initials + '</div>' +
-            '<span class="comm-username" style="display:flex;align-items:center;gap:0;cursor:pointer;" onclick="event.stopPropagation();openUserLibrary(\'' + username + '\',\'community\')">' + username + verifiedBadge + '</span>' +
+            '<span class="comm-username" style="display:flex;align-items:center;gap:0;">' + username + verifiedBadge + '</span>' +
           '</div>' +
           '<div style="display:flex;align-items:center;gap:8px;">' +
             priceTag +
@@ -8468,10 +8450,10 @@ function _renderPostDetail(post) {
 
   body.innerHTML = [
     '<div class="comm-post-user-row">',
-      '<div class="comm-post-user">',
+      '<div class="comm-post-user" style="cursor:pointer;" onclick="openUserLibrary(\'' + username + '\',\'comm-post-detail\')">',
         '<div class="comm-post-avatar">' + initial + '</div>',
         '<div>',
-          '<div class="comm-post-uname" style="display:flex;align-items:center;gap:0;cursor:pointer;" onclick="openUserLibrary(\'' + username + '\',\'comm-post-detail\')">' + username + verifiedBadge + '</div>',
+          '<div class="comm-post-uname" style="display:flex;align-items:center;gap:0;">' + username + verifiedBadge + '</div>',
           '<div class="comm-post-time">' + post.time + '</div>',
         '</div>',
       '</div>',
