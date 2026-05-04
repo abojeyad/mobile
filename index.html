@@ -64,6 +64,8 @@ input  { font-family: inherit; }
   --b-pink:   #FAEBF2;
   --b-blue:   #E4F0FB;
   --b-sage:   #EAF0E6;
+  --b-indigo: #EEF0FB;
+  --b-slate:  #EDF0F3;
 
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -1968,6 +1970,116 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   border: none; cursor: pointer; font-family: inherit; transition: opacity 0.15s;
 }
 .filter-apply-btn:hover { opacity: 0.88; }
+
+/* ══════════════════════════════════════════════════════════
+   PICKER TRIGGER ROW  (Brand / Perfumer / Country in filter sheet)
+══════════════════════════════════════════════════════════ */
+.filter-picker-trigger {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 13px 0; cursor: pointer; user-select: none;
+}
+.filter-picker-trigger-left  { display: flex; flex-direction: column; gap: 3px; }
+.filter-picker-trigger-label { font-size: var(--t4); font-weight: 500; color: var(--ink-1); }
+.filter-picker-trigger-value {
+  font-size: var(--t5); color: var(--ink-3);
+  max-width: 230px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.filter-picker-trigger-value.has-selection { color: var(--red); font-weight: 600; }
+.filter-picker-chevron { width: 16px; height: 16px; color: var(--ink-3); flex-shrink: 0; }
+[dir="rtl"] .filter-picker-chevron { transform: scaleX(-1); }
+
+/* ══════════════════════════════════════════════════════════
+   PICKER MODAL  (full-screen overlay with search + list)
+══════════════════════════════════════════════════════════ */
+.picker-overlay {
+  position: absolute; inset: 0; z-index: 1100;
+  background: rgba(0,0,0,0.45);
+  display: none; align-items: flex-end;
+}
+.picker-overlay.visible { display: flex; }
+.picker-sheet {
+  background: var(--bg-phone);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  width: 100%; max-height: 88%;
+  display: flex; flex-direction: column;
+  box-shadow: 0 -4px 32px rgba(0,0,0,0.14);
+  animation: sheetUp 0.28s cubic-bezier(0.32,0.72,0,1);
+}
+.picker-handle {
+  width: 36px; height: 4px; border-radius: 2px;
+  background: var(--border-strong); margin: 12px auto 0; flex-shrink: 0;
+}
+.picker-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px 12px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.picker-header-title { font-size: var(--t3); font-weight: 600; color: var(--ink-1); }
+.picker-header-done {
+  font-size: var(--t4); font-weight: 600; color: var(--red); cursor: pointer;
+  background: none; border: none; font-family: inherit; padding: 0;
+}
+.picker-search-wrap {
+  padding: 12px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.picker-search-inner {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-input); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 0 14px; height: 42px;
+}
+.picker-search-inner svg { width: 16px; height: 16px; color: var(--ink-3); flex-shrink: 0; }
+.picker-search-input {
+  flex: 1; border: none; background: transparent;
+  font-size: var(--t4); color: var(--ink-1); outline: none; padding: 0;
+  font-family: inherit;
+}
+.picker-search-input::placeholder { color: var(--ink-3); }
+.picker-clear-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--ink-3); padding: 0; display: none; line-height: 1;
+}
+.picker-clear-btn svg { width: 16px; height: 16px; display: block; }
+.picker-list { flex: 1; overflow-y: auto; }
+.picker-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.1s;
+}
+.picker-item:last-child { border-bottom: none; }
+.picker-item:active { background: var(--bg-input); }
+.picker-item-left  { display: flex; flex-direction: column; gap: 2px; }
+.picker-item-name  { font-size: var(--t4); color: var(--ink-1); font-weight: 500; }
+.picker-item-count { font-size: var(--t6); color: var(--ink-3); }
+.picker-item-check {
+  width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border-strong);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  transition: all 0.13s;
+}
+.picker-item.selected .picker-item-check {
+  background: var(--red); border-color: var(--red);
+}
+.picker-item.selected .picker-item-name { color: var(--red); font-weight: 600; }
+.picker-item-check svg { display: none; width: 13px; height: 13px; color: #fff; }
+.picker-item.selected .picker-item-check svg { display: block; }
+.picker-empty {
+  padding: 48px 20px; text-align: center;
+  color: var(--ink-3); font-size: var(--t4);
+  display: none;
+}
+.picker-footer {
+  padding: 12px 20px 28px; border-top: 1px solid var(--border); flex-shrink: 0;
+}
+.picker-apply-btn {
+  width: 100%; height: 48px; border-radius: var(--radius-md);
+  background: var(--gold); color: #fff; font-size: var(--t3); font-weight: 600;
+  border: none; cursor: pointer; font-family: inherit; transition: opacity 0.15s;
+}
+.picker-apply-btn:hover { opacity: 0.88; }
+/* Year collapsible */
+.fc-year-toggle {
+  font-size: var(--t5); color: var(--red); font-weight: 500;
+  cursor: pointer; margin-top: 8px; display: inline-block;
+}
+
 .home-header { padding: 6px 20px 16px; flex-shrink: 0; background: var(--bg-phone); }
 .search-bar { display: flex; align-items: center; gap: 12px; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0 14px; height: 48px; margin: 0 20px 18px; cursor: pointer; }
 .search-bar svg { width: 18px; height: 18px; color: var(--ink-3); flex-shrink: 0; }
@@ -2749,49 +2861,115 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         <span class="filter-header-action apply" onclick="applyFilters()" data-i18n="adv_search_apply">Search</span>
       </div>
       <div class="filter-body">
-        <div class="filter-section">
-          <div class="filter-section-label" data-i18n="filter_brand">Brand</div>
-          <div class="filter-chips-wrap" id="fc-brand"></div>
+
+        <!-- Brand — picker trigger (opens full-screen searchable modal) -->
+        <div class="filter-section" id="fs-brand">
+          <div class="filter-picker-trigger" id="fc-brand-trigger" onclick="openPickerModal('brand')">
+            <div class="filter-picker-trigger-left">
+              <span class="filter-picker-trigger-label" data-i18n="filter_brand">Brand</span>
+              <span class="filter-picker-trigger-value" id="fc-brand-value" data-i18n="picker_any">Any</span>
+            </div>
+            <svg class="filter-picker-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
         </div>
+
+        <!-- Gender — chips (3 values, fixed) -->
         <div class="filter-section">
           <div class="filter-section-label" data-i18n="filter_gender">Gender</div>
           <div class="filter-chips-wrap" id="fc-gender"></div>
         </div>
+
+        <!-- Family — chips (≤20 values) -->
         <div class="filter-section">
           <div class="filter-section-label" data-i18n="filter_family">Family</div>
           <div class="filter-chips-wrap" id="fc-family"></div>
         </div>
+
+        <!-- Accords — chips, sorted by frequency -->
         <div class="filter-section">
           <div class="filter-section-label" data-i18n="filter_accords">Accords</div>
           <div class="filter-chips-wrap" id="fc-accord"></div>
         </div>
+
+        <!-- Season — chips (fixed set) -->
         <div class="filter-section">
           <div class="filter-section-label" data-i18n="filter_season">Season</div>
           <div class="filter-chips-wrap" id="fc-season"></div>
         </div>
+
+        <!-- Wear time — chips (fixed set) -->
         <div class="filter-section">
           <div class="filter-section-label" data-i18n="filter_time">Time</div>
           <div class="filter-chips-wrap" id="fc-time"></div>
         </div>
-        <div class="filter-section">
-          <div class="filter-section-label" data-i18n="filter_perfumer">Perfumer</div>
-          <div class="filter-chips-wrap" id="fc-perfumer"></div>
+
+        <!-- Perfumer — picker trigger -->
+        <div class="filter-section" id="fs-perfumer">
+          <div class="filter-picker-trigger" id="fc-perfumer-trigger" onclick="openPickerModal('perfumer')">
+            <div class="filter-picker-trigger-left">
+              <span class="filter-picker-trigger-label" data-i18n="filter_perfumer">Perfumer</span>
+              <span class="filter-picker-trigger-value" id="fc-perfumer-value" data-i18n="picker_any">Any</span>
+            </div>
+            <svg class="filter-picker-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
         </div>
-        <div class="filter-section">
-          <div class="filter-section-label" data-i18n="filter_country">Country</div>
-          <div class="filter-chips-wrap" id="fc-country"></div>
+
+        <!-- Country — picker trigger -->
+        <div class="filter-section" id="fs-country">
+          <div class="filter-picker-trigger" id="fc-country-trigger" onclick="openPickerModal('country')">
+            <div class="filter-picker-trigger-left">
+              <span class="filter-picker-trigger-label" data-i18n="filter_country">Country</span>
+              <span class="filter-picker-trigger-value" id="fc-country-value" data-i18n="picker_any">Any</span>
+            </div>
+            <svg class="filter-picker-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
         </div>
+
+        <!-- Year — collapsible chips, newest-first, show 8 by default -->
         <div class="filter-section">
           <div class="filter-section-label" data-i18n="filter_year">Year</div>
           <div class="filter-chips-wrap" id="fc-year"></div>
+          <span class="fc-year-toggle" id="fc-year-toggle" onclick="_toggleYearExpand()" style="display:none;"></span>
         </div>
+
+        <!-- Rating — buckets -->
         <div class="filter-section">
           <div class="filter-section-label" data-i18n="filter_rating">Rating</div>
           <div class="filter-chips-wrap" id="fc-rating"></div>
         </div>
+
       </div>
       <div class="filter-apply-bar">
         <button class="filter-apply-btn" onclick="applyFilters()" data-i18n="adv_search_apply">Search</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       PICKER MODAL — shared for Brand, Perfumer, Country
+  ════════════════════════════════════════════════════════ -->
+  <div class="picker-overlay" id="picker-overlay" onclick="if(event.target===this)_closePickerModal()">
+    <div class="picker-sheet">
+      <div class="picker-handle"></div>
+      <div class="picker-header">
+        <button class="picker-header-done" onclick="_closePickerModal()" data-i18n="picker_cancel">Cancel</button>
+        <span class="picker-header-title" id="picker-title"></span>
+        <button class="picker-header-done" id="picker-done-btn" onclick="_confirmPickerModal()">Done</button>
+      </div>
+      <div class="picker-search-wrap">
+        <div class="picker-search-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input class="picker-search-input" id="picker-search-input" type="text" autocomplete="off" autocorrect="off" spellcheck="false" />
+          <button class="picker-clear-btn" id="picker-clear-btn" onclick="_clearPickerSearch()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="picker-list" id="picker-list"></div>
+      <div class="picker-empty" id="picker-empty"></div>
+      <div class="picker-footer">
+        <button class="picker-apply-btn" id="picker-apply-btn" onclick="_confirmPickerModal()">Done</button>
       </div>
     </div>
   </div>
@@ -5120,7 +5298,7 @@ function renderProductCards() {
     brands.innerHTML = '';
     BRANDS.forEach(function(b) {
       var sample = PRODUCTS.find(function(p) {
-        return p.brandEn.toLowerCase().replace(/\s+/g, '-') === b.id;
+        return p.brandId === b.id;
       }) || {};
       var initials = sample.initials || b.nameEn.slice(0, 2).toUpperCase();
       var bg       = sample.bg || 'var(--bg-surface)';
@@ -5488,7 +5666,7 @@ function renderSearchDropdown(q){
   var ql=q.toLowerCase();
   var matches=uniqueProducts().filter(function(p){
     return P(p,'name').toLowerCase().includes(ql)||P(p,'brand').toLowerCase().includes(ql)||
-           p.nameEn.toLowerCase().includes(ql)||p.brandEn.toLowerCase().includes(ql);
+           p.nameEn.toLowerCase().includes(ql)||(getBrand(p.brandId)||{}).nameEn?.toLowerCase().includes(ql);
   }).slice(0,5);
   matches.forEach(function(p){
     var item=document.createElement('div');
@@ -5551,11 +5729,11 @@ function renderSearchResults(q){
   if(!q&&!hasFilters){searchShowEntry();return;}
   var filtered=uniqueProducts().filter(function(p){
     var matchQ=!q||P(p,'name').toLowerCase().includes(q)||P(p,'brand').toLowerCase().includes(q)||
-      p.nameEn.toLowerCase().includes(q)||p.brandEn.toLowerCase().includes(q)||
+      p.nameEn.toLowerCase().includes(q)||(getBrand(p.brandId)||{nameEn:''}).nameEn.toLowerCase().includes(q)||
       (p.notes.topEn.join(' ')+p.notes.heartEn.join(' ')+p.notes.baseEn.join(' ')).toLowerCase().includes(q);
     var matchF=true;
     if(_activeFilters.brand&&_activeFilters.brand.length)
-      matchF=matchF&&_activeFilters.brand.some(function(b){return p.brandEn.toLowerCase()===b.toLowerCase();});
+      matchF=matchF&&_activeFilters.brand.some(function(b){return (getBrand(p.brandId)||{nameEn:''}).nameEn.toLowerCase()===b.toLowerCase();});
     if(_activeFilters.gender&&_activeFilters.gender.length)
       matchF=matchF&&_activeFilters.gender.some(function(g){return p.genderEn.toLowerCase()===g.toLowerCase();});
     if(_activeFilters.family&&_activeFilters.family.length)
@@ -5566,8 +5744,11 @@ function renderSearchResults(q){
       matchF=matchF&&_activeFilters.time.some(function(t){return (p.wearTimeEn||'').toLowerCase()===t.toLowerCase();});
     if(_activeFilters.perfumer&&_activeFilters.perfumer.length)
       matchF=matchF&&_activeFilters.perfumer.some(function(pf){return (p.perfumerEn||'').toLowerCase()===pf.toLowerCase();});
-    if(_activeFilters.country&&_activeFilters.country.length)
-      matchF=matchF&&_activeFilters.country.some(function(c){return (p.countryEn||'').toLowerCase()===c.toLowerCase();});
+    if(_activeFilters.country&&_activeFilters.country.length){
+      var _bd=getBrand(p.brandId)||{};
+      var _cEn=(_bd.countryEn||p.countryEn||'').toLowerCase();
+      matchF=matchF&&_activeFilters.country.some(function(c){return _cEn===c.toLowerCase();});
+    }
     if(_activeFilters.year&&_activeFilters.year.length)
       matchF=matchF&&_activeFilters.year.some(function(y){return String(p.year)===String(y);});
     if(_activeFilters.rating&&_activeFilters.rating.length)
@@ -5578,10 +5759,12 @@ function renderSearchResults(q){
       });
     return matchQ&&matchF;
   });
-  _searchResultsRef=filtered;
+  _searchResultsRef  = filtered;
+  _currentFilteredProducts = filtered;   /* keep picker contextual */
   if(filtered.length===0){
     results.innerHTML='';results.style.display='none';
     empty.style.display='flex';countEl.textContent='';
+    _buildContextualFilterSheet(filtered);
     return;
   }
   empty.style.display='none';results.style.display='';
@@ -5600,97 +5783,386 @@ function renderSearchResults(q){
   _buildContextualFilterSheet(filtered);
 }
 
-function _buildContextualFilterSheet(products){
-  /* Shared helper: build chips for a simple En/Ar field, sorted alphabetically */
-  function _buildFieldChips(containerId, group, getEn, getAr){
-    var el=document.getElementById(containerId);
-    if(!el)return;
-    el.innerHTML='';
-    var seen={};
-    products.forEach(function(p){
-      var en=(getEn(p)||'').trim();
-      if(!en||seen[en])return;
-      seen[en]={ar:(getAr?getAr(p):en)||en};
+/* ════════════════════════════════════════════════════════
+   FILTER SHEET — BUILD
+   Builds chip groups from the current product set.
+   Picker fields (brand, perfumer, country) are rebuilt as
+   trigger rows whose summary values reflect _activeFilters.
+   Year section is collapsible: 8 newest visible by default.
+   ════════════════════════════════════════════════════════ */
+var _YEAR_EXPAND_COUNT = 8;    /* chips visible before "Show more" */
+var _yearExpanded      = false; /* state for year toggle */
+var _pickerItems       = [];    /* all items for the open picker modal */
+var _pickerGroup       = '';    /* 'brand' | 'perfumer' | 'country'   */
+var _pickerSelected    = {};    /* { en-value: true } — live draft selections in modal */
+var _pickerContextProducts = []; /* product set at time picker was opened */
+
+function _buildContextualFilterSheet(products) {
+
+  /* ─── Shared helper: chip groups ─── */
+  function _buildFieldChips(containerId, group, getEn, getAr) {
+    var el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = '';
+    var seen = {};
+    products.forEach(function(p) {
+      var en = (getEn(p) || '').trim();
+      if (!en || seen[en]) return;
+      seen[en] = { ar: (getAr ? getAr(p) : en) || en };
     });
-    Object.keys(seen).sort().forEach(function(en){
-      var chip=document.createElement('span');
-      chip.className='filter-chip'+((_activeFilters[group]||[]).indexOf(en)!==-1?' active':'');
-      chip.setAttribute('data-group',group);
-      chip.setAttribute('data-val-en',en);
-      chip.setAttribute('data-val-ar',seen[en].ar);
-      chip.textContent=LANG==='ar'?seen[en].ar:en;
-      chip.onclick=function(){toggleFilterChip(this);};
+    Object.keys(seen).sort().forEach(function(en) {
+      var chip = document.createElement('span');
+      chip.className = 'filter-chip' + ((_activeFilters[group] || []).indexOf(en) !== -1 ? ' active' : '');
+      chip.setAttribute('data-group', group);
+      chip.setAttribute('data-val-en', en);
+      chip.setAttribute('data-val-ar', seen[en].ar);
+      chip.textContent = LANG === 'ar' ? seen[en].ar : en;
+      chip.onclick = function() { toggleFilterChip(this); };
       el.appendChild(chip);
     });
   }
 
-  _buildFieldChips('fc-brand',    'brand',    function(p){return p.brandEn;},    function(p){return p.brandAr;});
-  _buildFieldChips('fc-gender',   'gender',   function(p){return p.genderEn;},   function(p){return p.genderAr;});
-  _buildFieldChips('fc-family',   'family',   function(p){return p.familyEn;},   function(p){return p.familyAr;});
-  _buildFieldChips('fc-season',   'season',   function(p){return p.wearSeasonEn;},function(p){return p.wearSeasonAr;});
-  _buildFieldChips('fc-time',     'time',     function(p){return p.wearTimeEn;},  function(p){return p.wearTimeAr;});
-  _buildFieldChips('fc-perfumer', 'perfumer', function(p){return p.perfumerEn;},  function(p){return p.perfumerAr;});
-  _buildFieldChips('fc-country',  'country',  function(p){return p.countryEn;},   function(p){return p.countryAr;});
-
-  /* Year — language-neutral, sorted descending (newest first) */
-  var fyEl=document.getElementById('fc-year');
-  if(fyEl){
-    fyEl.innerHTML='';
-    var years={};
-    products.forEach(function(p){if(p.year)years[p.year]=true;});
-    Object.keys(years).sort(function(a,b){return b-a;}).forEach(function(yr){
-      var chip=document.createElement('span');
-      chip.className='filter-chip'+((_activeFilters.year||[]).indexOf(yr)!==-1?' active':'');
-      chip.setAttribute('data-group','year');chip.setAttribute('data-val-en',yr);
-      chip.textContent=yr;
-      chip.onclick=function(){toggleFilterChip(this);};
-      fyEl.appendChild(chip);
-    });
+  /* ─── Picker trigger summary helper ─── */
+  function _updatePickerTrigger(group) {
+    var el = document.getElementById('fc-' + group + '-value');
+    if (!el) return;
+    var sel = _activeFilters[group] || [];
+    if (sel.length === 0) {
+      el.textContent = T('picker_any');
+      el.classList.remove('has-selection');
+    } else if (sel.length === 1) {
+      el.textContent = sel[0];
+      el.classList.add('has-selection');
+    } else {
+      el.textContent = sel.length + ' ' + T('picker_selected');
+      el.classList.add('has-selection');
+    }
   }
 
-  /* Rating — buckets: 4.5+, 4.0+, 3.5+, sorted descending */
-  var frEl=document.getElementById('fc-rating');
-  if(frEl){
-    frEl.innerHTML='';
-    [{val:'4.5',labelEn:'4.5 ★ & above',labelAr:'4.5 ★ فأعلى'},
-     {val:'4.0',labelEn:'4.0 ★ & above',labelAr:'4.0 ★ فأعلى'},
-     {val:'3.5',labelEn:'3.5 ★ & above',labelAr:'3.5 ★ فأعلى'}].forEach(function(r){
-      var chip=document.createElement('span');
-      chip.className='filter-chip'+((_activeFilters.rating||[]).indexOf(r.val)!==-1?' active':'');
-      chip.setAttribute('data-group','rating');chip.setAttribute('data-val-en',r.val);
-      chip.textContent=LANG==='ar'?r.labelAr:r.labelEn;
-      chip.onclick=function(){toggleFilterChip(this);};
+  /* ─── Brand trigger ─── */
+  _updatePickerTrigger('brand');
+
+  /* ─── Gender, Family, Accords, Season, Time — chips ─── */
+  _buildFieldChips('fc-gender', 'gender',
+    function(p) { return p.genderEn; },
+    function(p) { return p.genderAr; });
+
+  _buildFieldChips('fc-family', 'family',
+    function(p) { return p.familyEn; },
+    function(p) { return p.familyAr; });
+
+  _buildFieldChips('fc-season', 'season',
+    function(p) { return p.wearSeasonEn; },
+    function(p) { return p.wearSeasonAr; });
+
+  _buildFieldChips('fc-time', 'time',
+    function(p) { return p.wearTimeEn; },
+    function(p) { return p.wearTimeAr; });
+
+  /* ─── Perfumer trigger ─── */
+  _updatePickerTrigger('perfumer');
+
+  /* ─── Country trigger ─── */
+  _updatePickerTrigger('country');
+
+  /* ─── Year — collapsible chips, newest first ─── */
+  var fyEl = document.getElementById('fc-year');
+  var fyToggle = document.getElementById('fc-year-toggle');
+  if (fyEl) {
+    fyEl.innerHTML = '';
+    var years = {};
+    products.forEach(function(p) { if (p.year) years[p.year] = true; });
+    var sortedYears = Object.keys(years).sort(function(a, b) { return b - a; });
+    var needsToggle = sortedYears.length > _YEAR_EXPAND_COUNT;
+    sortedYears.forEach(function(yr, i) {
+      var chip = document.createElement('span');
+      chip.className = 'filter-chip' + ((_activeFilters.year || []).indexOf(yr) !== -1 ? ' active' : '');
+      chip.setAttribute('data-group', 'year');
+      chip.setAttribute('data-val-en', yr);
+      chip.textContent = yr;
+      chip.onclick = function() { toggleFilterChip(this); };
+      /* Hide chips beyond the visible limit unless expanded */
+      if (!_yearExpanded && i >= _YEAR_EXPAND_COUNT) chip.style.display = 'none';
+      fyEl.appendChild(chip);
+    });
+    if (fyToggle) {
+      if (needsToggle) {
+        fyToggle.style.display = 'inline-block';
+        fyToggle.textContent = _yearExpanded
+          ? T('picker_show_less')
+          : T('picker_show_more') + ' (' + (sortedYears.length - _YEAR_EXPAND_COUNT) + ')';
+      } else {
+        fyToggle.style.display = 'none';
+      }
+    }
+  }
+
+  /* ─── Rating — fixed buckets ─── */
+  var frEl = document.getElementById('fc-rating');
+  if (frEl) {
+    frEl.innerHTML = '';
+    [
+      { val: '4.5', labelEn: '4.5 ★ & above', labelAr: '4.5 ★ فأعلى' },
+      { val: '4.0', labelEn: '4.0 ★ & above', labelAr: '4.0 ★ فأعلى' },
+      { val: '3.5', labelEn: '3.5 ★ & above', labelAr: '3.5 ★ فأعلى' }
+    ].forEach(function(r) {
+      var chip = document.createElement('span');
+      chip.className = 'filter-chip' + ((_activeFilters.rating || []).indexOf(r.val) !== -1 ? ' active' : '');
+      chip.setAttribute('data-group', 'rating');
+      chip.setAttribute('data-val-en', r.val);
+      chip.textContent = LANG === 'ar' ? r.labelAr : r.labelEn;
+      chip.onclick = function() { toggleFilterChip(this); };
       frEl.appendChild(chip);
     });
   }
 
-  /* Accords — from p.accords[], sorted by frequency descending */
-  var faEl=document.getElementById('fc-accord');
-  if(faEl){
-    faEl.innerHTML='';
-    var accordCount={};
-    products.forEach(function(p){
-      if(!p.accords)return;
-      p.accords.forEach(function(acc){
-        if(!acc.nameEn)return;
-        if(!accordCount[acc.nameEn])accordCount[acc.nameEn]={nameAr:acc.nameAr||acc.nameEn,count:0};
+  /* ─── Accords — from p.accords[], sorted by frequency desc ─── */
+  var faEl = document.getElementById('fc-accord');
+  if (faEl) {
+    faEl.innerHTML = '';
+    var accordCount = {};
+    products.forEach(function(p) {
+      if (!p.accords) return;
+      p.accords.forEach(function(acc) {
+        if (!acc.nameEn) return;
+        if (!accordCount[acc.nameEn]) accordCount[acc.nameEn] = { nameAr: acc.nameAr || acc.nameEn, count: 0 };
         accordCount[acc.nameEn].count++;
       });
     });
-    Object.keys(accordCount).sort(function(a,b){
-      return accordCount[b].count-accordCount[a].count;
-    }).forEach(function(nameEn){
-      var chip=document.createElement('span');
-      chip.className='filter-chip'+((_activeFilters.accord||[]).indexOf(nameEn)!==-1?' active':'');
-      chip.setAttribute('data-group','accord');
-      chip.setAttribute('data-val-en',nameEn);
-      chip.setAttribute('data-val-ar',accordCount[nameEn].nameAr);
-      chip.textContent=LANG==='ar'?accordCount[nameEn].nameAr:nameEn;
-      chip.onclick=function(){toggleFilterChip(this);};
+    Object.keys(accordCount).sort(function(a, b) {
+      return accordCount[b].count - accordCount[a].count;
+    }).forEach(function(nameEn) {
+      var chip = document.createElement('span');
+      chip.className = 'filter-chip' + ((_activeFilters.accord || []).indexOf(nameEn) !== -1 ? ' active' : '');
+      chip.setAttribute('data-group', 'accord');
+      chip.setAttribute('data-val-en', nameEn);
+      chip.setAttribute('data-val-ar', accordCount[nameEn].nameAr);
+      chip.textContent = LANG === 'ar' ? accordCount[nameEn].nameAr : nameEn;
+      chip.onclick = function() { toggleFilterChip(this); };
       faEl.appendChild(chip);
     });
   }
 }
+
+/* Toggle year section between collapsed and expanded */
+function _toggleYearExpand() {
+  _yearExpanded = !_yearExpanded;
+  var chips = document.querySelectorAll('#fc-year .filter-chip');
+  chips.forEach(function(chip, i) {
+    chip.style.display = (!_yearExpanded && i >= _YEAR_EXPAND_COUNT) ? 'none' : '';
+  });
+  var toggle = document.getElementById('fc-year-toggle');
+  if (toggle) {
+    var total   = chips.length;
+    var hidden  = total - _YEAR_EXPAND_COUNT;
+    toggle.textContent = _yearExpanded
+      ? T('picker_show_less')
+      : T('picker_show_more') + ' (' + hidden + ')';
+  }
+}
+
+/* ════════════════════════════════════════════════════════
+   PICKER MODAL — Brand / Perfumer / Country
+   ════════════════════════════════════════════════════════ */
+
+/* Config for each picker field */
+var _PICKER_CONFIG = {
+  brand: {
+    titleEn: 'Brand',         titleAr: 'الدور العطرية',
+    searchEn: 'Search brands…', searchAr: 'ابحث عن دار عطور…',
+    getItems: function(products) {
+      var seen = {}, items = [];
+      products.forEach(function(p) {
+        var bd = getBrand(p.brandId) || {};
+        var en = bd.nameEn || '';
+        if (!en || seen[en]) return;
+        seen[en] = true;
+        items.push({ en: en, ar: bd.nameAr || en });
+      });
+      return items;
+    }
+  },
+  perfumer: {
+    titleEn: 'Perfumer',       titleAr: 'العطار',
+    searchEn: 'Search perfumers…', searchAr: 'ابحث عن عطار…',
+    getItems: function(products) {
+      var seen = {}, items = [];
+      products.forEach(function(p) {
+        var en = (p.perfumerEn || '').trim();
+        if (!en || seen[en]) return;
+        seen[en] = true;
+        items.push({ en: en, ar: p.perfumerAr || en });
+      });
+      return items;
+    }
+  },
+  country: {
+    titleEn: 'Country',        titleAr: 'البلد',
+    searchEn: 'Search countries…', searchAr: 'ابحث عن بلد…',
+    getItems: function(products) {
+      var seen = {}, items = [];
+      products.forEach(function(p) {
+        var bd = getBrand(p.brandId) || {};
+        var en = (bd.countryEn || p.countryEn || '').trim();
+        if (!en || seen[en]) return;
+        seen[en] = true;
+        items.push({ en: en, ar: bd.countryAr || p.countryAr || en });
+      });
+      return items;
+    }
+  }
+};
+
+/* Build item count map: how many unique fragrances per value in current result set */
+function _pickerCountMap(group, products) {
+  var cfg  = _PICKER_CONFIG[group];
+  var map  = {};
+  products.forEach(function(p) {
+    var items = cfg.getItems([p]);
+    items.forEach(function(item) {
+      map[item.en] = (map[item.en] || 0) + 1;
+    });
+  });
+  return map;
+}
+
+/* Open the picker modal for a given group */
+function openPickerModal(group) {
+  var cfg = _PICKER_CONFIG[group];
+  if (!cfg) return;
+
+  _pickerGroup = group;
+  /* Snapshot current selection as draft */
+  _pickerSelected = {};
+  (_activeFilters[group] || []).forEach(function(v) { _pickerSelected[v] = true; });
+
+  /* Build items from the current result set (contextual) */
+  _pickerContextProducts = _currentFilteredProducts || uniqueProducts();
+  var countMap = _pickerCountMap(group, _pickerContextProducts);
+  _pickerItems = cfg.getItems(_pickerContextProducts);
+
+  /* Sort: selected first, then alphabetical */
+  _pickerItems.sort(function(a, b) {
+    var aSel = _pickerSelected[a.en] ? 0 : 1;
+    var bSel = _pickerSelected[b.en] ? 0 : 1;
+    if (aSel !== bSel) return aSel - bSel;
+    return (LANG === 'ar' ? a.ar : a.en).localeCompare(LANG === 'ar' ? b.ar : b.en);
+  });
+  _pickerItems._countMap = countMap;
+
+  /* Set UI text */
+  document.getElementById('picker-title').textContent = LANG === 'ar' ? cfg.titleAr : cfg.titleEn;
+  var inp = document.getElementById('picker-search-input');
+  inp.value = '';
+  inp.setAttribute('placeholder', LANG === 'ar' ? cfg.searchAr : cfg.searchEn);
+  document.getElementById('picker-clear-btn').style.display = 'none';
+
+  /* Render list & open */
+  _renderPickerList('');
+  _updatePickerDoneBtn();
+  document.getElementById('picker-overlay').classList.add('visible');
+  setTimeout(function() { inp.focus(); }, 320);
+
+  /* Live search */
+  inp.oninput = function() {
+    var q = inp.value.trim();
+    document.getElementById('picker-clear-btn').style.display = q ? '' : 'none';
+    _renderPickerList(q);
+  };
+}
+
+/* Render the scrollable list, filtered by query */
+function _renderPickerList(query) {
+  var list  = document.getElementById('picker-list');
+  var empty = document.getElementById('picker-empty');
+  var q     = query.toLowerCase().trim();
+  var cfg   = _PICKER_CONFIG[_pickerGroup];
+  var countMap = _pickerItems._countMap || {};
+
+  var filtered = q
+    ? _pickerItems.filter(function(item) {
+        return item.en.toLowerCase().includes(q) || item.ar.includes(q);
+      })
+    : _pickerItems;
+
+  list.innerHTML = '';
+  if (filtered.length === 0) {
+    empty.textContent = T('picker_no_results');
+    empty.style.display = 'block';
+    list.style.display  = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+  list.style.display  = '';
+
+  filtered.forEach(function(item) {
+    var isSel  = !!_pickerSelected[item.en];
+    var count  = countMap[item.en] || 0;
+    var name   = LANG === 'ar' ? item.ar : item.en;
+    var row    = document.createElement('div');
+    row.className = 'picker-item' + (isSel ? ' selected' : '');
+    row.innerHTML =
+      '<div class="picker-item-left">' +
+        '<span class="picker-item-name">' + _aiEscape(name) + '</span>' +
+        (count > 0 ? '<span class="picker-item-count">' + count + ' ' + T(count === 1 ? 'picker_product' : 'picker_products') + '</span>' : '') +
+      '</div>' +
+      '<div class="picker-item-check">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' +
+      '</div>';
+    row.addEventListener('click', (function(en) {
+      return function() {
+        if (_pickerSelected[en]) {
+          delete _pickerSelected[en];
+        } else {
+          _pickerSelected[en] = true;
+        }
+        row.classList.toggle('selected', !!_pickerSelected[en]);
+        row.querySelector('.picker-item-name').style.color = _pickerSelected[en] ? '' : '';
+        _updatePickerDoneBtn();
+      };
+    })(item.en));
+    list.appendChild(row);
+  });
+}
+
+function _updatePickerDoneBtn() {
+  var count = Object.keys(_pickerSelected).length;
+  var btn   = document.getElementById('picker-apply-btn');
+  var doneH = document.getElementById('picker-done-btn');
+  var label = count > 0
+    ? T('picker_done') + ' (' + count + ')'
+    : T('picker_done');
+  if (btn)   btn.textContent   = label;
+  if (doneH) doneH.textContent = label;
+}
+
+function _clearPickerSearch() {
+  var inp = document.getElementById('picker-search-input');
+  inp.value = '';
+  document.getElementById('picker-clear-btn').style.display = 'none';
+  _renderPickerList('');
+  inp.focus();
+}
+
+/* Confirm: commit draft selections back to _activeFilters and close */
+function _confirmPickerModal() {
+  _activeFilters[_pickerGroup] = Object.keys(_pickerSelected);
+  _closePickerModal();
+  /* Refresh the trigger summary row */
+  _buildContextualFilterSheet(_currentFilteredProducts || uniqueProducts());
+  _updateFilterBtn();
+}
+
+/* Cancel: discard draft, close */
+function _closePickerModal() {
+  document.getElementById('picker-overlay').classList.remove('visible');
+  var inp = document.getElementById('picker-search-input');
+  if (inp) { inp.value = ''; inp.oninput = null; }
+  document.getElementById('picker-clear-btn').style.display = 'none';
+}
+
+/* Track the current filtered product set so picker is always contextual */
+var _currentFilteredProducts = null;
 
 function _updateFilterBtn(){
   var btn=document.getElementById('search-filter-btn');
@@ -5704,7 +6176,8 @@ function _updateFilterBtn(){
    FILTER SHEET
    ════════════════════════════════════════════════════════ */
 function openFilterSheet(){
-  _buildContextualFilterSheet(uniqueProducts());
+  _yearExpanded = false;
+  _buildContextualFilterSheet(_currentFilteredProducts || uniqueProducts());
   document.getElementById('filter-overlay').classList.add('visible');
 }
 function closeFilterSheet(){document.getElementById('filter-overlay').classList.remove('visible');}
@@ -5731,7 +6204,13 @@ function toggleFilterChip(chip) {
 
 function resetFilters(){
   _activeFilters={};
+  _yearExpanded = false;
   document.querySelectorAll('#filter-overlay .filter-chip').forEach(function(c){c.classList.remove('active');});
+  /* Reset picker trigger summaries */
+  ['brand','perfumer','country'].forEach(function(g){
+    var el = document.getElementById('fc-' + g + '-value');
+    if (el) { el.textContent = T('picker_any'); el.classList.remove('has-selection'); }
+  });
   _updateFilterBtn();
 }
 
@@ -5786,6 +6265,7 @@ function _pdpAdapt(p) {
     price:    bestL ? (bestL.price + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn)) : (loPrice + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn)),
     store:    S(bestStore,'name') || '--',
     storeKey: bestStore.id || null,
+    link:     (bestL && bestL.link) ? bestL.link : (p.link || ''),
     r1: 'Incredible longevity. Found it for ' + loPrice + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn) + ' thanks to Yourdis.',
     r2: 'Great quality. The ' + P(p,'concentration') + ' version has excellent projection.',
     priceHistory: [
@@ -5906,8 +6386,9 @@ function openProduct(productId, origin) {
 
   /* Store features icon strip */
   var featuresWrap = document.getElementById('pdp-store-features');
+  var bestListing  = srcProduct ? getBestListing(srcProduct.id) : null;
   var bestStore    = srcProduct ? (function() {
-    var bl = getBestListing(srcProduct.id);
+    var bl = bestListing;
     return bl ? STORES.find(function(s){ return s.id === bl.storeId; }) : null;
   })() : null;
   if (featuresWrap && bestStore) {
@@ -5945,7 +6426,10 @@ function openProduct(productId, origin) {
       }
     ];
     features.forEach(function(f) {
-      var isActive = !!bestStore[f.key];
+      /* freeDelivery is per-listing; all other features are store-wide */
+      var isActive = f.key === 'freeDelivery'
+        ? !!(bestListing && bestListing.freeDelivery)
+        : !!bestStore[f.key];
       var chip = document.createElement('div');
       chip.className = 'store-feature-chip ' + f.colorClass + ' ' + (isActive ? '' : 'inactive');
       var label = LANG === 'ar' ? f.labelAr : f.labelEn;
@@ -5965,6 +6449,15 @@ function openProduct(productId, origin) {
   /* Store pill */
   var storeData = p.storeKey ? STORES.find(function(s){ return s.id === p.storeKey; }) : null;
   window._pdpStoreKey = p.storeKey || null;
+  window._pdpStoreLink = p.link || '#';
+  var ctaBtn = document.getElementById('product-cta-go-btn');
+  if (ctaBtn) {
+    ctaBtn.onclick = function() {
+      if (window._pdpStoreLink && window._pdpStoreLink !== '#') {
+        window.open(window._pdpStoreLink, '_blank', 'noopener');
+      }
+    };
+  }
   var sIcon = document.getElementById('product-store-icon');
   var sName = document.getElementById('product-store-name-link');
   if (storeData) {
@@ -7038,14 +7531,26 @@ function T(key) {
 }
 
 
-/* Product field in active language
-   Usage: P(product, 'name') → 'Bleu de Chanel EDP' or 'بلو دو شانيل'
-          P(product, 'concentration') → 'Eau de Parfum' or 'أو دو بارفيوم' */
+/* Product field in active language.
+   For brand-level fields (brand, house, country) that no longer
+   live on the product object, this helper automatically delegates
+   to getBrand(p.brandId) so all call sites stay unchanged.
+   Usage: P(product, 'name') → 'Bleu de Chanel EDP' or Arabic equivalent
+          P(product, 'brand') → resolved from brands.js via brandId
+          P(product, 'concentration') → 'Eau de Parfum' or Arabic equivalent */
 function P(product, field) {
   var arKey = field + 'Ar';
   var enKey = field + 'En';
+  /* Direct product field — return it if present */
   if (LANG === 'ar' && product[arKey] !== undefined) return product[arKey];
-  return product[enKey] !== undefined ? product[enKey] : (product[field] || '');
+  if (product[enKey] !== undefined) return product[enKey];
+  /* Brand-level delegation: brand, house, country */
+  var brand = getBrand(product.brandId);
+  if (brand) {
+    if (LANG === 'ar' && brand[arKey] !== undefined) return brand[arKey];
+    if (brand[enKey] !== undefined) return brand[enKey];
+  }
+  return product[field] || '';
 }
 
 /* Price string with correct currency label */
@@ -7738,7 +8243,7 @@ function _getBrands() {
   }).map(function(b) {
     /* Pull initials and bg colour from the first matching product */
     var sample = PRODUCTS.find(function(p) {
-      return p.brandEn.toLowerCase().replace(/\s+/g, '-') === b.id;
+      return p.brandId === b.id;
     }) || {};
     return {
       id:       b.id,
@@ -7764,7 +8269,7 @@ function _renderBrandsGrid(query) {
   empty.style.display = result.length === 0 ? 'flex' : 'none';
 
   result.forEach(function(b) {
-    var count     = uniqueProducts(PRODUCTS.filter(function(p) { return p.brandEn === b.nameEn; })).length;
+    var count = uniqueProducts(PRODUCTS.filter(function(p){return p.brandId===b.id;})).length;
     var bd        = BRANDS.find(function(br) { return br.id === b.id; }) || {};
     var origin    = bd.countryEn ? (LANG === 'ar' ? bd.countryAr : bd.countryEn) : '';
     var countLbl  = count + ' ' + (count !== 1 ? T('brand_product_count_plural') : T('brand_product_count_single'));
@@ -7805,7 +8310,7 @@ function openBrandPage(brandId, origin) {
   if (!brand) return;
   var bd       = BRANDS.find(function(br) { return br.id === brandId; }) || {};
   /* All variants for this brand, then deduplicated to one per fragrance */
-  var allVariants  = PRODUCTS.filter(function(p) { return p.brandEn === brand.nameEn; });
+  var allVariants = PRODUCTS.filter(function(p){return p.brandId===brand.id;});
   var products     = uniqueProducts(allVariants);
   var count        = products.length;
 
@@ -7814,7 +8319,7 @@ function openBrandPage(brandId, origin) {
   backBtn.onclick = function() { switchScreen(_brandPageOrigin); };
 
   /* Banner background — derive from first product of this brand */
-  var _brandFirstProduct = PRODUCTS.find(function(p){ return p.brandEn === brand.nameEn; });
+  var _brandFirstProduct = PRODUCTS.find(function(p){return p.brandId===brand.id;});
   var _brandBg = _brandFirstProduct ? _brandFirstProduct.bg : 'var(--bg-surface)';
   var banner = document.getElementById('brand-page-banner');
   banner.style.background = _brandBg;
@@ -8155,7 +8660,7 @@ function renderCommunityFeed() {
     var isArticle = post.type === 'article';
     var badgeClass = isInquiry ? 'comm-badge-inquiry' : (isArticle ? 'comm-badge-article' : 'comm-badge-sale');
     var badgeLabel = isInquiry ? T('comm_badge_inquiry') : (isArticle ? T('comm_badge_article') : T('comm_badge_sale'));
-    var msg = LANG === 'ar' ? post.msgAr : post.msgEn;
+    var msg = _aiEscape(LANG === 'ar' ? post.msgAr : post.msgEn);
 
     var priceTag = '';
     if (!isInquiry && !isArticle && post.price) {
@@ -8409,7 +8914,7 @@ function _renderPostDetail(post) {
   var isArticle  = post.type === 'article';
   var badgeClass = isInquiry ? 'comm-badge-inquiry' : (isArticle ? 'comm-badge-article' : 'comm-badge-sale');
   var badgeLabel = isInquiry ? T('comm_badge_inquiry') : (isArticle ? T('comm_badge_article') : T('comm_badge_sale'));
-  var msg        = LANG === 'ar' ? post.msgAr : post.msgEn;
+  var msg        = _aiEscape(LANG === 'ar' ? post.msgAr : post.msgEn);
   var username   = post.username || ('User_' + post.id.slice(-3));
   var initial    = username.charAt(0).toUpperCase();
   var verifiedBadge = post.verified
@@ -8493,7 +8998,7 @@ function _renderReplies(postId) {
       var rp = PRODUCTS.find(function(p){ return p.id === reply.productId || p.variantGroupId === reply.productId; });
       if (rp) {
         var rpname  = LANG === 'ar' ? rp.nameAr  : rp.nameEn;
-        var rpbrand = LANG === 'ar' ? rp.brandAr : rp.brandEn;
+        var rpbrand = P(rp,'brand');
         replyProductHtml = [
           '<div class="comm-reply-product" onclick="openComparePage(\'' + rp.id + '\',\'comm-post-detail\')">',
             '<div class="comm-reply-product-thumb">',
@@ -8533,7 +9038,7 @@ function _renderReplies(postId) {
           '<span class="comm-reply-name">' + reply.username + '</span>',
           '<span class="comm-reply-time">'  + reply.time    + '</span>',
         '</div>',
-        '<div class="comm-reply-text">' + reply.text + '</div>',
+        '<div class="comm-reply-text">' + _aiEscape(reply.text) + '</div>',
         replyProductHtml,
         imageHtml,
       '</div>'
@@ -8564,7 +9069,7 @@ function submitCommReply() {
     id: 'r' + Date.now(),
     username: 'You',
     time: LANG === 'ar' ? 'الآن' : 'now',
-    text: msg,
+    text: _aiEscape(msg),
     productId: _replyAttachedProductId || null,
     hasImage: _replyHasImage
   };
@@ -8801,7 +9306,7 @@ function tdRenderResults(q) {
       P(p,'name').toLowerCase().includes(q)  ||
       P(p,'brand').toLowerCase().includes(q) ||
       p.nameEn.toLowerCase().includes(q)     ||
-      p.brandEn.toLowerCase().includes(q)    ||
+      (getBrand(p.brandId)||{nameEn:''}).nameEn.toLowerCase().includes(q) ||
       (p.notes.topEn.join(' ') + p.notes.heartEn.join(' ') + p.notes.baseEn.join(' ')).toLowerCase().includes(q);
 
     var matchF = true;
@@ -8814,8 +9319,9 @@ function tdRenderResults(q) {
       matchF = matchF && _tdFilters.size.indexOf(p.size) !== -1;
     }
     if (_tdFilters.brand && _tdFilters.brand.length) {
+      var _pbd = getBrand(p.brandId) || {};
       matchF = matchF && _tdFilters.brand.some(function(b) {
-        return p.brandEn.toLowerCase() === b.toLowerCase();
+        return (_pbd.nameEn||'').toLowerCase() === b.toLowerCase();
       });
     }
     if (_tdFilters.gender && _tdFilters.gender.length) {
@@ -8862,16 +9368,17 @@ function tdOpenFilterSheet() {
   if (fc && fc.children.length === 0) {
     var seen = {};
     PRODUCTS.forEach(function(p) {
-      if (!seen[p.brandEn]) {
-        seen[p.brandEn] = true;
-        var chip = document.createElement('span');
-        chip.className = 'filter-chip';
-        chip.setAttribute('data-group', 'brand');
-        chip.setAttribute('data-val-en', p.brandEn);
-        chip.textContent = P(p, 'brand');
-        chip.onclick = function() { tdToggleFilterChip(this); };
-        fc.appendChild(chip);
-      }
+      var bd = getBrand(p.brandId) || {};
+      var bNameEn = bd.nameEn || '';
+      if (!bNameEn || seen[bNameEn]) return;
+      seen[bNameEn] = true;
+      var chip = document.createElement('span');
+      chip.className = 'filter-chip';
+      chip.setAttribute('data-group', 'brand');
+      chip.setAttribute('data-val-en', bNameEn);
+      chip.textContent = LANG === 'ar' ? (bd.nameAr || bNameEn) : bNameEn;
+      chip.onclick = function() { tdToggleFilterChip(this); };
+      fc.appendChild(chip);
     });
   }
   document.getElementById('td-filter-overlay').classList.add('visible');
