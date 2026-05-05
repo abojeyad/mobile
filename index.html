@@ -762,7 +762,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 /* ── Store features icon strip ── */
 .store-features-wrap {
   display: flex; flex-direction: row; flex-wrap: nowrap;
-  gap: 7px; padding: 14px 0 6px;
+  gap: 7px; padding: 10px 0;
   overflow-x: auto; scrollbar-width: none;
 }
 .store-features-wrap::-webkit-scrollbar { display: none; }
@@ -847,7 +847,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .wear-chip.voted .wear-chip-label { color:var(--red); }
 .wear-chip.voted .wear-chip-count { color:var(--red); }
 
-.reactions-section  { margin-bottom:20px; }
+.reactions-section  { margin-bottom:0; }
 .reactions-title    { font-size:var(--t5); font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:var(--ink-3); margin-bottom:12px; }
 .reactions-row      { display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px; }
 .reactions-row::-webkit-scrollbar { display:none; }
@@ -3830,25 +3830,16 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         </div>
       </button>
+      <!-- Cashback line -->
+      <div id="pdp-cashback-line" style="display:none;font-size:var(--t6);color:var(--ink-3);font-weight:400;margin-top:6px;text-align:start;line-height:1.5;"></div>
     </div>
 
     <div class="prod-info">
       <div class="prod-name" id="product-name">—</div>
-      <!-- Best-price store row — below product name -->
-      <div id="product-store-section" onclick="if(window._pdpStoreKey)openStorePage(window._pdpStoreKey)" style="display:flex;align-items:center;gap:8px;margin-top:6px;padding:0 2px;cursor:pointer;">
-        <div id="product-store-icon" style="width:22px;height:22px;border-radius:50%;background:var(--b-blue);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--ink-2);flex-shrink:0;">GS</div>
-        <span style="font-size:var(--t5);color:var(--ink-3);" data-i18n="pdp_best_price_at">Best price at</span>
-        <span id="product-store-name-link" style="font-size:var(--t5);font-weight:600;color:#2563EB;">—</span>
-        <div id="product-store-pill" style="display:none;"></div><!-- kept for JS compat -->
-      </div>
-
       <div class="prod-desc-container" style="margin-bottom:16px;font-size:14px;color:var(--ink-2);line-height:1.65;">
         <p id="product-desc" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin:0;padding:0;"></p>
         <span id="read-more-btn" onclick="toggleReadMore()" style="font-weight:500;color:var(--red);cursor:pointer;margin-left:4px;" data-i18n="pdp_read_more">Read More</span>
       </div>
-
-      <!-- Notes pyramid -->
-      <div class="notes-pyramid" id="product-notes"></div>
 
       <!-- Fragrance identity strip -->
 <div class="frag-identity-section">
@@ -3917,20 +3908,16 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         <span style="font-size:12px;color:var(--ink-3);line-height:1.5;" data-i18n="pdp_ai_generated_note"></span>
       </div>
 
+      <!-- Accords -->
+      <div class="accords-wrap" id="product-accords" style="margin-top:16px;"><div class="accord-title" data-i18n="pdp_accords">Accords</div></div>
+
+      <!-- Notes pyramid -->
+      <div class="notes-pyramid" id="product-notes" style="margin-top:16px;"></div>
+
     </div><!-- /prod-info -->
 
     <!-- Full-width divider — edge to edge -->
     <div style="height:1px;background:var(--border);margin:12px 0 0;"></div>
-
-    <!-- Accords + Store features — same horizontal padding as prod-info -->
-    <div style="padding:0 20px;">
-
-      <div class="accords-wrap" id="product-accords"><div class="accord-title" data-i18n="pdp_accords">Accords</div></div>
-
-      <!-- Store features icon strip -->
-      <div class="store-features-wrap" id="pdp-store-features" style="display:none;"></div>
-
-    </div>
 
     <div style="padding:0 20px;">
 
@@ -3953,6 +3940,9 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
           <button class="reaction-btn" onclick="toggleReaction(this)"><span class="reaction-icon">🚫</span><span class="reaction-label" data-i18n="pdp_reaction_hate">Hate</span><span class="reaction-count">12</span></button>
         </div>
       </div>
+
+      <!-- Store features icon strip -->
+      <div class="store-features-wrap" id="pdp-store-features" style="display:none;margin-top:12px;"></div>
 
       <!-- Compare Banner -->
       <div id="pdp-compare-banner-wrap" style="margin:0 0 8px;">
@@ -6665,14 +6655,22 @@ function openProduct(productId, origin) {
       }
     };
   }
-  var sIcon = document.getElementById('product-store-icon');
-  var sName = document.getElementById('product-store-name-link');
-  if (storeData) {
-    sIcon.textContent = storeData.initials; sIcon.style.background = storeData.bg;
-    sName.textContent = S(storeData,'name');
-  } else {
-    sIcon.textContent = '--'; sIcon.style.background = 'var(--bg-surface)';
-    sName.textContent = p.store || '--';
+  var storeName = storeData ? S(storeData,'name') : (p.store || '--');
+  /* Cashback line — always shown, 2% is a platform-wide benefit */
+  var cashbackEl = document.getElementById('pdp-cashback-line');
+  if (cashbackEl && storeName && storeName !== '--') {
+    var storeClickAttr = 'onclick="if(window._pdpStoreKey)openStorePage(window._pdpStoreKey)"';
+    var storeSpan = '<span style="font-weight:600;color:#2563EB;cursor:pointer;" ' + storeClickAttr + '>' + _aiEscape(storeName) + '</span>';
+    var _cbTemplate = T('pdp_cashback_line');
+    var _cbText = (_cbTemplate && _cbTemplate !== 'pdp_cashback_line')
+      ? _cbTemplate.replace('{store}.', storeSpan + '.')
+      : (LANG === 'ar'
+          ? '2٪ استرداد نقدي عند الشراء من ' + storeSpan + '.'
+          : '2% cashback when purchasing this product from ' + storeSpan + '.');
+    cashbackEl.innerHTML = _cbText;
+    cashbackEl.style.display = '';
+  } else if (cashbackEl) {
+    cashbackEl.style.display = 'none';
   }
 
   /* Price history */
