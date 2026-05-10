@@ -1412,11 +1412,16 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
 /* ── Community action sheet ── */
 .comm-action-overlay {
-  position: absolute; inset: 0; z-index: 600;
+  position: fixed; inset: 0; z-index: 9000;
   background: rgba(0,0,0,0.40);
-  display: none; align-items: flex-end;
+  display: none; align-items: flex-end; justify-content: center;
 }
 .comm-action-overlay.visible { display: flex; }
+@media (hover: hover) and (pointer: fine) {
+  /* On desktop, constrain the sheet to the phone-frame width */
+  .comm-action-overlay { align-items: flex-end; justify-content: center; }
+  .comm-action-sheet { max-width: 414px; margin: 0 auto; }
+}
 .comm-action-sheet {
   background: var(--bg-phone);
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
@@ -1590,6 +1595,10 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   font-family: inherit;
 }
 .comm-input:focus { border-color: var(--red); }
+/* Hide native number spinners */
+.comm-input[type="number"]::-webkit-inner-spin-button,
+.comm-input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.comm-input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
 .comm-media-row {
   display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px;
 }
@@ -1684,6 +1693,235 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .comm-empty-sub   { font-size: var(--t4); color: var(--ink-3); line-height: 1.6; }
 
 /* ══════════════════════════════════════════════════════════
+   COMMUNITY FAB — floating action button (replaces bottom nav post button)
+══════════════════════════════════════════════════════════ */
+
+/* ── Sale post action bar (inside post body, in scroll area) ── */
+.comm-sale-action-bar {
+  display: flex; gap: 8px;
+  padding: 10px 0 4px; flex-shrink: 0;
+  align-items: center;
+}
+.comm-contact-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 36px; padding: 0 14px;
+  border-radius: 20px;
+  background: var(--red); color: #fff; border: none;
+  font-size: var(--t5); font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: opacity 0.15s; flex-shrink: 0;
+}
+.comm-contact-btn:active { opacity: 0.82; }
+.comm-contact-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+.comm-sold-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 36px; padding: 0 14px;
+  border-radius: 20px;
+  background: var(--bg-surface); color: var(--green);
+  border: 1.5px solid var(--green);
+  font-size: var(--t5); font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: opacity 0.15s; flex-shrink: 0;
+}
+.comm-sold-btn:active { opacity: 0.75; }
+.comm-sold-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* ── Chat scope/closure notice on sale post detail ── */
+.comm-chat-scope-notice {
+  display: flex; align-items: flex-start; gap: 7px;
+  padding: 9px 11px; margin-top: 10px;
+  background: #FFFBEB; border: 1px solid #FCD34D;
+  border-radius: var(--radius-sm);
+}
+.comm-chat-scope-notice svg { width: 13px; height: 13px; flex-shrink: 0; color: #B45309; margin-top: 1px; }
+.comm-chat-scope-notice span { font-size: var(--t6); color: #92400E; line-height: 1.5; }
+
+/* ── Sold state banner shown inside post body ── */
+.comm-sold-banner {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px; background: #FEE2E2;
+  border-radius: var(--radius-sm); border: 1px solid #FCA5A5;
+  margin-top: 10px;
+}
+.comm-sold-banner svg { width: 15px; height: 15px; flex-shrink: 0; color: #DC2626; }
+.comm-sold-banner-text { font-size: var(--t5); font-weight: 600; color: #991B1B; }
+
+/* ── Chat sale scope notice (persistent banner, always shown for sale chats) ── */
+.chat-sale-notice {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 9px 16px; background: #FFFBEB;
+  border-top: 1px solid #FCD34D; border-bottom: 1px solid #FCD34D;
+  flex-shrink: 0;
+}
+.chat-sale-notice svg { width: 13px; height: 13px; flex-shrink: 0; color: #B45309; margin-top: 2px; }
+.chat-sale-notice span { font-size: var(--t6); color: #92400E; line-height: 1.5; }
+
+/* ── Community search bar ── */
+.comm-search-bar {
+  padding: 8px 14px 6px; flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+}
+.comm-search-inner {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg-input); border-radius: 20px;
+  padding: 8px 14px; border: 1.5px solid transparent;
+  transition: border-color 0.15s;
+}
+.comm-search-inner:focus-within { border-color: var(--red); }
+.comm-search-inner svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--ink-3); }
+.comm-search-inner input {
+  flex: 1; border: none; background: transparent;
+  font-size: var(--t4); color: var(--ink-1); outline: none;
+  font-family: inherit;
+}
+.comm-search-inner input::placeholder { color: var(--ink-3); }
+
+/* ── Pinned scope notice rendered at the top of the message list ── */
+.chat-scope-pin {
+  display: flex; align-items: flex-start; gap: 7px;
+  background: #FFFBEB; border: 1px solid #FCD34D;
+  border-radius: var(--radius-md); padding: 9px 12px;
+  margin-bottom: 8px; flex-shrink: 0;
+}
+.chat-scope-pin svg { width: 13px; height: 13px; flex-shrink: 0; color: #B45309; margin-top: 2px; }
+.chat-scope-pin span { font-size: var(--t6); color: #92400E; line-height: 1.5; }
+
+/* ── System message (sold closure event) ── */
+.chat-system-msg {
+  display: flex; align-items: center; justify-content: center;
+  gap: 6px; padding: 8px 16px; margin: 8px 0;
+  background: #FEE2E2; border-radius: var(--radius-md);
+  border: 1px solid #FCA5A5;
+}
+.chat-system-msg svg { width: 13px; height: 13px; flex-shrink: 0; color: #DC2626; }
+.chat-system-msg span { font-size: var(--t6); color: #991B1B; font-weight: 500; line-height: 1.4; text-align: center; }
+
+/* ── Chat closed notice (replaces input bar for sold-item chats) ── */
+.chat-closed-notice {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px; padding: 14px 20px 18px;
+  background: #FEF3C7; border-top: 1px solid #FCD34D;
+  flex-shrink: 0; text-align: center;
+}
+.chat-closed-notice svg { width: 18px; height: 18px; color: #B45309; flex-shrink: 0; }
+.chat-closed-notice-title { font-size: var(--t5); font-weight: 700; color: #92400E; }
+.chat-closed-notice-sub { font-size: var(--t6); color: #B45309; line-height: 1.5; }
+.comm-fab {
+  position: absolute; bottom: 24px; right: 20px;
+  height: 48px; padding: 0 20px; border-radius: 24px;
+  background: var(--red); color: #fff; border: none;
+  box-shadow: 0 4px 16px rgba(121,0,47,0.32);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  cursor: pointer; z-index: 20;
+  font-size: var(--t4); font-weight: 600; font-family: inherit;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.comm-fab:active { transform: scale(0.93); box-shadow: 0 2px 8px rgba(121,0,47,0.22); }
+.comm-fab svg { width: 18px; height: 18px; }
+[dir="rtl"] .comm-fab { right: auto; left: 20px; }
+
+
+══════════════════════════════════════════════════════════ */
+.comm-pending-banner {
+  display: flex; align-items: center; gap: 8px;
+  background: #FFFBEB; border: 1px solid #FCD34D;
+  border-radius: var(--radius-sm); padding: 8px 12px;
+  margin: 0 0 0 0; flex-shrink: 0;
+}
+.comm-pending-banner svg { width: 14px; height: 14px; flex-shrink: 0; color: #B45309; }
+.comm-pending-banner-text { font-size: var(--t6); color: #92400E; font-weight: 500; line-height: 1.4; }
+
+.comm-badge-pending {
+  background: #FEF3C7; color: #B45309;
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: var(--t6); font-weight: 600;
+  padding: 3px 8px; border-radius: 20px; white-space: nowrap;
+}
+.comm-badge-rejected {
+  background: #FEE2E2; color: #DC2626;
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: var(--t6); font-weight: 600;
+  padding: 3px 8px; border-radius: 20px; white-space: nowrap;
+}
+
+/* Card overlay state for pending/rejected cards */
+.comm-card.is-pending { opacity: 0.85; }
+.comm-card.is-rejected { opacity: 0.75; }
+.comm-card-status-bar {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px 0; margin-top: 8px;
+  border-top: 1px dashed var(--border);
+}
+.comm-card-status-bar svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+/* ── Admin review tab bar inside community screen ── */
+.comm-admin-tab-bar {
+  display: flex; background: var(--bg-surface);
+  border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.comm-admin-tab {
+  flex: 1; padding: 10px 8px; text-align: center;
+  font-size: var(--t5); font-weight: 500; color: var(--ink-3);
+  cursor: pointer; border-bottom: 2px solid transparent;
+  transition: all 0.15s; position: relative;
+}
+.comm-admin-tab.active { color: var(--red); border-bottom-color: var(--red); font-weight: 600; }
+.comm-admin-tab-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--red); color: #fff; border-radius: 10px;
+  font-size: 10px; font-weight: 700; padding: 1px 5px;
+  margin-left: 4px; vertical-align: middle; min-width: 16px;
+}
+[dir="rtl"] .comm-admin-tab-badge { margin-left: 0; margin-right: 4px; }
+
+/* ── Admin action buttons on post cards ── */
+.comm-admin-actions {
+  display: flex; gap: 8px; padding: 10px 16px 12px;
+  border-top: 1px solid var(--border); flex-shrink: 0;
+}
+.comm-admin-approve-btn {
+  flex: 1; padding: 9px 0; border-radius: var(--radius-sm);
+  background: var(--green); color: #fff;
+  font-size: var(--t5); font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  cursor: pointer; border: none; font-family: inherit; transition: opacity 0.15s;
+}
+.comm-admin-approve-btn:active { opacity: 0.8; }
+.comm-admin-approve-btn svg { width: 14px; height: 14px; }
+.comm-admin-reject-btn {
+  flex: 1; padding: 9px 0; border-radius: var(--radius-sm);
+  background: var(--bg-surface); color: #DC2626;
+  border: 1px solid #FCA5A5;
+  font-size: var(--t5); font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  cursor: pointer; font-family: inherit; transition: opacity 0.15s;
+}
+.comm-admin-reject-btn:active { opacity: 0.8; }
+.comm-admin-reject-btn svg { width: 14px; height: 14px; }
+
+/* Admin moderation screen */
+.comm-mod-card {
+  background: var(--bg-phone); border-bottom: 1px solid var(--border);
+  padding: 14px 16px 12px; cursor: default;
+}
+.comm-mod-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.comm-mod-card-text { font-size: var(--t4); color: var(--ink-1); line-height: 1.55; margin-bottom: 10px; }
+.comm-mod-card-meta { font-size: var(--t6); color: var(--ink-3); margin-bottom: 10px; }
+
+/* Admin nav badge on community header */
+.comm-admin-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 11px; border-radius: 20px;
+  background: var(--red-light); border: 1px solid rgba(121,0,47,0.18);
+  color: var(--red); font-size: var(--t6); font-weight: 600;
+  cursor: pointer; position: relative; flex-shrink: 0;
+}
+.comm-admin-btn svg { width: 13px; height: 13px; }
+.comm-admin-btn-count {
+  background: var(--red); color: #fff; border-radius: 9px;
+  font-size: 10px; font-weight: 700; padding: 1px 5px;
+  min-width: 16px; text-align: center;
+}
+
+/* ══════════════════════════════════════════════════════════
    COMMUNITY POST DETAIL SCREEN
    ══════════════════════════════════════════════════════════ */
 .comm-post-header {
@@ -1773,7 +2011,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   width: 100%; border: none; background: transparent;
   font-family: inherit; font-size: var(--t4); color: var(--ink-1);
   outline: none; resize: none; line-height: 1.45; max-height: 96px;
-  overflow-y: auto; min-height: 22px;
+  overflow-y: hidden; min-height: 22px;
 }
 .comm-reply-textarea::placeholder { color: var(--ink-3); }
 .comm-reply-attachments { display: none; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
@@ -1929,6 +2167,167 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 /* ══════════════════════════════════════════════════════════
    STORES SCREEN
 ══════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════
+   COMMUNITY ACTIVITY ENTRY (profile card)
+══════════════════════════════════════════════════════════ */
+.comm-act-entry {
+  margin: 0 20px 24px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-phone);
+  cursor: pointer;
+  transition: box-shadow 0.18s;
+}
+.comm-act-entry:hover  { box-shadow: 0 6px 24px rgba(0,0,0,0.09); }
+.comm-act-entry:active { opacity: 0.92; }
+.comm-act-entry.static { cursor: default; }
+.comm-act-entry.static:hover  { box-shadow: none; }
+.comm-act-entry.static:active { opacity: 1; }
+.comm-act-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 14px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-surface);
+  pointer-events: none;
+}
+.comm-act-icon {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  background: var(--b-purple);
+  display: flex; align-items: center; justify-content: center;
+  color: #6D28D9;
+}
+.comm-act-icon svg { width: 14px; height: 14px; }
+.comm-act-text { flex: 1; min-width: 0; }
+.comm-act-title { font-size: var(--t5); font-weight: 700; color: var(--ink-1); line-height: 1.2; }
+.comm-act-sub   { font-size: var(--t6); color: var(--ink-3); margin-top: 2px; line-height: 1.4; }
+.comm-act-chevron { width: 15px; height: 15px; color: var(--ink-3); flex-shrink: 0; }
+[dir="rtl"] .comm-act-chevron { transform: scaleX(-1); }
+.comm-act-stats {
+  display: flex; gap: 0;
+  border-top: 1px solid var(--border);
+  pointer-events: none;
+}
+.comm-act-stat {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 10px 6px; gap: 2px;
+  border-right: 1px solid var(--border);
+}
+.comm-act-stat:last-child { border-right: none; }
+.comm-act-stat-v { font-size: var(--t3); font-weight: 700; color: var(--ink-1); line-height: 1; }
+.comm-act-stat-l { font-size: var(--t6); color: var(--ink-3); margin-top: 2px; }
+
+/* ══════════════════════════════════════════════════════════
+   COMMUNITY ACTIVITY SCREEN
+══════════════════════════════════════════════════════════ */
+.comm-act-screen-header {
+  display: flex; align-items: center;
+  padding: 6px 16px 10px; flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-phone); gap: 0;
+}
+.comm-act-screen-hero {
+  padding: 20px 20px 16px;
+  background: linear-gradient(135deg, var(--b-purple) 0%, #F5F3FF 100%);
+  border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.comm-act-screen-title {
+  font-family: var(--font-display); font-size: var(--t2);
+  color: var(--ink-1); margin-bottom: 4px;
+}
+[dir="rtl"] .comm-act-screen-title { font-family: var(--font-ar) !important; font-weight: 600; }
+.comm-act-screen-desc { font-size: var(--t5); color: var(--ink-2); line-height: 1.55; }
+.comm-act-screen-stats {
+  display: flex; gap: 16px; margin-top: 14px;
+}
+.comm-act-screen-stat {
+  display: flex; flex-direction: column; gap: 1px;
+}
+.comm-act-screen-stat-v {
+  font-size: var(--t3); font-weight: 700; color: var(--ink-1);
+}
+.comm-act-screen-stat-l {
+  font-size: var(--t6); color: var(--ink-3);
+}
+
+/* Tab bar */
+.comm-act-tabs {
+  display: flex; flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-phone);
+  overflow-x: auto; scrollbar-width: none;
+}
+.comm-act-tabs::-webkit-scrollbar { display: none; }
+.comm-act-tab {
+  flex: 1; min-width: 72px;
+  padding: 11px 8px 10px; text-align: center;
+  font-size: var(--t5); font-weight: 500; color: var(--ink-3);
+  border-bottom: 2px solid transparent;
+  cursor: pointer; transition: all 0.15s;
+  white-space: nowrap;
+}
+.comm-act-tab.active {
+  color: var(--red); border-bottom-color: var(--red);
+  font-weight: 600;
+}
+
+/* Post row inside activity screen */
+.comm-act-post-row {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.1s;
+}
+.comm-act-post-row:last-child { border-bottom: none; }
+.comm-act-post-row:active { background: var(--bg-surface); }
+.comm-act-post-type-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 6px;
+}
+.comm-act-post-body { flex: 1; min-width: 0; }
+.comm-act-post-text {
+  font-size: var(--t4); color: var(--ink-1); line-height: 1.45;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; margin-bottom: 6px;
+}
+.comm-act-post-meta {
+  display: flex; align-items: center; gap: 10px;
+  font-size: var(--t6); color: var(--ink-3);
+}
+.comm-act-post-meta-item { display: flex; align-items: center; gap: 3px; }
+.comm-act-post-meta-item svg { width: 10px; height: 10px; flex-shrink: 0; }
+.comm-act-post-badge {
+  font-size: var(--t6); font-weight: 600; padding: 2px 7px;
+  border-radius: 20px; white-space: nowrap;
+}
+.comm-act-empty {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 52px 32px; gap: 10px; text-align: center;
+}
+.comm-act-empty svg { color: var(--ink-3); opacity: 0.3; width: 40px; height: 40px; }
+.comm-act-empty-title { font-size: var(--t4); font-weight: 600; color: var(--ink-1); }
+.comm-act-empty-sub { font-size: var(--t5); color: var(--ink-3); line-height: 1.6; }
+
+/* Comment row variant */
+.comm-act-reply-row {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 13px 16px; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.1s;
+}
+.comm-act-reply-row:last-child { border-bottom: none; }
+.comm-act-reply-row:active { background: var(--bg-surface); }
+.comm-act-reply-context {
+  font-size: var(--t6); color: var(--ink-3);
+  display: flex; align-items: center; gap: 5px;
+}
+.comm-act-reply-context svg { width: 10px; height: 10px; flex-shrink: 0; }
+.comm-act-reply-text {
+  font-size: var(--t4); color: var(--ink-1); line-height: 1.45;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.comm-act-reply-time { font-size: var(--t6); color: var(--ink-3); margin-top: 2px; }
+
 .stores-top-nav { display:flex; align-items:center; justify-content:space-between; padding:12px 20px 8px; flex-shrink:0; }
 .stores-top-title { font-size:var(--t3); font-weight:600; color:var(--ink-1); }
 .stores-count { font-size:var(--t5); color:var(--ink-3); }
@@ -2598,6 +2997,82 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
+
+/* ── Interests preference sections ── */
+.int-section { margin-bottom: 28px; }
+.int-section:last-child { margin-bottom: 0; }
+.int-section-label {
+  font-size: var(--t6); font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px;
+}
+.int-divider { height: 1px; background: var(--border); margin: 0 0 28px; }
+
+/* Grid layouts */
+.int-card-grid {
+  display: grid; gap: 10px;
+}
+.int-card-grid.col3 { grid-template-columns: repeat(3, 1fr); }
+.int-card-grid.col2 { grid-template-columns: repeat(2, 1fr); }
+
+/* Individual card */
+.int-card {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 8px; padding: 16px 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  background: var(--bg-surface);
+  cursor: pointer; user-select: none;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  text-align: center;
+}
+.int-card:active { opacity: 0.82; }
+.int-card.selected {
+  border-color: var(--red);
+  background: var(--red-light);
+  box-shadow: 0 0 0 1px var(--red);
+}
+.int-card-icon {
+  font-size: 28px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--bg-input);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+/* SVG icons inside int-card-icon */
+.int-card-icon svg {
+  width: 22px; height: 22px;
+  stroke: var(--ink-2);
+  transition: stroke 0.15s;
+}
+.int-card.selected .int-card-icon {
+  background: rgba(121,0,47,0.10);
+}
+.int-card.selected .int-card-icon svg {
+  stroke: var(--red);
+}
+.int-card-name {
+  font-size: var(--t6); font-weight: 600;
+  color: var(--ink-2); line-height: 1.3;
+  transition: color 0.15s;
+}
+.int-card.selected .int-card-name { color: var(--red); }
+
+/* Checkmark badge — top-right corner */
+.int-card-check {
+  position: absolute; top: 7px; right: 7px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--border); border: none;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.15s, background 0.15s;
+}
+[dir="rtl"] .int-card-check { right: auto; left: 7px; }
+.int-card-check svg { width: 9px; height: 9px; stroke: #fff; }
+.int-card.selected .int-card-check {
+  background: var(--red); opacity: 1;
+}
 .interest-card {
   border-radius: var(--radius-md);
   border: 2px solid transparent;
@@ -2885,12 +3360,8 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
           <img src="logo.png" alt="Yourdis" style="width:30px;height:30px;object-fit:contain;" onerror="this.style.display='none'"/>
           <span id="home-app-name" style="font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--ink-1);letter-spacing:0.04em;">YOURDIS</span>
         </div>
-      <!-- Right icons: Messages + Notification -->
+      <!-- Right icons: Notification only -->
       <div style="display:flex;align-items:center;gap:4px;">
-        <div class="icon-btn" style="position:relative;cursor:pointer;" onclick="if(guestGuard())return;openMessages()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-          <span id="msg-header-badge" style="position:absolute;top:6px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--red);border:1.5px solid #fff;display:none;"></span>
-        </div>
         <!-- Notification bell -->
         <div class="icon-btn" style="position:relative;cursor:pointer;" onclick="if(guestGuard())return;switchScreen('notifications')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
@@ -2968,7 +3439,11 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   <!-- Bottom nav — ONLY inside main screens -->
   <div class="bottom-nav">
     <div class="bn-item active" onclick="homeRefresh()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-i18n="nav_home">Home</span></div>
-    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('community')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><span data-i18n="nav_community">Community</span></div>
+    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('community')" style="position:relative;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      <span data-i18n="nav_community">Community</span>
+      <span class="bn-badge" id="comm-nav-badge"></span>
+    </div>
     <div class="bn-item" onclick="if(guestGuard())return;switchScreen('ai-chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span data-i18n="nav_ai">Sina AI</span></div>
     <div class="bn-item" onclick="if(guestGuard())return;switchScreen('activity')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span data-i18n="nav_activity">Activity</span></div>
   </div>
@@ -3347,6 +3822,40 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
     <div class="divider" style="margin:0 0 20px;"></div>
 
+    <!-- My Community Activity section -->
+    <div class="comm-act-entry" onclick="if(guestGuard())return;openCommActivityScreen()">
+      <div class="comm-act-header">
+        <div class="comm-act-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div class="comm-act-text">
+          <div class="comm-act-title" data-i18n="comm_act_entry_title">My Community Activity</div>
+          <div class="comm-act-sub" data-i18n="comm_act_entry_sub">Your questions, sales, articles and comments</div>
+        </div>
+        <svg class="comm-act-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+      <div class="comm-act-stats" id="comm-act-entry-stats">
+        <div class="comm-act-stat">
+          <div class="comm-act-stat-v" id="comm-act-stat-questions">0</div>
+          <div class="comm-act-stat-l" data-i18n="comm_act_tab_questions">Questions</div>
+        </div>
+        <div class="comm-act-stat">
+          <div class="comm-act-stat-v" id="comm-act-stat-sales">0</div>
+          <div class="comm-act-stat-l" data-i18n="comm_act_tab_sales">Sales</div>
+        </div>
+        <div class="comm-act-stat">
+          <div class="comm-act-stat-v" id="comm-act-stat-articles">0</div>
+          <div class="comm-act-stat-l" data-i18n="comm_act_tab_articles">Articles</div>
+        </div>
+        <div class="comm-act-stat">
+          <div class="comm-act-stat-v" id="comm-act-stat-comments">0</div>
+          <div class="comm-act-stat-l" data-i18n="comm_act_tab_comments">Comments</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider" style="margin:0 0 20px;"></div>
+
     <!-- Recently Viewed -->
     <div class="rv-entry" onclick="openRecentlyViewedPage()">
 
@@ -3368,21 +3877,31 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     </div>
 
 
-    <!-- My Interests -->
-    <div class="sec-head" style="margin-bottom:4px;">
-      <span class="sec-label" data-i18n="activity_interests">My Interests</span>
-      <span class="sec-link" data-i18n="activity_edit" onclick="switchScreen('sub-interests')" style="cursor:pointer;">Edit</span>
-    </div>
-    <div style="font-size:var(--t5);color:var(--ink-3);padding:0 20px;margin-bottom:14px;" data-i18n="activity_interests_sub">We've selected default interests for you. Tap Edit to customize them.</div>
-    <div class="pref-chips" style="margin-bottom:20px;">
-      <span class="pref-chip on">Woody / Oud</span>
-      <span class="pref-chip on">Oriental</span>
-      <span class="pref-chip">Niche</span>
-      <span class="pref-chip on">Fresh / Aqua</span>
-      <span class="pref-chip">Floral</span>
-    </div>
-
     <div class="divider" style="margin:0 0 20px;"></div>
+
+    <!-- My Interests — card style consistent with other sections -->
+    <div class="comm-act-entry" style="margin-bottom:20px;" onclick="switchScreen('sub-interests')">
+      <div class="comm-act-header">
+        <div class="comm-act-icon" style="background:var(--gold-light);color:var(--gold);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="comm-act-text">
+          <div class="comm-act-title" data-i18n="activity_interests">My Interests</div>
+          <div class="comm-act-sub" data-i18n="activity_interests_sub">We've selected default interests for you. Tap to customize.</div>
+        </div>
+        <svg class="comm-act-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+      <div style="padding:14px 16px 16px;display:flex;flex-wrap:wrap;gap:8px;">
+        <span class="pref-chip on">Woody / Oud</span>
+        <span class="pref-chip on">Oriental</span>
+        <span class="pref-chip">Niche</span>
+        <span class="pref-chip on">Fresh / Aqua</span>
+        <span class="pref-chip">Floral</span>
+        <span class="pref-chip on">Oud</span>
+        <span class="pref-chip">Citrus</span>
+        <span class="pref-chip">Gourmand</span>
+      </div>
+    </div>
 
     <div class="divider" style="margin:0;"></div>
 
@@ -3937,8 +4456,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         </div>
       </div>
 
-      <!-- Store features icon strip -->
-      <div class="store-features-wrap" id="pdp-store-features" style="display:none;margin-top:12px;"></div>
+      <div style="height:1px;background:var(--border);margin:20px 0 0;"></div>
 
       <!-- Compare Banner -->
       <div id="pdp-compare-banner-wrap" style="margin:0 0 8px;">
@@ -4043,17 +4561,6 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
           <div>
             <div style="font-size:var(--t4);font-weight:600;color:var(--ink-1);" data-i18n="library_owned">Owned</div>
             <div style="font-size:var(--t5);color:var(--ink-3);margin-top:2px;" data-i18n="pdp_library_owned_sub">Fragrances you own</div>
-          </div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="2" style="width:15px;height:15px;margin-left:auto;flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
-        </div>
-        <!-- Liked -->
-        <div onclick="addToLibrary('liked')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--radius-md);border:1px solid var(--border);background:var(--bg-surface);cursor:pointer;transition:background 0.12s;" onmouseover="this.style.background='var(--bg-input)'" onmouseout="this.style.background='var(--bg-surface)'">
-          <div style="width:38px;height:38px;border-radius:50%;background:var(--b-pink);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#8C3066" stroke-width="1.8" style="width:17px;height:17px;"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg>
-          </div>
-          <div>
-            <div style="font-size:var(--t4);font-weight:600;color:var(--ink-1);" data-i18n="library_liked">Liked</div>
-            <div style="font-size:var(--t5);color:var(--ink-3);margin-top:2px;" data-i18n="pdp_library_liked_sub">Fragrances you enjoy</div>
           </div>
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="2" style="width:15px;height:15px;margin-left:auto;flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
         </div>
@@ -4173,15 +4680,6 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     </button>
     <!-- Maybe later -->
     <button onclick="closeGuestModal()" style="background:none;border:none;font-size:var(--t5);color:var(--ink-3);cursor:pointer;padding:4px 0;" data-i18n="guest_modal_later">Maybe later</button>
-  </div>
-</div>
-
-<!-- Community action sheet — phone-frame level, visible across all community screens -->
-<div class="comm-action-overlay" id="comm-action-overlay" onclick="if(event.target===this)closeCommActionSheet()">
-  <div class="comm-action-sheet">
-    <div class="comm-action-handle"></div>
-    <div class="comm-action-title" id="comm-action-title"></div>
-    <div id="comm-action-items"></div>
   </div>
 </div>
 
@@ -4539,12 +5037,187 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
     </button>
     <span class="sub-header-title" data-i18n="interests_title">My Interests</span>
+    <div style="width:36px;"></div>
   </div>
-  <div class="sub-body">
-    <div class="sub-notice" style="margin-top:0;margin-bottom:20px;" data-i18n="interests_sub">Select the accords you enjoy most. We'll use these to personalise your recommendations.</div>
-    <div class="interests-grid" id="interests-grid"></div>
-    <button class="sub-btn" style="margin-top:20px;" onclick="interestsSave()" data-i18n="sub_save">Save Changes</button>
+
+  <div class="sub-body" style="padding:20px;">
+
+    <div style="font-size:var(--t5);color:var(--ink-3);line-height:1.6;margin-bottom:28px;" data-i18n="interests_sub">Tell us about your preferences. We'll use these to personalise your recommendations.</div>
+
+    <!-- ── Gender ── -->
+    <div class="int-section">
+      <div class="int-section-label" data-i18n="int_gender">Gender</div>
+      <div class="int-card-grid col3" id="int-gender">
+
+        <div class="int-card" data-group="gender" data-val="men" onclick="intToggle(this,'gender','single')">
+          <div class="int-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="7" r="4"/><path d="M17 21v-1a5 5 0 00-10 0v1"/></svg>
+          </div>
+          <div class="int-card-name" data-i18n="int_men">Men</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card" data-group="gender" data-val="women" onclick="intToggle(this,'gender','single')">
+          <div class="int-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="5"/><line x1="12" y1="13" x2="12" y2="21"/><line x1="9" y1="18" x2="15" y2="18"/></svg>
+          </div>
+          <div class="int-card-name" data-i18n="int_women">Women</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card selected" data-group="gender" data-val="unisex" onclick="intToggle(this,'gender','single')">
+          <div class="int-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="9" r="4"/><path d="M19 3l-4 4m0 0l4-4m-4 4V3m0 4h4"/><line x1="11" y1="13" x2="11" y2="21"/><line x1="8" y1="18" x2="14" y2="18"/></svg>
+          </div>
+          <div class="int-card-name" data-i18n="int_unisex">Unisex</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="int-divider"></div>
+
+    <!-- ── Fragrance Family ── -->
+    <div class="int-section">
+      <div class="int-section-label" data-i18n="int_family">Fragrance Family</div>
+      <div class="int-card-grid col2" id="int-family">
+
+        <div class="int-card selected" data-group="family" data-val="floral" onclick="intToggle(this,'family','multi')">
+          <div class="int-card-icon">🌸</div>
+          <div class="int-card-name" data-i18n="int_floral">Floral</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card selected" data-group="family" data-val="woody" onclick="intToggle(this,'family','multi')">
+          <div class="int-card-icon">🪵</div>
+          <div class="int-card-name" data-i18n="int_woody">Woody</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card selected" data-group="family" data-val="oriental" onclick="intToggle(this,'family','multi')">
+          <div class="int-card-icon">🕌</div>
+          <div class="int-card-name" data-i18n="int_oriental">Oriental</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card" data-group="family" data-val="aromatic" onclick="intToggle(this,'family','multi')">
+          <div class="int-card-icon">🌿</div>
+          <div class="int-card-name" data-i18n="int_aromatic">Aromatic</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card" data-group="family" data-val="musk" onclick="intToggle(this,'family','multi')">
+          <div class="int-card-icon">🤍</div>
+          <div class="int-card-name" data-i18n="int_musk">Musk</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card" data-group="family" data-val="leather" onclick="intToggle(this,'family','multi')">
+          <div class="int-card-icon">🧥</div>
+          <div class="int-card-name" data-i18n="int_leather">Leather</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card" data-group="family" data-val="fresh" onclick="intToggle(this,'family','multi')">
+          <div class="int-card-icon">💧</div>
+          <div class="int-card-name" data-i18n="int_fresh">Fresh</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card" data-group="family" data-val="chypre" onclick="intToggle(this,'family','multi')">
+          <div class="int-card-icon">🌲</div>
+          <div class="int-card-name" data-i18n="int_chypre">Chypre</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card selected" data-group="family" data-val="oud" onclick="intToggle(this,'family','multi')">
+          <div class="int-card-icon">🪔</div>
+          <div class="int-card-name" data-i18n="int_oud">Oud</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card" data-group="family" data-val="unknown" onclick="intToggle(this,'family','multi')">
+          <div class="int-card-icon">✨</div>
+          <div class="int-card-name" data-i18n="int_unknown">Unknown</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="int-divider"></div>
+
+    <!-- ── Season ── -->
+    <div class="int-section">
+      <div class="int-section-label" data-i18n="int_season">Season</div>
+      <div class="int-card-grid col3" id="int-season">
+
+        <div class="int-card" data-group="season" data-val="summer" onclick="intToggle(this,'season','multi')">
+          <div class="int-card-icon">☀️</div>
+          <div class="int-card-name" data-i18n="int_summer">Summer</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card selected" data-group="season" data-val="winter" onclick="intToggle(this,'season','multi')">
+          <div class="int-card-icon">❄️</div>
+          <div class="int-card-name" data-i18n="int_winter">Winter</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card" data-group="season" data-val="spring" onclick="intToggle(this,'season','multi')">
+          <div class="int-card-icon">🌱</div>
+          <div class="int-card-name" data-i18n="int_spring">Spring</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card selected" data-group="season" data-val="autumn" onclick="intToggle(this,'season','multi')">
+          <div class="int-card-icon">🍂</div>
+          <div class="int-card-name" data-i18n="int_autumn">Autumn</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card" data-group="season" data-val="all" onclick="intToggle(this,'season','single')" style="grid-column:span 2;">
+          <div class="int-card-icon">🌍</div>
+          <div class="int-card-name" data-i18n="int_all_seasons">All Seasons</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="int-divider"></div>
+
+    <!-- ── Time of Day ── -->
+    <div class="int-section">
+      <div class="int-section-label" data-i18n="int_time">Time of Day</div>
+      <div class="int-card-grid col3" id="int-time">
+
+        <div class="int-card selected" data-group="time" data-val="night" onclick="intToggle(this,'time','multi')">
+          <div class="int-card-icon">🌙</div>
+          <div class="int-card-name" data-i18n="int_night">Night</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card" data-group="time" data-val="day" onclick="intToggle(this,'time','multi')">
+          <div class="int-card-icon">🌤️</div>
+          <div class="int-card-name" data-i18n="int_day">Day</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+        <div class="int-card" data-group="time" data-val="daynight" onclick="intToggle(this,'time','single')">
+          <div class="int-card-icon">🌓</div>
+          <div class="int-card-name" data-i18n="int_day_night">Day &amp; Night</div>
+          <div class="int-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        </div>
+
+      </div>
+    </div>
+
+    <button class="sub-btn" style="margin-top:8px;" onclick="interestsSave()" data-i18n="sub_save">Save Changes</button>
     <div class="sub-success" id="interests-success" data-i18n="sub_saved_ok">✓ Saved successfully</div>
+
+    <div style="height:32px;" aria-hidden="true"></div>
   </div>
 </div>
 
@@ -4725,21 +5398,31 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 ═══════════════════════════════════════ -->
 <div class="screen" id="screen-community">
 
-  <!-- Header -->
-  <div class="comm-header">
-    <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="openCommInfo()">
-      <div style="width:36px;height:36px;border-radius:50%;background:var(--red-light);border:1.5px solid rgba(var(--red-rgb,180,0,0),0.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8" style="width:18px;height:18px;"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-      </div>
+  <!-- Header — matches AI chat bar style -->
+  <div class="ai-chat-bar">
+    <button class="dip-back-btn" onclick="switchScreen('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <div style="display:flex;align-items:center;gap:10px;cursor:pointer;flex:1;padding:0 10px;" onclick="openCommInfo()">
       <div>
         <div class="comm-header-title" data-i18n="comm_page_title">Community</div>
-        <div class="comm-header-sub" data-i18n="comm_header_sub">View community guidelines</div>
+        <div class="comm-header-sub" style="display:flex;align-items:center;gap:5px;">
+          <span class="comm-online-dot" style="width:6px;height:6px;flex-shrink:0;display:inline-block;"></span>
+          <span><span class="comm-online-count" id="comm-online-count">247</span> <span data-i18n="comm_online_now">online now</span></span>
+        </div>
       </div>
     </div>
-    <button class="comm-fab-header" onclick="openCommModal()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      <span data-i18n="comm_post_btn">Post</span>
-    </button>
+    <div style="display:flex;align-items:center;gap:4px;">
+      <button class="comm-admin-btn" id="comm-admin-btn" onclick="openCommAdminScreen()" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span data-i18n="comm_admin_btn">Admin</span>
+        <span class="comm-admin-btn-count" id="comm-admin-btn-count">0</span>
+      </button>
+      <button class="icon-btn" style="position:relative;cursor:pointer;flex-shrink:0;border:1px solid var(--border);" onclick="if(guestGuard())return;openMessages()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <span id="msg-header-badge" style="position:absolute;top:6px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--red);border:1.5px solid #fff;display:none;"></span>
+      </button>
+    </div>
   </div>
 
   <!-- Filter chips -->
@@ -4750,13 +5433,13 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="comm-filter-chip"        data-filter="article" onclick="setCommFilter('article')" data-i18n="comm_type_article">Article</div>
   </div>
 
-  <!-- Online users -->
-  <div class="comm-online-bar" id="comm-online-bar">
-    <div class="comm-online-dot"></div>
-    <span class="comm-online-label"><span class="comm-online-count" id="comm-online-count">247</span> <span data-i18n="comm_online_now">online now</span></span>
-  </div>
-
   <!-- Feed -->
+  <div class="comm-search-bar">
+    <div class="comm-search-inner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="comm-search-input" data-i18n="comm_search_ph" placeholder="Search posts…" oninput="renderCommunityFeed()">
+    </div>
+  </div>
   <div class="scroll-area">
     <div class="comm-feed" id="comm-feed"></div>
     <div id="comm-empty" class="comm-empty" style="display:none;">
@@ -4767,22 +5450,11 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div style="height:80px;" aria-hidden="true"></div>
   </div>
 
-  <!-- Bottom nav -->
-  <div class="bottom-nav">
-    <div class="bn-item" onclick="switchScreen('home')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span data-i18n="nav_home">Home</span>
-    </div>
-    <div class="bn-item active">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-      <span data-i18n="nav_community">Community</span>
-    </div>
-    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('ai-chat')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span data-i18n="nav_ai">Sina AI</span></div>
-    <div class="bn-item" onclick="if(guestGuard())return;switchScreen('activity')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      <span data-i18n="nav_activity">Activity</span>
-    </div>
-  </div>
+  <!-- FAB — floating action button for new post -->
+  <button class="comm-fab" onclick="openCommModal()" aria-label="New post">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    <span data-i18n="comm_post_btn">Post</span>
+  </button>
 
   <!-- Post modal overlay -->
   <div class="comm-modal-overlay" id="comm-modal-overlay" onclick="if(event.target===this)closeCommModal()">
@@ -4847,11 +5519,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
               <span data-i18n="comm_camera">Camera</span>
             </button>
           </div>
-          <div id="comm-inquiry-product-preview" style="display:none;" class="comm-selected-product">
-            <div class="comm-selected-thumb" id="comm-inquiry-thumb"></div>
-            <span class="comm-selected-name" id="comm-inquiry-product-name"></span>
-            <span class="comm-selected-remove" onclick="commRemoveProduct('inquiry')">✕</span>
-          </div>
+          <div id="comm-inquiry-product-preview" style="display:none;"></div>
         </div>
 
         <!-- Step 2b: For Sale form -->
@@ -4895,11 +5563,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
               <span data-i18n="comm_camera">Camera</span>
             </button>
           </div>
-          <div id="comm-article-product-preview" style="display:none;" class="comm-selected-product">
-            <div class="comm-selected-thumb" id="comm-article-thumb"></div>
-            <span class="comm-selected-name" id="comm-article-product-name"></span>
-            <span class="comm-selected-remove" onclick="commRemoveProduct('article')">✕</span>
-          </div>
+          <div id="comm-article-product-preview" style="display:none;"></div>
         </div>
 
       </div>
@@ -4916,7 +5580,10 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="comm-picker-sheet">
       <div class="comm-modal-handle"></div>
       <div class="comm-picker-header">
-        <span class="comm-picker-title" data-i18n="comm_pick_product">Pick a Product</span>
+        <div>
+          <span class="comm-picker-title" data-i18n="comm_pick_product">Pick a Product</span>
+          <div id="comm-picker-count-hint" style="font-size:var(--t6);color:var(--ink-3);margin-top:2px;"></div>
+        </div>
         <button class="comm-modal-close" onclick="closeCommPicker()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
@@ -4928,6 +5595,9 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         </div>
       </div>
       <div class="comm-picker-list" id="comm-picker-list"></div>
+      <div style="padding:12px 16px 20px;">
+        <button onclick="closeCommPicker()" style="width:100%;height:44px;border-radius:var(--radius-md);background:var(--red);color:#fff;font-size:var(--t4);font-weight:600;border:none;font-family:inherit;cursor:pointer;" data-i18n="comm_picker_done">Done</button>
+      </div>
     </div>
   </div>
 
@@ -5032,6 +5702,95 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 </div><!-- /screen-comm-info -->
 
 <!-- ═══════════════════════════════════════
+     SCREEN: ADMIN MODERATION (sub-screen)
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-comm-admin">
+
+  <div class="sub-header">
+    <button class="dip-back-btn" onclick="closeCommAdminScreen()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" data-i18n="comm_admin_screen_title">Post Moderation</span>
+    <div style="width:36px;flex-shrink:0;"></div>
+  </div>
+
+  <!-- Tab bar: Pending / Rejected -->
+  <div class="comm-admin-tab-bar" id="comm-admin-tab-bar">
+    <div class="comm-admin-tab active" id="comm-admin-tab-pending" onclick="switchAdminTab('pending')">
+      <span data-i18n="comm_admin_tab_pending">Pending</span>
+      <span class="comm-admin-tab-badge" id="comm-admin-pending-count">0</span>
+    </div>
+    <div class="comm-admin-tab" id="comm-admin-tab-rejected" onclick="switchAdminTab('rejected')">
+      <span data-i18n="comm_admin_tab_rejected">Rejected</span>
+      <span class="comm-admin-tab-badge" id="comm-admin-rejected-count" style="background:var(--ink-3);">0</span>
+    </div>
+  </div>
+
+  <div class="scroll-area">
+    <!-- Pending list -->
+    <div id="comm-admin-pending-list"></div>
+    <!-- Rejected list -->
+    <div id="comm-admin-rejected-list" style="display:none;"></div>
+    <!-- Empty state -->
+    <div id="comm-admin-empty" class="comm-empty" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:48px;height:48px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div class="comm-empty-title" data-i18n="comm_admin_empty_title">All clear!</div>
+      <div class="comm-empty-sub" data-i18n="comm_admin_empty_sub">No posts waiting for review.</div>
+    </div>
+    <div style="height:32px;" aria-hidden="true"></div>
+  </div>
+
+</div><!-- /screen-comm-admin -->
+
+<!-- ═══════════════════════════════════════
+     SCREEN: MY COMMUNITY ACTIVITY
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-comm-activity">
+
+  <!-- Header -->
+  <div class="ai-chat-bar">
+    <button class="dip-back-btn" onclick="switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <div style="text-align:center;flex:1;">
+      <div style="font-size:var(--t4);font-weight:600;color:var(--ink-1);" data-i18n="comm_act_screen_title">My Community Activity</div>
+    </div>
+    <div style="width:36px;"></div>
+  </div>
+
+  <!-- Hero strip -->
+  <div class="comm-act-screen-hero">
+    <div class="comm-act-screen-title" data-i18n="comm_act_hero_title">Your contributions</div>
+    <div class="comm-act-screen-desc" data-i18n="comm_act_hero_desc">Everything you've shared, asked, and sold in the Yourdis community.</div>
+    <div class="comm-act-screen-stats">
+      <div class="comm-act-screen-stat">
+        <div class="comm-act-screen-stat-v" id="cas-total">0</div>
+        <div class="comm-act-screen-stat-l" data-i18n="comm_act_total_posts">Total posts</div>
+      </div>
+      <div class="comm-act-screen-stat">
+        <div class="comm-act-screen-stat-v" id="cas-comments">0</div>
+        <div class="comm-act-screen-stat-l" data-i18n="comm_act_tab_comments">Comments</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab bar -->
+  <div class="comm-act-tabs" id="comm-act-tabs">
+    <div class="comm-act-tab active" data-tab="questions" onclick="switchCommActTab('questions')" data-i18n="comm_act_tab_questions">Questions</div>
+    <div class="comm-act-tab" data-tab="sales" onclick="switchCommActTab('sales')" data-i18n="comm_act_tab_sales">Sales</div>
+    <div class="comm-act-tab" data-tab="articles" onclick="switchCommActTab('articles')" data-i18n="comm_act_tab_articles">Articles</div>
+    <div class="comm-act-tab" data-tab="comments" onclick="switchCommActTab('comments')" data-i18n="comm_act_tab_comments">Comments</div>
+  </div>
+
+  <!-- Content -->
+  <div class="scroll-area">
+    <div id="comm-act-list"></div>
+    <div style="height:24px;" aria-hidden="true"></div>
+  </div>
+
+</div><!-- /screen-comm-activity -->
+
+<!-- ═══════════════════════════════════════
      SCREEN: USER LIBRARY (read-only, from community)
 ═══════════════════════════════════════ -->
 <div class="screen" id="screen-user-library">
@@ -5041,9 +5800,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
     </button>
     <span class="sub-header-title" id="user-lib-header-title" style="flex:1;"></span>
-    <button id="user-lib-msg-btn" class="icon-btn" style="width:36px;height:36px;flex-shrink:0;" onclick="openChatFromLibrary()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-    </button>
+    <div style="width:36px;flex-shrink:0;"></div>
   </div>
 
   <div class="scroll-area">
@@ -5060,11 +5817,6 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         <div class="flib-meta-item">
           <div class="flib-meta-v" id="user-lib-stat-owned">0</div>
           <div class="flib-meta-l" data-i18n="library_owned">Owned</div>
-        </div>
-        <div class="flib-meta-sep"></div>
-        <div class="flib-meta-item">
-          <div class="flib-meta-v" id="user-lib-stat-liked">0</div>
-          <div class="flib-meta-l" data-i18n="library_liked">Liked</div>
         </div>
         <div class="flib-meta-sep"></div>
         <div class="flib-meta-item">
@@ -5086,11 +5838,9 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <!-- Tabs -->
       <div class="flib-tabs" style="margin-top:16px;">
         <div class="flib-tab active" id="user-lib-tab-owned" onclick="userLibSwitchTab('owned')" data-i18n="library_owned">Owned</div>
-        <div class="flib-tab" id="user-lib-tab-liked" onclick="userLibSwitchTab('liked')" data-i18n="library_liked">Liked</div>
         <div class="flib-tab" id="user-lib-tab-want"  onclick="userLibSwitchTab('want')"  data-i18n="library_want">Want to Try</div>
       </div>
       <div id="user-lib-grid-owned" class="flib-grid"></div>
-      <div id="user-lib-grid-liked" class="flib-grid" style="display:none;"></div>
       <div id="user-lib-grid-want"  class="flib-grid" style="display:none;"></div>
     </div>
 
@@ -5178,7 +5928,10 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div class="comm-picker-sheet">
       <div class="comm-modal-handle"></div>
       <div class="comm-picker-header">
-        <span class="comm-picker-title" data-i18n="comm_pick_product">Pick a Product</span>
+        <div>
+          <span class="comm-picker-title" data-i18n="comm_pick_product">Pick a Product</span>
+          <div id="comm-reply-picker-hint" style="font-size:var(--t6);color:var(--ink-3);margin-top:2px;"></div>
+        </div>
         <button class="comm-modal-close" onclick="closeCommReplyPicker()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
@@ -5191,6 +5944,9 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         </div>
       </div>
       <div class="comm-picker-list" id="comm-reply-picker-list"></div>
+      <div style="padding:12px 16px 20px;">
+        <button onclick="closeCommReplyPicker()" style="width:100%;height:44px;border-radius:var(--radius-md);background:var(--red);color:#fff;font-size:var(--t4);font-weight:600;border:none;font-family:inherit;cursor:pointer;" data-i18n="comm_picker_done">Done</button>
+      </div>
     </div>
   </div>
 
@@ -5202,7 +5958,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 <div class="screen" id="screen-messages">
 
   <div class="sub-header">
-    <button class="dip-back-btn" onclick="switchScreen('home')">
+    <button class="dip-back-btn" onclick="switchScreen('community')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
     </button>
     <span class="sub-header-title" data-i18n="nav_messages">Messages</span>
@@ -5241,8 +5997,21 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
   <div class="chat-messages" id="chat-messages"></div>
 
-  <!-- Input bar — matches AI chat pattern -->
-  <div class="ai-input-bar">
+  <!-- Sale chat scope notice — always visible for sale-context chats -->
+  <div class="chat-sale-notice" id="chat-sale-notice" style="display:none;">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <span id="chat-sale-notice-text"></span>
+  </div>
+
+  <!-- Chat closed notice — shown for sold-item chats (replaces input bar) -->
+  <div class="chat-closed-notice" id="chat-closed-notice" style="display:none;">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+    <div class="chat-closed-notice-title" data-i18n="chat_sold_closed_title">This chat is closed</div>
+    <div class="chat-closed-notice-sub" data-i18n="chat_sold_closed_sub">This item has been sold. You can no longer send messages through this conversation.</div>
+  </div>
+
+  <!-- Input bar — hidden when chat is closed -->
+  <div class="ai-input-bar" id="chat-input-bar">
     <button class="ai-mic-btn" id="chat-mic-btn" onclick="chatToggleMic()" aria-label="Voice message">
       <svg id="chat-mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
     </button>
@@ -5267,6 +6036,15 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
 </div><!-- /phone-frame -->
 </div><!-- /app-root -->
+
+<!-- Community action sheet — position:fixed inside body, above everything -->
+<div class="comm-action-overlay" id="comm-action-overlay" onclick="if(event.target===this)closeCommActionSheet()">
+  <div class="comm-action-sheet">
+    <div class="comm-action-handle"></div>
+    <div class="comm-action-title" id="comm-action-title"></div>
+    <div id="comm-action-items"></div>
+  </div>
+</div>
 
 
 <script>
@@ -6577,63 +7355,6 @@ function openProduct(productId, origin) {
     accordsWrap.style.display = 'none';
   }
 
-  /* Store features icon strip */
-  var featuresWrap = document.getElementById('pdp-store-features');
-  var bestListing  = srcProduct ? getBestListing(srcProduct.id) : null;
-  var bestStore    = srcProduct ? (function() {
-    var bl = bestListing;
-    return bl ? STORES.find(function(s){ return s.id === bl.storeId; }) : null;
-  })() : null;
-  if (featuresWrap && bestStore) {
-    featuresWrap.innerHTML = '';
-    var features = [
-      {
-        key: 'freeDelivery',    colorClass: 'feat-delivery',
-        labelEn: 'Free Delivery', labelAr: 'شحن مجاني',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 4v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>'
-      },
-      {
-        key: 'expressDelivery', colorClass: 'feat-express',
-        labelEn: 'Express', labelAr: 'توصيل سريع',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>'
-      },
-      {
-        key: 'returnPolicy',    colorClass: 'feat-returns',
-        labelEn: 'Returns', labelAr: 'سياسة إرجاع',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>'
-      },
-      {
-        key: 'cashback',        colorClass: 'feat-cashback',
-        labelEn: 'Cashback', labelAr: 'استرداد نقدي',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>'
-      },
-      {
-        key: 'loyaltyPoints',   colorClass: 'feat-loyalty',
-        labelEn: 'Loyalty Points', labelAr: 'نقاط ولاء',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'
-      },
-      {
-        key: 'installments',    colorClass: 'feat-install',
-        labelEn: 'Installments', labelAr: 'أقساط',
-        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg>'
-      }
-    ];
-    features.forEach(function(f) {
-      /* freeDelivery is per-listing; all other features are store-wide */
-      var isActive = f.key === 'freeDelivery'
-        ? !!(bestListing && bestListing.freeDelivery)
-        : !!bestStore[f.key];
-      var chip = document.createElement('div');
-      chip.className = 'store-feature-chip ' + f.colorClass + ' ' + (isActive ? '' : 'inactive');
-      var label = LANG === 'ar' ? f.labelAr : f.labelEn;
-      chip.innerHTML = f.icon + '<span>' + label + '</span>';
-      featuresWrap.appendChild(chip);
-    });
-    featuresWrap.style.display = '';
-  } else if (featuresWrap) {
-    featuresWrap.style.display = 'none';
-  }
-
   /* CTA */
   document.getElementById('product-cta-btn-price').textContent = p.price;
   var badge = document.getElementById('product-cta-btn-badge');
@@ -6824,6 +7545,7 @@ function showPdpToast(msg) {
 }
 
 function toggleReaction(btn) {
+  if (guestGuard()) return;
   var countEl = btn.querySelector('.reaction-count');
   var count   = parseInt(countEl.textContent) || 0;
   if (btn.classList.contains('reacted')) {
@@ -6965,24 +7687,14 @@ function _compareRenderStores(p, sizeFilter) {
     return a.price - b.price;
   });
 
-  /* ── Determine Best Price and Best Choice indices ── */
+  /* ── Determine Best Price index ── */
   /* Best Price = first in-stock entry (already sorted cheapest first) */
-  var bestPriceIdx  = -1;
-  var bestChoiceIdx = -1;
-  var bestScore     = -1;
+  var bestPriceIdx = -1;
 
   listings.forEach(function(entry, i) {
     if (!entry.inStock) return;
-    /* Best Price: first in-stock */
     if (bestPriceIdx === -1) bestPriceIdx = i;
-    /* Best Choice: highest score */
-    var store = STORES.find(function(s){ return s.id === entry.storeId; }) || {};
-    var sc = scoreStore(store, entry);
-    if (sc > bestScore) { bestScore = sc; bestChoiceIdx = i; }
   });
-
-  /* If same store wins both — elevate to "Best Value" */
-  var bothSame = bestPriceIdx !== -1 && bestPriceIdx === bestChoiceIdx;
 
   /* Update hero subtitle with product meta + store count for the selected size */
   var heroSubEl = document.getElementById('compare-hero-sub');
@@ -7002,12 +7714,9 @@ function _compareRenderStores(p, sizeFilter) {
 
   /* SVG icons for badges */
   var iconPrice  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>';
-  var iconChoice = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
-  var iconValue  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
 
-  var labelBestPrice  = T('compare_best_price');
-  var labelBestChoice = T('compare_best_choice');
-  var labelOutStock   = LANG === 'ar' ? 'غير متوفر' : 'Out of stock';
+  var labelBestPrice = T('compare_best_price');
+  var labelOutStock  = LANG === 'ar' ? 'غير متوفر' : 'Out of stock';
 
   listings.forEach(function(entry, idx) {
     var store     = STORES.find(function(s) { return s.id === entry.storeId; }) || {};
@@ -7018,10 +7727,7 @@ function _compareRenderStores(p, sizeFilter) {
     if (!entry.inStock) {
       badgeHtml = '<span class="cmp-badge cmp-badge-stock">' + labelOutStock + '</span>';
     } else {
-      var parts = [];
-      if (idx === bestPriceIdx)  parts.push('<span class="cmp-badge cmp-badge-price">'  + iconPrice  + labelBestPrice  + '</span>');
-      if (idx === bestChoiceIdx) parts.push('<span class="cmp-badge cmp-badge-choice">' + iconChoice + labelBestChoice + '</span>');
-      badgeHtml = parts.join('');
+      if (idx === bestPriceIdx) badgeHtml = '<span class="cmp-badge cmp-badge-price">' + iconPrice + labelBestPrice + '</span>';
     }
 
     var discHtml = entry.discountPercent > 0
@@ -7444,6 +8150,7 @@ function renderActivity() {
   renderLibraryMosaic();
   renderActivityAlerts();
   renderRecentlyViewed();
+  renderCommActStats();
   /* Update language sub-label */
   var langSub = document.getElementById('settings-lang-sub');
   if (langSub) langSub.textContent = LANG === 'ar' ? 'العربية' : 'English';
@@ -8526,6 +9233,33 @@ function renderInterestsGrid() {
   });
 }
 
+/* ── Preference section state — defaults match HTML preselections ── */
+var _intPrefs = {
+  gender: ['unisex'],
+  family: ['floral', 'woody', 'oriental', 'oud'],
+  season: ['winter', 'autumn'],
+  time:   ['night']
+};
+
+function intToggle(el, group, mode) {
+  var val = el.getAttribute('data-val');
+  if (mode === 'single') {
+    _intPrefs[group] = [val];
+    document.querySelectorAll('#screen-sub-interests .int-card[data-group="' + group + '"]').forEach(function(card) {
+      card.classList.toggle('selected', card.getAttribute('data-val') === val);
+    });
+  } else {
+    var idx = _intPrefs[group].indexOf(val);
+    if (idx !== -1) {
+      _intPrefs[group].splice(idx, 1);
+      el.classList.remove('selected');
+    } else {
+      _intPrefs[group].push(val);
+      el.classList.add('selected');
+    }
+  }
+}
+
 function interestsToggle(id) {
   _selectedInterests[id] = !_selectedInterests[id];
   var card = document.querySelector('#interests-grid [data-id="' + id + '"]');
@@ -8533,21 +9267,28 @@ function interestsToggle(id) {
 }
 
 function interestsSave() {
-  /* Rebuild the pref-chips strip in the activity screen */
-  var container = document.querySelector('.pref-chips');
-  if (container) {
-    container.innerHTML = '';
-    INTERESTS.forEach(function(acc) {
-      var chip = document.createElement('span');
-      chip.className = 'pref-chip' + (_selectedInterests[acc.id] ? ' on' : '');
-      chip.textContent = LANG === 'ar' ? acc.ar : acc.en;
-      container.appendChild(chip);
-    });
+  /* Persist _intPrefs (already updated live by intToggle) */
+  /* Update the chips strip on the activity card to reflect current prefs */
+  var container = document.querySelector('#screen-activity .int-prefs-chips');
+  if (!container) {
+    /* Fallback: just update pref-chip elements if they exist */
+    var legacyContainer = document.querySelector('.pref-chips');
+    if (legacyContainer) {
+      legacyContainer.innerHTML = '';
+      ['gender','family','season','time'].forEach(function(group) {
+        (_intPrefs[group] || []).forEach(function(val) {
+          var chip = document.createElement('span');
+          chip.className = 'pref-chip on';
+          chip.textContent = val.charAt(0).toUpperCase() + val.slice(1);
+          legacyContainer.appendChild(chip);
+        });
+      });
+    }
   }
   var sucEl = document.getElementById('interests-success');
   if (sucEl) {
     sucEl.style.display = 'block';
-    setTimeout(function() { sucEl.style.display = 'none'; }, 3000);
+    setTimeout(function() { sucEl.style.display = 'none'; }, 2500);
   }
 }
 
@@ -8800,6 +9541,8 @@ var _userLibraries = {
 var _userLibOrigin = 'community';
 
 function openUserLibrary(username, origin) {
+  /* Don't open library for the current user's own posts */
+  if (!username || username === 'You') return;
   _userLibOrigin = origin || 'community';
   var data = _userLibraries[username] || { isPublic: false, owned: [], liked: [], want: [] };
 
@@ -8832,15 +9575,12 @@ function openUserLibrary(username, origin) {
     }
 
     var owned = resolveProducts(data.owned);
-    var liked = resolveProducts(data.liked);
     var want  = resolveProducts(data.want);
 
     document.getElementById('user-lib-stat-owned').textContent = owned.length;
-    document.getElementById('user-lib-stat-liked').textContent = liked.length;
     document.getElementById('user-lib-stat-want').textContent  = want.length;
 
     _userLibRenderGrid('owned', owned);
-    _userLibRenderGrid('liked', liked);
     _userLibRenderGrid('want',  want);
     userLibSwitchTab('owned');
   }
@@ -8903,15 +9643,16 @@ var _commPosts = [
     username: 'Faisal_99',
     msgEn: 'Looking for a fragrance similar to Baccarat Rouge 540 but at a more affordable price point. Any recommendations from the community?',
     msgAr: 'أبحث عن عطر مشابه لباكارات روج 540 ولكن بسعر أقل. هل لديكم توصيات؟',
-    time: '5m', replies: 4,
-    productId: null, image: null, verified: false
+    time: '5m', replies: 4, views: 61,
+    productId: null, image: null, verified: false,
+    isOwn: true
   },
   {
     id: 'c2', type: 'sale',
     username: 'Turki_Oud',
     msgEn: 'Sauvage Elixir 60ml – used about 15%. Bought recently, selling because it doesn\'t suit my skin. Excellent condition.',
     msgAr: 'سوفاج إكسير 60 مل - استخدام 15% تقريباً. بحالة ممتازة، أبيعه لأنه لا يناسب جلدي.',
-    time: '23m', replies: 2,
+    time: '23m', replies: 2, views: 84,
     price: 480,
     productId: null, image: 'jpeg1.jpg', verified: true
   },
@@ -8920,7 +9661,7 @@ var _commPosts = [
     username: 'Nora_Scents',
     msgEn: 'Does anyone know if Black Orchid performs better in cold or warm weather? Planning to buy it as a winter scent.',
     msgAr: 'هل بلاك أوركيد أداؤه أفضل في الطقس البارد أم الحار؟ أفكر في شرائه كعطر شتوي.',
-    time: '1h', replies: 7,
+    time: '1h', replies: 7, views: 132,
     productId: null, image: null, verified: false
   },
   {
@@ -8928,9 +9669,38 @@ var _commPosts = [
     username: 'AbdulR_KSA',
     msgEn: 'Libre Intense 90ml – 30% used. My wife bought it but prefers something lighter. Original box included.',
     msgAr: 'ليبر إنتنس 90 مل – استخدام 30%. مع العلبة الأصلية.',
-    time: '3h', replies: 1,
+    time: '3h', replies: 1, views: 47,
     price: 320,
-    productId: null, image: 'jpeg2.jpg', verified: false
+    productId: null, image: 'jpeg2.jpg', verified: false,
+    isOwn: true  /* demo: treat as current user's own post */
+  },
+  {
+    id: 'c4b', type: 'sale',
+    username: 'AbdulR_KSA',
+    msgEn: 'Maison Margiela Replica — Jazz Club 100ml. Used maybe 5 times. Pristine condition. Comes with original box and cap.',
+    msgAr: 'ماي جاز كلوب من ميزون مارجيلا 100 مل — استُخدم 5 مرات فقط. حالة ممتازة مع الكرتون الأصلي.',
+    time: '1d', replies: 3, views: 88,
+    price: 550,
+    productId: null, image: null, verified: false,
+    isOwn: true, sold: true
+  },
+  {
+    id: 'c5b', type: 'inquiry',
+    username: 'AbdulR_KSA',
+    msgEn: 'Has anyone tried the new Dior Homme flankers from 2025? Specifically curious about the Sport version and how it compares to the original.',
+    msgAr: 'هل جرب أحد روائح ديور أوم الجديدة من 2025؟ أريد معرفة المزيد عن نسخة السبورت.',
+    time: '2d', replies: 5, views: 74,
+    productId: null, image: null, verified: false,
+    isOwn: true
+  },
+  {
+    id: 'c8b', type: 'article',
+    username: 'AbdulR_KSA',
+    msgEn: 'The best time to apply fragrance is right after a shower when your skin is slightly damp — the moisture locks in the scent and makes it last significantly longer. Also, applying to pulse points like wrists, neck, and behind the ears amplifies projection throughout the day.',
+    msgAr: 'أفضل وقت لرش العطر هو مباشرة بعد الاستحمام عندما تكون بشرتك رطبة قليلاً — الرطوبة تثبّت العطر وتطيل دوامه. كذلك، رش العطر على نقاط النبض كالمعصمين والرقبة وخلف الأذنين يعزز انتشاره طوال اليوم.',
+    time: '3d', replies: 6, views: 118,
+    productId: null, image: null, verified: false,
+    isOwn: true
   },
   {
     id: 'c5', type: 'inquiry',
@@ -8962,8 +9732,9 @@ var _commPosts = [
     username: 'Faisal_99',
     msgEn: 'Why does the same fragrance smell different on different people? It all comes down to skin chemistry — pH levels, moisture, and natural oils all interact with the top notes and change how a scent develops on you. This is why testing on your own skin is the only true way to judge a fragrance.',
     msgAr: 'لماذا يبدو نفس العطر مختلفاً على أشخاص مختلفين؟ السبب هو كيمياء الجلد — مستوى الحموضة والرطوبة والزيوت الطبيعية تتفاعل مع النوتات الأولى وتغير طريقة تطور العطر على بشرتك. لهذا السبب، الاختبار على جلدك هو الطريقة الوحيدة الحقيقية للحكم على أي عطر.',
-    time: '1d', replies: 9,
-    productId: null, image: null, verified: false
+    time: '1d', replies: 9, views: 203,
+    productId: null, image: null, verified: false,
+    isOwn: true
   },
   {
     id: 'c9', type: 'article',
@@ -8976,7 +9747,7 @@ var _commPosts = [
 ];
 
 var _commSelectedType = null;
-var _commSelectedProductId = null;
+var _commSelectedProductIds = []; /* up to 3 products */
 var _commFilter = 'all';
 
 function setCommFilter(filter) {
@@ -8994,21 +9765,45 @@ function renderCommunityFeed() {
   if (!feed) return;
   feed.innerHTML = '';
 
-  var posts = _commFilter === 'all'
-    ? _commPosts
-    : _commPosts.filter(function(p) { return p.type === _commFilter; });
+  /* Search query filter */
+  var searchEl = document.getElementById('comm-search-input');
+  var q = searchEl ? searchEl.value.toLowerCase().trim() : '';
 
-  if (posts.length === 0) {
+  /* Public feed: only approved posts, filtered by type and search */
+  var approvedPosts = _commPosts.filter(function(p) {
+    var matchType = _commFilter === 'all' || p.type === _commFilter;
+    var matchQ = !q ||
+      (p.msgEn && p.msgEn.toLowerCase().includes(q)) ||
+      (p.msgAr && p.msgAr.toLowerCase().includes(q)) ||
+      (p.username && p.username.toLowerCase().includes(q));
+    return matchType && matchQ;
+  });
+
+  /* Publisher's own pending posts (visible only to them, with banner) */
+  var ownPending = _commPendingPosts.filter(function(p) {
+    var matchType = _commFilter === 'all' || p.type === _commFilter;
+    var matchQ = !q ||
+      (p.msgEn && p.msgEn.toLowerCase().includes(q)) ||
+      (p.msgAr && p.msgAr.toLowerCase().includes(q));
+    return p.isOwn && p.status === 'pending' && matchType && matchQ;
+  });
+
+  var allVisible = ownPending.concat(approvedPosts);
+
+  if (allVisible.length === 0) {
     if (empty) empty.style.display = 'flex';
     return;
   }
   if (empty) empty.style.display = 'none';
 
-  posts.forEach(function(post) {
+  allVisible.forEach(function(post) {
+    var isPending = post.status === 'pending';
     var card = document.createElement('div');
-    card.className = 'comm-card';
-    card.style.cursor = 'pointer';
-    card.addEventListener('click', (function(pid){ return function(){ openCommPostDetail(pid); }; })(post.id));
+    card.className = 'comm-card' + (isPending ? ' is-pending' : '');
+    card.style.cursor = isPending ? 'default' : 'pointer';
+    if (!isPending) {
+      card.addEventListener('click', (function(pid){ return function(){ openCommPostDetail(pid); }; })(post.id));
+    }
 
     var isInquiry = post.type === 'inquiry';
     var isArticle = post.type === 'article';
@@ -9021,16 +9816,19 @@ function renderCommunityFeed() {
       priceTag = '<span class="comm-price-tag">◈ ' + post.price + ' SAR</span>';
     }
 
-    var product = ((isInquiry || isArticle) && post.productId) ? PRODUCTS.find(function(p){ return p.id === post.productId || p.variantGroupId === post.productId; }) : null;
     var thumbHtml = '';
-    if (product) {
-      thumbHtml =
-        '<div class="comm-card-thumb">' +
-          '<div class="prod-img-wrap" style="background:' + product.bg + ';height:100%;">' +
-            '<img loading="lazy" src="' + product.img + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
-          '</div>' +
-        '</div>';
-    } else if (!isInquiry && !isArticle && post.image) {
+    if (isInquiry || isArticle) {
+      var fpid = (post.productIds && post.productIds.length) ? post.productIds[0] : post.productId;
+      var product = fpid ? PRODUCTS.find(function(p){ return p.id === fpid || p.variantGroupId === fpid; }) : null;
+      if (product) {
+        thumbHtml =
+          '<div class="comm-card-thumb">' +
+            '<div class="prod-img-wrap" style="background:' + product.bg + ';height:100%;">' +
+              '<img loading="lazy" src="' + product.img + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
+            '</div>' +
+          '</div>';
+      }
+    } else if (post.image) {
       thumbHtml =
         '<div class="comm-card-thumb">' +
           '<img loading="lazy" src="' + post.image + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
@@ -9050,17 +9848,25 @@ function renderCommunityFeed() {
     var actualReplies = (_commReplies[post.id] || []).length;
     var replyCount = actualReplies > 0 ? actualReplies : (post.replies || 0);
 
+    /* Pending approval status bar */
+    var pendingBar = isPending
+      ? '<div class="comm-card-status-bar">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' +
+          '<span style="font-size:var(--t6);color:#92400E;font-weight:500;">' + T('comm_pending_label') + '</span>' +
+        '</div>'
+      : '';
+
     card.innerHTML =
       /* ── Row 1: avatar+username (left) | badges+price+dots (right) ── */
       '<div class="comm-card-top">' +
-        '<div class="comm-user" style="cursor:pointer;" onclick="event.stopPropagation();openUserLibrary(\'' + username + '\',\'community\')">' +
+        '<div class="comm-user"' + (!isPending ? ' style="cursor:pointer;" onclick="event.stopPropagation();openUserLibrary(\'' + username + '\',\'community\')"' : '') + '>' +
           '<div class="comm-user-avatar">' + initials + '</div>' +
           '<span class="comm-username" style="display:flex;align-items:center;gap:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + username + verifiedBadge + '</span>' +
         '</div>' +
         '<div style="display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:8px;">' +
           priceTag +
           '<span class="badge ' + badgeClass + '">' + badgeLabel + '</span>' +
-          '<button class="comm-card-actions-btn" onclick="event.stopPropagation();openCommActionSheet(\'' + post.id + '\',false,\'' + username + '\')" aria-label="More actions"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button>' +
+          (!isPending ? '<button class="comm-card-actions-btn" onclick="event.stopPropagation();openCommActionSheet(\'' + post.id + '\',false,\'' + username + '\')" aria-label="More actions"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button>' : '') +
         '</div>' +
       '</div>' +
       /* ── Row 2: text (left, flex:1) | thumb (right, fixed) ── */
@@ -9068,11 +9874,15 @@ function renderCommunityFeed() {
         '<div class="comm-card-text" style="flex:1;min-width:0;margin-bottom:0;">' + msg + '</div>' +
         thumbHtml +
       '</div>' +
-      /* ── Row 3: time | replies ── */
-      '<div class="comm-card-meta">' +
-        '<span class="comm-card-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + post.time + '</span>' +
-        '<span class="comm-card-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>' + replyCount + ' ' + replyLabel + '</span>' +
-      '</div>';
+      /* ── Row 3: time | replies | views (hidden for pending) ── */
+      (!isPending
+        ? '<div class="comm-card-meta">' +
+            '<span class="comm-card-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + post.time + '</span>' +
+            '<span class="comm-card-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>' + replyCount + ' ' + replyLabel + '</span>' +
+            '<span class="comm-card-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' + (post.views || 0) + '</span>' +
+          '</div>'
+        : '') +
+      pendingBar;
 
     feed.appendChild(card);
   });
@@ -9088,7 +9898,7 @@ function closeCommInfo() {
 
 function openCommModal() {
   _commSelectedType = null;
-  _commSelectedProductId = null;
+  _commSelectedProductIds = [];
   document.getElementById('comm-step-type').style.display = '';
   document.getElementById('comm-form-inquiry').style.display = 'none';
   document.getElementById('comm-form-sale').style.display = 'none';
@@ -9105,8 +9915,7 @@ function openCommModal() {
   if (saleMsg)     saleMsg.value     = '';
   if (salePrice)   salePrice.value   = '';
   if (articleMsg)  articleMsg.value  = '';
-  commRemoveProduct('inquiry');
-  commRemoveProduct('article');
+  commRenderProductPreviews();
   document.getElementById('comm-modal-overlay').classList.add('visible');
 }
 
@@ -9143,13 +9952,23 @@ function renderCommPickerList(query) {
   list.innerHTML = '';
   var q = (query || '').toLowerCase().trim();
 
+  /* Show selection count hint */
+  var countHint = document.getElementById('comm-picker-count-hint');
+  if (countHint) {
+    var remaining = 3 - _commSelectedProductIds.length;
+    countHint.textContent = LANG === 'ar'
+      ? 'يمكنك اختيار ' + remaining + ' منتج آخر كحد أقصى'
+      : 'You can select up to ' + remaining + ' more product' + (remaining === 1 ? '' : 's');
+  }
+
   var filtered = PRODUCTS.filter(function(p) {
     return !q || P(p,'name').toLowerCase().includes(q) || P(p,'brand').toLowerCase().includes(q);
   });
 
   filtered.forEach(function(p) {
+    var isSelected = _commSelectedProductIds.indexOf(p.id) !== -1;
     var row = document.createElement('div');
-    row.className = 'comm-picker-row' + (_commSelectedProductId === p.id ? ' selected' : '');
+    row.className = 'comm-picker-row' + (isSelected ? ' selected' : '');
     row.setAttribute('data-product-id', p.id);
     row.innerHTML =
       '<div class="comm-picker-thumb">' +
@@ -9163,9 +9982,17 @@ function renderCommPickerList(query) {
       '</div>' +
       '<div class="comm-picker-check"></div>';
     row.addEventListener('click', function() {
-      _commSelectedProductId = p.id;
-      commSetProductPreview(p);
-      closeCommPicker();
+      var idx = _commSelectedProductIds.indexOf(p.id);
+      if (idx !== -1) {
+        /* Deselect */
+        _commSelectedProductIds.splice(idx, 1);
+      } else {
+        /* Select — max 3 */
+        if (_commSelectedProductIds.length >= 3) return;
+        _commSelectedProductIds.push(p.id);
+      }
+      renderCommPickerList(query);
+      commRenderProductPreviews();
     });
     list.appendChild(row);
   });
@@ -9173,27 +10000,49 @@ function renderCommPickerList(query) {
 
 function closeCommPicker() {
   document.getElementById('comm-picker-overlay').classList.remove('visible');
+  commRenderProductPreviews();
 }
 
-function commSetProductPreview(p) {
-  var preview = document.getElementById('comm-inquiry-product-preview');
-  var thumb   = document.getElementById('comm-inquiry-thumb');
-  var nameEl  = document.getElementById('comm-inquiry-product-name');
-  if (!preview) return;
-  thumb.innerHTML =
-    '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
-      '<img src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
-    '</div>';
-  nameEl.textContent = P(p,'name') + ' · ' + p.size;
-  preview.style.display = 'flex';
+function commRenderProductPreviews() {
+  /* Render selected products into both inquiry and article preview containers */
+  ['inquiry', 'article'].forEach(function(formType) {
+    var container = document.getElementById('comm-' + formType + '-product-preview');
+    if (!container) return;
+    container.innerHTML = '';
+    if (_commSelectedProductIds.length === 0) {
+      container.style.display = 'none';
+      return;
+    }
+    container.style.display = 'flex';
+    container.style.flexDirection = 'column';
+    container.style.gap = '6px';
+    _commSelectedProductIds.forEach(function(pid) {
+      var p = PRODUCTS.find(function(x){ return x.id === pid; });
+      if (!p) return;
+      var chip = document.createElement('div');
+      chip.className = 'comm-selected-product';
+      chip.innerHTML =
+        '<div class="comm-selected-thumb">' +
+          '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
+            '<img src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
+          '</div>' +
+        '</div>' +
+        '<span class="comm-selected-name">' + P(p,'name') + ' · ' + p.size + '</span>' +
+        '<span class="comm-selected-remove" data-pid="' + pid + '">✕</span>';
+      chip.querySelector('.comm-selected-remove').addEventListener('click', function() {
+        var idx = _commSelectedProductIds.indexOf(pid);
+        if (idx !== -1) _commSelectedProductIds.splice(idx, 1);
+        commRenderProductPreviews();
+        renderCommPickerList(document.getElementById('comm-picker-search-input') ? (document.getElementById('comm-picker-search-input').value || '') : '');
+      });
+      container.appendChild(chip);
+    });
+  });
 }
 
-function commRemoveProduct(formType) {
-  _commSelectedProductId = null;
-  var inquiryPreview = document.getElementById('comm-inquiry-product-preview');
-  var articlePreview = document.getElementById('comm-article-product-preview');
-  if (inquiryPreview) inquiryPreview.style.display = 'none';
-  if (articlePreview) articlePreview.style.display = 'none';
+function commRemoveProduct() {
+  _commSelectedProductIds = [];
+  commRenderProductPreviews();
 }
 
 function commPickGallery() {
@@ -9232,13 +10081,21 @@ function submitCommPost() {
     time: LANG === 'ar' ? 'الآن' : 'now',
     replies: 0,
     price: priceVal,
-    productId: _commSelectedProductId || null,
-    image: null
+    productId: _commSelectedProductIds.length === 1 ? _commSelectedProductIds[0] : null,
+    productIds: _commSelectedProductIds.slice(),
+    image: null,
+    /* ── Moderation fields ── */
+    status: 'pending',   /* 'pending' | 'approved' | 'rejected' */
+    isOwn: true          /* marks as submitted by current user */
   };
 
-  _commPosts.unshift(newPost);
+  /* Add to pending queue (separate from public feed) */
+  _commPendingPosts.unshift(newPost);
   closeCommModal();
+  /* Re-render so the publisher sees their post with pending banner */
   renderCommunityFeed();
+  /* Update admin badge count */
+  _updateAdminBadge();
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -9246,16 +10103,20 @@ function submitCommPost() {
  */
 var _commCurrentPostId      = null;
 var _commReplies            = {};
-var _replyAttachedProductId = null;
+var _replyAttachedProductIds = []; /* up to 3 products */
 var _replyHasImage          = false;
 
 function openCommPostDetail(postId) {
   _commCurrentPostId = postId;
   var post = _commPosts.find(function(p){ return p.id === postId; });
   if (!post) return;
+
+  /* Increment view count every open */
+  post.views = (post.views || 0) + 1;
+
   var ta = document.getElementById('comm-reply-textarea');
   if (ta) { ta.value = ''; ta.style.height = ''; }
-  _replyAttachedProductId = null;
+  _replyAttachedProductIds = [];
   _replyHasImage = false;
   _renderReplyAttachments();
   var sendBtn = document.getElementById('comm-reply-send-btn');
@@ -9269,6 +10130,39 @@ function openCommPostDetail(postId) {
 
 function closeCommPostDetail() { switchScreen('community'); }
 
+/* ── Sale post: Contact Seller ── */
+function commContactSeller() {
+  if (!_commCurrentPostId) return;
+  var post = _commPosts.find(function(p){ return p.id === _commCurrentPostId; });
+  if (!post) return;
+  var username = post.username || ('User_' + post.id.slice(-3));
+  /* Pass sold flag so chat screen knows to lock input */
+  openChat(username, 'comm-post-detail', !!post.sold, true);
+}
+
+/* ── Sale post: Mark as Sold (seller only) ── */
+function commMarkSold() {
+  if (!_commCurrentPostId) return;
+  var post = _commPosts.find(function(p){ return p.id === _commCurrentPostId; });
+  if (!post) return;
+  post.sold = true;
+
+  /* Mark the linked conversation as sold and append system closure message */
+  var username = post.username || ('User_' + post.id.slice(-3));
+  if (_conversations[username]) {
+    _conversations[username].sold = true;
+    var now = new Date();
+    var timeStr = now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0') +
+                  (now.getHours() < 12 ? ' AM' : ' PM');
+    _conversations[username].messages.push({ from: 'system', time: timeStr });
+  }
+
+  /* Re-render post body */
+  _renderPostDetail(post);
+  /* Re-render feed card */
+  renderCommunityFeed();
+}
+
 /* ──────────────────────────────────────────────────────────
    COMMUNITY ACTION SHEET
    openCommActionSheet(id, isReply, ownerUsername)
@@ -9278,8 +10172,308 @@ function closeCommPostDetail() { switchScreen('community'); }
    The current user is identified as 'You' (set at reply submit).
    Moderator flag can be set via _commIsModerator below.
 ────────────────────────────────────────────────────────── */
-var _commIsModerator = false; /* set true for moderator accounts */
-var _commActionTarget = null; /* { id, isReply } */
+/* ══════════════════════════════════════════════════════════
+   COMMUNITY MODERATION — Admin Approval Workflow
+══════════════════════════════════════════════════════════ */
+
+/* Queue of posts awaiting admin review (pending + rejected) */
+var _commPendingPosts = [];
+
+/* Set to true to reveal the Admin button (simulates admin login) */
+var _commIsAdmin = true;
+
+var _commAdminCurrentTab = 'pending';
+
+function _updateAdminBadge() {
+  var count = _commPendingPosts.filter(function(p) { return p.status === 'pending'; }).length;
+  var btn = document.getElementById('comm-admin-btn');
+  var countEl = document.getElementById('comm-admin-btn-count');
+  if (!btn) return;
+  btn.style.display = (_commIsAdmin && count > 0) ? '' : 'none';
+  if (countEl) countEl.textContent = count;
+}
+
+/* ══════════════════════════════════════════════════════════
+   MY COMMUNITY ACTIVITY
+══════════════════════════════════════════════════════════ */
+
+var _commActCurrentTab = 'questions';
+
+/* Count the current user's posts and comments */
+function _myPosts() {
+  return _commPosts.filter(function(p) { return p.isOwn; });
+}
+function _myReplies() {
+  var result = [];
+  Object.keys(_commReplies).forEach(function(postId) {
+    (_commReplies[postId] || []).forEach(function(r) {
+      if (r.username === 'You') result.push({ reply: r, postId: postId });
+    });
+  });
+  return result;
+}
+
+function renderCommActStats() {
+  var my      = _myPosts();
+  var q       = my.filter(function(p){ return p.type === 'inquiry'; }).length;
+  var s       = my.filter(function(p){ return p.type === 'sale'; }).length;
+  var a       = my.filter(function(p){ return p.type === 'article'; }).length;
+  var c       = _myReplies().length;
+
+  /* Entry card stats */
+  var els = { questions: q, sales: s, articles: a, comments: c };
+  Object.keys(els).forEach(function(k) {
+    var el = document.getElementById('comm-act-stat-' + k);
+    if (el) el.textContent = els[k];
+  });
+}
+
+function openCommActivityScreen() {
+  _commActCurrentTab = 'questions';
+  /* Sync tab bar highlight */
+  document.querySelectorAll('.comm-act-tab').forEach(function(t) {
+    t.classList.toggle('active', t.getAttribute('data-tab') === 'questions');
+  });
+  renderCommActList();
+  renderCommActHeroStats();
+  switchScreen('comm-activity');
+}
+
+function renderCommActHeroStats() {
+  var my = _myPosts();
+  var total = my.length;
+  var comments = _myReplies().length;
+  var totalEl = document.getElementById('cas-total');
+  var commEl  = document.getElementById('cas-comments');
+  if (totalEl) totalEl.textContent = total;
+  if (commEl)  commEl.textContent  = comments;
+}
+
+function switchCommActTab(tab) {
+  _commActCurrentTab = tab;
+  document.querySelectorAll('.comm-act-tab').forEach(function(t) {
+    t.classList.toggle('active', t.getAttribute('data-tab') === tab);
+  });
+  renderCommActList();
+}
+
+function renderCommActList() {
+  var list = document.getElementById('comm-act-list');
+  if (!list) return;
+  list.innerHTML = '';
+
+  if (_commActCurrentTab === 'comments') {
+    _renderCommActComments(list);
+    return;
+  }
+
+  var typeMap = { questions: 'inquiry', sales: 'sale', articles: 'article' };
+  var type    = typeMap[_commActCurrentTab];
+  var posts   = _myPosts().filter(function(p) { return p.type === type; });
+
+  if (posts.length === 0) {
+    _renderCommActEmpty(list, _commActCurrentTab);
+    return;
+  }
+
+  var typeColors = { inquiry: '#2563EB', sale: 'var(--green)', article: '#B45309' };
+  var dotColor   = typeColors[type] || 'var(--ink-3)';
+
+  posts.forEach(function(post) {
+    var msg     = LANG === 'ar' ? post.msgAr : post.msgEn;
+    var replies = (_commReplies[post.id] || []).length || post.replies || 0;
+    var views   = post.views || 0;
+    var isSold  = !!post.sold;
+
+    var row = document.createElement('div');
+    row.className = 'comm-act-post-row';
+    row.onclick   = function() { openCommPostDetail(post.id); };
+
+    /* Badge */
+    var badgeClass = type === 'inquiry' ? 'comm-badge-inquiry' : (type === 'article' ? 'comm-badge-article' : 'comm-badge-sale');
+    var badgeLabel = T(type === 'inquiry' ? 'comm_badge_inquiry' : (type === 'article' ? 'comm_badge_article' : 'comm_badge_sale'));
+
+    var soldTag = isSold
+      ? '<span style="font-size:var(--t6);font-weight:600;color:#991B1B;background:#FEE2E2;padding:2px 7px;border-radius:20px;border:1px solid #FCA5A5;margin-left:4px;">' + T('comm_mark_sold') + '</span>'
+      : '';
+
+    row.innerHTML =
+      '<div class="comm-act-post-type-dot" style="background:' + dotColor + ';"></div>' +
+      '<div class="comm-act-post-body">' +
+        '<div class="comm-act-post-text">' + _aiEscape(msg) + '</div>' +
+        '<div class="comm-act-post-meta">' +
+          '<span class="comm-act-post-badge badge ' + badgeClass + '">' + badgeLabel + '</span>' +
+          soldTag +
+          '<span class="comm-act-post-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>' + replies + '</span>' +
+          '<span class="comm-act-post-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' + views + '</span>' +
+          '<span class="comm-act-post-meta-item" style="margin-left:auto;">' + post.time + '</span>' +
+        '</div>' +
+      '</div>';
+
+    list.appendChild(row);
+  });
+}
+
+function _renderCommActComments(list) {
+  var myReplies = _myReplies();
+  if (myReplies.length === 0) {
+    _renderCommActEmpty(list, 'comments');
+    return;
+  }
+  myReplies.forEach(function(item) {
+    var r    = item.reply;
+    var post = _commPosts.find(function(p){ return p.id === item.postId; });
+    var postPreview = post ? _aiEscape((LANG === 'ar' ? post.msgAr : post.msgEn).slice(0, 60)) + '…' : '';
+    var row  = document.createElement('div');
+    row.className = 'comm-act-reply-row';
+    row.onclick = function() { if (post) openCommPostDetail(post.id); };
+    row.innerHTML =
+      '<div class="comm-act-reply-context">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>' +
+        '<span>' + T('comm_act_reply_on') + '</span>' +
+        '<span style="color:var(--ink-2);font-weight:500;">' + postPreview + '</span>' +
+      '</div>' +
+      '<div class="comm-act-reply-text">' + r.text + '</div>' +
+      '<div class="comm-act-reply-time">' + r.time + '</div>';
+    list.appendChild(row);
+  });
+}
+
+function _renderCommActEmpty(list, tab) {
+  var icons = {
+    questions: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+    sales:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',
+    articles:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+    comments:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>'
+  };
+  var titles = { questions: T('comm_act_empty_q'), sales: T('comm_act_empty_s'), articles: T('comm_act_empty_a'), comments: T('comm_act_empty_c') };
+  var el = document.createElement('div');
+  el.className = 'comm-act-empty';
+  el.innerHTML =
+    (icons[tab] || '') +
+    '<div class="comm-act-empty-title">' + (titles[tab] || '') + '</div>' +
+    '<div class="comm-act-empty-sub">' + T('comm_act_empty_sub') + '</div>';
+  list.appendChild(el);
+}
+
+function openCommAdminScreen() {
+  _commAdminCurrentTab = 'pending';
+  _renderAdminTab('pending');
+  switchScreen('comm-admin');
+}
+
+function closeCommAdminScreen() {
+  switchScreen('community');
+}
+
+function switchAdminTab(tab) {
+  _commAdminCurrentTab = tab;
+  document.getElementById('comm-admin-tab-pending').classList.toggle('active', tab === 'pending');
+  document.getElementById('comm-admin-tab-rejected').classList.toggle('active', tab === 'rejected');
+  _renderAdminTab(tab);
+}
+
+function _renderAdminTab(tab) {
+  var pendingList  = document.getElementById('comm-admin-pending-list');
+  var rejectedList = document.getElementById('comm-admin-rejected-list');
+  var emptyEl      = document.getElementById('comm-admin-empty');
+
+  pendingList.style.display  = tab === 'pending'  ? '' : 'none';
+  rejectedList.style.display = tab === 'rejected' ? '' : 'none';
+
+  var posts = _commPendingPosts.filter(function(p) { return p.status === tab; });
+
+  /* Update tab counts */
+  var pendingCount  = _commPendingPosts.filter(function(p) { return p.status === 'pending'; }).length;
+  var rejectedCount = _commPendingPosts.filter(function(p) { return p.status === 'rejected'; }).length;
+  document.getElementById('comm-admin-pending-count').textContent  = pendingCount;
+  document.getElementById('comm-admin-rejected-count').textContent = rejectedCount;
+
+  var listEl = tab === 'pending' ? pendingList : rejectedList;
+  listEl.innerHTML = '';
+
+  if (posts.length === 0) {
+    if (emptyEl) emptyEl.style.display = 'flex';
+    return;
+  }
+  if (emptyEl) emptyEl.style.display = 'none';
+
+  posts.forEach(function(post) {
+    var isInquiry = post.type === 'inquiry';
+    var isArticle = post.type === 'article';
+    var badgeClass = isInquiry ? 'comm-badge-inquiry' : (isArticle ? 'comm-badge-article' : 'comm-badge-sale');
+    var badgeLabel = isInquiry ? T('comm_badge_inquiry') : (isArticle ? T('comm_badge_article') : T('comm_badge_sale'));
+    var msg = _aiEscape(LANG === 'ar' ? post.msgAr : post.msgEn);
+    var username = post.username || T('comm_you');
+    var initials = username.charAt(0).toUpperCase();
+
+    var card = document.createElement('div');
+    card.className = 'comm-mod-card';
+    card.innerHTML =
+      '<div class="comm-mod-card-header">' +
+        '<div class="comm-user-avatar" style="width:28px;height:28px;font-size:12px;">' + initials + '</div>' +
+        '<span style="font-size:var(--t5);font-weight:600;color:var(--ink-1);">' + username + '</span>' +
+        '<span class="badge ' + badgeClass + '" style="margin-left:auto;">' + badgeLabel + '</span>' +
+      '</div>' +
+      '<div class="comm-mod-card-text">' + msg + '</div>' +
+      '<div class="comm-mod-card-meta">' + (LANG === 'ar' ? 'الوقت: ' : 'Submitted: ') + post.time + '</div>';
+
+    if (tab === 'pending') {
+      var actions = document.createElement('div');
+      actions.className = 'comm-admin-actions';
+      actions.innerHTML =
+        '<button class="comm-admin-approve-btn" onclick="adminApprovePost(\'' + post.id + '\')">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' +
+          T('comm_admin_approve') +
+        '</button>' +
+        '<button class="comm-admin-reject-btn" onclick="adminRejectPost(\'' + post.id + '\')">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+          T('comm_admin_reject') +
+        '</button>';
+      card.appendChild(actions);
+    } else {
+      /* Rejected tab — allow restore */
+      var restore = document.createElement('div');
+      restore.className = 'comm-admin-actions';
+      restore.innerHTML =
+        '<button class="comm-admin-approve-btn" onclick="adminApprovePost(\'' + post.id + '\')" style="flex:0 0 auto;padding:9px 18px;">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' +
+          T('comm_admin_approve') +
+        '</button>';
+      card.appendChild(restore);
+    }
+
+    listEl.appendChild(card);
+  });
+}
+
+function adminApprovePost(postId) {
+  var idx = _commPendingPosts.findIndex(function(p) { return p.id === postId; });
+  if (idx === -1) return;
+  var post = _commPendingPosts[idx];
+  post.status = 'approved';
+  post.isOwn  = false; /* now visible to all */
+  /* Move to public feed */
+  _commPosts.unshift(post);
+  /* Remove from pending queue */
+  _commPendingPosts.splice(idx, 1);
+  /* Re-render */
+  renderCommunityFeed();
+  _updateAdminBadge();
+  _renderAdminTab(_commAdminCurrentTab);
+}
+
+function adminRejectPost(postId) {
+  var post = _commPendingPosts.find(function(p) { return p.id === postId; });
+  if (!post) return;
+  post.status = 'rejected';
+  /* Re-render feed (removes it from the owner's pending view) */
+  renderCommunityFeed();
+  _updateAdminBadge();
+  _renderAdminTab(_commAdminCurrentTab);
+}
+var _commActionTarget  = null; /* { id, isReply } */
+var _commIsModerator   = false; /* set true for admin/moderator accounts */
 
 function openCommActionSheet(id, isReply, ownerUsername) {
   _commActionTarget = { id: id, isReply: isReply };
@@ -9288,7 +10482,9 @@ function openCommActionSheet(id, isReply, ownerUsername) {
   var items   = document.getElementById('comm-action-items');
   if (!overlay || !items) return;
 
-  var isOwner = (ownerUsername === 'You') || _commIsModerator;
+  /* Check ownership: 'You' username, moderator, or post.isOwn flag */
+  var post = !isReply ? _commPosts.find(function(p){ return p.id === id; }) : null;
+  var isOwner = (ownerUsername === 'You') || _commIsModerator || (post && post.isOwn);
 
   title.textContent = isReply ? T('comm_action_title_reply') : T('comm_action_title_post');
   items.innerHTML = '';
@@ -9408,6 +10604,9 @@ function _renderPostDetail(post) {
   if (!body) return;
   var isInquiry  = post.type === 'inquiry';
   var isArticle  = post.type === 'article';
+  var isSale     = post.type === 'sale';
+  var isSold     = !!post.sold;
+  var isOwner    = !!post.isOwn;
   var badgeClass = isInquiry ? 'comm-badge-inquiry' : (isArticle ? 'comm-badge-article' : 'comm-badge-sale');
   var badgeLabel = isInquiry ? T('comm_badge_inquiry') : (isArticle ? T('comm_badge_article') : T('comm_badge_sale'));
   var msg        = _aiEscape(LANG === 'ar' ? post.msgAr : post.msgEn);
@@ -9417,28 +10616,37 @@ function _renderPostDetail(post) {
     ? '<svg viewBox="0 0 24 24" fill="none" style="width:13px;height:13px;flex-shrink:0;margin-left:3px;vertical-align:middle;"><path fill="#EAA005" d="M12 2l1.8 2.1 2.6-.8 1 2.5 2.7.2.1 2.7 2.4 1.2-.9 2.5 1.6 2.2-1.9 1.8.6 2.6-2.6.6-.8 2.6-2.5-.9-2.1 1.7-2.1-1.7-2.5.9-.8-2.6-2.6-.6.6-2.6-1.9-1.8 1.6-2.2-.9-2.5 2.4-1.2.1-2.7 2.7-.2 1-2.5 2.6.8z"/><path stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7.5 12.5l3 3 5-6"/></svg>'
     : '';
 
-  var product = ((isInquiry || isArticle) && post.productId) ? PRODUCTS.find(function(p){ return p.id === post.productId || p.variantGroupId === post.productId; }) : null;
   var productHtml = '';
-  if (product) {
-    var pname  = LANG === 'ar' ? product.nameAr  : product.nameEn;
-    var pbrand = LANG === 'ar' ? product.brandAr : product.brandEn;
-    productHtml = [
-      '<div class="comm-post-product-pill" onclick="openComparePage(\'' + product.id + '\',\'comm-post-detail\')">',
-        '<div class="comm-post-product-thumb">',
-          '<div class="prod-img-wrap" style="background:' + product.bg + ';height:100%;">',
-            '<img src="' + product.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">',
-          '</div>',
-        '</div>',
-        '<div class="comm-post-product-info">',
-          '<div class="comm-post-product-name">' + pname + '</div>',
-          '<div class="comm-post-product-sub">' + pbrand + ' · ' + product.size + '</div>',
-        '</div>',
-        '<div class="comm-post-product-arrow">',
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>',
-        '</div>',
-      '</div>'
-    ].join('');
-  } else if (!isInquiry && post.image) {
+  if (isInquiry || isArticle) {
+    /* Support both legacy single productId and new productIds array */
+    var pids = post.productIds && post.productIds.length
+      ? post.productIds
+      : (post.productId ? [post.productId] : []);
+    if (pids.length > 0) {
+      productHtml = pids.map(function(pid) {
+        var product = PRODUCTS.find(function(p){ return p.id === pid || p.variantGroupId === pid; });
+        if (!product) return '';
+        var pname  = LANG === 'ar' ? product.nameAr  : product.nameEn;
+        var pbrand = LANG === 'ar' ? product.brandAr : product.brandEn;
+        return [
+          '<div class="comm-post-product-pill" onclick="openComparePage(\'' + product.id + '\',\'comm-post-detail\')">',
+            '<div class="comm-post-product-thumb">',
+              '<div class="prod-img-wrap" style="background:' + product.bg + ';height:100%;">',
+                '<img src="' + product.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">',
+              '</div>',
+            '</div>',
+            '<div class="comm-post-product-info">',
+              '<div class="comm-post-product-name">' + pname + '</div>',
+              '<div class="comm-post-product-sub">' + pbrand + ' · ' + product.size + '</div>',
+            '</div>',
+            '<div class="comm-post-product-arrow">',
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>',
+            '</div>',
+          '</div>'
+        ].join('');
+      }).join('');
+    }
+  } else if (post.image) {
     productHtml =
       '<div style="margin-top:12px;border-radius:var(--radius-md);overflow:hidden;max-height:220px;">' +
         '<img src="' + post.image + '" alt="" style="width:100%;object-fit:cover;display:block;" onerror="this.parentElement.style.display=\'none\'">' +
@@ -9448,6 +10656,42 @@ function _renderPostDetail(post) {
   var priceHtml = (!isInquiry && post.price)
     ? '<span class="comm-post-price-badge">◈ ' + post.price + ' SAR</span>'
     : '';
+
+  /* ── Sale actions: rendered inline inside the post body ── */
+  var saleActionsHtml = '';
+  if (isSale) {
+    /* Sold banner — shown after item is marked sold */
+    var soldBannerHtml = isSold
+      ? '<div class="comm-sold-banner">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>' +
+          '<span class="comm-sold-banner-text">' + T('comm_sold_banner') + '</span>' +
+        '</div>'
+      : '';
+
+    /* Closure notice — removed from here; it lives inside the chat screen instead */
+
+    /* Contact Seller button — hidden from the seller themselves */
+    var contactBtnHtml = !isOwner
+      ? '<button class="comm-contact-btn" onclick="commContactSeller()">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>' +
+          T('comm_contact_seller') +
+        '</button>'
+      : '';
+
+    /* Sold button — only for owner, only while not yet sold */
+    var soldBtnHtml = (isOwner && !isSold)
+      ? '<button class="comm-sold-btn" onclick="commMarkSold()">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>' +
+          T('comm_mark_sold') +
+        '</button>'
+      : '';
+
+    var actionRowHtml = (contactBtnHtml || soldBtnHtml)
+      ? '<div class="comm-sale-action-bar">' + contactBtnHtml + soldBtnHtml + '</div>'
+      : '';
+
+    saleActionsHtml = soldBannerHtml + actionRowHtml;
+  }
 
   body.innerHTML = [
     '<div class="comm-post-user-row">',
@@ -9465,7 +10709,8 @@ function _renderPostDetail(post) {
       '</div>',
     '</div>',
     '<div class="comm-post-text">' + msg + '</div>',
-    productHtml
+    productHtml,
+    saleActionsHtml
   ].join('');
 }
 
@@ -9493,12 +10738,16 @@ function _renderReplies(postId) {
     var initial = reply.username.charAt(0).toUpperCase();
 
     var replyProductHtml = '';
-    if (reply.productId) {
-      var rp = PRODUCTS.find(function(p){ return p.id === reply.productId || p.variantGroupId === reply.productId; });
-      if (rp) {
+    var rpids = reply.productIds && reply.productIds.length
+      ? reply.productIds
+      : (reply.productId ? [reply.productId] : []);
+    if (rpids.length > 0) {
+      replyProductHtml = rpids.map(function(rpid) {
+        var rp = PRODUCTS.find(function(p){ return p.id === rpid || p.variantGroupId === rpid; });
+        if (!rp) return '';
         var rpname  = LANG === 'ar' ? rp.nameAr  : rp.nameEn;
         var rpbrand = P(rp,'brand');
-        replyProductHtml = [
+        return [
           '<div class="comm-reply-product" onclick="openComparePage(\'' + rp.id + '\',\'comm-post-detail\')">',
             '<div class="comm-reply-product-thumb">',
               '<div class="prod-img-wrap" style="background:' + rp.bg + ';height:100%;">',
@@ -9512,7 +10761,7 @@ function _renderReplies(postId) {
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>',
           '</div>'
         ].join('');
-      }
+      }).join('');
     }
 
     var imageHtml = '';
@@ -9563,20 +10812,21 @@ function commReplyCheckSend() {
   var ta      = document.getElementById('comm-reply-textarea');
   var sendBtn = document.getElementById('comm-reply-send-btn');
   if (!sendBtn) return;
-  sendBtn.disabled = !(ta && ta.value.trim().length > 0) && !_replyAttachedProductId && !_replyHasImage;
+  sendBtn.disabled = !(ta && ta.value.trim().length > 0) && !_replyAttachedProductIds.length && !_replyHasImage;
 }
 
 function submitCommReply() {
   if (!_commCurrentPostId) return;
   var ta  = document.getElementById('comm-reply-textarea');
   var msg = (ta ? ta.value : '').trim();
-  if (!msg && !_replyAttachedProductId && !_replyHasImage) return;
+  if (!msg && !_replyAttachedProductIds.length && !_replyHasImage) return;
   var reply = {
     id: 'r' + Date.now(),
     username: 'You',
     time: LANG === 'ar' ? 'الآن' : 'now',
     text: _aiEscape(msg),
-    productId: _replyAttachedProductId || null,
+    productIds: _replyAttachedProductIds.length ? _replyAttachedProductIds.slice() : null,
+    productId: _replyAttachedProductIds.length === 1 ? _replyAttachedProductIds[0] : null,
     hasImage: _replyHasImage
   };
   if (!_commReplies[_commCurrentPostId]) _commReplies[_commCurrentPostId] = [];
@@ -9584,7 +10834,7 @@ function submitCommReply() {
   var post = _commPosts.find(function(p){ return p.id === _commCurrentPostId; });
   if (post) post.replies = _commReplies[_commCurrentPostId].length;
   if (ta) { ta.value = ''; ta.style.height = ''; }
-  _replyAttachedProductId = null;
+  _replyAttachedProductIds = [];
   _replyHasImage = false;
   _renderReplyAttachments();
   var sendBtn = document.getElementById('comm-reply-send-btn');
@@ -9592,7 +10842,7 @@ function submitCommReply() {
   _renderReplies(_commCurrentPostId);
   setTimeout(function() {
     var scroll = document.getElementById('comm-post-detail-scroll');
-    if (scroll) scroll.scrollTop = 0; /* newest reply is at top */
+    if (scroll) scroll.scrollTop = 0;
   }, 50);
 }
 
@@ -9601,25 +10851,32 @@ function _renderReplyAttachments() {
   if (!strip) return;
   strip.innerHTML = '';
   var hasAny = false;
-  if (_replyAttachedProductId) {
-    var p = PRODUCTS.find(function(pr){ return pr.id === _replyAttachedProductId; });
-    if (p) {
-      hasAny = true;
-      var pname = LANG === 'ar' ? p.nameAr : p.nameEn;
-      var chip = document.createElement('div');
-      chip.className = 'comm-reply-attach-chip';
-      chip.innerHTML = [
-        '<div class="comm-reply-attach-chip-thumb">',
-          '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">',
-            '<img src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">',
-          '</div>',
+
+  _replyAttachedProductIds.forEach(function(pid) {
+    var p = PRODUCTS.find(function(pr){ return pr.id === pid; });
+    if (!p) return;
+    hasAny = true;
+    var pname = LANG === 'ar' ? p.nameAr : p.nameEn;
+    var chip = document.createElement('div');
+    chip.className = 'comm-reply-attach-chip';
+    chip.innerHTML = [
+      '<div class="comm-reply-attach-chip-thumb">',
+        '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">',
+          '<img src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">',
         '</div>',
-        '<span style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + pname + '</span>',
-        '<span class="comm-reply-attach-chip-remove" onclick="commReplyRemoveProduct()">✕</span>'
-      ].join('');
-      strip.appendChild(chip);
-    }
-  }
+      '</div>',
+      '<span style="max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + pname + '</span>',
+      '<span class="comm-reply-attach-chip-remove" data-pid="' + pid + '">✕</span>'
+    ].join('');
+    chip.querySelector('.comm-reply-attach-chip-remove').addEventListener('click', function() {
+      var idx = _replyAttachedProductIds.indexOf(pid);
+      if (idx !== -1) _replyAttachedProductIds.splice(idx, 1);
+      _renderReplyAttachments();
+      renderCommReplyPickerList('');
+    });
+    strip.appendChild(chip);
+  });
+
   if (_replyHasImage) {
     hasAny = true;
     var imgChip = document.createElement('div');
@@ -9639,8 +10896,7 @@ function _renderReplyAttachments() {
   commReplyCheckSend();
 }
 
-function commReplyRemoveProduct() { _replyAttachedProductId = null; _renderReplyAttachments(); }
-function commReplyRemoveImage()   { _replyHasImage = false;         _renderReplyAttachments(); }
+function commReplyRemoveImage() { _replyHasImage = false; _renderReplyAttachments(); }
 
 function commReplyPickProduct() {
   var s = document.getElementById('comm-reply-picker-search');
@@ -9656,11 +10912,21 @@ function renderCommReplyPickerList(query) {
   if (!list) return;
   list.innerHTML = '';
   var q = (query || '').toLowerCase().trim();
+
+  var hint = document.getElementById('comm-reply-picker-hint');
+  if (hint) {
+    var rem = 3 - _replyAttachedProductIds.length;
+    hint.textContent = LANG === 'ar'
+      ? 'يمكنك اختيار ' + rem + ' منتج آخر كحد أقصى'
+      : 'You can select up to ' + rem + ' more product' + (rem === 1 ? '' : 's');
+  }
+
   PRODUCTS.filter(function(p) {
     return !q || P(p,'name').toLowerCase().includes(q) || P(p,'brand').toLowerCase().includes(q);
   }).forEach(function(p) {
+    var isSelected = _replyAttachedProductIds.indexOf(p.id) !== -1;
     var row = document.createElement('div');
-    row.className = 'comm-picker-row' + (_replyAttachedProductId === p.id ? ' selected' : '');
+    row.className = 'comm-picker-row' + (isSelected ? ' selected' : '');
     row.innerHTML = [
       '<div class="comm-picker-thumb">',
         '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">',
@@ -9674,9 +10940,15 @@ function renderCommReplyPickerList(query) {
       '<div class="comm-picker-check"></div>'
     ].join('');
     row.addEventListener('click', function() {
-      _replyAttachedProductId = p.id;
+      var idx = _replyAttachedProductIds.indexOf(p.id);
+      if (idx !== -1) {
+        _replyAttachedProductIds.splice(idx, 1);
+      } else {
+        if (_replyAttachedProductIds.length >= 3) return;
+        _replyAttachedProductIds.push(p.id);
+      }
+      renderCommReplyPickerList(query);
       _renderReplyAttachments();
-      closeCommReplyPicker();
     });
     list.appendChild(row);
   });
@@ -9684,6 +10956,7 @@ function renderCommReplyPickerList(query) {
 
 function closeCommReplyPicker() {
   document.getElementById('comm-reply-picker-overlay').classList.remove('visible');
+  _renderReplyAttachments();
 }
 
 function commReplyPickGallery() {
@@ -9736,6 +11009,50 @@ function _seedDemoReplies() {
     }
   ];
   _commPosts[0].replies = _commReplies[fid].length;
+
+  /* Seed "You" replies across a few posts for the Comments tab demo */
+  var c3 = _commPosts.find(function(p){ return p.id === 'c3'; });
+  if (c3 && !_commReplies['c3']) {
+    _commReplies['c3'] = [
+      {
+        id: 'yr1', username: 'You',
+        time: isAr ? 'منذ 45 دقيقة' : '45 min ago',
+        text: isAr
+          ? 'بلاك أوركيد يعطي أداء أفضل في الطقس البارد — الحرارة تجعله ثقيلاً بعض الشيء.'
+          : 'Black Orchid performs much better in the cold — heat makes it a bit overwhelming.',
+        productId: null, hasImage: false
+      }
+    ];
+    c3.replies = (_commReplies['c3'] || []).length + (c3.replies || 0);
+  }
+  var c5 = _commPosts.find(function(p){ return p.id === 'c5'; });
+  if (c5 && !_commReplies['c5']) {
+    _commReplies['c5'] = [
+      {
+        id: 'yr2', username: 'You',
+        time: isAr ? 'منذ 3 ساعات' : '3 hours ago',
+        text: isAr
+          ? 'بلو دو شانيل أو دو بارفيوم يدوم لديّ من 7 إلى 9 ساعات على الجلد. السيلاج متوسط لكنه يرتفع في الجو الرطب.'
+          : 'Bleu de Chanel EDP lasts 7–9 hours on my skin. Sillage is moderate but gets better in humid air.',
+        productId: null, hasImage: false
+      }
+    ];
+    c5.replies = (_commReplies['c5'] || []).length + (c5.replies || 0);
+  }
+  var c9 = _commPosts.find(function(p){ return p.id === 'c9'; });
+  if (c9 && !_commReplies['c9']) {
+    _commReplies['c9'] = [
+      {
+        id: 'yr3', username: 'You',
+        time: isAr ? 'منذ يوم' : '1 day ago',
+        text: isAr
+          ? 'شرح ممتاز! أضيف أن البارفيوم (الإكستريت) يعطي بروجيكشن أهدأ مع ثبات أطول — مثالي للمناسبات الليلية.'
+          : 'Great breakdown! I\'d add that Parfum (Extrait) gives quieter but longer-lasting projection — perfect for evenings.',
+        productId: null, hasImage: false
+      }
+    ];
+    c9.replies = (_commReplies['c9'] || []).length + (c9.replies || 0);
+  }
 }
 
 /* ======================================================
@@ -9943,6 +11260,8 @@ document.addEventListener('DOMContentLoaded', function() {
   _shuffleProducts(); /* randomise order on every load */
   setLang(initLang); /* triggers renderProductCards + onLangChange → renderStores + renderAlerts */
   renderInterestsGrid();
+  _updateAdminBadge(); /* initialise admin badge visibility */
+  updateCommNavBadge(); /* initialise community nav dot */
   setTimeout(_seedDemoReplies, 200);
   setTimeout(renderMessagesList, 300);
 });
@@ -9961,9 +11280,12 @@ var _conversations = {
       { from: 'me',   text: 'Yes, still available! Barely used, great condition.', time: '10:17 AM' },
       { from: 'them', text: 'What\'s your best price? Can you do 450?', time: '10:19 AM' },
       { from: 'me',   text: 'I can do 460, final offer.', time: '10:22 AM' },
-      { from: 'them', text: 'Deal. How do we arrange pickup?', time: '10:24 AM' }
+      { from: 'them', text: 'Deal. How do we arrange pickup?', time: '10:24 AM' },
+      { from: 'me',   text: 'Great! I\'ll send my location. Cash on pickup.', time: '10:26 AM' },
+      { from: 'system', time: '10:31 AM' } /* sold system message — text set by T() at render time */
     ],
-    unread: true
+    unread: true,
+    sold: true /* this conversation is closed — item was sold */
   },
   'Nora_Scents': {
     messages: [
@@ -9976,6 +11298,7 @@ var _conversations = {
 
 var _activeChatUser = null;
 var _chatOrigin     = 'messages';
+var _chatIsSold     = false; /* true when opened from a sold sale post */
 
 function openMessages() {
   renderMessagesList();
@@ -10014,7 +11337,7 @@ function renderMessagesList() {
 
     var row = document.createElement('div');
     row.className = 'msg-conv-row';
-    row.onclick = function() { openChat(username, 'messages'); };
+    row.onclick = function() { openChat(username, 'messages', false); };
     row.innerHTML =
       '<div class="msg-conv-avatar">' + initials + '</div>' +
       '<div class="msg-conv-info">' +
@@ -10039,9 +11362,20 @@ function updateMsgBadge() {
   var hasUnread = Object.values(_conversations).some(function(c) { return c.unread; });
   var badge = document.getElementById('msg-header-badge');
   if (badge) badge.style.display = hasUnread ? 'block' : 'none';
+  /* Mirror unread state onto the community nav dot (messages belong to community) */
+  updateCommNavBadge();
 }
 
-function openChat(username, origin) {
+function updateCommNavBadge() {
+  var badge = document.getElementById('comm-nav-badge');
+  if (!badge) return;
+  /* Show dot when there are unread messages or pending community posts for the user */
+  var hasUnreadMsg  = Object.values(_conversations).some(function(c) { return c.unread; });
+  var hasPending    = _commPendingPosts && _commPendingPosts.some(function(p) { return p.isOwn && p.status === 'pending'; });
+  badge.classList.toggle('visible', hasUnreadMsg || hasPending);
+}
+
+function openChat(username, origin, isSold, isSaleChat) {
   _activeChatUser = username;
   _chatOrigin     = origin || 'messages';
 
@@ -10053,14 +11387,32 @@ function openChat(username, origin) {
   }
   updateMsgBadge();
 
-  /* Header */
-  var name   = document.getElementById('chat-header-name');
-  if (name)   name.textContent   = username;
+  /* Sold state comes from the conversation object (authoritative) OR the caller flag */
+  var conv = _conversations[username];
+  _chatIsSold = !!(conv && conv.sold) || !!isSold;
+  /* Propagate sold back onto the conv so it persists */
+  if (isSold && conv) conv.sold = true;
 
-  renderChatMessages();
+  /* Header */
+  var name = document.getElementById('chat-header-name');
+  if (name) name.textContent = username;
+
+  /* Bottom notices — sale notice is now pinned inside messages; hide both bottom elements */
+  var saleNotice   = document.getElementById('chat-sale-notice');
+  var closedNotice = document.getElementById('chat-closed-notice');
+  if (saleNotice)   saleNotice.style.display   = 'none';
+  if (closedNotice) closedNotice.style.display = 'none';
+
+  /* Input bar — hidden when sold */
+  var inputBar = document.getElementById('chat-input-bar');
+  if (inputBar) inputBar.style.display = _chatIsSold ? 'none' : '';
+
+  /* Show sold closed notice at bottom only when sold */
+  if (closedNotice) closedNotice.style.display = _chatIsSold ? 'flex' : 'none';
+
+  renderChatMessages(_chatIsSold, !!(isSaleChat || isSold || (conv && conv.sold)));
   switchScreen('chat');
 
-  /* Scroll to bottom */
   setTimeout(function() {
     var msgs = document.getElementById('chat-messages');
     if (msgs) msgs.scrollTop = msgs.scrollHeight;
@@ -10075,17 +11427,43 @@ function closeChatScreen() {
 function openChatFromLibrary() {
   var username = document.getElementById('user-lib-header-title').textContent;
   if (!username) return;
-  openChat(username, 'user-library');
+  openChat(username, 'user-library', false);
 }
 
-function renderChatMessages() {
+function renderChatMessages(isSold, isSaleContext) {
   var container = document.getElementById('chat-messages');
   if (!container || !_activeChatUser) return;
   var conv = _conversations[_activeChatUser];
   if (!conv) return;
+
+  /* Resolve sold/sale state from conv if not passed explicitly */
+  if (isSold === undefined) isSold = !!conv.sold;
+  if (isSaleContext === undefined) isSaleContext = isSold;
+
   container.innerHTML = '';
 
+  /* ── Pinned scope notice at the very top of the message list ── */
+  if (isSaleContext) {
+    var noticeWrap = document.createElement('div');
+    noticeWrap.className = 'chat-scope-pin';
+    noticeWrap.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' +
+      '<span>' + T('comm_chat_scope_notice') + '</span>';
+    container.appendChild(noticeWrap);
+  }
+
   conv.messages.forEach(function(msg) {
+    /* System message — shown as a centered pill */
+    if (msg.from === 'system') {
+      var sys = document.createElement('div');
+      sys.className = 'chat-system-msg';
+      sys.innerHTML =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>' +
+        '<span>' + T('chat_sold_closed_title') + ' — ' + T('chat_sold_closed_sub') + '</span>';
+      container.appendChild(sys);
+      return;
+    }
+
     var isMine   = msg.from === 'me';
     var initials = isMine ? 'Me' : _activeChatUser.charAt(0).toUpperCase();
     var wrap = document.createElement('div');
