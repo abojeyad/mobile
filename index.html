@@ -467,14 +467,14 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 }
 .pc-low-num {
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.01em;
 }
 [dir="rtl"] .pc-low-num {
   font-family: var(--font-ar) !important;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
 }
 .pc-low-cur {
@@ -2700,24 +2700,55 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 [dir="rtl"] .filter-header-action.apply { text-align: left; }
 .filter-header-title { font-size: var(--t3); font-weight: 600; color: var(--ink-1); }
 .filter-body { flex: 1; overflow-y: auto; }
-.filter-section { padding: 16px 20px 14px; border-bottom: 1px solid var(--border); }
+.filter-section { padding: 18px 20px 16px; border-bottom: 1px solid var(--border); }
 .filter-section:last-child { border-bottom: none; }
 .filter-section-label {
-  font-size: var(--t6); font-weight: 700; letter-spacing: 0.07em;
-  text-transform: uppercase; color: var(--ink-3); margin-bottom: 12px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.09em;
+  text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px;
 }
 .filter-chips-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* Base chip — override per group via class */
 .filter-chip {
-  font-size: var(--t5); padding: 7px 15px; border-radius: 20px;
-  border: 1px solid var(--border-strong); background: var(--bg-phone);
-  color: var(--ink-2); cursor: pointer; transition: all 0.13s; user-select: none;
+  font-size: var(--t5); padding: 8px 14px; border-radius: 20px;
+  border: 1.5px solid var(--border-strong); background: var(--bg-phone);
+  color: var(--ink-2); cursor: pointer; transition: all 0.15s; user-select: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: inherit;
 }
-.filter-chip.active { background: var(--red); color: #fff; border-color: var(--red); }
+.filter-chip .fc-emoji { font-size: 15px; line-height: 1; flex-shrink: 0; }
+.filter-chip:active { transform: scale(0.96); }
+
+/* Active state — brand primary */
+.filter-chip.active {
+  background: var(--red); color: #fff; border-color: var(--red);
+  box-shadow: 0 2px 8px rgba(121,0,47,0.25);
+}
+
+/* Group tints — applied via data-group attribute */
+.filter-chip[data-group="gender"]  { background: #F5F3FF; border-color: #C4B5FD; color: #5B21B6; }
+.filter-chip[data-group="gender"].active  { background: var(--red); color: #fff; border-color: var(--red); box-shadow: 0 2px 8px rgba(121,0,47,0.25); }
+
+.filter-chip[data-group="season"]  { background: #F0FDF4; border-color: #86EFAC; color: #166534; }
+.filter-chip[data-group="season"].active  { background: var(--red); color: #fff; border-color: var(--red); box-shadow: 0 2px 8px rgba(121,0,47,0.25); }
+
+.filter-chip[data-group="time"]    { background: #EFF6FF; border-color: #93C5FD; color: #1D4ED8; }
+.filter-chip[data-group="time"].active    { background: var(--red); color: #fff; border-color: var(--red); box-shadow: 0 2px 8px rgba(121,0,47,0.25); }
+
+.filter-chip[data-group="family"]  { background: #FDF3DC; border-color: #FCD34D; color: #92400E; }
+.filter-chip[data-group="family"].active  { background: var(--red); color: #fff; border-color: var(--red); box-shadow: 0 2px 8px rgba(121,0,47,0.25); }
+
+.filter-chip[data-group="year"],
+.filter-chip[data-group="rating"]  { background: var(--bg-surface); border-color: var(--border-strong); color: var(--ink-2); }
+.filter-chip[data-group="year"].active,
+.filter-chip[data-group="rating"].active { background: var(--red); color: #fff; border-color: var(--red); box-shadow: 0 2px 8px rgba(121,0,47,0.25); }
+
 .filter-apply-bar { padding: 16px 20px 24px; flex-shrink: 0; }
 .filter-apply-btn {
-  width: 100%; height: 48px; border-radius: var(--radius-md);
+  width: 100%; height: 50px; border-radius: var(--radius-md);
   background: #79002F; color: #fff; font-size: var(--t3); font-weight: 600;
   border: none; cursor: pointer; font-family: inherit; transition: opacity 0.15s;
+  letter-spacing: 0.02em;
 }
 .filter-apply-btn:hover { opacity: 0.88; }
 /* Top Deals filter sheet keeps gold */
@@ -3698,7 +3729,42 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       </div>
       <div class="filter-body">
 
-        <!-- Brand — picker trigger (opens full-screen searchable modal) -->
+        <!-- 1. Gender — emoji chips -->
+        <div class="filter-section">
+          <div class="filter-section-label" data-i18n="filter_gender">Gender</div>
+          <div class="filter-chips-wrap" id="fc-gender"></div>
+        </div>
+
+        <!-- 2. Season — emoji chips -->
+        <div class="filter-section">
+          <div class="filter-section-label" data-i18n="filter_season">Season</div>
+          <div class="filter-chips-wrap" id="fc-season"></div>
+        </div>
+
+        <!-- 3. Usage time — emoji chips -->
+        <div class="filter-section">
+          <div class="filter-section-label" data-i18n="filter_time">Usage Time</div>
+          <div class="filter-chips-wrap" id="fc-time"></div>
+        </div>
+
+        <!-- 4. Fragrance family — emoji chips -->
+        <div class="filter-section">
+          <div class="filter-section-label" data-i18n="filter_family">Fragrance Family</div>
+          <div class="filter-chips-wrap" id="fc-family"></div>
+        </div>
+
+        <!-- 5. Main accords — picker trigger -->
+        <div class="filter-section" id="fs-accord">
+          <div class="filter-picker-trigger" id="fc-accord-trigger" onclick="openPickerModal('accord')">
+            <div class="filter-picker-trigger-left">
+              <span class="filter-picker-trigger-label" data-i18n="filter_accords">Main Accords</span>
+              <span class="filter-picker-trigger-value" id="fc-accord-value" data-i18n="picker_any">Any</span>
+            </div>
+            <svg class="filter-picker-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+
+        <!-- 6. Brand — picker trigger -->
         <div class="filter-section" id="fs-brand">
           <div class="filter-picker-trigger" id="fc-brand-trigger" onclick="openPickerModal('brand')">
             <div class="filter-picker-trigger-left">
@@ -3709,42 +3775,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
           </div>
         </div>
 
-        <!-- Gender — chips (3 values, fixed) -->
-        <div class="filter-section">
-          <div class="filter-section-label" data-i18n="filter_gender">Gender</div>
-          <div class="filter-chips-wrap" id="fc-gender"></div>
-        </div>
-
-        <!-- Family — chips (≤20 values) -->
-        <div class="filter-section">
-          <div class="filter-section-label" data-i18n="filter_family">Family</div>
-          <div class="filter-chips-wrap" id="fc-family"></div>
-        </div>
-
-        <!-- Accords — picker trigger (opens full-screen searchable modal) -->
-        <div class="filter-section" id="fs-accord">
-          <div class="filter-picker-trigger" id="fc-accord-trigger" onclick="openPickerModal('accord')">
-            <div class="filter-picker-trigger-left">
-              <span class="filter-picker-trigger-label" data-i18n="filter_accords">Accords</span>
-              <span class="filter-picker-trigger-value" id="fc-accord-value" data-i18n="picker_any">Any</span>
-            </div>
-            <svg class="filter-picker-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </div>
-        </div>
-
-        <!-- Season — chips (fixed set) -->
-        <div class="filter-section">
-          <div class="filter-section-label" data-i18n="filter_season">Season</div>
-          <div class="filter-chips-wrap" id="fc-season"></div>
-        </div>
-
-        <!-- Wear time — chips (fixed set) -->
-        <div class="filter-section">
-          <div class="filter-section-label" data-i18n="filter_time">Time</div>
-          <div class="filter-chips-wrap" id="fc-time"></div>
-        </div>
-
-        <!-- Perfumer — picker trigger -->
+        <!-- 7. Perfumer — picker trigger -->
         <div class="filter-section" id="fs-perfumer">
           <div class="filter-picker-trigger" id="fc-perfumer-trigger" onclick="openPickerModal('perfumer')">
             <div class="filter-picker-trigger-left">
@@ -3755,7 +3786,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
           </div>
         </div>
 
-        <!-- Country — picker trigger -->
+        <!-- 8. Country — picker trigger -->
         <div class="filter-section" id="fs-country">
           <div class="filter-picker-trigger" id="fc-country-trigger" onclick="openPickerModal('country')">
             <div class="filter-picker-trigger-left">
@@ -3766,14 +3797,14 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
           </div>
         </div>
 
-        <!-- Year — collapsible chips, newest-first, show 8 by default -->
+        <!-- 9. Year — collapsible chips -->
         <div class="filter-section">
           <div class="filter-section-label" data-i18n="filter_year">Year</div>
           <div class="filter-chips-wrap" id="fc-year"></div>
           <span class="fc-year-toggle" id="fc-year-toggle" onclick="_toggleYearExpand()" style="display:none;"></span>
         </div>
 
-        <!-- Rating — buckets -->
+        <!-- 10. Rating — buckets -->
         <div class="filter-section">
           <div class="filter-section-label" data-i18n="filter_rating">Rating</div>
           <div class="filter-chips-wrap" id="fc-rating"></div>
@@ -3960,7 +3991,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       </div>
       <div class="comm-act-stats">
         <div class="comm-act-stat">
-          <div class="comm-act-stat-v">2,450</div>
+          <div class="comm-act-stat-v">2,450&#x202F;<svg class="sar-sym" aria-label="SAR" role="img"><use href="#sar-sym"/></svg></div>
           <div class="comm-act-stat-l" data-i18n="activity_purchases">Total Purchases</div>
         </div>
         <div class="comm-act-stat">
@@ -5495,7 +5526,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <!-- Stats row (scrolls away) -->
     <div style="display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border);background:var(--bg-phone);">
       <div class="wallet-stat-cell">
-        <div style="font-size:var(--t2);font-weight:700;color:var(--ink-1);">2,450</div>
+        <div style="font-size:var(--t2);font-weight:700;color:var(--ink-1);">2,450&#x202F;<svg class="sar-sym" aria-label="SAR" role="img"><use href="#sar-sym"/></svg></div>
         <div style="font-size:var(--t6);color:var(--ink-3);margin-top:2px;line-height:1.3;" data-i18n="cashback_stat_purchases">Total Purchases</div>
       </div>
       <div class="wallet-stat-cell">
@@ -5503,7 +5534,7 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         <div style="font-size:var(--t6);color:var(--ink-3);margin-top:2px;line-height:1.3;" data-i18n="activity_orders">Orders Placed</div>
       </div>
       <div class="wallet-stat-cell">
-        <div style="font-size:var(--t2);font-weight:700;color:var(--red);">320</div>
+        <div style="font-size:var(--t2);font-weight:700;color:var(--red);">320&#x202F;<svg class="sar-sym" aria-label="SAR" role="img"><use href="#sar-sym"/></svg></div>
         <div style="font-size:var(--t6);color:var(--ink-3);margin-top:2px;line-height:1.3;" data-i18n="cashback_stat_savings">Potential Savings</div>
       </div>
     </div>
@@ -7228,25 +7259,60 @@ var _pickerContextProducts = []; /* product set at time picker was opened */
 
 function _buildContextualFilterSheet(products) {
 
-  /* ─── Shared helper: chip groups ─── */
-  function _buildFieldChips(containerId, group, getEn, getAr) {
+  /* ── Static curated chip definitions per group ──
+     Values match exact product data fields.
+     Shown always regardless of current result set —
+     correct UX: filters show the universe, not just current matches. */
+
+  var STATIC_CHIPS = {
+    gender: [
+      { en: 'Masculine',  ar: 'رجالي',     emoji: '👔' },
+      { en: 'Feminine',   ar: 'نسائي',     emoji: '🌷' },
+      { en: 'Unisex',     ar: 'للجنسين',   emoji: '✦'  }
+    ],
+    season: [
+      { en: 'Summer',          ar: 'صيفي',             emoji: '☀️' },
+      { en: 'Spring',          ar: 'ربيعي',            emoji: '🌱' },
+      { en: 'Spring / Autumn', ar: 'ربيعي / خريفي',    emoji: '🌸' },
+      { en: 'Autumn',          ar: 'خريفي',            emoji: '🍂' },
+      { en: 'Winter',          ar: 'شتوي',             emoji: '❄️' },
+      { en: 'All Seasons',     ar: 'كل الفصول',        emoji: '🌍' }
+    ],
+    time: [
+      { en: 'Day',         ar: 'نهاري',           emoji: '🌤️' },
+      { en: 'Night',       ar: 'ليلي',            emoji: '🌙'  },
+      { en: 'Day & Night', ar: 'نهاري وليلي',     emoji: '🌓'  }
+    ],
+    family: [
+      { en: 'Floral',    ar: 'زهري',     emoji: '🌸' },
+      { en: 'Woody',     ar: 'خشبي',     emoji: '🪵' },
+      { en: 'Oriental',  ar: 'شرقي',     emoji: '🕌' },
+      { en: 'Aromatic',  ar: 'عطري',     emoji: '🌿' },
+      { en: 'Musk',      ar: 'مسكي',     emoji: '🤍' },
+      { en: 'Leather',   ar: 'جلدي',     emoji: '🧥' },
+      { en: 'Fresh',     ar: 'منعش',     emoji: '💧' },
+      { en: 'Chypre',    ar: 'شيبر',     emoji: '🌲' },
+      { en: 'Oud',       ar: 'عود',      emoji: '🪔' },
+      { en: 'Undefined', ar: 'غير محدد', emoji: '✨' }
+    ]
+  };
+
+  /* ─── Render static curated chip group ─── */
+  function _buildStaticChips(containerId, group) {
     var el = document.getElementById(containerId);
     if (!el) return;
     el.innerHTML = '';
-    var seen = {};
-    products.forEach(function(p) {
-      var en = (getEn(p) || '').trim();
-      if (!en || seen[en]) return;
-      seen[en] = { ar: (getAr ? getAr(p) : en) || en };
-    });
-    Object.keys(seen).sort().forEach(function(en) {
+    (STATIC_CHIPS[group] || []).forEach(function(item) {
+      var isActive = (_activeFilters[group] || []).indexOf(item.en) !== -1;
       var chip = document.createElement('span');
-      chip.className = 'filter-chip' + ((_activeFilters[group] || []).indexOf(en) !== -1 ? ' active' : '');
+      chip.className = 'filter-chip' + (isActive ? ' active' : '');
       chip.setAttribute('data-group', group);
-      chip.setAttribute('data-val-en', en);
-      chip.setAttribute('data-val-ar', seen[en].ar);
-      chip.textContent = LANG === 'ar' ? seen[en].ar : en;
+      chip.setAttribute('data-val-en', item.en);
+      chip.setAttribute('data-val-ar', item.ar);
       chip.onclick = function() { toggleFilterChip(this); };
+      chip.innerHTML =
+        '<span class="fc-emoji">' + item.emoji + '</span>' +
+        (LANG === 'ar' ? item.ar : item.en);
       el.appendChild(chip);
     });
   }
@@ -7268,30 +7334,22 @@ function _buildContextualFilterSheet(products) {
     }
   }
 
-  /* ─── Brand trigger ─── */
+  /* ─── 1–4: Static chip groups ─── */
+  _buildStaticChips('fc-gender', 'gender');
+  _buildStaticChips('fc-season', 'season');
+  _buildStaticChips('fc-time',   'time');
+  _buildStaticChips('fc-family', 'family');
+
+  /* ─── 5. Main accords trigger ─── */
+  _updatePickerTrigger('accord');
+
+  /* ─── 6. Brand trigger ─── */
   _updatePickerTrigger('brand');
 
-  /* ─── Gender, Family, Accords, Season, Time — chips ─── */
-  _buildFieldChips('fc-gender', 'gender',
-    function(p) { return p.genderEn; },
-    function(p) { return p.genderAr; });
-
-  _buildFieldChips('fc-family', 'family',
-    function(p) { return p.familyEn; },
-    function(p) { return p.familyAr; });
-
-  _buildFieldChips('fc-season', 'season',
-    function(p) { return p.wearSeasonEn; },
-    function(p) { return p.wearSeasonAr; });
-
-  _buildFieldChips('fc-time', 'time',
-    function(p) { return p.wearTimeEn; },
-    function(p) { return p.wearTimeAr; });
-
-  /* ─── Perfumer trigger ─── */
+  /* ─── 7. Perfumer trigger ─── */
   _updatePickerTrigger('perfumer');
 
-  /* ─── Country trigger ─── */
+  /* ─── 8. Country trigger ─── */
   _updatePickerTrigger('country');
 
   /* ─── Year — collapsible chips, newest first ─── */
