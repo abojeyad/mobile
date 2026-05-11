@@ -26,6 +26,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 img    { display: block; }
 input  { font-family: inherit; }
 
+/* Saudi Riyal symbol — inline SVG scaled to match surrounding text */
+.sar-sym {
+  display: inline-block;
+  width: 0.72em;       /* symbol is ~0.895:1 h:w ratio; 0.72em at 1em height feels balanced */
+  height: 0.82em;
+  vertical-align: -0.10em;  /* baseline-align with numerals */
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
 /* ══════════════════════════════════════════════════════════
    DESIGN TOKENS
 ══════════════════════════════════════════════════════════ */
@@ -368,43 +378,165 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   background: var(--bg-phone); border: 1px solid var(--border);
   border-radius: var(--radius-lg); overflow: hidden; cursor: pointer;
   display: flex; flex-direction: column;
-  transition: box-shadow 0.15s;
+  transition: box-shadow 0.2s, transform 0.2s;
 }
-.product-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+.product-card:hover  { box-shadow: 0 8px 28px rgba(0,0,0,0.10); transform: translateY(-2px); }
+.product-card:active { transform: translateY(0); box-shadow: none; }
 
-/* Image zone — fixed height, always covers */
+/* Image zone — original 140px height restored */
 .pc-img {
   width: 100%; height: 140px; position: relative; flex-shrink: 0; overflow: hidden;
 }
 .pc-img .img-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-.pc-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.pc-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 0.35s ease; }
+.product-card:hover .pc-img img { transform: scale(1.04); }
 .pc-img .img-initials { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 20px; color: rgba(0,0,0,0.25); }
 
-/* Optional badge on top-left of image */
+/* Badge — top-left overlay */
 .pc-badge { position: absolute; top: 8px; left: 8px; z-index: 2; }
 [dir="rtl"] .pc-badge { left: auto; right: 8px; }
 
-/* Body — always same fields in same order */
-.pc-body { padding: 12px 12px 14px; display: flex; flex-direction: column; flex: 1; }
-.pc-name  { font-size: var(--t5); font-weight: 500; color: var(--ink-1); margin-bottom: 4px; line-height: 1.35; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pc-avail { font-size: var(--t5); color: var(--ink-3); margin-bottom: 8px; }
-.pc-lowest {
-  align-self: flex-start; margin-bottom: 4px;
-  font-size: var(--t5); padding: 2px 8px;
-  background: var(--gold); color: #fff;
-  border-radius: 20px; font-weight: 600; white-space: nowrap;
+/* Body */
+.pc-body {
+  padding: 11px 12px 13px;
+  display: flex; flex-direction: column; flex: 1;
+  gap: 0;
 }
-.pc-highest { font-size: var(--t5); color: var(--ink-2); }
-.pc-savings { font-size: var(--t5); color: var(--ink-2); }
 
-/* ── Grid variant: 2-column, cards fill column width ── */
+/* Product name — serif, elegant, 2-line */
+.pc-name {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-1);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+[dir="rtl"] .pc-name {
+  font-family: var(--font-ar) !important;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* Store availability — micro, muted */
+.pc-avail {
+  font-size: 11px;
+  color: var(--ink-3);
+  margin-bottom: 9px;
+  letter-spacing: 0.01em;
+}
+
+/* Price block — Model C: gold left-border accent */
+.pc-price-row {
+  margin-top: auto;
+  border-left: 2px solid var(--gold);
+  padding-left: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+[dir="rtl"] .pc-price-row {
+  border-left: none;
+  border-right: 2px solid var(--gold);
+  padding-left: 0;
+  padding-right: 8px;
+}
+
+/* Lowest price row — gold throughout, children inherit */
+.pc-low-row {
+  display: flex; align-items: baseline; gap: 4px;
+  color: var(--gold);
+}
+.pc-low-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  line-height: 1;
+  opacity: 0.8;
+}
+[dir="rtl"] .pc-low-label {
+  letter-spacing: 0;
+  font-size: 10px;
+}
+.pc-low-num {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+[dir="rtl"] .pc-low-num {
+  font-family: var(--font-ar) !important;
+  font-size: 14px;
+  font-weight: 700;
+}
+.pc-low-cur {
+  font-size: 10px;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+/* Highest price row — grey throughout, children inherit */
+.pc-high-row {
+  display: flex; align-items: baseline; gap: 4px;
+  color: var(--ink-3);
+}
+.pc-high-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  line-height: 1;
+}
+[dir="rtl"] .pc-high-label {
+  letter-spacing: 0;
+  font-size: 10px;
+}
+.pc-high-num {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+}
+.pc-high-cur {
+  font-size: 10px;
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+/* Save badge — on image, top-right */
+.pc-save-badge {
+  position: absolute;
+  top: 8px; right: 8px;
+  z-index: 2;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--green);
+  border-radius: 20px;
+  padding: 3px 8px;
+  white-space: nowrap;
+  letter-spacing: 0;
+  pointer-events: none;
+}
+[dir="rtl"] .pc-save-badge {
+  right: auto; left: 8px;
+}
+
+/* Grid variant — cards fill column width, taller image */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 12px; padding: 0 20px;
 }
 .product-grid .product-card { width: 100%; flex-shrink: unset; }
-.product-grid .product-card .pc-img { height: auto; aspect-ratio: 1/1; }
 
 /* Image wrap helper */
 .prod-img-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
@@ -2184,6 +2316,40 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 .comm-act-entry.static { cursor: default; }
 .comm-act-entry.static:hover  { box-shadow: none; }
 .comm-act-entry.static:active { opacity: 1; }
+
+/* ── My Interests card body ── */
+.activity-interests-body {
+  padding: 0 14px 16px;
+  pointer-events: none;
+}
+.activity-interests-accents {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 10px;
+}
+.activity-accent-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 11px 5px 8px;
+  border-radius: 20px;
+  font-size: var(--t6); font-weight: 600;
+  letter-spacing: 0.01em;
+  border: 1.5px solid transparent;
+}
+.activity-accent-pill .accent-emoji {
+  font-size: 14px; line-height: 1; flex-shrink: 0;
+}
+.activity-interests-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.activity-interests-count {
+  font-size: var(--t6); color: var(--ink-3); font-weight: 500;
+}
+.activity-interests-edit {
+  font-size: var(--t6); font-weight: 700; color: var(--red);
+  display: flex; align-items: center; gap: 3px;
+}
+.activity-interests-edit svg { width: 11px; height: 11px; flex-shrink: 0; }
 .comm-act-header {
   display: flex; align-items: center; gap: 10px;
   padding: 13px 14px 12px;
@@ -2215,6 +2381,17 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
   border-right: 1px solid var(--border);
 }
 .comm-act-stat:last-child { border-right: none; }
+[dir="rtl"] .comm-act-stat { border-right: none; border-left: 1px solid var(--border); }
+[dir="rtl"] .comm-act-stat:last-child { border-left: none; }
+
+/* Wallet page stats grid cells */
+.wallet-stat-cell {
+  padding: 12px 8px; text-align: center;
+  border-right: 1px solid var(--border);
+}
+.wallet-stat-cell:last-child { border-right: none; }
+[dir="rtl"] .wallet-stat-cell { border-right: none; border-left: 1px solid var(--border); }
+[dir="rtl"] .wallet-stat-cell:last-child { border-left: none; }
 .comm-act-stat-v { font-size: var(--t3); font-weight: 700; color: var(--ink-1); line-height: 1; }
 .comm-act-stat-l { font-size: var(--t6); color: var(--ink-3); margin-top: 2px; }
 
@@ -3283,6 +3460,14 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 </style>
 </head>
 <body>
+
+<!-- Saudi Riyal symbol — referenced via <use> throughout the app -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none;" aria-hidden="true">
+  <symbol id="sar-sym" viewBox="0 0 1124.14 1256.39">
+    <path d="M699.62,1113.02h0c-20.06,44.48-33.32,92.75-38.4,143.37l424.51-90.24c20.06-44.47,33.31-92.75,38.4-143.37l-424.51,90.24Z"/>
+    <path d="M1085.73,895.8c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.33v-135.2l292.27-62.11c20.06-44.47,33.32-92.75,38.4-143.37l-330.68,70.27V66.13c-50.67,28.45-95.67,66.32-132.25,110.99v403.35l-132.25,28.11V0c-50.67,28.44-95.67,66.32-132.25,110.99v525.69l-295.91,62.88c-20.06,44.47-33.33,92.75-38.42,143.37l334.33-71.05v170.26l-358.3,76.14c-20.06,44.47-33.32,92.75-38.4,143.37l375.04-79.7c30.53-6.35,56.77-24.4,73.83-49.24l68.78-101.97v-.02c7.14-10.55,11.3-23.27,11.3-36.97v-149.98l132.25-28.11v270.4l424.53-90.28Z"/>
+  </symbol>
+</svg>
 <div id="app-root">
 <div class="phone-frame">
 
@@ -3757,14 +3942,37 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       </button>
     </div>
 
-    <!-- Stats -->
+    <!-- Cashback & Wallet Card -->
     <div style="height:16px;" aria-hidden="true"></div>
-    <div style="font-size:var(--t5);color:var(--ink-3);padding:0 20px;margin-bottom:12px;" data-i18n="activity_cashback_desc">Shop through Yourdis and earn 2% cashback on every purchase, credited directly to your wallet.</div>
-    <div class="stats-grid" style="margin-bottom:20px;">
-      <div class="stat-card"><div class="stat-l" data-i18n="activity_purchases">Total Purchases</div><div class="stat-v">2,450 SAR</div></div>
-      <div class="stat-card"><div class="stat-l" data-i18n="activity_cashback">Cashback (2%)</div><div class="stat-v">49 SAR</div></div>
-      <div class="stat-card"><div class="stat-l" data-i18n="activity_orders">Orders Placed</div><div class="stat-v">12</div></div>
-      <div class="stat-card"><div class="stat-l" data-i18n="activity_savings">Potential Savings</div><div class="stat-v">320 SAR</div></div>
+    <div class="comm-act-entry" style="margin-bottom:20px;" onclick="switchScreen('sub-cashback')">
+      <div class="comm-act-header">
+        <div class="comm-act-icon" style="background:var(--gold-light);color:var(--gold);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 00-2 2v2h12V5a2 2 0 00-2-2z"/><path d="M12 14a2 2 0 100-4 2 2 0 000 4z"/></svg>
+        </div>
+        <div class="comm-act-text">
+          <div class="comm-act-title" data-i18n="cashback_card_title">Cashback &amp; Wallet</div>
+          <div class="comm-act-sub" data-i18n="activity_cashback_desc">Shop through Yourdis and earn 2% cashback on every purchase, credited directly to your wallet.</div>
+        </div>
+        <svg class="comm-act-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+      <div class="comm-act-stats">
+        <div class="comm-act-stat">
+          <div class="comm-act-stat-v">2,450</div>
+          <div class="comm-act-stat-l" data-i18n="activity_purchases">Total Purchases</div>
+        </div>
+        <div class="comm-act-stat">
+          <div class="comm-act-stat-v" style="color:var(--gold);">49&#x202F;<svg class="sar-sym" aria-label="SAR" role="img"><use href="#sar-sym"/></svg></div>
+          <div class="comm-act-stat-l" data-i18n="activity_cashback">Cashback (2%)</div>
+        </div>
+        <div class="comm-act-stat">
+          <div class="comm-act-stat-v">12</div>
+          <div class="comm-act-stat-l" data-i18n="activity_orders">Orders Placed</div>
+        </div>
+        <div class="comm-act-stat">
+          <div class="comm-act-stat-v" style="color:var(--red);">320&#x202F;<svg class="sar-sym" aria-label="SAR" role="img"><use href="#sar-sym"/></svg></div>
+          <div class="comm-act-stat-l" data-i18n="activity_savings">Potential Savings</div>
+        </div>
+      </div>
     </div>
 
     <!-- My Fragrance Library entry -->
@@ -3891,16 +4099,8 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
         </div>
         <svg class="comm-act-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
       </div>
-      <div style="padding:14px 16px 16px;display:flex;flex-wrap:wrap;gap:8px;">
-        <span class="pref-chip on">Woody / Oud</span>
-        <span class="pref-chip on">Oriental</span>
-        <span class="pref-chip">Niche</span>
-        <span class="pref-chip on">Fresh / Aqua</span>
-        <span class="pref-chip">Floral</span>
-        <span class="pref-chip on">Oud</span>
-        <span class="pref-chip">Citrus</span>
-        <span class="pref-chip">Gourmand</span>
-      </div>
+      <!-- Interest accent pills — rendered by JS via renderActivityInterests() -->
+      <div class="activity-interests-body" id="activity-interests-body"></div>
     </div>
 
     <div class="divider" style="margin:0;"></div>
@@ -4327,11 +4527,15 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
 
   <div class="scroll-area">
     <!-- Hero image -->
-    <div class="product-hero-img" id="product-hero-bg">
+    <div class="product-hero-img" id="product-hero-bg" style="cursor:zoom-in;" onclick="(function(){ var img=document.getElementById('product-hero-img'); if(img&&img.src) window.openImageViewer(img.src, document.getElementById('product-hero-wrap').style.background); })()">
       <div class="prod-img-wrap" id="product-hero-wrap" style="height:100%;">
         <img loading="eager" class="prod-img" id="product-hero-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center;position:relative;z-index:1;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="prod-initials" id="product-hero-initials" style="display:none;font-size:52px;">◈</div>
       </div>
+      <!-- Expand button -->
+      <button class="pdp-hero-expand-btn" onclick="event.stopPropagation();(function(){ var img=document.getElementById('product-hero-img'); if(img&&img.src) window.openImageViewer(img.src, document.getElementById('product-hero-wrap').style.background); })()" aria-label="View fullscreen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+      </button>
     </div>
 
     <div class="buy-cta-bar">
@@ -4817,8 +5021,29 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
     </button>
     <span class="sub-header-title" data-i18n="set_profile">Profile</span>
+    <div style="width:36px;"></div>
   </div>
   <div class="sub-body">
+
+    <!-- Profile photo picker -->
+    <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:28px;">
+      <div style="position:relative;display:inline-block;">
+        <!-- Avatar ring -->
+        <div style="width:88px;height:88px;border-radius:50%;overflow:hidden;border:2.5px solid var(--border-strong);background:var(--ink-3);">
+          <img id="sub-profile-avatar-img" src="profile.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div id="sub-profile-avatar-fallback" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-family:var(--font-display);font-size:28px;color:#fff;">AH</div>
+        </div>
+        <!-- Camera button -->
+        <button onclick="document.getElementById('sub-profile-file').click()" style="position:absolute;bottom:0;right:0;width:28px;height:28px;border-radius:50%;background:var(--red);border:2px solid var(--bg-phone);display:flex;align-items:center;justify-content:center;cursor:pointer;" aria-label="Change photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </button>
+      </div>
+      <!-- Hidden file input -->
+      <input id="sub-profile-file" type="file" accept="image/*" style="display:none;" onchange="subProfilePhotoChange(this)"/>
+      <div style="margin-top:10px;font-size:var(--t6);color:var(--ink-3);" data-i18n="profile_photo_hint">Tap the camera icon to change your photo</div>
+    </div>
+
+    <!-- Display name -->
     <div class="sub-label" data-i18n="sub_profile_name_label">Display Name</div>
     <input id="sub-profile-input" class="sub-input" type="text" value="Abdullah Hassan" data-i18n="sub_profile_name_ph"/>
     <button class="sub-btn" onclick="subProfileSave()" data-i18n="sub_save">Save Changes</button>
@@ -5220,6 +5445,196 @@ html, body { height: 100%; background: var(--bg-page); font-family: var(--font-b
     <div style="height:32px;" aria-hidden="true"></div>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN: CASHBACK & WALLET (sub-screen)
+═══════════════════════════════════════ -->
+<div class="screen" id="screen-sub-cashback">
+
+  <!-- Fixed header -->
+  <div class="sub-header">
+    <button class="dip-back-btn" onclick="switchScreen('activity')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    </button>
+    <span class="sub-header-title" data-i18n="cashback_card_title">Cashback &amp; Wallet</span>
+    <div style="width:36px;"></div>
+  </div>
+
+  <!-- Single scrollable body — hero + stats scroll; tab bar sticks -->
+  <div class="sub-body" style="padding:0;">
+
+    <!-- Hero banner (scrolls away) -->
+    <div style="background:linear-gradient(135deg,#79002F 0%,#A5004A 60%,#C2005A 100%);padding:20px 20px 24px;position:relative;overflow:hidden;">
+      <div style="position:absolute;right:-30px;top:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,0.06);pointer-events:none;"></div>
+      <div style="position:absolute;right:40px;bottom:-50px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.04);pointer-events:none;"></div>
+
+      <!-- Icon + title + description -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:rgba(234,160,5,0.20);border:1.5px solid rgba(234,160,5,0.40);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#EAA005" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 00-2 2v2h12V5a2 2 0 00-2-2z"/><path d="M12 14a2 2 0 100-4 2 2 0 000 4z"/></svg>
+        </div>
+        <div>
+          <div style="font-size:var(--t3);font-weight:700;color:#fff;" data-i18n="cashback_card_title">Cashback &amp; Wallet</div>
+          <div style="font-size:var(--t6);color:rgba(255,255,255,0.70);margin-top:2px;" data-i18n="activity_cashback_desc">Shop through Yourdis and earn 2% cashback on every purchase, credited directly to your wallet.</div>
+        </div>
+      </div>
+
+      <!-- Wallet balance highlight -->
+      <div style="background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);border-radius:14px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="font-size:var(--t6);color:rgba(255,255,255,0.65);margin-bottom:4px;" data-i18n="cashback_wallet_balance">Wallet Balance</div>
+          <div style="font-size:26px;font-weight:700;color:#EAA005;line-height:1;">49 <svg class="sar-sym" aria-label="SAR" role="img"><use href="#sar-sym"/></svg></div>
+        </div>
+        <button style="padding:9px 18px;border-radius:20px;background:#EAA005;color:#fff;font-size:var(--t6);font-weight:700;border:none;cursor:pointer;flex-shrink:0;" data-i18n="cashback_withdraw">Withdraw</button>
+      </div>
+    </div>
+
+    <!-- Stats row (scrolls away) -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border);background:var(--bg-phone);">
+      <div class="wallet-stat-cell">
+        <div style="font-size:var(--t2);font-weight:700;color:var(--ink-1);">2,450</div>
+        <div style="font-size:var(--t6);color:var(--ink-3);margin-top:2px;line-height:1.3;" data-i18n="cashback_stat_purchases">Total Purchases</div>
+      </div>
+      <div class="wallet-stat-cell">
+        <div style="font-size:var(--t2);font-weight:700;color:var(--ink-1);">12</div>
+        <div style="font-size:var(--t6);color:var(--ink-3);margin-top:2px;line-height:1.3;" data-i18n="activity_orders">Orders Placed</div>
+      </div>
+      <div class="wallet-stat-cell">
+        <div style="font-size:var(--t2);font-weight:700;color:var(--red);">320</div>
+        <div style="font-size:var(--t6);color:var(--ink-3);margin-top:2px;line-height:1.3;" data-i18n="cashback_stat_savings">Potential Savings</div>
+      </div>
+    </div>
+
+    <!-- Tab bar — sticks once hero scrolls past -->
+    <div class="comm-act-tabs" id="cashback-tabs" style="position:sticky;top:0;z-index:10;">
+      <div class="comm-act-tab active" data-tab="wallet" onclick="switchCashbackTab('wallet')" data-i18n="cashback_tab_wallet">Wallet Activity</div>
+      <div class="comm-act-tab"        data-tab="purchases" onclick="switchCashbackTab('purchases')" data-i18n="cashback_tab_purchases">My Purchases</div>
+    </div>
+
+    <!-- ── TAB: Wallet Activity ── -->
+    <div id="cashback-tab-wallet" style="padding:20px;">
+
+      <!-- How cashback works -->
+      <div style="font-size:var(--t5);font-weight:700;color:var(--ink-1);margin-bottom:14px;" data-i18n="cashback_how_title">How It Works</div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="width:34px;height:34px;border-radius:50%;background:var(--gold-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#EAA005" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:var(--t5);font-weight:600;color:var(--ink-1);" data-i18n="cashback_step1_title">Click through Yourdis</div>
+            <div style="font-size:var(--t6);color:var(--ink-3);margin-top:3px;line-height:1.5;" data-i18n="cashback_step1_desc">Find the best price and tap the store listing to go to the retailer's site.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="width:34px;height:34px;border-radius:50%;background:var(--gold-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#EAA005" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:var(--t5);font-weight:600;color:var(--ink-1);" data-i18n="cashback_step2_title">Complete your purchase</div>
+            <div style="font-size:var(--t6);color:var(--ink-3);margin-top:3px;line-height:1.5;" data-i18n="cashback_step2_desc">Buy on the store's website as usual. No promo codes needed.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="width:34px;height:34px;border-radius:50%;background:var(--gold-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#EAA005" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:var(--t5);font-weight:600;color:var(--ink-1);" data-i18n="cashback_step3_title">2% credited to your wallet</div>
+            <div style="font-size:var(--t6);color:var(--ink-3);margin-top:3px;line-height:1.5;" data-i18n="cashback_step3_desc">Cashback is automatically added to your Yourdis wallet after confirmation.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="width:34px;height:34px;border-radius:50%;background:var(--red-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:var(--t5);font-weight:600;color:var(--ink-1);" data-i18n="cashback_step4_title">Withdraw anytime</div>
+            <div style="font-size:var(--t6);color:var(--ink-3);margin-top:3px;line-height:1.5;" data-i18n="cashback_step4_desc">Transfer your wallet balance to your bank account at any time, with no minimum.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Divider -->
+      <div style="height:1px;background:var(--border);margin-bottom:20px;"></div>
+
+      <!-- Transaction list -->
+      <div style="font-size:var(--t5);font-weight:700;color:var(--ink-1);margin-bottom:14px;" data-i18n="cashback_recent_title">Recent Activity</div>
+      <div style="border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--border);margin-bottom:24px;">
+
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg-phone);">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--gold-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#EAA005" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:var(--t5);font-weight:600;color:var(--ink-1);">Baccarat Rouge 540</div>
+            <div style="font-size:var(--t6);color:var(--ink-3);margin-top:2px;">Abaq · <span data-i18n="cashback_confirmed">Confirmed</span> · 3 days ago</div>
+          </div>
+          <div style="font-size:var(--t4);font-weight:700;color:#16A34A;flex-shrink:0;">+14 <svg class="sar-sym" aria-label="SAR" role="img"><use href="#sar-sym"/></svg></div>
+        </div>
+
+        <div style="height:1px;background:var(--border);"></div>
+
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg-phone);">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--gold-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#EAA005" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:var(--t5);font-weight:600;color:var(--ink-1);">Sauvage Elixir</div>
+            <div style="font-size:var(--t6);color:var(--ink-3);margin-top:2px;">Faces · <span data-i18n="cashback_confirmed">Confirmed</span> · 2 weeks ago</div>
+          </div>
+          <div style="font-size:var(--t4);font-weight:700;color:#16A34A;flex-shrink:0;">+9 <svg class="sar-sym" aria-label="SAR" role="img"><use href="#sar-sym"/></svg></div>
+        </div>
+
+        <div style="height:1px;background:var(--border);"></div>
+
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg-phone);">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--bg-surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:var(--t5);font-weight:600;color:var(--ink-1);" data-i18n="cashback_withdrawal">Withdrawal</div>
+            <div style="font-size:var(--t6);color:var(--ink-3);margin-top:2px;"><span data-i18n="cashback_processed">Processed</span> · 1 month ago</div>
+          </div>
+          <div style="font-size:var(--t4);font-weight:700;color:var(--red);flex-shrink:0;">−26 <svg class="sar-sym" aria-label="SAR" role="img"><use href="#sar-sym"/></svg></div>
+        </div>
+
+        <div style="height:1px;background:var(--border);"></div>
+
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg-phone);">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--gold-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#EAA005" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:var(--t5);font-weight:600;color:var(--ink-1);">Creed Aventus</div>
+            <div style="font-size:var(--t6);color:var(--ink-3);margin-top:2px;">Be On One · <span data-i18n="cashback_confirmed">Confirmed</span> · 6 weeks ago</div>
+          </div>
+          <div style="font-size:var(--t4);font-weight:700;color:#16A34A;flex-shrink:0;">+22 <svg class="sar-sym" aria-label="SAR" role="img"><use href="#sar-sym"/></svg></div>
+        </div>
+
+      </div>
+
+      <!-- Info note -->
+      <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;display:flex;gap:10px;align-items:flex-start;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div style="font-size:var(--t6);color:var(--ink-3);line-height:1.6;" data-i18n="cashback_note">Cashback is funded by Yourdis from our affiliate commission. It costs you nothing extra. Withdrawals are processed within 3–5 business days.</div>
+      </div>
+
+    </div>
+
+    <!-- ── TAB: My Purchases ── -->
+    <div id="cashback-tab-purchases" style="display:none;">
+      <div class="dip-alt-list" id="cashback-purchases-list" style="margin:16px 16px 32px;"></div>
+    </div>
+
+  </div>
+</div><!-- /screen-sub-cashback -->
+
 
 <!-- ═══════════════════════════════════════
      SCREEN: FRAGRANCE LIBRARY
@@ -6089,23 +6504,58 @@ function buildProductCard(p, badgeHtml) {
       (badgeHtml ? '<div class="pc-badge">' + badgeHtml + '</div>' : '') +
     '</div>';
 
-  var name    = P(p, 'name');
-  var avail   = storesLabel(p);
-  var lo      = getLowestPrice(p.id);
-  var hi      = getHighestPrice(p.id);
-  var sv      = getSavings(p.id);
-  var cur     = LANG === 'ar' ? p.currencyAr : p.currencyEn;
-  var lowest  = T('card_lowest') + ' ' + (lo !== null ? lo + ' ' + cur : '--');
-  var highest = T('card_highest') + ' ' + (hi !== null ? hi + ' ' + cur : '--');
-  var savings = T('card_savings') + ' ' + (sv > 0 ? sv + ' ' + cur : '--');
+  var name  = P(p, 'name');
+  var avail = storesLabel(p);
+  var lo    = getLowestPrice(p.id);
+  var hi    = getHighestPrice(p.id);
+  var sv    = getSavings(p.id);
+  var cur   = LANG === 'ar' ? p.currencyAr : p.currencyEn;
+
+  var lblLow  = T('card_lowest');
+  var lblHigh = T('card_highest');
+  var lblSave = T('card_savings');
+
+  /* Save badge injected into image zone */
+  var saveBadgeHtml = (sv > 0)
+    ? '<span class="pc-save-badge">' + lblSave + sv + ' ' + curSym(cur) + '</span>'
+    : '';
+
+  var lowRowHtml = lo !== null
+    ? '<div class="pc-low-row">' +
+        '<span class="pc-low-label">' + lblLow + '</span>' +
+        '<span class="pc-low-num">'   + lo     + '</span>' +
+        curSym(cur) +
+      '</div>'
+    : '';
+
+  var highRowHtml = (hi !== null && hi !== lo)
+    ? '<div class="pc-high-row">' +
+        '<span class="pc-high-label">' + lblHigh + '</span>' +
+        '<span class="pc-high-num">'   + hi      + '</span>' +
+        curSym(cur) +
+      '</div>'
+    : '';
+
+  /* Rebuild imgHtml with save badge inside */
+  imgHtml =
+    '<div class="pc-img" style="position:relative;">' +
+      '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
+        '<img loading="lazy" src="' + p.img + '" alt=""' +
+          ' onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
+        '<div class="img-initials" style="display:none;">' + p.initials + '</div>' +
+      '</div>' +
+      (badgeHtml ? '<div class="pc-badge">' + badgeHtml + '</div>' : '') +
+      saveBadgeHtml +
+    '</div>';
 
   var bodyHtml =
     '<div class="pc-body">' +
-      '<div class="pc-name">'    + name    + '</div>' +
-      '<div class="pc-avail">'   + avail   + '</div>' +
-      '<span class="pc-lowest">' + lowest  + '</span>' +
-      '<div class="pc-highest">' + highest + '</div>' +
-      '<div class="pc-savings">' + savings + '</div>' +
+      '<div class="pc-name">' + name + '</div>' +
+      '<div class="pc-avail">' + avail + '</div>' +
+      '<div class="pc-price-row">' +
+        lowRowHtml +
+        highRowHtml +
+      '</div>' +
     '</div>';
 
   card.innerHTML = imgHtml + bodyHtml;
@@ -6342,8 +6792,8 @@ function renderProductCards() {
           discountHtml +
         '</div>' +
         '<div class="drop-right">' +
-          '<div class="drop-price">' + (lo !== null ? lo + ' ' + cur : '--') + '</div>' +
-          '<div class="drop-delta">' + (sv > 0 ? '&#x2212;' + sv + ' ' + cur : '') + '</div>' +
+          '<div class="drop-price">' + (lo !== null ? lo + ' ' + curSym(cur) : '--') + '</div>' +
+          '<div class="drop-delta">' + (sv > 0 ? '&#x2212;' + sv + ' ' + curSym(cur) : '') + '</div>' +
         '</div>';
       drops.appendChild(row);
     });
@@ -6504,7 +6954,7 @@ function sharePdp() {
   var brand = prod ? P(prod, 'brand') : (p.brand || '');
   var lo    = prod ? getLowestPrice(prod.id) : null;
   var cur   = prod ? (LANG === 'ar' ? prod.currencyAr : prod.currencyEn) : 'SAR';
-  var priceStr = lo !== null ? lo + ' ' + cur : '';
+  var priceStr = lo !== null ? lo + ' ' + curSym(cur) : '';
   var titleStr = brand ? brand + ' – ' + name : name;
   var textStr  = priceStr
     ? (LANG === 'ar'
@@ -6752,7 +7202,7 @@ function renderSearchResults(q){
     row.innerHTML=
       '<div class="result-thumb"><div class="prod-img-wrap" style="background:'+p.bg+';height:100%;"><img loading="lazy" src="'+p.img+'" alt="" style="width:100%;height:100%;object-fit:cover;"></div></div>'+
       '<div class="result-info"><div class="result-name">'+P(p,'name')+'</div><div class="result-brand">'+P(p,'brand')+' · '+P(p,'concentration')+'</div></div>'+
-      '<div class="result-right"><div class="result-price">'+(getLowestPrice(p.id)!==null?getLowestPrice(p.id)+' '+(LANG==='ar'?p.currencyAr:p.currencyEn):'--')+'</div><div class="result-stores">'+storesLabel(p)+'</div></div>';
+      '<div class="result-right"><div class="result-price">'+(getLowestPrice(p.id)!==null?getLowestPrice(p.id)+' '+curSym(LANG==='ar'?p.currencyAr:p.currencyEn):'--')+'</div><div class="result-stores">'+storesLabel(p)+'</div></div>';
     row.addEventListener('click',(function(pid){return function(){openComparePage(pid,'search');};})(p.id));
     results.appendChild(row);
   });
@@ -7233,16 +7683,16 @@ function _pdpAdapt(p) {
     desc:     LANG === 'ar' ? p.descAr : p.descEn,
     notes:    notesHtml,
     reviews: '287',
-    price:    bestL ? (bestL.price + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn)) : (loPrice + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn)),
+    price:    bestL ? (bestL.price + ' ' + curSym(LANG==='ar'?p.currencyAr:p.currencyEn)) : (loPrice + ' ' + curSym(LANG==='ar'?p.currencyAr:p.currencyEn)),
     store:    S(bestStore,'name') || '--',
     storeKey: bestStore.id || null,
     link:     (bestL && bestL.link) ? bestL.link : (p.link || ''),
-    r1: 'Incredible longevity. Found it for ' + loPrice + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn) + ' thanks to Yourdis.',
+    r1: 'Incredible longevity. Found it for ' + loPrice + ' ' + curSym(LANG==='ar'?p.currencyAr:p.currencyEn) + ' thanks to Yourdis.',
     r2: 'Great quality. The ' + P(p,'concentration') + ' version has excellent projection.',
     priceHistory: [
-      { date:'Today · 2 hrs ago', price: loPrice + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn), dir:'down' },
-      { date:'14 Feb 2025',            price: hiPrice + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn), dir:'up'   },
-      { date:'01 Jun 2024',            price: loPrice + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn), dir:'down' }
+      { date:'Today · 2 hrs ago', price: loPrice + ' ' + curSym(LANG==='ar'?p.currencyAr:p.currencyEn), dir:'down' },
+      { date:'14 Feb 2025',            price: hiPrice + ' ' + curSym(LANG==='ar'?p.currencyAr:p.currencyEn), dir:'up'   },
+      { date:'01 Jun 2024',            price: loPrice + ' ' + curSym(LANG==='ar'?p.currencyAr:p.currencyEn), dir:'down' }
     ]
   };
 }
@@ -7356,7 +7806,7 @@ function openProduct(productId, origin) {
   }
 
   /* CTA */
-  document.getElementById('product-cta-btn-price').textContent = p.price;
+  document.getElementById('product-cta-btn-price').innerHTML = p.price;
   var badge = document.getElementById('product-cta-btn-badge');
   badge.textContent = ''; badge.style.display = 'none';
 
@@ -7449,19 +7899,49 @@ function _pdpBuildRecCard(p) {
   card.className = 'product-card';
   card.style.cursor = 'pointer';
   card.addEventListener('click', (function(pid){ return function(){ openComparePage(pid,'product-detail'); }; })(p.id));
+  var _lo  = getLowestPrice(p.id);
+  var _hi  = getHighestPrice(p.id);
+  var _sv  = getSavings(p.id);
+  var _cur = LANG === 'ar' ? p.currencyAr : p.currencyEn;
+  var _lblLow  = T('card_lowest');
+  var _lblHigh = T('card_highest');
+  var _lblSave = T('card_savings');
+
+  var _saveBadge = (_sv > 0)
+    ? '<span class="pc-save-badge">' + _lblSave + _sv + ' ' + curSym(_cur) + '</span>'
+    : '';
+
+  var _lowRow = _lo !== null
+    ? '<div class="pc-low-row">' +
+        '<span class="pc-low-label">' + _lblLow + '</span>' +
+        '<span class="pc-low-num">'   + _lo     + '</span>' +
+        curSym(_cur) +
+      '</div>'
+    : '';
+
+  var _highRow = (_hi !== null && _hi !== _lo)
+    ? '<div class="pc-high-row">' +
+        '<span class="pc-high-label">' + _lblHigh + '</span>' +
+        '<span class="pc-high-num">'   + _hi      + '</span>' +
+        curSym(_cur) +
+      '</div>'
+    : '';
+
   card.innerHTML =
-    '<div class="pc-img">' +
+    '<div class="pc-img" style="position:relative;">' +
       '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
         '<img loading="lazy" src="' + p.img + '" alt="" onerror="this.style.display=\'none\'">' +
         '<div class="img-initials" style="display:none;">' + p.initials + '</div>' +
       '</div>' +
+      _saveBadge +
     '</div>' +
     '<div class="pc-body">' +
-      '<div class="pc-name">'    + P(p,'name')       + '</div>' +
-      '<div class="pc-avail">'   + storesLabel(p)    + '</div>' +
-      '<span class="pc-lowest">' + T('card_lowest')  + ' ' + (getLowestPrice(p.id) !== null ? getLowestPrice(p.id) + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn) : '--') + '</span>' +
-      '<div class="pc-highest">' + T('card_highest') + ' ' + (getHighestPrice(p.id) !== null ? getHighestPrice(p.id) + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn) : '--') + '</div>' +
-      '<div class="pc-savings">' + T('card_savings') + ' ' + (getSavings(p.id) > 0 ? getSavings(p.id) + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn) : '--') + '</div>' +
+      '<div class="pc-name">'  + P(p,'name')    + '</div>' +
+      '<div class="pc-avail">' + storesLabel(p) + '</div>' +
+      '<div class="pc-price-row">' +
+        _lowRow +
+        _highRow +
+      '</div>' +
     '</div>';
   return card;
 }
@@ -7773,7 +8253,7 @@ function _compareRenderStores(p, sizeFilter) {
           '<div class="cmp-card-price-wrap">' +
             (entry.discountPercent > 0 ? '<span class="cmp-discount">↓' + entry.discountPercent + '%</span>' : '') +
             '<span class="cmp-price">' + entry.price + '</span>' +
-            '<span class="cmp-currency">' + cur + '</span>' +
+            curSym(cur) +
           '</div>' +
         '</div>' +
       '</div>';
@@ -7797,7 +8277,7 @@ function _compareAltCard(p) {
     '</div>' +
     '<div class="dip-alt-info">' +
       '<div class="dip-alt-name">' + P(p,'name') + '</div>' +
-      '<div class="dip-alt-sub">'  + (getLowestPrice(p.id) !== null ? getLowestPrice(p.id) + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn) : '--') + ' · ' + P(p,'brand') + '</div>' +
+      '<div class="dip-alt-sub">'  + (getLowestPrice(p.id) !== null ? getLowestPrice(p.id) + ' ' + curSym(LANG==='ar'?p.currencyAr:p.currencyEn) : '--') + ' · ' + P(p,'brand') + '</div>' +
     '</div>' +
     '<div class="dip-alt-right">' +
       '<div class="dip-alt-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div>' +
@@ -7857,6 +8337,17 @@ function _compareRenderSimilar(sourceProduct) {
     var bd  = getBrand(p.brandId) || {};
     var brandName = LANG === 'ar' ? (bd.nameAr || '') : (bd.nameEn || '');
 
+    /* Find the store offering the lowest price for this product */
+    var lowestStoreName = '';
+    if (typeof LISTINGS !== 'undefined' && typeof STORES !== 'undefined') {
+      var pListings = LISTINGS.filter(function(l){ return l.productId === p.id && l.inStock; });
+      if (pListings.length) {
+        pListings.sort(function(a,b){ return a.price - b.price; });
+        var loStore = STORES.find(function(s){ return s.id === pListings[0].storeId; });
+        if (loStore) lowestStoreName = S(loStore, 'name');
+      }
+    }
+
     var card = document.createElement('div');
     card.className = 'dip-alt-card';
     card.style.cursor = 'pointer';
@@ -7879,12 +8370,13 @@ function _compareRenderSimilar(sourceProduct) {
         '</div>' +
         '<div class="cmp-card-row2">' +
           '<div class="cmp-card-attrs">' +
+            (lowestStoreName ? _aiEscape(lowestStoreName) + ' · ' : '') +
             _aiEscape(brandName) +
             (p.familyEn ? ' · ' + _aiEscape(P(p, 'family')) : '') +
           '</div>' +
           '<div class="cmp-card-price-wrap">' +
             '<span class="cmp-price">' + (lo !== null ? lo : '--') + '</span>' +
-            (lo !== null ? '<span class="cmp-currency">' + cur + '</span>' : '') +
+            (lo !== null ? curSym(cur) : '') +
           '</div>' +
         '</div>' +
       '</div>';
@@ -7946,7 +8438,7 @@ function renderAlerts() {
       active.length + ' ' + T('alerts_tracking');
     document.getElementById('alerts-summary-savings').innerHTML =
       T('alerts_savings') + ' <strong style="color:var(--green);">' +
-      totalSavings + ' SAR</strong> ' + T('alerts_if_drop');
+      totalSavings + '\u00a0' + sarSym() + '</strong> ' + T('alerts_if_drop');
   } else {
     summary.style.display = 'none';
     empty.style.display   = 'block';
@@ -7980,7 +8472,7 @@ function renderAlerts() {
         '<div class="toggle" onclick="event.stopPropagation();requestAlertDisable(\'' + p.id + '\')"><div class="toggle-thumb"></div></div>' +
       '</div>' +
       '<div class="alert-v3-prices">' +
-        '<span class="alert-v3-lowest-badge">' + T('card_lowest') + ' ' + (lo !== null ? lo + ' ' + cur : '--') + '</span>' +
+        '<span class="alert-v3-lowest-badge">' + T('card_lowest') + ' ' + (lo !== null ? lo + ' ' + curSym(cur) : '--') + '</span>' +
         movHtml +
         '<span class="alert-v3-stores">' + T('alerts_in_stores') + ' ' + storeCount + ' ' + T('alerts_stores') + '</span>' +
       '</div>';
@@ -8195,7 +8687,7 @@ function renderActivityAlerts() {
   }
   if (savingsEl) {
     savingsEl.innerHTML = totalSavings > 0
-      ? T('activity_alerts_save_up_to') + ' <strong>' + totalSavings + ' SAR</strong>'
+      ? T('activity_alerts_save_up_to') + ' <strong>' + totalSavings + '\u00a0' + sarSym() + '</strong>'
       : '';
   }
 
@@ -8213,7 +8705,7 @@ function renderActivityAlerts() {
           '<img loading="lazy" src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;">' +
         '</div>' +
         '<div class="alerts-mosaic-price">' +
-          '<span class="alerts-mosaic-price-badge">' + (getLowestPrice(p.id) !== null ? getLowestPrice(p.id) + ' ' + (LANG==='ar'?p.currencyAr:p.currencyEn) : '--') + '</span>' +
+          '<span class="alerts-mosaic-price-badge">' + (getLowestPrice(p.id) !== null ? getLowestPrice(p.id) + ' ' + curSym(LANG==='ar'?p.currencyAr:p.currencyEn) : '--') + '</span>' +
         '</div>';
     } else {
       cell.classList.add('alerts-mosaic-empty-cell');
@@ -8591,6 +9083,22 @@ function T(key) {
   return entry[LANG] || entry['en'] || key;
 }
 
+/* Returns an inline <svg> string that renders the Saudi Riyal symbol.
+   Inherits colour from currentColor so it matches surrounding text automatically. */
+function sarSym() {
+  return '<svg class="sar-sym" aria-label="SAR" role="img"><use href="#sar-sym"/></svg>';
+}
+
+/* Resolves a currency string to either the SAR symbol or the raw string.
+   Pass the product's currencyEn / currencyAr value — if it's SAR or ريال,
+   return the symbol; anything else (USD, $, etc.) returns as-is. */
+function curSym(cur) {
+  if (!cur) return '';
+  var c = cur.trim();
+  if (c === 'SAR' || c === 'ريال') return sarSym();
+  return c;
+}
+
 
 /* Product field in active language.
    For brand-level fields (brand, house, country) that no longer
@@ -8614,10 +9122,10 @@ function P(product, field) {
   return product[field] || '';
 }
 
-/* Price string with correct currency label */
+/* Price string with correct currency symbol */
 function price(amount, product) {
   var cur = LANG === 'ar' ? product.currencyAr : product.currencyEn;
-  return amount + ' ' + cur;
+  return amount + '\u00a0' + curSym(cur);
 }
 
 /* Availability string: "Available in 5 stores" / "متوفر في 5 متاجر" */
@@ -9016,6 +9524,27 @@ function subShowSuccess(id) {
 }
 
 /* ── Profile ── */
+function subProfilePhotoChange(input) {
+  if (!input.files || !input.files[0]) return;
+  var file = input.files[0];
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var src = e.target.result;
+    /* Update preview in this screen */
+    var previewImg = document.getElementById('sub-profile-avatar-img');
+    if (previewImg) { previewImg.src = src; previewImg.style.display = 'block'; }
+    var fallback = document.getElementById('sub-profile-avatar-fallback');
+    if (fallback) fallback.style.display = 'none';
+    /* Propagate to all avatar-img elements in the app */
+    document.querySelectorAll('.avatar-img').forEach(function(img) { img.src = src; img.style.display = 'block'; });
+    document.querySelectorAll('.avatar-fallback').forEach(function(fb) { fb.style.display = 'none'; });
+    /* Also update fragrance library hero avatar if present */
+    var flibImg = document.querySelector('.flib-avatar-inner img');
+    if (flibImg) { flibImg.src = src; flibImg.style.display = ''; }
+  };
+  reader.readAsDataURL(file);
+}
+
 function subProfileSave() {
   var val = (document.getElementById('sub-profile-input').value || '').trim();
   if (!val) return;
@@ -9025,6 +9554,11 @@ function subProfileSave() {
       el.textContent = val;
     }
   });
+  /* Update avatar fallback initials */
+  var initials = val.split(' ').map(function(w){ return w[0]; }).join('').slice(0,2).toUpperCase();
+  document.querySelectorAll('.avatar-fallback').forEach(function(el) { el.textContent = initials; });
+  var subFallback = document.getElementById('sub-profile-avatar-fallback');
+  if (subFallback) subFallback.textContent = initials;
   subShowSuccess('sub-profile-success');
 }
 
@@ -9172,7 +9706,96 @@ switchScreen = function(id) {
   if (id === 'sub-email') {
     subEmailReset();
   }
+  if (id === 'sub-cashback') {
+    renderCashbackPurchases();
+    switchCashbackTab('wallet');
+  }
 };
+
+/* ── Cashback tab switcher ── */
+function switchCashbackTab(tab) {
+  document.querySelectorAll('#cashback-tabs .comm-act-tab').forEach(function(t) {
+    t.classList.toggle('active', t.dataset.tab === tab);
+  });
+  document.getElementById('cashback-tab-wallet').style.display    = tab === 'wallet'    ? '' : 'none';
+  document.getElementById('cashback-tab-purchases').style.display = tab === 'purchases' ? '' : 'none';
+}
+
+/* ── Cashback purchased products ── */
+/* storeId is the store the user purchased from (for display);
+   unavailable means the product is no longer listed anywhere  */
+var CASHBACK_PURCHASE_IDS = [
+  { id: 'mfk-baccarat-rouge-540-70',  storeId: 'abaq',           unavailable: false },
+  { id: 'dior-sauvage-elixir-100',    storeId: 'faces',          unavailable: false },
+  { id: 'chanel-bleu-edp-100',        storeId: 'be-on-one',      unavailable: false },
+  { id: 'tomford-black-orchid-50',    storeId: 'candy-niche',    unavailable: true  },
+  { id: 'creed-aventus-100',          storeId: 'be-on-one',      unavailable: false },
+  { id: 'ysl-libre-intense-50',       storeId: 'asheq-al-otor',  unavailable: false }
+];
+
+function renderCashbackPurchases() {
+  var list = document.getElementById('cashback-purchases-list');
+  if (!list) return;
+  if (list.childElementCount > 0) return; /* already rendered */
+
+  var unavailableLabel = LANG === 'ar' ? 'غير متاح' : 'Unavailable';
+
+  CASHBACK_PURCHASE_IDS.forEach(function(entry) {
+    var p = (PRODUCTS || []).find(function(x){ return x.id === entry.id; });
+    if (!p) return;
+
+    var store     = (STORES || []).find(function(s){ return s.id === entry.storeId; }) || {};
+    var storeName = S(store, 'name') || entry.storeId;
+    var bd        = getBrand(p.brandId) || {};
+    var brandName = LANG === 'ar' ? (bd.nameAr || '') : (bd.nameEn || '');
+    var name      = LANG === 'ar' ? (p.nameAr || p.nameEn) : p.nameEn;
+    var lo        = getLowestPrice(p.id);
+    var cur       = LANG === 'ar' ? p.currencyAr : p.currencyEn;
+
+    var card = document.createElement('div');
+    card.className = 'dip-alt-card';
+
+    if (entry.unavailable) {
+      card.style.opacity       = '0.55';
+      card.style.cursor        = 'default';
+      card.style.pointerEvents = 'none';
+    } else {
+      card.addEventListener('click', (function(pid){ return function(){ openComparePage(pid, 'activity'); }; })(p.id));
+    }
+
+    var badgeHtml = entry.unavailable
+      ? '<span class="cmp-badge" style="background:#E5E7EB;color:#6B7280;border-color:#D1D5DB;">' + unavailableLabel + '</span>'
+      : '';
+
+    var chevronHtml = entry.unavailable ? '' :
+      '<div class="dip-alt-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>';
+
+    card.innerHTML =
+      /* Thumbnail */
+      '<div class="cmp-card-img">' +
+        '<div class="prod-img-wrap" style="background:' + p.bg + ';height:100%;">' +
+          '<img loading="lazy" src="' + p.img + '" alt="" style="width:100%;height:100%;object-fit:cover;"' +
+            ' onerror="this.style.display=\'none\'">' +
+        '</div>' +
+      '</div>' +
+      /* Body */
+      '<div class="cmp-card-body">' +
+        '<div class="cmp-card-row1">' +
+          '<div class="cmp-store-name">' + name + '</div>' +
+          '<div class="cmp-card-badges">' + badgeHtml + '</div>' +
+        '</div>' +
+        '<div class="cmp-card-row2">' +
+          '<div class="cmp-card-attrs">' + storeName + (brandName ? ' · ' + brandName : '') + '</div>' +
+          '<div class="cmp-card-price-wrap">' +
+            (lo !== null ? '<span class="cmp-price">' + lo + '</span>' + ' ' + curSym(cur) : '<span class="cmp-price" style="font-size:var(--t5);color:var(--ink-3);">--</span>') +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      chevronHtml;
+
+    list.appendChild(card);
+  });
+}
 
 /* ── Support ── */
 function subSupportSend() {
@@ -9258,6 +9881,7 @@ function intToggle(el, group, mode) {
       el.classList.add('selected');
     }
   }
+  renderActivityInterests();
 }
 
 function interestsToggle(id) {
@@ -9266,9 +9890,106 @@ function interestsToggle(id) {
   if (card) card.classList.toggle('selected', !!_selectedInterests[id]);
 }
 
+/* Full lookup: group → val → { emoji, en, ar, style } */
+var INT_PREFS_META = {
+  gender: {
+    men:    { emoji: '👔', en: 'Men',    ar: 'رجالي'  },
+    women:  { emoji: '🌷', en: 'Women',  ar: 'نسائي'  },
+    unisex: { emoji: '✦',  en: 'Unisex', ar: 'يونيسكس' }
+  },
+  family: {
+    floral:   { emoji: '🌸', en: 'Floral',   ar: 'زهري'    },
+    woody:    { emoji: '🪵', en: 'Woody',    ar: 'خشبي'    },
+    oriental: { emoji: '🕌', en: 'Oriental', ar: 'شرقي'    },
+    aromatic: { emoji: '🌿', en: 'Aromatic', ar: 'عطري'    },
+    musk:     { emoji: '🤍', en: 'Musk',     ar: 'مسكي'    },
+    leather:  { emoji: '🧥', en: 'Leather',  ar: 'جلدي'    },
+    fresh:    { emoji: '💧', en: 'Fresh',    ar: 'منعش'    },
+    chypre:   { emoji: '🌲', en: 'Chypre',   ar: 'شيبر'    },
+    oud:      { emoji: '🪔', en: 'Oud',      ar: 'عود'     },
+    unknown:  { emoji: '✨', en: 'Unknown',  ar: 'غير محدد' }
+  },
+  season: {
+    summer:  { emoji: '☀️', en: 'Summer',      ar: 'صيفي'    },
+    winter:  { emoji: '❄️', en: 'Winter',      ar: 'شتوي'    },
+    spring:  { emoji: '🌱', en: 'Spring',      ar: 'ربيعي'   },
+    autumn:  { emoji: '🍂', en: 'Autumn',      ar: 'خريفي'   },
+    all:     { emoji: '🌍', en: 'All Seasons', ar: 'كل المواسم' }
+  },
+  time: {
+    night:    { emoji: '🌙',  en: 'Night',       ar: 'ليلي'      },
+    day:      { emoji: '🌤️', en: 'Day',         ar: 'نهاري'     },
+    daynight: { emoji: '🌓',  en: 'Day & Night', ar: 'نهاري وليلي' }
+  }
+};
+
+/* Pill style per group */
+var INT_GROUP_STYLE = {
+  gender: { bg: '#F5F3FF', border: '#C4B5FD', color: '#5B21B6' },
+  family: { bg: '#FDF3DC', border: '#FCD34D', color: '#92400E' },
+  season: { bg: '#F0FDF4', border: '#86EFAC', color: '#166534' },
+  time:   { bg: '#EFF6FF', border: '#93C5FD', color: '#1D4ED8' }
+};
+
+function renderActivityInterests() {
+  var body = document.getElementById('activity-interests-body');
+  if (!body) return;
+
+  var lang = typeof LANG !== 'undefined' ? LANG : 'en';
+
+  /* Collect all selected items in order: gender → family → season → time */
+  var items = [];
+  ['gender', 'family', 'season', 'time'].forEach(function(group) {
+    (_intPrefs[group] || []).forEach(function(val) {
+      var meta = (INT_PREFS_META[group] || {})[val];
+      if (meta) items.push({ group: group, val: val, meta: meta });
+    });
+  });
+
+  var totalCount = items.length;
+
+  /* Pills — show up to 6 */
+  var pillsHtml = '<div class="activity-interests-accents">';
+  items.slice(0, 6).forEach(function(item) {
+    var st = INT_GROUP_STYLE[item.group] || { bg: 'var(--bg-surface)', border: 'var(--border-strong)', color: 'var(--ink-2)' };
+    pillsHtml +=
+      '<span class="activity-accent-pill" style="background:' + st.bg + ';border-color:' + st.border + ';color:' + st.color + ';">' +
+        '<span class="accent-emoji">' + item.meta.emoji + '</span>' +
+        (lang === 'ar' ? item.meta.ar : item.meta.en) +
+      '</span>';
+  });
+  /* If more than 6, show a "+N more" pill */
+  if (items.length > 6) {
+    var more = items.length - 6;
+    pillsHtml +=
+      '<span class="activity-accent-pill" style="background:var(--bg-surface);border-color:var(--border-strong);color:var(--ink-3);">' +
+        '+' + more +
+      '</span>';
+  }
+  pillsHtml += '</div>';
+
+  /* Footer */
+  var countLabel = totalCount > 0
+    ? (lang === 'ar' ? totalCount + ' اهتمام محدد' : totalCount + ' selected')
+    : (lang === 'ar' ? 'لم تحدد بعد' : 'None selected yet');
+  var editLabel = lang === 'ar' ? 'تعديل' : 'Customize';
+
+  var footerHtml =
+    '<div class="activity-interests-footer">' +
+      '<span class="activity-interests-count">' + countLabel + '</span>' +
+      '<span class="activity-interests-edit">' +
+        editLabel +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>' +
+      '</span>' +
+    '</div>';
+
+  body.innerHTML = pillsHtml + footerHtml;
+}
+
 function interestsSave() {
   /* Persist _intPrefs (already updated live by intToggle) */
   /* Update the chips strip on the activity card to reflect current prefs */
+  renderActivityInterests();
   var container = document.querySelector('#screen-activity .int-prefs-chips');
   if (!container) {
     /* Fallback: just update pref-chip elements if they exist */
@@ -9298,6 +10019,7 @@ function interestsSave() {
   onLangChange = function(lang) {
     if (_prevOnLangChange) _prevOnLangChange(lang);
     renderInterestsGrid();
+    renderActivityInterests();
     /* Re-render pref-chips strip on the activity screen */
     var container = document.querySelector('.pref-chips');
     if (container) {
@@ -9473,7 +10195,7 @@ function openBrandPage(brandId, origin) {
       '</div>' +
       '<div class="brand-product-right">' +
         '<div class="brand-product-from">' + fromLabel + '</div>' +
-        '<div class="brand-product-price">' + (getLowestPrice(p.id) !== null ? getLowestPrice(p.id) + ' ' + cur : '--') + '</div>' +
+        '<div class="brand-product-price">' + (getLowestPrice(p.id) !== null ? getLowestPrice(p.id) + ' ' + curSym(cur) : '--') + '</div>' +
       '</div>';
     list.appendChild(row);
   });
@@ -9813,7 +10535,7 @@ function renderCommunityFeed() {
 
     var priceTag = '';
     if (!isInquiry && !isArticle && post.price) {
-      priceTag = '<span class="comm-price-tag">◈ ' + post.price + ' SAR</span>';
+      priceTag = '<span class="comm-price-tag">◈ ' + post.price + '\u00a0' + sarSym() + '</span>';
     }
 
     var thumbHtml = '';
@@ -10654,7 +11376,7 @@ function _renderPostDetail(post) {
   }
 
   var priceHtml = (!isInquiry && post.price)
-    ? '<span class="comm-post-price-badge">◈ ' + post.price + ' SAR</span>'
+    ? '<span class="comm-post-price-badge">◈ ' + post.price + '\u00a0' + sarSym() + '</span>'
     : '';
 
   /* ── Sale actions: rendered inline inside the post body ── */
@@ -11260,6 +11982,7 @@ document.addEventListener('DOMContentLoaded', function() {
   _shuffleProducts(); /* randomise order on every load */
   setLang(initLang); /* triggers renderProductCards + onLangChange → renderStores + renderAlerts */
   renderInterestsGrid();
+  renderActivityInterests();
   _updateAdminBadge(); /* initialise admin badge visibility */
   updateCommNavBadge(); /* initialise community nav dot */
   setTimeout(_seedDemoReplies, 200);
@@ -11517,6 +12240,321 @@ function chatSend() {
       navigator.serviceWorker.register('sw.js').catch(function(e) { console.warn('SW:', e); });
     });
   }
+</script>
+
+<!-- ═══════════════════════════════════════
+     FULLSCREEN IMAGE VIEWER OVERLAY
+═══════════════════════════════════════ -->
+<div id="img-viewer-overlay" aria-modal="true" role="dialog">
+  <div id="img-viewer-backdrop"></div>
+  <button id="img-viewer-close" aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <div id="img-viewer-zoom-btns">
+    <button id="img-viewer-zoom-in"  aria-label="Zoom in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+    </button>
+    <button id="img-viewer-zoom-out" aria-label="Zoom out">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+    </button>
+  </div>
+  <div id="img-viewer-stage">
+    <img id="img-viewer-img" src="" alt="" draggable="false"/>
+  </div>
+  <div id="img-viewer-hint">Pinch to zoom · Swipe down to close</div>
+</div>
+
+<style>
+/* ══════════════════════════════════════════════════════════
+   FULLSCREEN IMAGE VIEWER
+══════════════════════════════════════════════════════════ */
+#img-viewer-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+#img-viewer-overlay.iv-open {
+  opacity: 1; pointer-events: all;
+}
+#img-viewer-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.94);
+}
+#img-viewer-close {
+  position: absolute; top: 16px; right: 16px; z-index: 2;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; cursor: pointer; transition: background 0.15s;
+}
+#img-viewer-close:active { background: rgba(255,255,255,0.25); }
+#img-viewer-close svg { width: 18px; height: 18px; }
+#img-viewer-zoom-btns {
+  position: absolute; bottom: 52px; right: 20px; z-index: 2;
+  display: flex; flex-direction: column; gap: 10px;
+}
+#img-viewer-zoom-btns button {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; cursor: pointer; transition: background 0.15s;
+}
+#img-viewer-zoom-btns button:active { background: rgba(255,255,255,0.25); }
+#img-viewer-zoom-btns button svg { width: 18px; height: 18px; }
+#img-viewer-stage {
+  position: relative; z-index: 1;
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; touch-action: none;
+  will-change: transform;
+}
+#img-viewer-img {
+  max-width: 100%; max-height: 100%;
+  object-fit: contain;
+  transform-origin: center center;
+  user-select: none; -webkit-user-select: none;
+  transition: transform 0.08s ease-out;
+  will-change: transform;
+}
+#img-viewer-hint {
+  position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+  z-index: 2; color: rgba(255,255,255,0.45);
+  font-size: 12px; white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+
+/* Expand icon on PDP hero image */
+.pdp-hero-expand-btn {
+  position: absolute; bottom: 10px; right: 10px; z-index: 3;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(0,0,0,0.40); border: 1px solid rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; cursor: pointer; transition: background 0.15s;
+}
+.pdp-hero-expand-btn:active { background: rgba(0,0,0,0.65); }
+.pdp-hero-expand-btn svg { width: 16px; height: 16px; }
+[dir="rtl"] .pdp-hero-expand-btn { right: auto; left: 10px; }
+</style>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   FULLSCREEN IMAGE VIEWER
+   Supports: tap-to-open, pinch-to-zoom, double-tap zoom,
+             pan when zoomed, swipe/drag-to-close, button zoom
+══════════════════════════════════════════════════════════ */
+(function() {
+
+  var overlay  = document.getElementById('img-viewer-overlay');
+  var stage    = document.getElementById('img-viewer-stage');
+  var img      = document.getElementById('img-viewer-img');
+  var closeBtn = document.getElementById('img-viewer-close');
+  var zoomIn   = document.getElementById('img-viewer-zoom-in');
+  var zoomOut  = document.getElementById('img-viewer-zoom-out');
+  var hint     = document.getElementById('img-viewer-hint');
+
+  /* ── State ── */
+  var scale = 1, minScale = 1, maxScale = 4;
+  var tx = 0, ty = 0;           /* current translate */
+  var lastTap = 0;              /* for double-tap */
+  var dragStartY = 0, dragStartTy = 0;
+  var isDragging = false;
+  var hintTimer = null;
+
+  /* ── Pinch state ── */
+  var pinching = false;
+  var pinchStartDist = 0, pinchStartScale = 1;
+  var pinchMidX = 0, pinchMidY = 0;
+  var pinchStartTx = 0, pinchStartTy = 0;
+
+  /* ── Pan state ── */
+  var panning = false;
+  var panStartX = 0, panStartY = 0;
+  var panStartTx = 0, panStartTy = 0;
+
+  function applyTransform(animated) {
+    if (animated) {
+      img.style.transition = 'transform 0.22s cubic-bezier(0.25,0.46,0.45,0.94)';
+    } else {
+      img.style.transition = 'none';
+    }
+    img.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
+  }
+
+  function clampTranslate() {
+    /* Clamp pan so image can't go off-screen when zoomed */
+    var sw = stage.clientWidth, sh = stage.clientHeight;
+    var iw = img.naturalWidth  || sw;
+    var ih = img.naturalHeight || sh;
+    var renderedW = Math.min(sw, iw * (sh / ih)) * scale;
+    var renderedH = Math.min(sh, ih * (sw / iw)) * scale;
+    var maxTx = Math.max(0, (renderedW  - sw)  / 2);
+    var maxTy = Math.max(0, (renderedH - sh) / 2);
+    tx = Math.max(-maxTx, Math.min(maxTx, tx));
+    ty = Math.max(-maxTy, Math.min(maxTy, ty));
+  }
+
+  function resetTransform(animated) {
+    scale = 1; tx = 0; ty = 0;
+    applyTransform(animated);
+  }
+
+  function openViewer(src, bg) {
+    img.src = src;
+    stage.style.background = bg || 'transparent';
+    resetTransform(false);
+    overlay.classList.add('iv-open');
+    document.body.style.overflow = 'hidden';
+    /* Show hint then fade */
+    hint.style.opacity = '1';
+    clearTimeout(hintTimer);
+    hintTimer = setTimeout(function(){ hint.style.opacity = '0'; }, 2800);
+  }
+
+  function closeViewer() {
+    overlay.classList.remove('iv-open');
+    document.body.style.overflow = '';
+    setTimeout(function(){ img.src = ''; resetTransform(false); }, 250);
+  }
+
+  /* ── Close button + backdrop tap ── */
+  closeBtn.addEventListener('click', closeViewer);
+  document.getElementById('img-viewer-backdrop').addEventListener('click', closeViewer);
+
+  /* ── Zoom buttons ── */
+  zoomIn.addEventListener('click', function() {
+    scale = Math.min(maxScale, scale * 1.4);
+    clampTranslate();
+    applyTransform(true);
+  });
+  zoomOut.addEventListener('click', function() {
+    scale = Math.max(minScale, scale / 1.4);
+    if (scale <= minScale) { tx = 0; ty = 0; }
+    clampTranslate();
+    applyTransform(true);
+  });
+
+  /* ── Touch events ── */
+  stage.addEventListener('touchstart', onTouchStart, { passive: false });
+  stage.addEventListener('touchmove',  onTouchMove,  { passive: false });
+  stage.addEventListener('touchend',   onTouchEnd,   { passive: false });
+
+  function dist(t) {
+    var dx = t[0].clientX - t[1].clientX;
+    var dy = t[0].clientY - t[1].clientY;
+    return Math.sqrt(dx*dx + dy*dy);
+  }
+  function mid(t) {
+    return {
+      x: (t[0].clientX + t[1].clientX) / 2,
+      y: (t[0].clientY + t[1].clientY) / 2
+    };
+  }
+
+  function onTouchStart(e) {
+    var touches = e.touches;
+    if (touches.length === 2) {
+      e.preventDefault();
+      pinching = true; panning = false; isDragging = false;
+      pinchStartDist  = dist(touches);
+      pinchStartScale = scale;
+      var m = mid(touches);
+      pinchMidX   = m.x; pinchMidY   = m.y;
+      pinchStartTx = tx; pinchStartTy = ty;
+    } else if (touches.length === 1) {
+      var now = Date.now();
+      var t = touches[0];
+      /* double-tap */
+      if (now - lastTap < 280) {
+        e.preventDefault();
+        if (scale > 1) {
+          resetTransform(true);
+        } else {
+          scale = 2.5; tx = 0; ty = 0;
+          applyTransform(true);
+        }
+        lastTap = 0;
+        return;
+      }
+      lastTap = now;
+      if (scale > 1) {
+        /* pan */
+        panning = true;
+        panStartX  = t.clientX; panStartY  = t.clientY;
+        panStartTx = tx;        panStartTy = ty;
+      } else {
+        /* drag-to-close */
+        isDragging  = true;
+        dragStartY  = t.clientY;
+        dragStartTy = ty;
+      }
+    }
+  }
+
+  function onTouchMove(e) {
+    var touches = e.touches;
+    if (pinching && touches.length === 2) {
+      e.preventDefault();
+      var newDist = dist(touches);
+      var newScale = pinchStartScale * (newDist / pinchStartDist);
+      newScale = Math.max(minScale, Math.min(maxScale, newScale));
+      /* Zoom toward pinch midpoint */
+      var m = mid(touches);
+      var ds = newScale - pinchStartScale;
+      tx = pinchStartTx - ds * (pinchMidX - stage.clientWidth  / 2);
+      ty = pinchStartTy - ds * (pinchMidY - stage.clientHeight / 2);
+      scale = newScale;
+      clampTranslate();
+      applyTransform(false);
+    } else if (panning && touches.length === 1) {
+      e.preventDefault();
+      var t = touches[0];
+      tx = panStartTx + (t.clientX - panStartX);
+      ty = panStartTy + (t.clientY - panStartY);
+      clampTranslate();
+      applyTransform(false);
+    } else if (isDragging && touches.length === 1 && scale <= 1) {
+      e.preventDefault();
+      var t = touches[0];
+      var dy = t.clientY - dragStartY;
+      ty = dragStartTy + dy;
+      /* Fade backdrop based on drag distance */
+      var progress = Math.min(1, Math.abs(dy) / 220);
+      overlay.style.opacity = 1 - progress * 0.6;
+      img.style.transition = 'none';
+      img.style.transform  = 'translate(' + tx + 'px,' + ty + 'px) scale(1)';
+    }
+  }
+
+  function onTouchEnd(e) {
+    if (pinching) {
+      pinching = false;
+      if (scale < 1.05) resetTransform(true);
+    } else if (panning) {
+      panning = false;
+    } else if (isDragging) {
+      isDragging = false;
+      var dy = ty - dragStartTy;
+      if (Math.abs(dy) > 110) {
+        closeViewer();
+      } else {
+        overlay.style.opacity = '';
+        resetTransform(true);
+      }
+    }
+  }
+
+  /* ── Keyboard ── */
+  document.addEventListener('keydown', function(e) {
+    if (!overlay.classList.contains('iv-open')) return;
+    if (e.key === 'Escape') closeViewer();
+  });
+
+  /* ── Expose opener globally ── */
+  window.openImageViewer = openViewer;
+
+})();
 </script>
 </body>
 </html>
